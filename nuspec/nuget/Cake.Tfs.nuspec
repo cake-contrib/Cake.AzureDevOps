@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>Cake.Tfs</id>
+    <title>Cake.Tfs</title>
+    <version>0.0.0</version>
+    <authors>Pascal Berger</authors>
+    <owners>pascalberger, cake-contrib</owners>
+    <summary>Addin for working with Team Foundation Server or Visual Studio Team Services for the Cake build automation system</summary>
+    <description>
+This addin for Cake allows you to work with Team Foundation Server or Visual Studio Team Services.
+    </description>
+    <licenseUrl>https://github.com/cake-contrib/Cake.Tfs/blob/develop/LICENSE</licenseUrl>
+    <projectUrl>http://cake-contrib.github.io/Cake.Tfs/</projectUrl>
+    <iconUrl>https://cdn.rawgit.com/cake-contrib/graphics/a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>Copyright © Pascal Berger</copyright>
+    <tags>Cake Script Team-Foundation-Server TFS Visual-Studio-Team-Services VSTS</tags>
+    <releaseNotes>https://github.com/cake-contrib/Cake.Tfs/releases/tag/0.1.0</releaseNotes>
+  </metadata>
+  <files>
+    <file src="net461\Cake.Tfs.dll" target="lib\net461" />
+    <file src="net461\Cake.Tfs.pdb" target="lib\net461" />
+    <file src="net461\Cake.Tfs.xml" target="lib\net461" />
+  </files>
+</package>
