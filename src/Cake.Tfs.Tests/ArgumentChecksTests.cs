@@ -1,4 +1,4 @@
-﻿namespace Cake.Tfs.Tests.Authentication
+﻿namespace Cake.Tfs.Tests
 {
     using Xunit;
 
