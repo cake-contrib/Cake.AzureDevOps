@@ -45,5 +45,20 @@
                 throw new ArgumentOutOfRangeException(parameterName);
             }
         }
+
+        /// <summary>
+        /// Throws an exception if the specified parameter's value is negative or zero.
+        /// </summary>
+        /// <param name="value">The value of the argument.</param>
+        /// <param name="parameterName">The name of the parameter to include in any thrown exception.</param>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is negative or zero.</exception>
+        [DebuggerStepThrough]
+        public static void NotNegativeOrZero(this int value, string parameterName)
+        {
+            if (value <= 0)
+            {
+                throw new ArgumentOutOfRangeException(parameterName);
+            }
+        }
     }
 }
