@@ -1,6 +1,6 @@
 ﻿namespace Cake.Tfs
 {
-    using Core.Annotations;
+    using Cake.Core.Annotations;
 
     /// <summary>
     /// Contains functionality related to Team Foundation Server or Visual Studio Team Services.

@@ -1,8 +1,8 @@
 ﻿namespace Cake.Tfs
 {
-    using Authentication;
-    using Core;
-    using Core.Annotations;
+    using Cake.Core;
+    using Cake.Core.Annotations;
+    using Cake.Tfs.Authentication;
 
     /// <content>
     /// Contains functionality related to authenticating to Team Foundation Server or Visual Studio Team Services.
