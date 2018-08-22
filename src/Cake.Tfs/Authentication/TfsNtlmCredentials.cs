@@ -3,7 +3,7 @@
     /// <summary>
     /// Credentials for integrated / NTLM authentication.
     /// </summary>
-    internal class TfsNtlmCredentials : ITfsCredentials
+    public class TfsNtlmCredentials : ITfsCredentials
     {
     }
 }
