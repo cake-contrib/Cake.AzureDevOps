@@ -137,6 +137,26 @@
         public string RepositoryName => this.repositoryDescription.RepositoryName;
 
         /// <summary>
+        /// Gets the ID of the repository.
+        /// Returns <see cref="Guid.Empty"/> if no pull request could be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="TfsException">If pull request could not be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public Guid RepositoryId
+        {
+            get
+            {
+                if (!this.ValidatePullRequest())
+                {
+                    return Guid.Empty;
+                }
+
+                return this.pullRequest.Repository.Id;
+            }
+        }
+
+        /// <summary>
         /// Gets the ID of the pull request.
         /// Returns 0 if no pull request could be found and
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
