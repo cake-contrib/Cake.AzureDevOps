@@ -111,6 +111,23 @@
         public bool HasPullRequestLoaded => this.pullRequest != null;
 
         /// <summary>
+        /// Gets the hash of the latest commit on the source branch.
+        /// Returns <see cref="string.Empty"/> if no pull request could be found.
+        /// </summary>
+        public string LastSourceCommitId
+        {
+            get
+            {
+                if (!this.ValidatePullRequest())
+                {
+                    return string.Empty;
+                }
+
+                return this.pullRequest.LastMergeSourceCommit.CommitId;
+            }
+        }
+
+        /// <summary>
         /// Votes for the pullrequest.
         /// </summary>
         /// <param name="vote">The vote for the pull request.</param>
