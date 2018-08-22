@@ -34,7 +34,7 @@
         /// <returns>Description of the pull request.
         /// Returns null if pull request could not be found and
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.</returns>
-        /// <exception cref="TfsException">If pull request could not be found and
+        /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
@@ -78,6 +78,8 @@
         /// ]]>
         /// </code>
         /// </example>
+        /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
         public static void TfsPullRequestVote(
@@ -88,8 +90,7 @@
             context.NotNull(nameof(context));
             settings.NotNull(nameof(settings));
 
-            var pullRequest = new TfsPullRequest(context.Log, settings);
-            pullRequest.Vote(vote);
+            new TfsPullRequest(context.Log, settings).Vote(vote);
         }
     }
 }

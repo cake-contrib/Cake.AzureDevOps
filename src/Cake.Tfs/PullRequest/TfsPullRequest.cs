@@ -25,7 +25,7 @@
         /// </summary>
         /// <param name="log">The Cake log context.</param>
         /// <param name="settings">Settings for accessing TFS.</param>
-        /// <exception cref="TfsException">If <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/>
+        /// <exception cref="TfsPullRequestNotFoundException">If <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/>
         /// is set to <c>true</c> and no pull request could be found.</exception>
         public TfsPullRequest(ICakeLog log, TfsPullRequestSettings settings)
         {
@@ -90,7 +90,7 @@
             {
                 if (this.settings.ThrowExceptionIfPullRequestCouldNotBeFound)
                 {
-                    throw new TfsException("Could not find pull request");
+                    throw new TfsPullRequestNotFoundException("Pull request not found");
                 }
 
                 this.log.Warning("Could not find pull request");
@@ -141,7 +141,7 @@
         /// Returns <see cref="Guid.Empty"/> if no pull request could be found and
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
         /// </summary>
-        /// <exception cref="TfsException">If pull request could not be found and
+        /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public Guid RepositoryId
         {
@@ -161,7 +161,7 @@
         /// Returns 0 if no pull request could be found and
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
         /// </summary>
-        /// <exception cref="TfsException">If pull request could not be found and
+        /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public int PullRequestId
         {
@@ -181,7 +181,7 @@
         /// Returns 0 if no pull request could be found and
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
         /// </summary>
-        /// <exception cref="TfsException">If pull request could not be found and
+        /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public int CodeReviewId
         {
@@ -201,7 +201,7 @@
         /// Returns <see cref="string.Empty"/> if no pull request could be found and
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
         /// </summary>
-        /// <exception cref="TfsException">If pull request could not be found and
+        /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public string LastSourceCommitId
         {
@@ -220,6 +220,8 @@
         /// Votes for the pullrequest.
         /// </summary>
         /// <param name="vote">The vote for the pull request.</param>
+        /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public void Vote(TfsPullRequestVote vote)
         {
             if (!this.ValidatePullRequest())
@@ -249,9 +251,9 @@
         /// the pull request instance can be null for subsequent calls.
         /// </summary>
         /// <returns>True if a valid pull request instance exists.</returns>
-        /// <exception cref="TfsException">If <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/>
+        /// <exception cref="TfsPullRequestNotFoundException">If <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/>
         /// is set to <c>true</c> and no pull request could be found.</exception>
-        public bool ValidatePullRequest()
+        private bool ValidatePullRequest()
         {
             if (this.HasPullRequestLoaded)
             {
@@ -260,7 +262,7 @@
 
             if (this.settings.ThrowExceptionIfPullRequestCouldNotBeFound)
             {
-                throw new TfsException("Could not find pull request");
+                throw new TfsPullRequestNotFoundException("Pull request not found");
             }
 
             this.log.Verbose("Skipping, since no pull request instance could be found.");
