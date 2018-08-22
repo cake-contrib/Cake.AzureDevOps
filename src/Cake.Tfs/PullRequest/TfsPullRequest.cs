@@ -177,6 +177,26 @@
         }
 
         /// <summary>
+        /// Gets the ID of the code review.
+        /// Returns 0 if no pull request could be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="TfsException">If pull request could not be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public int CodeReviewId
+        {
+            get
+            {
+                if (!this.ValidatePullRequest())
+                {
+                    return 0;
+                }
+
+                return this.pullRequest.CodeReviewId;
+            }
+        }
+
+        /// <summary>
         /// Gets the hash of the latest commit on the source branch.
         /// Returns <see cref="string.Empty"/> if no pull request could be found and
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
