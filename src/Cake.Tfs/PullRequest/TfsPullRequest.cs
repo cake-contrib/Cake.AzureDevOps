@@ -111,6 +111,32 @@
         public bool HasPullRequestLoaded => this.pullRequest != null;
 
         /// <summary>
+        /// Gets the Url of the Team Foundation Server or Visual Studio Team Services.
+        /// </summary>
+        public Uri ServerUrl => this.repositoryDescription.ServerUrl;
+
+        /// <summary>
+        /// Gets the name of the Team Foundation Server or Visual Studio Team Services collection.
+        /// </summary>
+        public string CollectionName => this.repositoryDescription.CollectionName;
+
+        /// <summary>
+        /// Gets the URL for accessing the web portal of the Team Foundation Server or
+        /// Visual Studio Team Services collection.
+        /// </summary>
+        public Uri CollectionUrl => this.repositoryDescription.CollectionUrl;
+
+        /// <summary>
+        /// Gets the name of the Team Foundation Server or Visual Studio Team Services project.
+        /// </summary>
+        public string ProjectName => this.repositoryDescription.ProjectName;
+
+        /// <summary>
+        /// Gets the name of the Git repository.
+        /// </summary>
+        public string RepositoryName => this.repositoryDescription.RepositoryName;
+
+        /// <summary>
         /// Gets the ID of the pull request.
         /// Returns 0 if no pull request could be found and
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
