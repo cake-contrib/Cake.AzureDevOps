@@ -1,22 +1,20 @@
-﻿<!DOCTYPE html>
-<html>
-    <head>
+﻿<!DOCTYPE html><html><head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-        <meta name="description" />
-        <meta name="keywords" content="static content generator,static site generator,static site,HTML,web development,.NET,C#,Razor,Markdown,YAML" />
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="description">
+        <meta name="keywords" content="static content generator,static site generator,static site,HTML,web development,.NET,C#,Razor,Markdown,YAML">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Cake.Tfs/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Cake.Tfs/assets/img/favicon.ico" type="image/x-icon">
-        <title>Cake.Tfs - Cake.Tfs</title>
+        <title>Cake.Tfs - Examples</title>
         <link href="/Cake.Tfs/assets/css/mermaid.css" rel="stylesheet">
         <link href="/Cake.Tfs/assets/css/highlight.css" rel="stylesheet">
-        <link href="/Cake.Tfs/assets/css/bootstrap/bootstrap.css" rel="stylesheet" />
-        <link href="/Cake.Tfs/assets/css/adminlte/AdminLTE.css" rel="stylesheet" />
-        <link href="/Cake.Tfs/assets/css/theme/theme.css" rel="stylesheet" />
+        <link href="/Cake.Tfs/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
+        <link href="/Cake.Tfs/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
+        <link href="/Cake.Tfs/assets/css/theme/theme.css" rel="stylesheet">
         <link href="//fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,400i,700,700i" rel="stylesheet">
         <link href="/Cake.Tfs/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <link href="/Cake.Tfs/assets/css/override.css" rel="stylesheet" />
+        <link href="/Cake.Tfs/assets/css/override.css" rel="stylesheet">
         <script src="/Cake.Tfs/assets/js/jquery-2.2.3.min.js"></script>
         <script src="/Cake.Tfs/assets/js/bootstrap.min.js"></script>        
         <script src="/Cake.Tfs/assets/js/app.min.js"></script>         
@@ -31,7 +29,7 @@
 
         
     </head>
-    <body class="hold-transition wyam layout-boxed layout-top-nav no-gutter">    
+    <body class="hold-transition wyam layout-boxed  ">    
         <div class="top-banner"></div>
         <div class="wrapper with-container">
             <!-- Header -->
@@ -43,6 +41,10 @@
                          
                 <nav class="navbar navbar-static-top" role="navigation">
                     <!-- Sidebar toggle button-->
+                        <a href="#" class="sidebar-toggle visible-xs-block" data-toggle="offcanvas" role="button">
+                            <span class="sr-only">Toggle side menu</span>
+                            <i class="fa fa-chevron-circle-right"></i>
+                        </a>
                                         
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
@@ -54,7 +56,7 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                         <ul class="nav navbar-nav">                            
-                                    <li><a href="/Cake.Tfs/docs">Documentation</a></li>
+                                    <li class="active"><a href="/Cake.Tfs/docs">Documentation</a></li>
         <li><a href="/Cake.Tfs/api">API</a></li>
  
                         </ul>       
@@ -66,11 +68,13 @@
             </header>
             
             <!-- Left side column. contains the logo and sidebar -->
-            <aside class="main-sidebar hidden">
+            <aside class="main-sidebar ">
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
-        <div><p><a href="https://github.com/cake-contrib/Cake.Tfs/tree/develop/docs/input/index.cshtml"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit Content</a></p></div>
-    <div id="infobar-headings"></div>
+        <div><p><a href="https://github.com/cake-contrib/Cake.Tfs/tree/develop/docs/input/docs/usage/examples.md"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit Content</a></p></div>
+    <div id="infobar-headings"><h6>On This Page</h6><p><a href="#build-script">Build Script</a></p>
+<hr class="infobar-hidden">
+</div>
 
                 </section>
                 <section class="sidebar">    
@@ -79,6 +83,13 @@
 
                     <ul class="sidebar-menu">
                         
+                <li class="treeview active">
+                    <a href="/Cake.Tfs/docs/usage">Usage</a> <a href="#" class="expand"></a>
+                    <ul class="treeview-menu">
+                                        <li class="selected"><a href="/Cake.Tfs/docs/usage/examples">Examples</a></li>
+
+                    </ul>
+                </li>
 
                     </ul>
                             
@@ -92,16 +103,19 @@
 
 
 	<section class="content-header">
-		<h1>Cake.Tfs</h1>
+		<h1>Examples</h1>
 	</section>
 	<section class="content">
-		
-<div class="container">				
-	<h1>What is it?</h1>
-    <p>
-        The Tfs Addin for <a href="http://cakebuild.net/" target="_blank">Cake</a> allows you to access Team Foundation Server or Visual Studio Team Services from Cake build scripts.
-    </p>
-</div>
+		<h1 id="build-script">Build Script</h1>
+<p>To use the Cake Tfs addin in your Cake file simply import it. Then define a task.</p>
+<pre><code class="language-csharp">#addin "Cake.Tfs"
+
+Task("run-generator").Does(() =&gt;
+{
+    RunYeomanGenerator("my-generator");
+}
+</code></pre>
+
 	</section>
                 
             </div>           
@@ -114,8 +128,8 @@
         <div class="wrapper bottom-wrapper">
             <footer class="bottom-footer">
                 <p class="text-muted">
-    Copyright &copy; Pascal Berger and <a href="https://github.com/cake-contrib/Cake.Tfs/graphs/contributors" target="_blank">contributors</a>.
-    <br/>
+    Copyright © Pascal Berger and <a href="https://github.com/cake-contrib/Cake.Tfs/graphs/contributors" target="_blank">contributors</a>.
+    <br>
     Website generated by <a href="http://wyam.io" target="_blank">Wyam</a>
 </p>
 
@@ -130,7 +144,7 @@
         room: 'cake-contrib/Lobby'
     };
 </script>
-<script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
+<script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async="" defer=""></script>
 
 <script type="text/javascript" src="/Cake.Tfs/assets/js/anchor.min.js"></script>
 <script type="text/javascript" src="/Cake.Tfs/assets/js/clipboard.min.js"></script>
@@ -217,5 +231,5 @@
                 }, 500);
             });
         </script>
-    </body>
-</html>
+    
+</body></html>
