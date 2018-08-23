@@ -1,7 +1,3 @@
-# Project specific 
-
-BuildArtifacts/
-
 # Created by https://www.gitignore.io/api/cake,visualstudio
 
 ### Cake ###
@@ -305,3 +301,8 @@ __pycache__/
 # should be stored in the .pubxml.user file.
 
 # End of https://www.gitignore.io/api/cake,visualstudio
+
+# Project specific 
+
+BuildArtifacts/
+config.wyam.*

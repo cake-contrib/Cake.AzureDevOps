@@ -9,7 +9,8 @@ BuildParameters.SetParameters(
     title: "Cake.Tfs",
     repositoryOwner: "cake-contrib",
     repositoryName: "Cake.Tfs",
-    appVeyorAccountName: "cakecontrib");
+    appVeyorAccountName: "cakecontrib",
+    shouldDeployGraphDocumentation: false);
 
 BuildParameters.PrintParameters(Context);
 
