@@ -3,7 +3,7 @@
     /// <summary>
     /// Credentials for OAuth authentication.
     /// </summary>
-    internal class TfsOAuthCredentials : ITfsCredentials
+    public class TfsOAuthCredentials : ITfsCredentials
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TfsOAuthCredentials"/> class.

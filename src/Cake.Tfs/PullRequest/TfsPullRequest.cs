@@ -25,7 +25,7 @@
         /// </summary>
         /// <param name="log">The Cake log context.</param>
         /// <param name="settings">Settings for accessing TFS.</param>
-        /// <exception cref="TfsException">If <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/>
+        /// <exception cref="TfsPullRequestNotFoundException">If <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/>
         /// is set to <c>true</c> and no pull request could be found.</exception>
         public TfsPullRequest(ICakeLog log, TfsPullRequestSettings settings)
         {
@@ -90,7 +90,7 @@
             {
                 if (this.settings.ThrowExceptionIfPullRequestCouldNotBeFound)
                 {
-                    throw new TfsException("Could not find pull request");
+                    throw new TfsPullRequestNotFoundException("Pull request not found");
                 }
 
                 this.log.Warning("Could not find pull request");
@@ -111,9 +111,118 @@
         public bool HasPullRequestLoaded => this.pullRequest != null;
 
         /// <summary>
-        /// Gets the hash of the latest commit on the source branch.
-        /// Returns <see cref="string.Empty"/> if no pull request could be found.
+        /// Gets the Url of the Team Foundation Server or Visual Studio Team Services.
         /// </summary>
+        public Uri ServerUrl => this.repositoryDescription.ServerUrl;
+
+        /// <summary>
+        /// Gets the name of the Team Foundation Server or Visual Studio Team Services collection.
+        /// </summary>
+        public string CollectionName => this.repositoryDescription.CollectionName;
+
+        /// <summary>
+        /// Gets the URL for accessing the web portal of the Team Foundation Server or
+        /// Visual Studio Team Services collection.
+        /// </summary>
+        public Uri CollectionUrl => this.repositoryDescription.CollectionUrl;
+
+        /// <summary>
+        /// Gets the name of the Team Foundation Server or Visual Studio Team Services project.
+        /// </summary>
+        public string ProjectName => this.repositoryDescription.ProjectName;
+
+        /// <summary>
+        /// Gets the name of the Git repository.
+        /// </summary>
+        public string RepositoryName => this.repositoryDescription.RepositoryName;
+
+        /// <summary>
+        /// Gets the ID of the repository.
+        /// Returns <see cref="Guid.Empty"/> if no pull request could be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public Guid RepositoryId
+        {
+            get
+            {
+                if (!this.ValidatePullRequest())
+                {
+                    return Guid.Empty;
+                }
+
+                return this.pullRequest.Repository.Id;
+            }
+        }
+
+        /// <summary>
+        /// Gets the ID of the pull request.
+        /// Returns 0 if no pull request could be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public int PullRequestId
+        {
+            get
+            {
+                if (!this.ValidatePullRequest())
+                {
+                    return 0;
+                }
+
+                return this.pullRequest.PullRequestId;
+            }
+        }
+
+        /// <summary>
+        /// Gets the ID of the code review.
+        /// Returns 0 if no pull request could be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public int CodeReviewId
+        {
+            get
+            {
+                if (!this.ValidatePullRequest())
+                {
+                    return 0;
+                }
+
+                return this.pullRequest.CodeReviewId;
+            }
+        }
+
+        /// <summary>
+        /// Gets the name of the target branch.
+        /// Returns <see cref="string.Empty"/> if no pull request could be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public string TargetRefName
+        {
+            get
+            {
+                if (!this.ValidatePullRequest())
+                {
+                    return string.Empty;
+                }
+
+                return this.pullRequest.TargetRefName;
+            }
+        }
+
+        /// <summary>
+        /// Gets the hash of the latest commit on the source branch.
+        /// Returns <see cref="string.Empty"/> if no pull request could be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public string LastSourceCommitId
         {
             get
@@ -131,6 +240,8 @@
         /// Votes for the pullrequest.
         /// </summary>
         /// <param name="vote">The vote for the pull request.</param>
+        /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public void Vote(TfsPullRequestVote vote)
         {
             if (!this.ValidatePullRequest())
@@ -160,9 +271,9 @@
         /// the pull request instance can be null for subsequent calls.
         /// </summary>
         /// <returns>True if a valid pull request instance exists.</returns>
-        /// <exception cref="TfsException">If <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/>
+        /// <exception cref="TfsPullRequestNotFoundException">If <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/>
         /// is set to <c>true</c> and no pull request could be found.</exception>
-        public bool ValidatePullRequest()
+        private bool ValidatePullRequest()
         {
             if (this.HasPullRequestLoaded)
             {
@@ -171,7 +282,7 @@
 
             if (this.settings.ThrowExceptionIfPullRequestCouldNotBeFound)
             {
-                throw new TfsException("Could not find pull request");
+                throw new TfsPullRequestNotFoundException("Pull request not found");
             }
 
             this.log.Verbose("Skipping, since no pull request instance could be found.");

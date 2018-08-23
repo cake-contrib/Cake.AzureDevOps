@@ -3,7 +3,7 @@
     /// <summary>
     /// Credentials for basic authentication.
     /// </summary>
-    internal class TfsBasicCredentials : ITfsCredentials
+    public class TfsBasicCredentials : ITfsCredentials
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TfsBasicCredentials"/> class.

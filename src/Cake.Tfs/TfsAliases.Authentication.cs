@@ -8,7 +8,7 @@
     /// Contains functionality related to authenticating to Team Foundation Server or Visual Studio Team Services.
     /// </content>
     [CakeNamespaceImport("Cake.Tfs.Authentication")]
-    public static partial class TfaAliases
+    public static partial class TfsAliases
     {
         /// <summary>
         /// Returns credentials for integrated / NTLM authentication.
