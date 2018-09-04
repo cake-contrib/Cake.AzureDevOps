@@ -51,6 +51,22 @@
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="TfsPullRequestSettings"/> class
+        /// based on the instance of a <see cref="TfsPullRequestSettings"/> class.
+        /// </summary>
+        /// <param name="settings">Settings containing the parameters.</param>
+        public TfsPullRequestSettings(TfsPullRequestSettings settings)
+        {
+            settings.NotNull(nameof(settings));
+
+            this.RepositoryUrl = settings.RepositoryUrl;
+            this.SourceBranch = settings.SourceBranch;
+            this.PullRequestId = settings.PullRequestId;
+            this.Credentials = settings.Credentials;
+            this.ThrowExceptionIfPullRequestCouldNotBeFound = settings.ThrowExceptionIfPullRequestCouldNotBeFound;
+        }
+
+        /// <summary>
         /// Gets the full URL of the Git repository, eg. <code>http://myserver:8080/tfs/defaultcollection/myproject/_git/myrepository</code>.
         /// </summary>
         public Uri RepositoryUrl { get; private set; }

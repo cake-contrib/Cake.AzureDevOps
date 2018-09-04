@@ -131,7 +131,7 @@
             }
         }
 
-        public sealed class TheCtorForPulLRequestId
+        public sealed class TheCtorForPullRequestId
         {
             [Fact]
             public void Should_Throw_If_RepositoryUrl_Is_Null()
@@ -238,6 +238,106 @@
 
                 // Then
                 result.Credentials.ShouldBe(credentials);
+            }
+        }
+
+        public sealed class TheCtorForSettings
+        {
+            [Fact]
+            public void Should_Throw_If_Settings_Are_Null()
+            {
+                // Given
+                TfsPullRequestSettings settings = null;
+
+                // When
+                var result = Record.Exception(() => new TfsPullRequestSettings(settings));
+
+                // Then
+                result.IsArgumentNullException("settings");
+            }
+
+            [Fact]
+            public void Should_Set_Repository_Url()
+            {
+                // Given
+                var repositoryUrl = new Uri("http://example.com");
+                var pullRequestId = 41;
+                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var settings = new TfsPullRequestSettings(repositoryUrl, pullRequestId, credentials);
+
+                // When
+                var result = new TfsPullRequestSettings(settings);
+
+                // Then
+                result.RepositoryUrl.ShouldBe(repositoryUrl);
+            }
+
+            [Theory]
+            [InlineData(1)]
+            [InlineData(int.MaxValue)]
+            public void Should_Set_PullRequestId(int pullRequestId)
+            {
+                // Given
+                var repositoryUrl = new Uri("http://example.com");
+                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var settings = new TfsPullRequestSettings(repositoryUrl, pullRequestId, credentials);
+
+                // When
+                var result = new TfsPullRequestSettings(settings);
+
+                // Then
+                result.PullRequestId.ShouldBe(pullRequestId);
+            }
+
+            [Fact]
+            public void Should_Set_SourceBranch()
+            {
+                // Given
+                var repositoryUrl = new Uri("http://example.com");
+                var sourceBranch = "foo";
+                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var settings = new TfsPullRequestSettings(repositoryUrl, sourceBranch, credentials);
+
+                // When
+                var result = new TfsPullRequestSettings(settings);
+
+                // Then
+                result.SourceBranch.ShouldBe(sourceBranch);
+            }
+
+            [Fact]
+            public void Should_Set_Credentials()
+            {
+                // Given
+                var repositoryUrl = new Uri("http://example.com");
+                var pullRequestId = 41;
+                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var settings = new TfsPullRequestSettings(repositoryUrl, pullRequestId, credentials);
+
+                // When
+                var result = new TfsPullRequestSettings(settings);
+
+                // Then
+                result.Credentials.ShouldBe(credentials);
+            }
+
+            [Theory]
+            [InlineData(true)]
+            [InlineData(false)]
+            public void Should_Set_ThrowExceptionIfPullRequestCouldNotBeFound(bool value)
+            {
+                // Given
+                var repositoryUrl = new Uri("http://example.com");
+                var pullRequestId = 41;
+                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var settings = new TfsPullRequestSettings(repositoryUrl, pullRequestId, credentials);
+                settings.ThrowExceptionIfPullRequestCouldNotBeFound = value;
+
+                // When
+                var result = new TfsPullRequestSettings(settings);
+
+                // Then
+                result.ThrowExceptionIfPullRequestCouldNotBeFound.ShouldBe(value);
             }
         }
     }
