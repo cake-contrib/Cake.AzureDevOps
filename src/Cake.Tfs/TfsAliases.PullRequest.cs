@@ -74,7 +74,7 @@
         ///
         ///     TfsVotePullRequest(
         ///         pullRequestSettings,
-        ///         TfsPullRequestVote.Approved);
+        ///         TfsVotePullRequest.Approved);
         /// ]]>
         /// </code>
         /// </example>
@@ -82,7 +82,7 @@
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
-        public static void TfsPullRequestVote(
+        public static void TfsVotePullRequest(
             this ICakeContext context,
             TfsPullRequestSettings settings,
             TfsPullRequestVote vote)
