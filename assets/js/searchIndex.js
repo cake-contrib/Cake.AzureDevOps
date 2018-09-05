@@ -34,62 +34,14 @@ var searchModule = function() {
 
     a({
         id:0,
-        title:"TfsException",
-        content:"TfsException",
+        title:"TfsAadCredentials",
+        content:"TfsAadCredentials",
         description:'',
         tags:''
     });
 
     a({
         id:1,
-        title:"ITfsCredentials",
-        content:"ITfsCredentials",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:2,
-        title:"TfsBasicCredentials",
-        content:"TfsBasicCredentials",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:3,
-        title:"TfsPullRequest",
-        content:"TfsPullRequest",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:4,
-        title:"TfsPullRequestVote",
-        content:"TfsPullRequestVote",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:5,
-        title:"TfsOAuthCredentials",
-        content:"TfsOAuthCredentials",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:6,
-        title:"TfsPullRequestNotFoundException",
-        content:"TfsPullRequestNotFoundException",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:7,
         title:"TfsNtlmCredentials",
         content:"TfsNtlmCredentials",
         description:'',
@@ -97,9 +49,57 @@ var searchModule = function() {
     });
 
     a({
+        id:2,
+        title:"TfsPullRequestSettings",
+        content:"TfsPullRequestSettings",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:3,
+        title:"TfsException",
+        content:"TfsException",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:4,
+        title:"TfsBasicCredentials",
+        content:"TfsBasicCredentials",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:5,
+        title:"TfsPullRequest",
+        content:"TfsPullRequest",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:6,
+        title:"TfsOAuthCredentials",
+        content:"TfsOAuthCredentials",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:7,
+        title:"TfsPullRequestNotFoundException",
+        content:"TfsPullRequestNotFoundException",
+        description:'',
+        tags:''
+    });
+
+    a({
         id:8,
-        title:"TfsAadCredentials",
-        content:"TfsAadCredentials",
+        title:"TfsPullRequestVote",
+        content:"TfsPullRequestVote",
         description:'',
         tags:''
     });
@@ -114,21 +114,33 @@ var searchModule = function() {
 
     a({
         id:10,
-        title:"TfsPullRequestSettings",
-        content:"TfsPullRequestSettings",
+        title:"ITfsCredentials",
+        content:"ITfsCredentials",
         description:'',
         tags:''
     });
 
     y({
-        url:'/Cake.Tfs/api/Cake.Tfs/TfsException',
-        title:"TfsException",
+        url:'/Cake.Tfs/api/Cake.Tfs.Authentication/TfsAadCredentials',
+        title:"TfsAadCredentials",
         description:""
     });
 
     y({
-        url:'/Cake.Tfs/api/Cake.Tfs.Authentication/ITfsCredentials',
-        title:"ITfsCredentials",
+        url:'/Cake.Tfs/api/Cake.Tfs.Authentication/TfsNtlmCredentials',
+        title:"TfsNtlmCredentials",
+        description:""
+    });
+
+    y({
+        url:'/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestSettings',
+        title:"TfsPullRequestSettings",
+        description:""
+    });
+
+    y({
+        url:'/Cake.Tfs/api/Cake.Tfs/TfsException',
+        title:"TfsException",
         description:""
     });
 
@@ -145,12 +157,6 @@ var searchModule = function() {
     });
 
     y({
-        url:'/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestVote',
-        title:"TfsPullRequestVote",
-        description:""
-    });
-
-    y({
         url:'/Cake.Tfs/api/Cake.Tfs.Authentication/TfsOAuthCredentials',
         title:"TfsOAuthCredentials",
         description:""
@@ -163,14 +169,8 @@ var searchModule = function() {
     });
 
     y({
-        url:'/Cake.Tfs/api/Cake.Tfs.Authentication/TfsNtlmCredentials',
-        title:"TfsNtlmCredentials",
-        description:""
-    });
-
-    y({
-        url:'/Cake.Tfs/api/Cake.Tfs.Authentication/TfsAadCredentials',
-        title:"TfsAadCredentials",
+        url:'/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestVote',
+        title:"TfsPullRequestVote",
         description:""
     });
 
@@ -181,8 +181,8 @@ var searchModule = function() {
     });
 
     y({
-        url:'/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestSettings',
-        title:"TfsPullRequestSettings",
+        url:'/Cake.Tfs/api/Cake.Tfs.Authentication/ITfsCredentials',
+        title:"ITfsCredentials",
         description:""
     });
 

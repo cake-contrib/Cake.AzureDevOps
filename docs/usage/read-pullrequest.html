@@ -108,7 +108,7 @@
 	</section>
 	<section class="content">
 		<p>The <a href="https://www.nuget.org/packages/Cake.Tfs">Cake.Tfs addin</a> provides an alias for reading pull request information.</p>
-<p>The following example will approve a pull request on a Team Foundation Server:</p>
+<p>The following example will read details of a pull request:</p>
 <pre><code class="language-csharp">#addin &quot;Cake.Tfs&quot;
 
 Task(&quot;Read-PullRequest&quot;).Does(() =&gt;
@@ -121,8 +121,7 @@ Task(&quot;Read-PullRequest&quot;).Does(() =&gt;
 
     var pullRequest =
         TfsPullRequest(
-            pullRequestSettings,
-            TfsPullRequestVote.Approved);
+            pullRequestSettings);
 
     Information(pullRequest.TargetRefName);
 });
