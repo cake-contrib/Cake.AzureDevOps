@@ -217,7 +217,7 @@
         }
 
         /// <summary>
-        /// Gets the hash of the latest commit on the source branch.
+        /// Gets the commit at the head of the source branch at the time of the last pull request merge.
         /// Returns <see cref="string.Empty"/> if no pull request could be found and
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
         /// </summary>
@@ -233,6 +233,26 @@
                 }
 
                 return this.pullRequest.LastMergeSourceCommit.CommitId;
+            }
+        }
+
+        /// <summary>
+        /// Gets the commit at the head of the target branch at the time of the last pull request merge.
+        /// Returns <see cref="string.Empty"/> if no pull request could be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public string LastTargetCommitId
+        {
+            get
+            {
+                if (!this.ValidatePullRequest())
+                {
+                    return string.Empty;
+                }
+
+                return this.pullRequest.LastMergeTargetCommit.CommitId;
             }
         }
 
