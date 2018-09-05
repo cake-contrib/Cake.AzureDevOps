@@ -5,7 +5,7 @@ Description: Example how to read pull request information using the Cake.Tfs add
 ---
 The [Cake.Tfs addin] provides an alias for reading pull request information.
 
-The following example will approve a pull request on a Team Foundation Server:
+The following example will read details of a pull request:
 
 ```csharp
 #addin "Cake.Tfs"
@@ -20,8 +20,7 @@ Task("Read-PullRequest").Does(() =>
 
     var pullRequest =
         TfsPullRequest(
-            pullRequestSettings,
-            TfsPullRequestVote.Approved);
+            pullRequestSettings);
 
     Information(pullRequest.TargetRefName);
 });

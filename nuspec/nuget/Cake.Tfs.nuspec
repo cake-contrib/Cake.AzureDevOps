@@ -17,7 +17,7 @@ This addin for Cake allows you to work with Team Foundation Server or Visual Stu
     <repository type="git" url="https://github.com/cake-contrib/Cake.Tfs"/>
     <copyright>Copyright © Pascal Berger</copyright>
     <tags>Cake Script Team-Foundation-Server TFS Visual-Studio-Team-Services VSTS</tags>
-    <releaseNotes>https://github.com/cake-contrib/Cake.Tfs/releases/tag/0.1.0</releaseNotes>
+    <releaseNotes>https://github.com/cake-contrib/Cake.Tfs/releases/tag/0.2.0</releaseNotes>
   </metadata>
   <files>
     <file src="net461\Cake.Tfs.dll" target="lib\net461" />
