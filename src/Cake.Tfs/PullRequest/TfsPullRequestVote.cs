@@ -1,7 +1,7 @@
 namespace Cake.Tfs.PullRequest
 {
     /// <summary>
-    /// Defines the vote for a Team Foundation Server or Visual Studio Team Services pull request.
+    /// Defines the vote for a Team Foundation Server or Azure DevOps pull request.
     /// </summary>
     public enum TfsPullRequestVote : short
     {

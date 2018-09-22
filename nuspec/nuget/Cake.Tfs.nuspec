@@ -6,9 +6,9 @@
     <version>0.0.0</version>
     <authors>Pascal Berger</authors>
     <owners>pascalberger, cake-contrib</owners>
-    <summary>Addin for working with Team Foundation Server or Visual Studio Team Services for the Cake build automation system</summary>
+    <summary>Addin for working with Team Foundation Server or Azure DevOps for the Cake build automation system</summary>
     <description>
-This addin for Cake allows you to work with Team Foundation Server or Visual Studio Team Services.
+      This addin for Cake allows you to work with Team Foundation Server or Azure DevOps.
     </description>
     <licenseUrl>https://github.com/cake-contrib/Cake.Tfs/blob/develop/LICENSE</licenseUrl>
     <projectUrl>http://cake-contrib.github.io/Cake.Tfs/</projectUrl>
@@ -16,7 +16,7 @@ This addin for Cake allows you to work with Team Foundation Server or Visual Stu
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <repository type="git" url="https://github.com/cake-contrib/Cake.Tfs"/>
     <copyright>Copyright © Pascal Berger</copyright>
-    <tags>Cake Script Team-Foundation-Server TFS Visual-Studio-Team-Services VSTS</tags>
+    <tags>Cake Script Team-Foundation-Server TFS Azure-DevOps</tags>
     <releaseNotes>https://github.com/cake-contrib/Cake.Tfs/releases/tag/0.2.1</releaseNotes>
   </metadata>
   <files>

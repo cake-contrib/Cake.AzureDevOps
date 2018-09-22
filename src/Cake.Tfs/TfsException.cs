@@ -4,7 +4,7 @@
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Represents errors that occur during connecting to TFS.
+    /// Represents errors that occur during connecting to Team Foundation Server or Azure DevOps.
     /// </summary>
     [Serializable]
     public class TfsException : Exception

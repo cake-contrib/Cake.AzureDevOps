@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net461</TargetFrameworks>
-    <Description>Addin for working with Team Foundation Server or Visual Studio Team Services for the Cake build automation system</Description>
+    <Description>Addin for working with Team Foundation Server or Azure DevOps for the Cake build automation system</Description>
     <Authors>Pascal Berger</Authors>
     <Copyright>Copyright © Pascal Berger</Copyright>
   </PropertyGroup>
