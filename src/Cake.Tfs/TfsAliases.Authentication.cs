@@ -5,7 +5,7 @@
     using Cake.Tfs.Authentication;
 
     /// <content>
-    /// Contains functionality related to authenticating to Team Foundation Server or Visual Studio Team Services.
+    /// Contains functionality related to authenticating to Team Foundation Server or Azure DevOps.
     /// </content>
     [CakeNamespaceImport("Cake.Tfs.Authentication")]
     public static partial class TfsAliases
@@ -51,7 +51,7 @@
 
         /// <summary>
         /// Returns credentials for authentication with a personal access token.
-        /// Can be used for Team Foundation Server and Visual Studio Team Services.
+        /// Can be used for Team Foundation Server and Azure DevOps.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="personalAccessToken">Personal access token.</param>
@@ -70,7 +70,7 @@
 
         /// <summary>
         /// Returns credentials for OAuth authentication.
-        /// Can only be used with Visual Studio Team Services.
+        /// Can only be used with Azure DevOps.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="accessToken">OAuth access token.</param>
@@ -89,6 +89,7 @@
 
         /// <summary>
         /// Returns credentials for authentication with an Azure Active Directory.
+        /// Can only be used with Azure DevOps.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="userName">User name.</param>

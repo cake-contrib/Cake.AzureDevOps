@@ -35,7 +35,7 @@
 
         /// <summary>
         /// Returns credentials for authentication with a personal access token.
-        /// Can be used for Team Foundation Server and Visual Studio Team Services.
+        /// Can be used for Team Foundation Server and Azure DevOps.
         /// </summary>
         /// <param name="personalAccessToken">Personal access token.</param>
         /// <returns>Credentials for authentication with a personal access token.</returns>
@@ -49,7 +49,7 @@
 
         /// <summary>
         /// Returns credentials for OAuth authentication.
-        /// Can only be used with Visual Studio Team Services.
+        /// Can only be used with Azure DevOps.
         /// </summary>
         /// <param name="accessToken">OAuth access token.</param>
         /// <returns>Credentials for OAuth authentication.</returns>
@@ -63,6 +63,7 @@
 
         /// <summary>
         /// Returns credentials for authentication with an Azure Active Directory.
+        /// Can only be used with Azure DevOps.
         /// </summary>
         /// <param name="userName">User name.</param>
         /// <param name="password">Password.</param>

@@ -5,13 +5,13 @@
     using Cake.Tfs.PullRequest;
 
     /// <content>
-    /// Contains functionality related to Team Foundation Server or Visual Studio Team Services pull requests.
+    /// Contains functionality related to Team Foundation Server or Azure DevOps pull requests.
     /// </content>
     [CakeNamespaceImport("Cake.Tfs.PullRequest")]
     public static partial class TfsAliases
     {
         /// <summary>
-        /// Gets a Team Foundation Server or Visual Studio Team Services pull request using the specified settings.
+        /// Gets a Team Foundation Server or Azure DevOps pull request using the specified settings.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="settings">Settings for getting the pull request.</param>
@@ -56,7 +56,7 @@
         }
 
         /// <summary>
-        /// Votes for the Team Foundation Server or Visual Studio Team Services pull request
+        /// Votes for the Team Foundation Server or Azure DevOps pull request
         /// using the specified settings.
         /// </summary>
         /// <param name="context">The context.</param>
