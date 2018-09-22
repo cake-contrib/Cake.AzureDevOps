@@ -286,6 +286,40 @@
         }
 
         /// <summary>
+        /// Sets a status on the pull request.
+        /// </summary>
+        /// <param name="status">The description of the status which should be set.</param>
+        /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public void SetStatus(TfsPullRequestStatus status)
+        {
+            status.NotNull(nameof(status));
+
+            if (!this.ValidatePullRequest())
+            {
+                return;
+            }
+
+            using (var gitClient = this.CreateGitClient())
+            {
+                    gitClient.CreatePullRequestStatusAsync(
+                        new GitPullRequestStatus
+                        {
+                            State = status.State.ToGitStatusState(),
+                            Description = status.Description,
+                            TargetUrl = status.TargetUrl?.ToString(),
+                            Context = new GitStatusContext()
+                            {
+                                Name = status.Name,
+                                Genre = status.Genre
+                            }
+                        },
+                        this.pullRequest.Repository.Id,
+                        this.pullRequest.PullRequestId);
+            }
+        }
+
+        /// <summary>
         /// Validates if a pull request could be found.
         /// Depending on <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/>
         /// the pull request instance can be null for subsequent calls.
