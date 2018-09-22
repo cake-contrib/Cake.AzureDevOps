@@ -164,7 +164,7 @@
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Class for writing issues to Team Foundation Server or Visual Studio Team Services pull requests.
+    Class for writing issues to Team Foundation Server or Azure DevOps pull requests.
     </div>
 
 		<div class="panel panel-default">
@@ -258,7 +258,7 @@ class Type type-node
 								<td>string</td>
 								<td>
 									<div>
-    Gets the name of the Team Foundation Server or Visual Studio Team Services collection.
+    Gets the name of the Team Foundation Server or Azure DevOps collection.
     </div>
 								</td>
 							</tr>
@@ -268,7 +268,7 @@ class Type type-node
 								<td>
 									<div>
     Gets the URL for accessing the web portal of the Team Foundation Server or
-    Visual Studio Team Services collection.
+    Azure DevOps collection.
     </div>
 								</td>
 							</tr>
@@ -286,7 +286,18 @@ class Type type-node
 								<td>string</td>
 								<td>
 									<div>
-    Gets the hash of the latest commit on the source branch.
+    Gets the commit at the head of the source branch at the time of the last pull request merge.
+    Returns <code class="cs">System.String.Empty</code> if no pull request could be found and
+    <code class="cs"><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestSettings/21F4914A">ThrowExceptionIfPullRequestCouldNotBeFound</a></code> is set to <code class="cs">false</code>.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest/AA2044DC">LastTargetCommitId</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    Gets the commit at the head of the target branch at the time of the last pull request merge.
     Returns <code class="cs">System.String.Empty</code> if no pull request could be found and
     <code class="cs"><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestSettings/21F4914A">ThrowExceptionIfPullRequestCouldNotBeFound</a></code> is set to <code class="cs">false</code>.
     </div>
@@ -297,7 +308,7 @@ class Type type-node
 								<td>string</td>
 								<td>
 									<div>
-    Gets the name of the Team Foundation Server or Visual Studio Team Services project.
+    Gets the name of the Team Foundation Server or Azure DevOps project.
     </div>
 								</td>
 							</tr>
@@ -337,7 +348,7 @@ class Type type-node
 								<td>Uri</td>
 								<td>
 									<div>
-    Gets the Url of the Team Foundation Server or Visual Studio Team Services.
+    Gets the Url of the Team Foundation Server or Azure DevOps.
     </div>
 								</td>
 							</tr>

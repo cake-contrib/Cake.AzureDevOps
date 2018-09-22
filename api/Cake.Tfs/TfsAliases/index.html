@@ -160,7 +160,7 @@
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Contains functionality related to Team Foundation Server or Visual Studio Team Services.
+    Contains functionality related to Team Foundation Server or Azure DevOps.
     </div>
 
 		<div class="panel panel-default">
@@ -198,8 +198,8 @@ class Type type-node
 
 	<h1 id="Syntax">Syntax</h1>
 	<pre><code>[CakeAliasCategory("TFS")]
-[CakeNamespaceImport("Cake.Tfs.Authentication")]
 [CakeNamespaceImport("Cake.Tfs.PullRequest")]
+[CakeNamespaceImport("Cake.Tfs.Authentication")]
 public static class TfsAliases</code></pre>
 
 
@@ -253,6 +253,7 @@ public static class TfsAliases</code></pre>
 								<td>
 									<div>
     Returns credentials for authentication with an Azure Active Directory.
+    Can only be used with Azure DevOps.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -286,7 +287,7 @@ public static class TfsAliases</code></pre>
 								<td>
 									<div>
     Returns credentials for OAuth authentication.
-    Can only be used with Visual Studio Team Services.
+    Can only be used with Azure DevOps.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -297,7 +298,7 @@ public static class TfsAliases</code></pre>
 								<td>
 									<div>
     Returns credentials for authentication with a personal access token.
-    Can be used for Team Foundation Server and Visual Studio Team Services.
+    Can be used for Team Foundation Server and Azure DevOps.
     </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -307,7 +308,7 @@ public static class TfsAliases</code></pre>
 								<td><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest">TfsPullRequest</a></td>
 								<td>
 									<div>
-     Gets a Team Foundation Server or Visual Studio Team Services pull request using the specified settings.
+     Gets a Team Foundation Server or Azure DevOps pull request using the specified settings.
      </div>
 											<div><small><em>static</em></small></div>
 								</td>
@@ -317,7 +318,7 @@ public static class TfsAliases</code></pre>
 								<td>void</td>
 								<td>
 									<div>
-     Votes for the Team Foundation Server or Visual Studio Team Services pull request
+     Votes for the Team Foundation Server or Azure DevOps pull request
      using the specified settings.
      </div>
 											<div><small><em>static</em></small></div>

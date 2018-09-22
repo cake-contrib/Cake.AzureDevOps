@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Cake.Tfs/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Cake.Tfs/assets/img/favicon.ico" type="image/x-icon">
-        <title>Cake.Tfs - API - TfsPullRequest.LastSourceCommitId Property</title>
+        <title>Cake.Tfs - API - TfsPullRequest.LastTargetCommitId Property</title>
         <link href="/Cake.Tfs/assets/css/mermaid.css" rel="stylesheet">
         <link href="/Cake.Tfs/assets/css/highlight.css" rel="stylesheet">
         <link href="/Cake.Tfs/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
@@ -144,8 +144,8 @@
 				<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest/C7215B5C">CollectionName</a></li>
 				<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest/6D8EBAE1">CollectionUrl</a></li>
 				<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest/8F4A5EA2">HasPullRequestLoaded</a></li>
-				<li class="selected"><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest/A921F35E">LastSourceCommitId</a></li>
-				<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest/AA2044DC">LastTargetCommitId</a></li>
+				<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest/A921F35E">LastSourceCommitId</a></li>
+				<li class="selected"><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest/AA2044DC">LastTargetCommitId</a></li>
 				<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest/D3360158">ProjectName</a></li>
 				<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest/01D46E47">PullRequestId</a></li>
 				<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest/4CE12CF2">RepositoryId</a></li>
@@ -169,14 +169,14 @@
 
 <section class="content-header">
 			<h3><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest">TfsPullRequest</a>.</h3>
-	<h1>LastSourceCommitId <small>Property</small></h1>
+	<h1>LastTargetCommitId <small>Property</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Gets the commit at the head of the source branch at the time of the last pull request merge.
+    Gets the commit at the head of the target branch at the time of the last pull request merge.
     Returns <code class="cs">System.String.Empty</code> if no pull request could be found and
     <code class="cs"><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestSettings/21F4914A">ThrowExceptionIfPullRequestCouldNotBeFound</a></code> is set to <code class="cs">false</code>.
     </div>
@@ -196,7 +196,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public string LastSourceCommitId { get; }</code></pre>
+	<pre><code>public string LastTargetCommitId { get; }</code></pre>
 
 
 
