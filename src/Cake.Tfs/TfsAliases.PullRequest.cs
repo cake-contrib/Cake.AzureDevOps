@@ -92,5 +92,52 @@
 
             new TfsPullRequest(context.Log, settings).Vote(vote);
         }
+
+        /// <summary>
+        /// Sets a status on a Team Foundation Server or Azure DevOps pull request
+        /// using the specified settings.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">Settings for accessing the pull request.</param>
+        /// <param name="status">Description of the status which should be set.</param>
+        /// <example>
+        /// <para>Set a custom status on the pull request:</para>
+        /// <code>
+        /// <![CDATA[
+        ///     var pullRequestSettings =
+        ///         new TfsPullRequestSettings(
+        ///             new Uri("http://myserver:8080/tfs/defaultcollection/myproject/_git/myrepository"),
+        ///             "refs/heads/feature/myfeature",
+        ///             TfsAuthenticationNtlm());
+        ///
+        ///     var pullRequstStatus =
+        ///         new TfsPullRequestStatus("MyStatus")
+        ///         {
+        ///             Genre = "MyGenre",
+        ///             State = TfsPullRequestStatusState.Succeeded,
+        ///             Description = "My custom status is successful"
+        ///         }
+        ///
+        ///     TfsSetPullRequestStatus(
+        ///         pullRequestSettings,
+        ///         pullRequstStatus);
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Pull Request")]
+        public static void TfsSetPullRequestStatus(
+            this ICakeContext context,
+            TfsPullRequestSettings settings,
+            TfsPullRequestStatus status)
+        {
+            context.NotNull(nameof(context));
+            settings.NotNull(nameof(settings));
+            status.NotNull(nameof(status));
+
+            new TfsPullRequest(context.Log, settings).SetStatus(status);
+        }
     }
 }
