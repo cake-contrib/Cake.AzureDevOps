@@ -302,6 +302,7 @@
 
             using (var gitClient = this.CreateGitClient())
             {
+                var request =
                     gitClient.CreatePullRequestStatusAsync(
                         new GitPullRequestStatus
                         {
@@ -316,6 +317,9 @@
                         },
                         this.pullRequest.Repository.Id,
                         this.pullRequest.PullRequestId);
+
+                var postedStatus = request.Result;
+                this.log.Verbose("Posted status '{0}'.", postedStatus.Context.Name);
             }
         }
 
