@@ -56,6 +56,34 @@
         }
 
         /// <summary>
+        /// Gets a Team Foundation Server or Azure DevOps pull request using the settings obtained from predefined build variables.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <example>
+        /// <para>Get a pull request:</para>
+        /// <code>
+        /// <![CDATA[
+        ///     var pullRequest = TfsPullRequestUsingTfsBuildOAuthToken();
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <returns>Description of the pull request.
+        /// Returns null if pull request could not be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Pull Request")]
+        public static TfsPullRequest TfsPullRequestUsingTfsBuildOAuthToken(
+            this ICakeContext context)
+        {
+            context.NotNull(nameof(context));
+            var settings = TfsPullRequestSettings.UsingTfsBuildOAuthToken();
+
+            return TfsPullRequest(context, settings);
+        }
+
+        /// <summary>
         /// Votes for the Team Foundation Server or Azure DevOps pull request
         /// using the specified settings.
         /// </summary>

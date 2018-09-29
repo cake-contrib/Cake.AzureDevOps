@@ -340,5 +340,115 @@
                 result.ThrowExceptionIfPullRequestCouldNotBeFound.ShouldBe(value);
             }
         }
+
+        public sealed class TheCtorForEnvironmentVariables : IDisposable
+        {
+            [Fact]
+            public void Should_Throw_If_Credentials_Are_Null()
+            {
+                // Given
+                ITfsCredentials creds = null;
+
+                // When
+                var result = Record.Exception(() => new TfsPullRequestSettings(creds));
+
+                // Then
+                result.IsArgumentNullException("credentials");
+            }
+
+            [Fact]
+            public void Should_Throw_If_Repository_Url_Env_Var_Is_Not_Set()
+            {
+                // Given
+                var creds = new TfsNtlmCredentials();
+
+                // When
+                var result = Record.Exception(() => new TfsPullRequestSettings(creds));
+
+                // Then
+                result.IsArgumentNullException("repositoryUrl");
+            }
+
+            [Fact]
+            public void Should_Set_Repository_Url()
+            {
+                // Given
+                var creds = new TfsNtlmCredentials();
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com", EnvironmentVariableTarget.Process);
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42", EnvironmentVariableTarget.Process);
+
+                // When
+                var settings = new TfsPullRequestSettings(creds);
+
+                // Then
+                settings.RepositoryUrl.ShouldBe(new Uri("http://example.com"));
+            }
+
+            [Fact]
+            public void Should_Set_Pull_Request_Id()
+            {
+                // Given
+                var creds = new TfsNtlmCredentials();
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com", EnvironmentVariableTarget.Process);
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42", EnvironmentVariableTarget.Process);
+
+                // When
+                var settings = new TfsPullRequestSettings(creds);
+
+                // Then
+                settings.PullRequestId.ShouldBe(42);
+            }
+
+            [Fact]
+            public void Should_Throw_If_Pull_Request_Id_Env_Var_Is_Not_Set()
+            {
+                // Given
+                var creds = new TfsNtlmCredentials();
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com", EnvironmentVariableTarget.Process);
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", string.Empty, EnvironmentVariableTarget.Process);
+
+                // When
+                var result = Record.Exception(() => new TfsPullRequestSettings(creds));
+
+                // Then
+                result.IsArgumentNullException("pullRequestId");
+            }
+
+            [Fact]
+            public void Should_Throw_If_Pull_Request_Id_Env_Var_Is_Not_Integer()
+            {
+                // Given
+                var creds = new TfsNtlmCredentials();
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com", EnvironmentVariableTarget.Process);
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "hello", EnvironmentVariableTarget.Process);
+
+                // When
+                var result = Record.Exception(() => new TfsPullRequestSettings(creds));
+
+                // Then
+                result.IsArgumentException("pullRequestId");
+            }
+
+            [Fact]
+            public void Should_Throw_If_Pull_Request_Id_Is_Zero()
+            {
+                //Given
+                var creds = new TfsNtlmCredentials();
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com", EnvironmentVariableTarget.Process);
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "0", EnvironmentVariableTarget.Process);
+
+                //When
+                var result = Record.Exception(() => new TfsPullRequestSettings(creds));
+
+                //Then
+                result.IsArgumentOutOfRangeException("pullRequestId");
+            }
+
+            public void Dispose()
+            {
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", string.Empty, EnvironmentVariableTarget.Process);
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", string.Empty, EnvironmentVariableTarget.Process);
+            }
+        }
     }
 }

@@ -67,6 +67,44 @@
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="TfsPullRequestSettings"/> class using environment variables.
+        /// </summary>
+        /// <param name="credentials">Credentials to use to authenticate against Team Foundation Server or
+        /// Azure DevOps.</param>
+        public TfsPullRequestSettings(ITfsCredentials credentials)
+        {
+            credentials.NotNull(nameof(credentials));
+            this.Credentials = credentials;
+
+            var repositoryUrl = Environment.GetEnvironmentVariable("BUILD_REPOSITORY_URI", EnvironmentVariableTarget.Process);
+            repositoryUrl.NotNullOrWhiteSpace(nameof(repositoryUrl));
+            this.RepositoryUrl = new Uri(repositoryUrl);
+
+            var pullRequestId = Environment.GetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", EnvironmentVariableTarget.Process);
+            pullRequestId.NotNullOrWhiteSpace(nameof(pullRequestId));
+            if (!int.TryParse(pullRequestId, out int pullRequestIdValue))
+            {
+                throw new ArgumentException("SYSTEM_PULLREQUEST_PULLREQUESTID should contain integer value", nameof(pullRequestId));
+            }
+
+            pullRequestIdValue.NotNegativeOrZero(nameof(pullRequestId));
+            this.PullRequestId = pullRequestIdValue;
+        }
+
+        /// <summary>
+        /// Constructs the settings object using the provided access token.
+        /// </summary>
+        /// <returns>The instance of <see cref="TfsPullRequestSettings"/> class.</returns>
+        public static TfsPullRequestSettings UsingTfsBuildOAuthToken()
+        {
+            var accessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN", EnvironmentVariableTarget.Process);
+            accessToken.NotNullOrWhiteSpace(nameof(accessToken));
+
+            var creds = new TfsOAuthCredentials(accessToken);
+            return new TfsPullRequestSettings(creds);
+        }
+
+        /// <summary>
         /// Gets the full URL of the Git repository, eg. <code>http://myserver:8080/tfs/defaultcollection/myproject/_git/myrepository</code>.
         /// </summary>
         public Uri RepositoryUrl { get; private set; }
