@@ -92,19 +92,6 @@
         }
 
         /// <summary>
-        /// Constructs the settings object using the provided access token.
-        /// </summary>
-        /// <returns>The instance of <see cref="TfsPullRequestSettings"/> class.</returns>
-        public static TfsPullRequestSettings UsingTfsBuildOAuthToken()
-        {
-            var accessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN", EnvironmentVariableTarget.Process);
-            accessToken.NotNullOrWhiteSpace(nameof(accessToken));
-
-            var creds = new TfsOAuthCredentials(accessToken);
-            return new TfsPullRequestSettings(creds);
-        }
-
-        /// <summary>
         /// Gets the full URL of the Git repository, eg. <code>http://myserver:8080/tfs/defaultcollection/myproject/_git/myrepository</code>.
         /// </summary>
         public Uri RepositoryUrl { get; private set; }
@@ -130,5 +117,18 @@
         /// pull request for <see cref="SourceBranch"/> or <see cref="PullRequestId"/> could not be found.
         /// </summary>
         public bool ThrowExceptionIfPullRequestCouldNotBeFound { get; set; } = true;
+
+        /// <summary>
+        /// Constructs the settings object using the provided access token.
+        /// </summary>
+        /// <returns>The instance of <see cref="TfsPullRequestSettings"/> class.</returns>
+        public static TfsPullRequestSettings UsingTfsBuildOAuthToken()
+        {
+            var accessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN", EnvironmentVariableTarget.Process);
+            accessToken.NotNullOrWhiteSpace(nameof(accessToken));
+
+            var creds = new TfsOAuthCredentials(accessToken);
+            return new TfsPullRequestSettings(creds);
+        }
     }
 }

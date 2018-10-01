@@ -432,15 +432,15 @@
             [Fact]
             public void Should_Throw_If_Pull_Request_Id_Is_Zero()
             {
-                //Given
+                // Given
                 var creds = new TfsNtlmCredentials();
                 Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com", EnvironmentVariableTarget.Process);
                 Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "0", EnvironmentVariableTarget.Process);
 
-                //When
+                // When
                 var result = Record.Exception(() => new TfsPullRequestSettings(creds));
 
-                //Then
+                // Then
                 result.IsArgumentOutOfRangeException("pullRequestId");
             }
 
