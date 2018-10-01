@@ -366,7 +366,7 @@
                 var result = Record.Exception(() => new TfsPullRequestSettings(creds));
 
                 // Then
-                result.IsArgumentNullException("repositoryUrl");
+                result.IsInvalidOperationException();
             }
 
             [Fact]
@@ -411,7 +411,7 @@
                 var result = Record.Exception(() => new TfsPullRequestSettings(creds));
 
                 // Then
-                result.IsArgumentNullException("pullRequestId");
+                result.IsInvalidOperationException();
             }
 
             [Fact]
@@ -426,7 +426,7 @@
                 var result = Record.Exception(() => new TfsPullRequestSettings(creds));
 
                 // Then
-                result.IsArgumentException("pullRequestId");
+                result.IsInvalidOperationException();
             }
 
             [Fact]
@@ -441,7 +441,7 @@
                 var result = Record.Exception(() => new TfsPullRequestSettings(creds));
 
                 // Then
-                result.IsArgumentOutOfRangeException("pullRequestId");
+                result.IsInvalidOperationException();
             }
 
             public void Dispose()

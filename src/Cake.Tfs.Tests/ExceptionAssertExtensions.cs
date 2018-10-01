@@ -40,5 +40,14 @@
             Assert.IsType<ArgumentException>(exception);
             Assert.Equal(parameterName, ((ArgumentException)exception).ParamName);
         }
+
+        /// <summary>
+        /// Checks if an execption is of type <see cref="InvalidOperationException"/>.
+        /// </summary>
+        /// <param name="exception">Exception to check.</param>
+        public static void IsInvalidOperationException(this Exception exception)
+        {
+            Assert.IsType<InvalidOperationException>(exception);
+        }
     }
 }

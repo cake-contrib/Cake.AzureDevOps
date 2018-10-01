@@ -77,17 +77,31 @@
             this.Credentials = credentials;
 
             var repositoryUrl = Environment.GetEnvironmentVariable("BUILD_REPOSITORY_URI", EnvironmentVariableTarget.Process);
-            repositoryUrl.NotNullOrWhiteSpace(nameof(repositoryUrl));
+            if (string.IsNullOrWhiteSpace(repositoryUrl))
+            {
+                throw new InvalidOperationException(
+                    "Failed to read the BUILD_REPOSITORY_URI environment variable. It is only possible to address this environment variable when running in an Azure Pipelines build");
+            }
+
             this.RepositoryUrl = new Uri(repositoryUrl);
 
             var pullRequestId = Environment.GetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", EnvironmentVariableTarget.Process);
-            pullRequestId.NotNullOrWhiteSpace(nameof(pullRequestId));
-            if (!int.TryParse(pullRequestId, out int pullRequestIdValue))
+            if (string.IsNullOrWhiteSpace(pullRequestId))
             {
-                throw new ArgumentException("SYSTEM_PULLREQUEST_PULLREQUESTID should contain integer value", nameof(pullRequestId));
+                throw new InvalidOperationException(
+                    "Failed to read the SYSTEM_PULLREQUEST_PULLREQUESTID environment variable. It is only possible to address this environment variable when running in an Azure Pipelines build");
             }
 
-            pullRequestIdValue.NotNegativeOrZero(nameof(pullRequestId));
+            if (!int.TryParse(pullRequestId, out int pullRequestIdValue))
+            {
+                throw new InvalidOperationException("SYSTEM_PULLREQUEST_PULLREQUESTID environment variable should contain integer value");
+            }
+
+            if (pullRequestIdValue <= 0)
+            {
+                throw new InvalidOperationException("SYSTEM_PULLREQUEST_PULLREQUESTID environment variable should contain integer value and it should be greater than zero");
+            }
+
             this.PullRequestId = pullRequestIdValue;
         }
 
