@@ -3,7 +3,7 @@
     using Cake.Core.Annotations;
 
     /// <summary>
-    /// Contains functionality related to Team Foundation Server or Visual Studio Team Services.
+    /// Contains functionality related to Team Foundation Server or Azure DevOps.
     /// </summary>
     [CakeAliasCategory("TFS")]
     public static partial class TfsAliases

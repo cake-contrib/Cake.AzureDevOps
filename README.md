@@ -1,6 +1,6 @@
-# TFS / VSTS support for Cake 
+# TFS / Azure DevOps support for Cake 
 
-This addin for Cake allows you to work with Team Foundation Server or Visual Studio Team Services.
+This addin for Cake allows you to work with Team Foundation Server or Azure DevOps.
 
 [![License](http://img.shields.io/:license-mit-blue.svg)](https://github.com/cake-contrib/Cake.Tfs/blob/feature/build/LICENSE)
 

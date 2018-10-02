@@ -11,7 +11,7 @@
     using TfsUrlParser;
 
     /// <summary>
-    /// Class for writing issues to Team Foundation Server or Visual Studio Team Services pull requests.
+    /// Class for writing issues to Team Foundation Server or Azure DevOps pull requests.
     /// </summary>
     public sealed class TfsPullRequest
     {
@@ -111,23 +111,23 @@
         public bool HasPullRequestLoaded => this.pullRequest != null;
 
         /// <summary>
-        /// Gets the Url of the Team Foundation Server or Visual Studio Team Services.
+        /// Gets the Url of the Team Foundation Server or Azure DevOps.
         /// </summary>
         public Uri ServerUrl => this.repositoryDescription.ServerUrl;
 
         /// <summary>
-        /// Gets the name of the Team Foundation Server or Visual Studio Team Services collection.
+        /// Gets the name of the Team Foundation Server or Azure DevOps collection.
         /// </summary>
         public string CollectionName => this.repositoryDescription.CollectionName;
 
         /// <summary>
         /// Gets the URL for accessing the web portal of the Team Foundation Server or
-        /// Visual Studio Team Services collection.
+        /// Azure DevOps collection.
         /// </summary>
         public Uri CollectionUrl => this.repositoryDescription.CollectionUrl;
 
         /// <summary>
-        /// Gets the name of the Team Foundation Server or Visual Studio Team Services project.
+        /// Gets the name of the Team Foundation Server or Azure DevOps project.
         /// </summary>
         public string ProjectName => this.repositoryDescription.ProjectName;
 
@@ -279,9 +279,66 @@
                         authorizedIdenity.Id.ToString(),
                         CancellationToken.None);
 
-                var createdReviewer = request.Result;
-                var createdVote = (TfsPullRequestVote)createdReviewer.Vote;
-                this.log.Verbose("Voted for pull request with '{0}'.", createdVote.ToString());
+                try
+                {
+                    var createdReviewer = request.Result;
+                    var createdVote = (TfsPullRequestVote)createdReviewer.Vote;
+                    this.log.Verbose("Voted for pull request with '{0}'.", createdVote.ToString());
+                }
+                catch (Exception ex)
+                {
+                    this.log.Error("Error voting on pull request: " + ex.InnerException?.Message);
+                    throw;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets a status on the pull request.
+        /// </summary>
+        /// <param name="status">The description of the status which should be set.</param>
+        /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public void SetStatus(TfsPullRequestStatus status)
+        {
+            status.NotNull(nameof(status));
+
+            if (!this.ValidatePullRequest())
+            {
+                return;
+            }
+
+            using (var gitClient = this.CreateGitClient())
+            {
+                var request =
+                    gitClient.CreatePullRequestStatusAsync(
+                        new GitPullRequestStatus
+                        {
+                            State = status.State.ToGitStatusState(),
+                            Description = status.Description,
+                            TargetUrl = status.TargetUrl?.ToString(),
+                            Context = new GitStatusContext()
+                            {
+                                Name = status.Name,
+                                Genre = status.Genre
+                            }
+                        },
+                        this.pullRequest.Repository.Id,
+                        this.pullRequest.PullRequestId);
+
+                try
+                {
+                    var postedStatus = request.Result;
+                    this.log.Verbose(
+                        "Set status '{0}' to {1}.",
+                        postedStatus.Context?.Name,
+                        postedStatus.State.ToString());
+                }
+                catch (Exception ex)
+                {
+                    this.log.Error("Error posting pull request status: " + ex.InnerException?.Message);
+                    throw;
+                }
             }
         }
 
@@ -310,10 +367,10 @@
         }
 
         /// <summary>
-        /// Creates a client object for communicating with Team Foundation Server.
+        /// Creates a client object for communicating with Team Foundation Server or Azure DevOps.
         /// </summary>
         /// <param name="authorizedIdentity">Returns identity which is authorized.</param>
-        /// <returns>Client object for communicating with Team Foundation Server</returns>
+        /// <returns>Client object for communicating with Team Foundation Server or Azure DevOps</returns>
         private GitHttpClient CreateGitClient(out Identity authorizedIdentity)
         {
             var connection =
@@ -333,9 +390,9 @@
         }
 
         /// <summary>
-        /// Creates a client object for communicating with Team Foundation Server.
+        /// Creates a client object for communicating with Team Foundation Server or Azure DevOps.
         /// </summary>
-        /// <returns>Client object for communicating with Team Foundation Server</returns>
+        /// <returns>Client object for communicating with Team Foundation Server or Azure DevOps</returns>
         private GitHttpClient CreateGitClient()
         {
             return this.CreateGitClient(out var identity);

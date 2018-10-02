@@ -17,7 +17,7 @@
         /// URLs using SSH scheme are converted to HTTPS.</param>
         /// <param name="sourceBranch">Branch for which the pull request is made.</param>
         /// <param name="credentials">Credentials to use to authenticate against Team Foundation Server or
-        /// Visual Studio Team Services.</param>
+        /// Azure DevOps.</param>
         public TfsPullRequestSettings(Uri repositoryUrl, string sourceBranch, ITfsCredentials credentials)
         {
             repositoryUrl.NotNull(nameof(repositoryUrl));
@@ -38,7 +38,7 @@
         /// URLs using SSH scheme are converted to HTTPS.</param>
         /// <param name="pullRequestId">ID of the pull request.</param>
         /// <param name="credentials">Credentials to use to authenticate against Team Foundation Server or
-        /// Visual Studio Team Services.</param>
+        /// Azure DevOps.</param>
         public TfsPullRequestSettings(Uri repositoryUrl, int pullRequestId, ITfsCredentials credentials)
         {
             repositoryUrl.NotNull(nameof(repositoryUrl));
@@ -67,6 +67,47 @@
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="TfsPullRequestSettings"/> class using environment variables
+        /// as set by a Azure Pipelines or Team Foundation Server build.
+        /// </summary>
+        /// <param name="credentials">Credentials to use to authenticate against Team Foundation Server or
+        /// Azure DevOps.</param>
+        public TfsPullRequestSettings(ITfsCredentials credentials)
+        {
+            credentials.NotNull(nameof(credentials));
+
+            this.Credentials = credentials;
+
+            var repositoryUrl = Environment.GetEnvironmentVariable("BUILD_REPOSITORY_URI", EnvironmentVariableTarget.Process);
+            if (string.IsNullOrWhiteSpace(repositoryUrl))
+            {
+                throw new InvalidOperationException(
+                    "Failed to read the BUILD_REPOSITORY_URI environment variable. Make sure you are running in an Azure Pipelines or Team Foundation Server build.");
+            }
+
+            this.RepositoryUrl = new Uri(repositoryUrl);
+
+            var pullRequestId = Environment.GetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", EnvironmentVariableTarget.Process);
+            if (string.IsNullOrWhiteSpace(pullRequestId))
+            {
+                throw new InvalidOperationException(
+                    "Failed to read the SYSTEM_PULLREQUEST_PULLREQUESTID environment variable. Make sure you are running in an Azure Pipelines or Team Foundation Server build.");
+            }
+
+            if (!int.TryParse(pullRequestId, out int pullRequestIdValue))
+            {
+                throw new InvalidOperationException("SYSTEM_PULLREQUEST_PULLREQUESTID environment variable should contain integer value");
+            }
+
+            if (pullRequestIdValue <= 0)
+            {
+                throw new InvalidOperationException("SYSTEM_PULLREQUEST_PULLREQUESTID environment variable should contain integer value and it should be greater than zero");
+            }
+
+            this.PullRequestId = pullRequestIdValue;
+        }
+
+        /// <summary>
         /// Gets the full URL of the Git repository, eg. <code>http://myserver:8080/tfs/defaultcollection/myproject/_git/myrepository</code>.
         /// </summary>
         public Uri RepositoryUrl { get; private set; }
@@ -83,7 +124,7 @@
 
         /// <summary>
         /// Gets the credentials used to authenticate against Team Foundation Server or
-        /// Visual Studio Team Services.
+        /// Azure DevOps.
         /// </summary>
         public ITfsCredentials Credentials { get; private set; }
 
@@ -92,5 +133,22 @@
         /// pull request for <see cref="SourceBranch"/> or <see cref="PullRequestId"/> could not be found.
         /// </summary>
         public bool ThrowExceptionIfPullRequestCouldNotBeFound { get; set; } = true;
+
+        /// <summary>
+        /// Constructs the settings object using the access token provided by a Azure Pipelines or Team Foundation Server build.
+        /// </summary>
+        /// <returns>The instance of <see cref="TfsPullRequestSettings"/> class.</returns>
+        public static TfsPullRequestSettings UsingTfsBuildOAuthToken()
+        {
+            var accessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN", EnvironmentVariableTarget.Process);
+
+            if (string.IsNullOrWhiteSpace(accessToken))
+            {
+                throw new InvalidOperationException(
+                    "Failed to read the SYSTEM_ACCESSTOKEN environment variable. Make sure you are running in an Azure Pipelines or Team Foundation Server build and that the 'Allow Scripts to access OAuth token' option is enabled.");
+            }
+
+            return new TfsPullRequestSettings(new TfsOAuthCredentials(accessToken));
+        }
     }
 }
