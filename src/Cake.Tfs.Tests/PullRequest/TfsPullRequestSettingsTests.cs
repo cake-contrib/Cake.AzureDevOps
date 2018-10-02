@@ -361,6 +361,7 @@
             {
                 // Given
                 var creds = new TfsNtlmCredentials();
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
 
                 // When
                 var result = Record.Exception(() => new TfsPullRequestSettings(creds));
@@ -370,33 +371,62 @@
             }
 
             [Fact]
-            public void Should_Set_Repository_Url()
+            public void Should_Throw_If_Repository_Url_Env_Var_Is_Empty()
             {
                 // Given
                 var creds = new TfsNtlmCredentials();
-                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com", EnvironmentVariableTarget.Process);
-                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42", EnvironmentVariableTarget.Process);
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", string.Empty);
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
 
                 // When
-                var settings = new TfsPullRequestSettings(creds);
+                var result = Record.Exception(() => new TfsPullRequestSettings(creds));
 
                 // Then
-                settings.RepositoryUrl.ShouldBe(new Uri("http://example.com"));
+                result.IsInvalidOperationException();
             }
 
             [Fact]
-            public void Should_Set_Pull_Request_Id()
+            public void Should_Throw_If_Repository_Url_Env_Var_Is_WhiteSpace()
             {
                 // Given
                 var creds = new TfsNtlmCredentials();
-                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com", EnvironmentVariableTarget.Process);
-                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42", EnvironmentVariableTarget.Process);
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", " ");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
 
                 // When
-                var settings = new TfsPullRequestSettings(creds);
+                var result = Record.Exception(() => new TfsPullRequestSettings(creds));
 
                 // Then
-                settings.PullRequestId.ShouldBe(42);
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_Pull_Request_Id_Env_Var_Is_Empty()
+            {
+                // Given
+                var creds = new TfsNtlmCredentials();
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+
+                // When
+                var result = Record.Exception(() => new TfsPullRequestSettings(creds));
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_Pull_Request_Id_Env_Var_Is_WhiteSpace()
+            {
+                // Given
+                var creds = new TfsNtlmCredentials();
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", " ");
+
+                // When
+                var result = Record.Exception(() => new TfsPullRequestSettings(creds));
+
+                // Then
+                result.IsInvalidOperationException();
             }
 
             [Fact]
@@ -404,8 +434,8 @@
             {
                 // Given
                 var creds = new TfsNtlmCredentials();
-                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com", EnvironmentVariableTarget.Process);
-                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", string.Empty, EnvironmentVariableTarget.Process);
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", string.Empty);
 
                 // When
                 var result = Record.Exception(() => new TfsPullRequestSettings(creds));
@@ -419,8 +449,8 @@
             {
                 // Given
                 var creds = new TfsNtlmCredentials();
-                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com", EnvironmentVariableTarget.Process);
-                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "hello", EnvironmentVariableTarget.Process);
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "hello");
 
                 // When
                 var result = Record.Exception(() => new TfsPullRequestSettings(creds));
@@ -434,8 +464,8 @@
             {
                 // Given
                 var creds = new TfsNtlmCredentials();
-                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com", EnvironmentVariableTarget.Process);
-                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "0", EnvironmentVariableTarget.Process);
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "0");
 
                 // When
                 var result = Record.Exception(() => new TfsPullRequestSettings(creds));
@@ -444,10 +474,243 @@
                 result.IsInvalidOperationException();
             }
 
+            [Fact]
+            public void Should_Set_Repository_Url()
+            {
+                // Given
+                var creds = new TfsNtlmCredentials();
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+
+                // When
+                var settings = new TfsPullRequestSettings(creds);
+
+                // Then
+                settings.RepositoryUrl.ShouldBe(new Uri("http://example.com"));
+            }
+
+            [Fact]
+            public void Should_Set_Pull_Request_Id()
+            {
+                // Given
+                var creds = new TfsNtlmCredentials();
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+
+                // When
+                var settings = new TfsPullRequestSettings(creds);
+
+                // Then
+                settings.PullRequestId.ShouldBe(42);
+            }
+
             public void Dispose()
             {
-                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", string.Empty, EnvironmentVariableTarget.Process);
-                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", string.Empty, EnvironmentVariableTarget.Process);
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", null);
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", null);
+            }
+        }
+
+        public sealed class TheUsingTfsBuildOAuthTokenMethod : IDisposable
+        {
+            [Fact]
+            public void Should_Throw_If_Repository_Url_Env_Var_Is_Not_Set()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => TfsPullRequestSettings.UsingTfsBuildOAuthToken());
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_Repository_Url_Env_Var_Is_Empty()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", string.Empty);
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => TfsPullRequestSettings.UsingTfsBuildOAuthToken());
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_Repository_Url_Env_Var_Is_WhiteSpace()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", " ");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => TfsPullRequestSettings.UsingTfsBuildOAuthToken());
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_Pull_Request_Id_Env_Var_Is_Not_Set()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => TfsPullRequestSettings.UsingTfsBuildOAuthToken());
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_Pull_Request_Id_Env_Var_Is_Empty()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", string.Empty);
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => TfsPullRequestSettings.UsingTfsBuildOAuthToken());
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_Pull_Request_Id_Env_Var_Is_WhiteSpace()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", " ");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => TfsPullRequestSettings.UsingTfsBuildOAuthToken());
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_Pull_Request_Id_Env_Var_Is_Not_Integer()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "foo");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => TfsPullRequestSettings.UsingTfsBuildOAuthToken());
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_Pull_Request_Id_Is_Zero()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "0");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => TfsPullRequestSettings.UsingTfsBuildOAuthToken());
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_System_Access_Token_Env_Var_Is_Not_Set()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+
+                // When
+                var result = Record.Exception(() => TfsPullRequestSettings.UsingTfsBuildOAuthToken());
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_System_Access_Token_Env_Var_Is_Empty()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", string.Empty);
+
+                // When
+                var result = Record.Exception(() => TfsPullRequestSettings.UsingTfsBuildOAuthToken());
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_System_Access_Token_Env_Var_Is_WhiteSpace()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", " ");
+
+                // When
+                var result = Record.Exception(() => TfsPullRequestSettings.UsingTfsBuildOAuthToken());
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Set_Repository_Url()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var settings = TfsPullRequestSettings.UsingTfsBuildOAuthToken();
+
+                // Then
+                settings.RepositoryUrl.ShouldBe(new Uri("http://example.com"));
+            }
+
+            [Fact]
+            public void Should_Set_Pull_Request_Id()
+            {
+                // Given
+                var creds = new TfsNtlmCredentials();
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var settings = TfsPullRequestSettings.UsingTfsBuildOAuthToken();
+
+                // Then
+                settings.PullRequestId.ShouldBe(42);
+            }
+
+            public void Dispose()
+            {
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", null);
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", null);
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", null);
             }
         }
     }

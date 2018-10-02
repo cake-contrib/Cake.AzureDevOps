@@ -67,20 +67,22 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TfsPullRequestSettings"/> class using environment variables.
+        /// Initializes a new instance of the <see cref="TfsPullRequestSettings"/> class using environment variables
+        /// as set by a Azure Pipelines or Team Foundation Server build.
         /// </summary>
         /// <param name="credentials">Credentials to use to authenticate against Team Foundation Server or
         /// Azure DevOps.</param>
         public TfsPullRequestSettings(ITfsCredentials credentials)
         {
             credentials.NotNull(nameof(credentials));
+
             this.Credentials = credentials;
 
             var repositoryUrl = Environment.GetEnvironmentVariable("BUILD_REPOSITORY_URI", EnvironmentVariableTarget.Process);
             if (string.IsNullOrWhiteSpace(repositoryUrl))
             {
                 throw new InvalidOperationException(
-                    "Failed to read the BUILD_REPOSITORY_URI environment variable. It is only possible to address this environment variable when running in an Azure Pipelines build");
+                    "Failed to read the BUILD_REPOSITORY_URI environment variable. Make sure you are running in an Azure Pipelines or Team Foundation Server build.");
             }
 
             this.RepositoryUrl = new Uri(repositoryUrl);
@@ -89,7 +91,7 @@
             if (string.IsNullOrWhiteSpace(pullRequestId))
             {
                 throw new InvalidOperationException(
-                    "Failed to read the SYSTEM_PULLREQUEST_PULLREQUESTID environment variable. It is only possible to address this environment variable when running in an Azure Pipelines build");
+                    "Failed to read the SYSTEM_PULLREQUEST_PULLREQUESTID environment variable. Make sure you are running in an Azure Pipelines or Team Foundation Server build.");
             }
 
             if (!int.TryParse(pullRequestId, out int pullRequestIdValue))
@@ -133,16 +135,20 @@
         public bool ThrowExceptionIfPullRequestCouldNotBeFound { get; set; } = true;
 
         /// <summary>
-        /// Constructs the settings object using the provided access token.
+        /// Constructs the settings object using the access token provided by a Azure Pipelines or Team Foundation Server build.
         /// </summary>
         /// <returns>The instance of <see cref="TfsPullRequestSettings"/> class.</returns>
         public static TfsPullRequestSettings UsingTfsBuildOAuthToken()
         {
             var accessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN", EnvironmentVariableTarget.Process);
-            accessToken.NotNullOrWhiteSpace(nameof(accessToken));
 
-            var creds = new TfsOAuthCredentials(accessToken);
-            return new TfsPullRequestSettings(creds);
+            if (string.IsNullOrWhiteSpace(accessToken))
+            {
+                throw new InvalidOperationException(
+                    "Failed to read the SYSTEM_ACCESSTOKEN environment variable. Make sure you are running in an Azure Pipelines or Team Foundation Server build and that the 'Allow Scripts to access OAuth token' option is enabled.");
+            }
+
+            return new TfsPullRequestSettings(new TfsOAuthCredentials(accessToken));
         }
     }
 }
