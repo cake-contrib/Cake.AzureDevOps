@@ -279,9 +279,17 @@
                         authorizedIdenity.Id.ToString(),
                         CancellationToken.None);
 
-                var createdReviewer = request.Result;
-                var createdVote = (TfsPullRequestVote)createdReviewer.Vote;
-                this.log.Verbose("Voted for pull request with '{0}'.", createdVote.ToString());
+                try
+                {
+                    var createdReviewer = request.Result;
+                    var createdVote = (TfsPullRequestVote)createdReviewer.Vote;
+                    this.log.Verbose("Voted for pull request with '{0}'.", createdVote.ToString());
+                }
+                catch (Exception ex)
+                {
+                    this.log.Error("Error voting on pull request: " + ex.InnerException?.Message);
+                    throw;
+                }
             }
         }
 
@@ -302,6 +310,7 @@
 
             using (var gitClient = this.CreateGitClient())
             {
+                var request =
                     gitClient.CreatePullRequestStatusAsync(
                         new GitPullRequestStatus
                         {
@@ -316,6 +325,20 @@
                         },
                         this.pullRequest.Repository.Id,
                         this.pullRequest.PullRequestId);
+
+                try
+                {
+                    var postedStatus = request.Result;
+                    this.log.Verbose(
+                        "Set status '{0}' to {1}.",
+                        postedStatus.Context?.Name,
+                        postedStatus.State.ToString());
+                }
+                catch (Exception ex)
+                {
+                    this.log.Error("Error posting pull request status: " + ex.InnerException?.Message);
+                    throw;
+                }
             }
         }
 
