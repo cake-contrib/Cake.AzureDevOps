@@ -79,6 +79,7 @@
                 pullRequest.CollectionName.ShouldBe("MyCollection");
                 pullRequest.CodeReviewId.ShouldBe(123);
                 pullRequest.ProjectName.ShouldBe("MyTeamProject");
+                pullRequest.SourceRefName.ShouldBe("foo");
                 pullRequest.TargetRefName.ShouldBe("master");
                 pullRequest.LastSourceCommitId.ShouldBe("4a92b977");
                 pullRequest.LastTargetCommitId.ShouldBe("78a3c113");
@@ -101,6 +102,7 @@
                 pullRequest.CollectionName.ShouldBe("DefaultCollection");
                 pullRequest.CodeReviewId.ShouldBe(123);
                 pullRequest.ProjectName.ShouldBe("MyProject");
+                pullRequest.SourceRefName.ShouldBe("foo");
                 pullRequest.TargetRefName.ShouldBe("master");
                 pullRequest.LastSourceCommitId.ShouldBe("4a92b977");
                 pullRequest.LastTargetCommitId.ShouldBe("78a3c113");
@@ -123,6 +125,7 @@
                 pullRequest.CollectionName.ShouldBe("MyCollection");
                 pullRequest.CodeReviewId.ShouldBe(123);
                 pullRequest.ProjectName.ShouldBe("MyTeamProject");
+                pullRequest.SourceRefName.ShouldBe("feature");
                 pullRequest.TargetRefName.ShouldBe("master");
                 pullRequest.LastSourceCommitId.ShouldBe("4a92b977");
                 pullRequest.LastTargetCommitId.ShouldBe("78a3c113");
@@ -145,6 +148,7 @@
                 pullRequest.CollectionName.ShouldBe("DefaultCollection");
                 pullRequest.CodeReviewId.ShouldBe(123);
                 pullRequest.ProjectName.ShouldBe("MyProject");
+                pullRequest.SourceRefName.ShouldBe("feature");
                 pullRequest.TargetRefName.ShouldBe("master");
                 pullRequest.LastSourceCommitId.ShouldBe("4a92b977");
                 pullRequest.LastTargetCommitId.ShouldBe("78a3c113");
@@ -172,6 +176,7 @@
                 pullRequest.ProjectName.ShouldBe("MyTeamProject");
                 pullRequest.PullRequestId.ShouldBe(0);
                 pullRequest.CodeReviewId.ShouldBe(0);
+                pullRequest.SourceRefName.ShouldBeEmpty();
                 pullRequest.TargetRefName.ShouldBeEmpty();
                 pullRequest.LastSourceCommitId.ShouldBeEmpty();
                 pullRequest.LastTargetCommitId.ShouldBeEmpty();
@@ -199,6 +204,7 @@
                 pullRequest.ProjectName.ShouldBe("MyProject");
                 pullRequest.PullRequestId.ShouldBe(0);
                 pullRequest.CodeReviewId.ShouldBe(0);
+                pullRequest.SourceRefName.ShouldBeEmpty();
                 pullRequest.TargetRefName.ShouldBeEmpty();
                 pullRequest.LastSourceCommitId.ShouldBeEmpty();
                 pullRequest.LastTargetCommitId.ShouldBeEmpty();
@@ -226,6 +232,7 @@
                 pullRequest.ProjectName.ShouldBe("MyTeamProject");
                 pullRequest.PullRequestId.ShouldBe(0);
                 pullRequest.CodeReviewId.ShouldBe(0);
+                pullRequest.SourceRefName.ShouldBeEmpty();
                 pullRequest.TargetRefName.ShouldBeEmpty();
                 pullRequest.LastSourceCommitId.ShouldBeEmpty();
                 pullRequest.LastTargetCommitId.ShouldBeEmpty();
@@ -253,6 +260,7 @@
                 pullRequest.ProjectName.ShouldBe("MyProject");
                 pullRequest.PullRequestId.ShouldBe(0);
                 pullRequest.CodeReviewId.ShouldBe(0);
+                pullRequest.SourceRefName.ShouldBeEmpty();
                 pullRequest.TargetRefName.ShouldBeEmpty();
                 pullRequest.LastSourceCommitId.ShouldBeEmpty();
                 pullRequest.LastTargetCommitId.ShouldBeEmpty();
