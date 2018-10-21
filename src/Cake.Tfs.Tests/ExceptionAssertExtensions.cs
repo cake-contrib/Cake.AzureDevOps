@@ -1,6 +1,7 @@
 ﻿namespace Cake.Tfs
 {
     using System;
+    using Cake.Tfs.PullRequest;
     using Xunit;
 
     /// <summary>
@@ -48,6 +49,24 @@
         public static void IsInvalidOperationException(this Exception exception)
         {
             Assert.IsType<InvalidOperationException>(exception);
+        }
+
+        /// <summary>
+        /// Checks if an exception is of type <see cref="UriFormatException"/>.
+        /// </summary>
+        /// <param name="exception">Exception to check.</param>
+        public static void IsUrlFormatException(this Exception exception)
+        {
+            Assert.IsType<UriFormatException>(exception);
+        }
+
+        /// <summary>
+        /// Checks if an exception is of type <see cref="TfsPullRequestNotFoundException"/>.
+        /// </summary>
+        /// <param name="exception">Exception to check.</param>
+        public static void IsTfsPullRequestNotFoundException(this Exception exception)
+        {
+            Assert.IsType<TfsPullRequestNotFoundException>(exception);
         }
     }
 }
