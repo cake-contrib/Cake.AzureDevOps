@@ -46,7 +46,7 @@
             context.NotNull(nameof(context));
             settings.NotNull(nameof(settings));
 
-            var pullRequest = new TfsPullRequest(context.Log, settings);
+            var pullRequest = new TfsPullRequest(context.Log, settings, new GitClientFactory());
 
             if (pullRequest.HasPullRequestLoaded)
             {
@@ -125,7 +125,7 @@
             context.NotNull(nameof(context));
             settings.NotNull(nameof(settings));
 
-            new TfsPullRequest(context.Log, settings).Vote(vote);
+            new TfsPullRequest(context.Log, settings, new GitClientFactory()).Vote(vote);
         }
 
         /// <summary>
@@ -172,7 +172,7 @@
             settings.NotNull(nameof(settings));
             status.NotNull(nameof(status));
 
-            new TfsPullRequest(context.Log, settings).SetStatus(status);
+            new TfsPullRequest(context.Log, settings, new GitClientFactory()).SetStatus(status);
         }
     }
 }

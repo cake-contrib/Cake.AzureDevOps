@@ -4,10 +4,8 @@
     using System.Linq;
     using System.Threading;
     using Cake.Core.Diagnostics;
-    using Cake.Tfs.Authentication;
+    using Cake.Tfs;
     using Microsoft.TeamFoundation.SourceControl.WebApi;
-    using Microsoft.VisualStudio.Services.Identity;
-    using Microsoft.VisualStudio.Services.WebApi;
     using TfsUrlParser;
 
     /// <summary>
@@ -17,6 +15,7 @@
     {
         private readonly ICakeLog log;
         private readonly TfsPullRequestSettings settings;
+        private readonly IGitClientFactory gitClientFactory;
         private readonly RepositoryDescription repositoryDescription;
         private readonly GitPullRequest pullRequest;
 
@@ -25,15 +24,18 @@
         /// </summary>
         /// <param name="log">The Cake log context.</param>
         /// <param name="settings">Settings for accessing TFS.</param>
+        /// <param name="gitClientFactory">A factory to communicate with Git client.</param>
         /// <exception cref="TfsPullRequestNotFoundException">If <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/>
         /// is set to <c>true</c> and no pull request could be found.</exception>
-        public TfsPullRequest(ICakeLog log, TfsPullRequestSettings settings)
+        public TfsPullRequest(ICakeLog log, TfsPullRequestSettings settings, IGitClientFactory gitClientFactory)
         {
             log.NotNull(nameof(log));
             settings.NotNull(nameof(settings));
+            gitClientFactory.NotNull(nameof(gitClientFactory));
 
             this.log = log;
             this.settings = settings;
+            this.gitClientFactory = gitClientFactory;
 
             this.repositoryDescription = new RepositoryDescription(settings.RepositoryUrl);
 
@@ -44,7 +46,7 @@
                 this.repositoryDescription.ProjectName,
                 this.repositoryDescription.RepositoryName);
 
-            using (var gitClient = this.CreateGitClient(out var authorizedIdenity))
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.repositoryDescription.CollectionUrl, settings.Credentials, out var authorizedIdenity))
             {
                 this.log.Verbose(
                      "Authorized Identity:\n  Id: {0}\n  DisplayName: {1}",
@@ -269,7 +271,7 @@
                 return;
             }
 
-            using (var gitClient = this.CreateGitClient(out var authorizedIdenity))
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials, out var authorizedIdenity))
             {
                 var request =
                     gitClient.CreatePullRequestReviewerAsync(
@@ -308,7 +310,7 @@
                 return;
             }
 
-            using (var gitClient = this.CreateGitClient())
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials))
             {
                 var request =
                     gitClient.CreatePullRequestStatusAsync(
@@ -364,38 +366,6 @@
 
             this.log.Verbose("Skipping, since no pull request instance could be found.");
             return false;
-        }
-
-        /// <summary>
-        /// Creates a client object for communicating with Team Foundation Server or Azure DevOps.
-        /// </summary>
-        /// <param name="authorizedIdentity">Returns identity which is authorized.</param>
-        /// <returns>Client object for communicating with Team Foundation Server or Azure DevOps</returns>
-        private GitHttpClient CreateGitClient(out Identity authorizedIdentity)
-        {
-            var connection =
-                new VssConnection(
-                    this.repositoryDescription.CollectionUrl,
-                    this.settings.Credentials.ToVssCredentials());
-
-            authorizedIdentity = connection.AuthorizedIdentity;
-
-            var gitClient = connection.GetClient<GitHttpClient>();
-            if (gitClient == null)
-            {
-                throw new TfsException("Could not retrieve the GitHttpClient object");
-            }
-
-            return gitClient;
-        }
-
-        /// <summary>
-        /// Creates a client object for communicating with Team Foundation Server or Azure DevOps.
-        /// </summary>
-        /// <returns>Client object for communicating with Team Foundation Server or Azure DevOps</returns>
-        private GitHttpClient CreateGitClient()
-        {
-            return this.CreateGitClient(out var identity);
         }
     }
 }
