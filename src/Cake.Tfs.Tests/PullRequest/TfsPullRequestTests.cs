@@ -341,6 +341,7 @@
                 // Then
                 result.ShouldNotBe(null);
                 result.IsExpected("Vote");
+                result.IsTfsPullRequestNotFoundException();
             }
         }
 
@@ -409,6 +410,7 @@
                 // Then
                 result.ShouldNotBe(null);
                 result.IsExpected("SetStatus");
+                result.IsTfsPullRequestNotFoundException();
             }
         }
     }

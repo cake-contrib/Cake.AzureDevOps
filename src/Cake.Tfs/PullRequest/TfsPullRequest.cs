@@ -284,6 +284,14 @@
                 try
                 {
                     var createdReviewer = request.Result;
+
+                    if (createdReviewer == null)
+                    {
+                        throw new TfsPullRequestNotFoundException(
+                            this.pullRequest.Repository.Id,
+                            this.pullRequest.PullRequestId);
+                    }
+
                     var createdVote = (TfsPullRequestVote)createdReviewer.Vote;
                     this.log.Verbose("Voted for pull request with '{0}'.", createdVote.ToString());
                 }
@@ -331,6 +339,14 @@
                 try
                 {
                     var postedStatus = request.Result;
+
+                    if (postedStatus == null)
+                    {
+                        throw new TfsPullRequestNotFoundException(
+                            this.pullRequest.Repository.Id,
+                            this.pullRequest.PullRequestId);
+                    }
+
                     this.log.Verbose(
                         "Set status '{0}' to {1}.",
                         postedStatus.Context?.Name,

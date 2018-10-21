@@ -17,6 +17,16 @@
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="TfsPullRequestNotFoundException"/> class.
+        /// </summary>
+        /// <param name="repositoryId">ID of the repository where the pull request was searched.</param>
+        /// <param name="pullRequestId">ID of the pull request which could not be found.</param>
+        public TfsPullRequestNotFoundException(Guid repositoryId, int pullRequestId)
+            : this("Pull request with ID " + pullRequestId + " not found in repository with GUID " + repositoryId)
+        {
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="TfsPullRequestNotFoundException"/> class with a specified error message.
         /// </summary>
         /// <param name="message">The message that describes the error. </param>
