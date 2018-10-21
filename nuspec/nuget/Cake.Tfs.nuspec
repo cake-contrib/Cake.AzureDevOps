@@ -17,7 +17,7 @@
     <repository type="git" url="https://github.com/cake-contrib/Cake.Tfs"/>
     <copyright>Copyright © Pascal Berger</copyright>
     <tags>Cake Script Team-Foundation-Server TFS Azure-DevOps</tags>
-    <releaseNotes>https://github.com/cake-contrib/Cake.Tfs/releases/tag/0.2.2</releaseNotes>
+    <releaseNotes>https://github.com/cake-contrib/Cake.Tfs/releases/tag/0.2.3</releaseNotes>
   </metadata>
   <files>
     <file src="net461\Cake.Tfs.dll" target="lib\net461" />
