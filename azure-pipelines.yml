@@ -11,5 +11,9 @@ pr:
 - develop
 
 steps:
-- powershell: ./build.ps1
+- powershell: |
+   $ENV:CAKE_SKIP_GITVERSION=([string]::IsNullOrEmpty($ENV:SYSTEM_PULLREQUEST_PULLREQUESTID) -eq $False).ToString()
+   
+   .\build.ps1
+   exit $LASTEXITCODE 
   displayName: 'Cake Build'
