@@ -25,7 +25,7 @@
     <PackageReference Include="Cake.Core" Version="0.28.0" />
     <PackageReference Include="Costura.Fody" Version="3.1.6" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.2" />
-    <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="15.112.1" />
+    <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="15.131.1" />
     <PackageReference Include="Microsoft.VisualStudio.Services.InteractiveClient" Version="15.112.1" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
     <PackageReference Include="TfsUrlParser" Version="1.2.0" />
