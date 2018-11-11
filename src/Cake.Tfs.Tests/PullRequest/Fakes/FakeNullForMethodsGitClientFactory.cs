@@ -1,6 +1,7 @@
 ﻿namespace Cake.Tfs.Tests.PullRequest.Fakes
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading;
     using Microsoft.TeamFoundation.SourceControl.WebApi;
     using Moq;
@@ -14,6 +15,10 @@
 
             m.Setup(arg => arg.CreatePullRequestStatusAsync(It.IsAny<GitPullRequestStatus>(), It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<object>(), It.IsAny<CancellationToken>()))
              .ReturnsAsync(() => null);
+
+            m.Setup(arg => arg.GetCommitDiffsAsync(It.IsAny<string>(), It.IsAny<Guid>(), true, null, null, It.IsAny<GitBaseVersionDescriptor>(), It.IsAny<GitTargetVersionDescriptor>(), null, CancellationToken.None))
+             .ReturnsAsync(()
+                    => new GitCommitDiffs { ChangeCounts = new Dictionary<VersionControlChangeType, int>(), Changes = new List<GitChange>() });
 
             return m;
         }
