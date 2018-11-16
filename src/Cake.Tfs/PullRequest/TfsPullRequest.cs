@@ -1,9 +1,11 @@
 ﻿namespace Cake.Tfs.PullRequest
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using Cake.Core.Diagnostics;
+    using Cake.Core.IO;
     using Cake.Tfs;
     using Microsoft.TeamFoundation.SourceControl.WebApi;
     using TfsUrlParser;
@@ -18,6 +20,18 @@
         private readonly IGitClientFactory gitClientFactory;
         private readonly RepositoryDescription repositoryDescription;
         private readonly GitPullRequest pullRequest;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TfsPullRequest"/> class.
+        /// </summary>
+        /// <param name="log">The Cake log context.</param>
+        /// <param name="settings">Settings for accessing TFS.</param>
+        /// <exception cref="TfsPullRequestNotFoundException">If <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/>
+        /// is set to <c>true</c> and no pull request could be found.</exception>
+        public TfsPullRequest(ICakeLog log, TfsPullRequestSettings settings)
+            : this(log, settings, new GitClientFactory())
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TfsPullRequest"/> class.
@@ -377,6 +391,61 @@
                     this.log.Error("Error posting pull request status: " + ex.InnerException?.Message);
                     throw;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets the files modified by the pull request.
+        /// </summary>
+        /// <returns>The collection of the modified files paths.</returns>
+        public IEnumerable<FilePath> GetModifiedFiles()
+        {
+            if (!this.ValidatePullRequest())
+            {
+                return new List<FilePath>();
+            }
+
+            var targetVersionDescriptor = new GitTargetVersionDescriptor
+            {
+                VersionType = GitVersionType.Commit,
+                Version = this.LastSourceCommitId
+            };
+
+            var baseVersionDescriptor = new GitBaseVersionDescriptor
+            {
+                VersionType = GitVersionType.Commit,
+                Version = this.LastTargetCommitId
+            };
+
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials))
+            {
+                var commitDiffs = gitClient.GetCommitDiffsAsync(
+                    this.ProjectName,
+                    this.RepositoryId,
+                    true, // bool? diffCommonCommit
+                    null, // int? top
+                    null, // int? skip
+                    baseVersionDescriptor,
+                    targetVersionDescriptor,
+                    null, // object userState
+                    CancellationToken.None).Result;
+
+                this.log.Verbose(
+                    "Found {0} changed file(s) in the pull request",
+                    commitDiffs.Changes.Count());
+
+                if (!commitDiffs.ChangeCounts.Any())
+                {
+                    return new List<FilePath>();
+                }
+
+                return
+                    from change in commitDiffs.Changes
+                    where
+                        change != null &&
+                        !change.Item.IsFolder
+                    select
+                        new FilePath(change.Item.Path.TrimStart('/'));
             }
         }
 

@@ -1,5 +1,8 @@
 ﻿namespace Cake.Tfs.Tests.PullRequest
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Cake.Core.IO;
     using Cake.Tfs.PullRequest;
     using Cake.Tfs.Tests.PullRequest.Fakes;
     using Microsoft.VisualStudio.Services.Common;
@@ -24,6 +27,19 @@
             }
 
             [Fact]
+            public void Should_Throw_If_Log_Is_Null_Overload()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, "foo") { Log = null };
+
+                // When
+                var result = Record.Exception(() => new TfsPullRequest(fixture.Log, fixture.Settings));
+
+                // Then
+                result.IsArgumentNullException("log");
+            }
+
+            [Fact]
             public void Should_Throw_If_Settings_Are_Null()
             {
                 // Given
@@ -31,6 +47,19 @@
 
                 // When
                 var result = Record.Exception(() => new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory));
+
+                // Then
+                result.IsArgumentNullException("settings");
+            }
+
+            [Fact]
+            public void Should_Throw_If_Settings_Are_Null_Overload()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 42) { Settings = null };
+
+                // When
+                var result = Record.Exception(() => new TfsPullRequest(fixture.Log, fixture.Settings));
 
                 // Then
                 result.IsArgumentNullException("settings");
@@ -419,6 +448,47 @@
                 result.ShouldNotBe(null);
                 result.IsExpected("SetStatus");
                 result.IsTfsPullRequestNotFoundException();
+            }
+        }
+
+        public sealed class GetModifiedFiles
+        {
+            [Fact]
+            public void Should_Return_Empty_Collection_If_No_Changes_Found()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 42) { GitClientFactory = new FakeNullForMethodsGitClientFactory() };
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var files = pullRequest.GetModifiedFiles();
+
+                // Then
+                files.ShouldBeOfType<List<FilePath>>();
+                files.ShouldNotBeNull();
+                files.ShouldBeEmpty();
+            }
+
+            [Fact]
+            public void Should_Return_Valid_Collection_Of_Modified_Files()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 42);
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var files = pullRequest.GetModifiedFiles();
+
+                // Then
+                files.ShouldNotBeNull();
+                files.ShouldNotBeEmpty();
+                files.ShouldHaveSingleItem();
+
+                var filePath = files.First();
+                filePath.ShouldBeOfType<FilePath>();
+                filePath.ShouldNotBeNull();
+                filePath.FullPath.ShouldNotBeEmpty();
+                filePath.FullPath.ShouldBe("src/project/myclass.cs");
             }
         }
     }
