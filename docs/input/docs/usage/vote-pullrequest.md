@@ -5,7 +5,7 @@ Description: Example how to approve or vote for pull requests using the Cake.Tfs
 ---
 The [Cake.Tfs addin] provides an alias for approving or voting on pull requests.
 
-The following example will approve a pull request on a Team Foundation Server:
+The following example will approve a pull request on a Azure DevOps Server:
 
 ```csharp
 #addin "Cake.Tfs"
