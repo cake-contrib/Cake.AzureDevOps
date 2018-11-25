@@ -100,6 +100,43 @@
                         State = status.State
                     });
 
+            // Setup CommitDiffs object
+            var gitChanges = new List<GitChange>
+            {
+                new GitChange
+                {
+                    ChangeId = 1,
+                    ChangeType = VersionControlChangeType.Edit,
+                    Item = new GitItem("/src/project/myclass.cs", "ID1", GitObjectType.Commit, "6b13ff8", 0)
+                },
+                null,
+                new GitChange
+                {
+                    ChangeId = 2,
+                    ChangeType = VersionControlChangeType.Edit,
+                    Item = new GitItem("/tools/folder", "ID2", GitObjectType.Tree, "6b13ff8", 0)
+                }
+            };
+
+            var gitCommitDiffs = new GitCommitDiffs
+            {
+                ChangeCounts = new Dictionary<VersionControlChangeType, int> { { VersionControlChangeType.Edit, 2 } },
+                Changes = gitChanges
+            };
+
+            m.Setup(arg => arg.GetCommitDiffsAsync(
+                    It.IsAny<string>(),
+                    It.IsAny<Guid>(),
+                    true,
+                    null,
+                    null,
+                    It.IsAny<GitBaseVersionDescriptor>(),
+                    It.IsAny<GitTargetVersionDescriptor>(),
+                    null,
+                    CancellationToken.None))
+             .ReturnsAsync((string prj, Guid rId, bool? b, int? t, int? s, GitBaseVersionDescriptor bvd, GitTargetVersionDescriptor tvd, object o1, CancellationToken c1)
+                    => gitCommitDiffs);
+
             return m;
         }
     }
