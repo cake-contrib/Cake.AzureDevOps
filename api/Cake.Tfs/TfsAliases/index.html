@@ -136,11 +136,11 @@
 			<li class="header">Namespace</li>
 		<li><a href="/Cake.Tfs/api/Cake.Tfs">Cake<wbr>.Tfs</a></li>
 		<li role="separator" class="divider"></li>
-			<li class="header">Interface Types</li>
-				<li><a href="/Cake.Tfs/api/Cake.Tfs/IGitClientFactory">IGitClientFactory</a></li>
 			<li class="header">Class Types</li>
 				<li class="selected"><a href="/Cake.Tfs/api/Cake.Tfs/TfsAliases">TfsAliases</a></li>
 				<li><a href="/Cake.Tfs/api/Cake.Tfs/TfsException">TfsException</a></li>
+			<li class="header">Interface Types</li>
+				<li><a href="/Cake.Tfs/api/Cake.Tfs/IGitClientFactory">IGitClientFactory</a></li>
 
 
                     </ul>
@@ -199,8 +199,8 @@ class Type type-node
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>[CakeAliasCategory("TFS")]
-[CakeNamespaceImport("Cake.Tfs.PullRequest")]
+	<pre><code>[CakeNamespaceImport("Cake.Tfs.PullRequest")]
+[CakeAliasCategory("TFS")]
 [CakeNamespaceImport("Cake.Tfs.Authentication")]
 public static class TfsAliases</code></pre>
 
@@ -217,11 +217,11 @@ public static class TfsAliases</code></pre>
 					</tr>
 				</thead>
 					<tbody><tr>
-						<td>CakeAliasCategory</td>
+						<td>CakeNamespaceImport</td>
 						<td></td>
 					</tr>
 					<tr>
-						<td>CakeNamespaceImport</td>
+						<td>CakeAliasCategory</td>
 						<td></td>
 					</tr>
 					<tr>
