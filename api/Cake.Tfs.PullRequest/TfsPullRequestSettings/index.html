@@ -75,6 +75,7 @@
 <p><a href="#Syntax">Syntax</a></p>
 <p><a href="#Constructors">Constructors</a></p>
 <p><a href="#Properties">Properties</a></p>
+<p><a href="#Methods">Methods</a></p>
 <hr class="infobar-hidden">
 </div>
 
@@ -137,11 +138,13 @@
 		<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest">Cake<wbr>.Tfs<wbr>.PullRequest</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Enum Types</li>
+				<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestStatusState">Tfs<wbr>Pull<wbr>Request<wbr>Status<wbr>State</a></li>
 				<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestVote">TfsPullRequestVote</a></li>
 			<li class="header">Class Types</li>
 				<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest">TfsPullRequest</a></li>
 				<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestNotFoundException">Tfs<wbr>Pull<wbr>Request<wbr>Not<wbr>Found<wbr>Exception</a></li>
 				<li class="selected"><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestSettings">Tfs<wbr>Pull<wbr>Request<wbr>Settings</a></li>
+				<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestStatus">TfsPullRequestStatus</a></li>
 
 
                     </ul>
@@ -207,6 +210,7 @@ class Type type-node
 
 
 
+
 			<h1 id="Constructors">Constructors</h1>
 			<div class="box">
 				<div class="box-body no-padding table-responsive">
@@ -218,6 +222,13 @@ class Type type-node
 							</tr>
 						</thead>
 							<tbody><tr>
+								<td><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestSettings/1D2BD22D">Tfs<wbr>Pull<wbr>Request<wbr>Settings<wbr>(ITfsCredentials)<wbr></a></td>
+									<td>
+    Initializes a new instance of the <code class="cs"><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestSettings">TfsPullRequestSettings</a></code> class using environment variables
+    as set by a Azure Pipelines or Team Foundation Server build.
+    </td>
+							</tr>
+							<tr>
 								<td><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestSettings/26BCE363">Tfs<wbr>Pull<wbr>Request<wbr>Settings<wbr>(<wbr>Tfs<wbr>Pull<wbr>Request<wbr>Settings)<wbr></a></td>
 									<td>
     Initializes a new instance of the <code class="cs"><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestSettings">TfsPullRequestSettings</a></code> class
@@ -266,7 +277,7 @@ class Type type-node
 							</tr>
 							<tr>
 								<td><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestSettings/5E73759A">PullRequestId</a></td>
-								<td>Nullable<wbr>&lt;T&gt;<wbr></td>
+								<td>int?</td>
 								<td>
 									<div>
     Gets the ID of the pull request.
@@ -306,6 +317,31 @@ class Type type-node
 			</div>
 		
 
+			<h1 id="Methods">Methods</h1>
+			<div class="box">
+				<div class="box-body no-padding table-responsive">
+					<table class="table table-striped table-hover three-cols">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Value</th>
+								<th>Summary</th>
+							</tr>
+						</thead>
+							<tbody><tr>
+								<td><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestSettings/E529B915">Using<wbr>Tfs<wbr>Build<wbr>O<wbr>Auth<wbr>Token<wbr>()<wbr></a></td>
+								<td><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestSettings">Tfs<wbr>Pull<wbr>Request<wbr>Settings</a></td>
+								<td>
+									<div>
+    Constructs the settings object using the access token provided by a Azure Pipelines or Team Foundation Server build.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+					</tbody></table>
+				</div>
+			</div>
+		
 
 
 

@@ -138,11 +138,13 @@
 		<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest">Cake<wbr>.Tfs<wbr>.PullRequest</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Enum Types</li>
+				<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestStatusState">Tfs<wbr>Pull<wbr>Request<wbr>Status<wbr>State</a></li>
 				<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestVote">TfsPullRequestVote</a></li>
 			<li class="header">Class Types</li>
 				<li class="selected"><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest">TfsPullRequest</a></li>
 				<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestNotFoundException">Tfs<wbr>Pull<wbr>Request<wbr>Not<wbr>Found<wbr>Exception</a></li>
 				<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestSettings">Tfs<wbr>Pull<wbr>Request<wbr>Settings</a></li>
+				<li><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestStatus">TfsPullRequestStatus</a></li>
 
 
                     </ul>
@@ -208,6 +210,7 @@ class Type type-node
 
 
 
+
 			<h1 id="Constructors">Constructors</h1>
 			<div class="box">
 				<div class="box-body no-padding table-responsive">
@@ -220,6 +223,12 @@ class Type type-node
 						</thead>
 							<tbody><tr>
 								<td><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest/023AC2A1">TfsPullRequest<wbr>(ICakeLog, <wbr>Tfs<wbr>Pull<wbr>Request<wbr>Settings)<wbr></a></td>
+									<td>
+    Initializes a new instance of the <code class="cs"><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest">TfsPullRequest</a></code> class.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest/B0A698D9">TfsPullRequest<wbr>(ICakeLog, <wbr>Tfs<wbr>Pull<wbr>Request<wbr>Settings, <wbr>IGitClientFactory)<wbr></a></td>
 									<td>
     Initializes a new instance of the <code class="cs"><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest">TfsPullRequest</a></code> class.
     </td>
@@ -353,6 +362,15 @@ class Type type-node
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest/4BE97DED">SourceRefName</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    Gets the name of the source branch
+    </div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest/1D2B8852">TargetRefName</a></td>
 								<td>string</td>
 								<td>
@@ -380,6 +398,24 @@ class Type type-node
 							</tr>
 						</thead>
 							<tbody><tr>
+								<td><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest/98E41C9F">GetModifiedFiles<wbr>()<wbr></a></td>
+								<td>IEnumerable<wbr>&lt;FilePath&gt;<wbr></td>
+								<td>
+									<div>
+    Gets the files modified by the pull request.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest/67E71366">SetStatus<wbr>(<wbr>Tfs<wbr>Pull<wbr>Request<wbr>Status)<wbr></a></td>
+								<td>void</td>
+								<td>
+									<div>
+    Sets a status on the pull request.
+    </div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest/1985740D">Vote<wbr>(TfsPullRequestVote)<wbr></a></td>
 								<td>void</td>
 								<td>
