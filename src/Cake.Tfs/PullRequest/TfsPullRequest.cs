@@ -7,6 +7,7 @@
     using Cake.Core.Diagnostics;
     using Cake.Core.IO;
     using Cake.Tfs;
+    using Cake.Tfs.PullRequest.CommentThread;
     using Microsoft.TeamFoundation.SourceControl.WebApi;
     using TfsUrlParser;
 
@@ -446,6 +447,72 @@
                         !change.Item.IsFolder
                     select
                         new FilePath(change.Item.Path.TrimStart('/'));
+            }
+        }
+
+        /// <summary>
+        /// Gets the pull request comment threads.
+        /// </summary>
+        /// <returns>The list of comment threads of the pull request.</returns>
+        public IEnumerable<TfsPullRequestCommentThread> GetCommentThreads()
+        {
+            if (!this.ValidatePullRequest())
+            {
+                return new List<TfsPullRequestCommentThread>();
+            }
+
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials))
+            {
+                var threads = gitClient.GetThreadsAsync(this.RepositoryId, this.PullRequestId, null, null, null, CancellationToken.None).Result;
+
+                return threads.Select(t => new TfsPullRequestCommentThread(t));
+            }
+        }
+
+        /// <summary>
+        /// Sets the pull request comment thread status to <see cref="CommentThreadStatus.Fixed"/>.
+        /// </summary>
+        /// <param name="threadId">The Id of the comment thread.</param>
+        public void ResolveCommentThread(int threadId)
+        {
+            this.SetCommentThreadStatus(threadId, CommentThreadStatus.Fixed);
+        }
+
+        /// <summary>
+        /// Sets the pull request comment thread to <see cref="CommentThreadStatus.Active"/>.
+        /// </summary>
+        /// <param name="threadId">The Id of the comment thread.</param>
+        public void ActivateCommentThread(int threadId)
+        {
+            this.SetCommentThreadStatus(threadId, CommentThreadStatus.Active);
+        }
+
+        /// <summary>
+        /// Sets the pull request comment thread status.
+        /// </summary>
+        /// <param name="threadId">The Id of the comment thread.</param>
+        /// <param name="status">The comment thread status.</param>
+        private void SetCommentThreadStatus(int threadId, CommentThreadStatus status)
+        {
+            if (!this.ValidatePullRequest())
+            {
+                return;
+            }
+
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials))
+            {
+                var newThread = new GitPullRequestCommentThread
+                {
+                    Status = status
+                };
+
+                gitClient.UpdateThreadAsync(
+                    newThread,
+                    this.RepositoryId,
+                    this.PullRequestId,
+                    threadId,
+                    null,
+                    CancellationToken.None).Wait();
             }
         }
 
