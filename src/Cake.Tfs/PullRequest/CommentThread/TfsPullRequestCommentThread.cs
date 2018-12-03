@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Cake.Core.IO;
     using Microsoft.TeamFoundation.SourceControl.WebApi;
     using Microsoft.VisualStudio.Services.WebApi;
 
@@ -55,11 +56,11 @@
         /// Gets or sets the path of the modified file the pull request comment thread belongs to.
         /// Returns 'null' for the comment threads not related to any particular file.
         /// </summary>
-        public string FilePath
+        public FilePath FilePath
         {
             get
             {
-                string filePath = null;
+                FilePath filePath = null;
                 if (this.thread.ThreadContext?.FilePath != null)
                 {
                     filePath = this.thread.ThreadContext.FilePath.TrimStart('/');
@@ -75,7 +76,7 @@
                     this.thread.ThreadContext = new CommentThreadContext();
                 }
 
-                this.thread.ThreadContext.FilePath = value;
+                this.thread.ThreadContext.FilePath = value.FullPath;
             }
         }
 
