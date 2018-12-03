@@ -57,5 +57,14 @@
             get => this.comment.IsDeleted;
             set => this.comment.IsDeleted = value;
         }
+
+        /// <summary>
+        /// Gets or sets the comment type.
+        /// </summary>
+        public TfsCommentType CommentType
+        {
+            get => (TfsCommentType)this.comment.CommentType;
+            set => this.comment.CommentType = (CommentType)value;
+        }
     }
 }
