@@ -24,10 +24,9 @@
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TfsPullRequestCommentThread"/> class.
-        /// TODO: This ctor must become internal.
         /// </summary>
         /// <param name="thread">The original comment thread in TFS or Azue DevOps pull request.</param>
-        public TfsPullRequestCommentThread(GitPullRequestCommentThread thread)
+        internal TfsPullRequestCommentThread(GitPullRequestCommentThread thread)
         {
             thread.NotNull(nameof(thread));
 
@@ -109,6 +108,11 @@
             get => this.thread.Properties;
             set => this.thread.Properties = value != null ? new PropertiesCollection(value) : null;
         }
+
+        /// <summary>
+        /// Gets the inner Git comment thread object. Intended for the internal use only.
+        /// </summary>
+        internal GitPullRequestCommentThread InnerThread => this.thread;
 
         /// <summary>
         /// Gets the value of the thread property.
