@@ -488,6 +488,28 @@
         }
 
         /// <summary>
+        /// Creates a new comment thread in the pull request.
+        /// </summary>
+        /// <param name="thread">The instance of the thread.</param>
+        public void CreateCommentThread(TfsPullRequestCommentThread thread)
+        {
+            if (!this.ValidatePullRequest())
+            {
+                return;
+            }
+
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials))
+            {
+                gitClient.CreateThreadAsync(
+                    thread.InnerThread,
+                    this.RepositoryId,
+                    this.PullRequestId,
+                    null,
+                    CancellationToken.None).Wait();
+            }
+        }
+
+        /// <summary>
         /// Sets the pull request comment thread status.
         /// </summary>
         /// <param name="threadId">The Id of the comment thread.</param>
