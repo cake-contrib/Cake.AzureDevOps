@@ -26,6 +26,9 @@
             m.Setup(arg => arg.GetThreadsAsync(It.IsAny<Guid>(), It.IsAny<int>(), null, null, null, CancellationToken.None))
              .ReturnsAsync(() => new List<GitPullRequestCommentThread>());
 
+            m.Setup(arg => arg.CreateThreadAsync(It.IsAny<GitPullRequestCommentThread>(), It.IsAny<Guid>(), It.IsAny<int>(), null, CancellationToken.None))
+                .ReturnsAsync(() => null);
+
             return m;
         }
     }

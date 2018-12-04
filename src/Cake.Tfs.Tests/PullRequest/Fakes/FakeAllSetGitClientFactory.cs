@@ -183,6 +183,15 @@
              .ReturnsAsync((Guid rId, int prId, int? it, int? baseIt, object o, CancellationToken c)
                     => commentThreads);
 
+            m.Setup(arg => arg.CreateThreadAsync(
+                It.IsAny<GitPullRequestCommentThread>(),
+                It.IsAny<Guid>(),
+                It.IsAny<int>(),
+                null,
+                CancellationToken.None))
+             .ReturnsAsync((GitPullRequestCommentThread prct, Guid g, int i, object o, CancellationToken c)
+                    => prct);
+
             return m;
         }
     }

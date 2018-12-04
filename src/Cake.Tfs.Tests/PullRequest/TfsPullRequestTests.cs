@@ -1,5 +1,6 @@
 ﻿namespace Cake.Tfs.Tests.PullRequest
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Cake.Core.IO;
@@ -605,6 +606,54 @@
                 thread2.FilePath.ShouldBeNull();
                 thread2.Comments.ShouldNotBeNull();
                 thread2.Comments.ShouldBeEmpty();
+            }
+        }
+
+        public sealed class CreateCommentThread
+        {
+            [Fact]
+            public void Should_Throw_If_Input_Thread_Is_Null()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 100);
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var result = Record.Exception(() => pullRequest.CreateCommentThread(null));
+
+                // Then
+                Assert.IsType<NullReferenceException>(result);
+            }
+
+            [Fact]
+            public void Should_Not_Throw_If_Null_Is_Returned()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 100)
+                {
+                    GitClientFactory = new FakeNullForMethodsGitClientFactory()
+                };
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                pullRequest.CreateCommentThread(new TfsPullRequestCommentThread());
+
+                // Then
+                // ?? Nothing to validate here since the method returns void
+            }
+
+            [Fact]
+            public void Should_Create_Valid_Comment_Thread()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidAzureDevOpsUrl, 200);
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                pullRequest.CreateCommentThread(new TfsPullRequestCommentThread { Id = 300, Status = TfsCommentThreadStatus.Pending, FilePath = "/index.html" });
+
+                // Then
+                // ?? Nothing to validate here since the method returns void
             }
         }
     }
