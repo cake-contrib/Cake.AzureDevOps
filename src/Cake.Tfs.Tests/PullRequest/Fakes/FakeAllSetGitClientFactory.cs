@@ -134,8 +134,18 @@
                     It.IsAny<GitTargetVersionDescriptor>(),
                     null,
                     CancellationToken.None))
-             .ReturnsAsync((string prj, Guid rId, bool? b, int? t, int? s, GitBaseVersionDescriptor bvd, GitTargetVersionDescriptor tvd, object o1, CancellationToken c1)
+             .ReturnsAsync((string prj, Guid rId, bool? b, int? t, int? s, GitBaseVersionDescriptor bvd, GitTargetVersionDescriptor tvd, object o, CancellationToken c)
                     => gitCommitDiffs);
+
+            m.Setup(arg => arg.UpdateThreadAsync(
+                It.IsAny<GitPullRequestCommentThread>(),
+                It.IsAny<Guid>(),
+                It.IsAny<int>(),
+                It.IsAny<int>(),
+                null,
+                CancellationToken.None))
+             .ReturnsAsync((GitPullRequestCommentThread prct, Guid g, int prId, int thId, object o, CancellationToken c)
+                    => new GitPullRequestCommentThread { Id = thId, Status = prct.Status });
 
             return m;
         }

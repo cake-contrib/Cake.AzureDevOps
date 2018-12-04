@@ -491,5 +491,54 @@
                 filePath.FullPath.ShouldBe("src/project/myclass.cs");
             }
         }
+
+        public sealed class SetCommentThreadStatus
+        {
+            [Fact]
+            public void Should_Activate_Comment_Thread()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 12);
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                pullRequest.ActivateCommentThread(321);
+
+                // Then
+                // ?? Nothing to validate here since the method returns void
+            }
+
+            [Fact]
+            public void Should_Resolve_Comment_Thread()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidAzureDevOpsUrl, 21);
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                pullRequest.ResolveCommentThread(123);
+
+                // Then
+                // ?? Nothing to validate here since the method returns void
+            }
+
+            [Fact]
+            public void Should_Not_Throw_If_Null_Is_Returned()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 11)
+                {
+                    GitClientFactory = new FakeNullForMethodsGitClientFactory()
+                };
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                pullRequest.ActivateCommentThread(35);
+                pullRequest.ResolveCommentThread(53);
+
+                // Then
+                // ?? Nothing to validate here since the method returns void
+            }
+        }
     }
 }

@@ -20,6 +20,9 @@
              .ReturnsAsync(()
                     => new GitCommitDiffs { ChangeCounts = new Dictionary<VersionControlChangeType, int>(), Changes = new List<GitChange>() });
 
+            m.Setup(arg => arg.UpdateThreadAsync(It.IsAny<GitPullRequestCommentThread>(), It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>(), null, CancellationToken.None))
+             .ReturnsAsync(() => null);
+
             return m;
         }
     }
