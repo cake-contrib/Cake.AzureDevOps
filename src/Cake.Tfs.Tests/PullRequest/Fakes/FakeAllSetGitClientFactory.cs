@@ -147,6 +147,42 @@
              .ReturnsAsync((GitPullRequestCommentThread prct, Guid g, int prId, int thId, object o, CancellationToken c)
                     => new GitPullRequestCommentThread { Id = thId, Status = prct.Status });
 
+            // Setup GitPullRequestCommentThread collection
+            var commentThreads = new List<GitPullRequestCommentThread>
+            {
+                new GitPullRequestCommentThread
+                {
+                    Id = 11,
+                    ThreadContext = new CommentThreadContext()
+                    {
+                        FilePath = "/some/path/to/file.cs"
+                    },
+                    Comments = new List<Comment>
+                    {
+                        new Comment { Content = "Hello", IsDeleted = false, CommentType = CommentType.CodeChange },
+                        new Comment { Content = "Goodbye", IsDeleted = true, CommentType = CommentType.Text }
+                    },
+                    Status = CommentThreadStatus.Active
+                },
+                new GitPullRequestCommentThread
+                {
+                    Id = 22,
+                    ThreadContext = null,
+                    Comments = new List<Comment>(),
+                    Status = CommentThreadStatus.Fixed
+                }
+            };
+
+            m.Setup(arg => arg.GetThreadsAsync(
+                It.IsAny<Guid>(),
+                It.IsAny<int>(),
+                null,
+                null,
+                null,
+                CancellationToken.None))
+             .ReturnsAsync((Guid rId, int prId, int? it, int? baseIt, object o, CancellationToken c)
+                    => commentThreads);
+
             return m;
         }
     }
