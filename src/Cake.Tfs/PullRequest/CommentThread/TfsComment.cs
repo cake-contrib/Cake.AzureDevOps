@@ -22,6 +22,19 @@
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="TfsComment"/> class.
+        /// </summary>
+        /// <param name="content">The content of the comment.</param>
+        /// <param name="isDeleted">Equals 'true' if a comment is deleted. Otherwise, 'false'.</param>
+        /// <param name="commentType">The type of the comment.</param>
+        public TfsComment(string content, bool isDeleted, CommentType commentType)
+        {
+            content.NotNullOrWhiteSpace(nameof(content));
+
+            this.comment = new Comment { Content = content, IsDeleted = isDeleted, CommentType = commentType };
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="TfsComment"/> class with empty Git comment.
         /// </summary>
         public TfsComment()
