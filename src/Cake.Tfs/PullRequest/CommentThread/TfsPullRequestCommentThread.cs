@@ -96,7 +96,7 @@
 
             set
             {
-                this.thread.Comments = value?.Select(c => new Comment { Content = c.Content, IsDeleted = c.IsDeleted }).ToList();
+                this.thread.Comments = value?.Select(c => new Comment { Content = c.Content, IsDeleted = c.IsDeleted, CommentType = (CommentType)c.CommentType }).ToList();
             }
         }
 
