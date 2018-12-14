@@ -510,6 +510,73 @@
         }
 
         /// <summary>
+        /// Gets the Id of the latest pull request iteration.
+        /// </summary>
+        /// <returns>The Id of the pull request iteration.</returns>
+        public int GetLatestIterationId()
+        {
+            if (!this.ValidatePullRequest())
+            {
+                return -1;
+            }
+
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials))
+            {
+                var iterations = gitClient.GetPullRequestIterationsAsync(
+                                     this.RepositoryId,
+                                     this.PullRequestId,
+                                     null,
+                                     null,
+                                     CancellationToken.None).Result;
+
+                if (iterations == null)
+                {
+                    throw new TfsException("Could not retrieve the iterations");
+                }
+
+                var iterationId = iterations.Max(x => x.Id ?? -1);
+                return iterationId;
+            }
+        }
+
+        /// <summary>
+        /// Gets all the pull request changes of the given iteration.
+        /// </summary>
+        /// <param name="iterationId">The id of the iteration.</param>
+        /// <returns>The colletion of the iteration changes of the given id.</returns>
+        public IEnumerable<TfsPullRequestIterationChange> GetIterationChanges(int iterationId)
+        {
+            if (!this.ValidatePullRequest())
+            {
+                return null;
+            }
+
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials))
+            {
+                var changes =
+                    gitClient.GetPullRequestIterationChangesAsync(
+                        this.RepositoryId,
+                        this.PullRequestId,
+                        iterationId,
+                        null,
+                        null,
+                        null,
+                        null,
+                        CancellationToken.None).Result;
+
+                var tfsChanges = changes?.ChangeEntries.Select(c =>
+                    new TfsPullRequestIterationChange
+                    {
+                        ChangeId = c.ChangeId,
+                        ChangeTrackingId = c.ChangeTrackingId,
+                        ItemPath = c.Item.Path
+                    });
+
+                return tfsChanges;
+            }
+        }
+
+        /// <summary>
         /// Sets the pull request comment thread status.
         /// </summary>
         /// <param name="threadId">The Id of the comment thread.</param>
