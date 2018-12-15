@@ -8,6 +8,7 @@
     using Cake.Core.IO;
     using Cake.Tfs;
     using Cake.Tfs.PullRequest.CommentThread;
+    using Microsoft.TeamFoundation.Common;
     using Microsoft.TeamFoundation.SourceControl.WebApi;
     using TfsUrlParser;
 
@@ -512,7 +513,8 @@
         /// <summary>
         /// Gets the Id of the latest pull request iteration.
         /// </summary>
-        /// <returns>The Id of the pull request iteration.</returns>
+        /// <returns>The Id of the pull request iteration. Returns -1 in case the pull request is not valid.</returns>
+        /// <exception cref="TfsException">If it is not possible to obtain a collection of <see cref="GitPullRequestIteration"/>.</exception>
         public int GetLatestIterationId()
         {
             if (!this.ValidatePullRequest())
@@ -543,7 +545,7 @@
         /// Gets all the pull request changes of the given iteration.
         /// </summary>
         /// <param name="iterationId">The id of the iteration.</param>
-        /// <returns>The colletion of the iteration changes of the given id.</returns>
+        /// <returns>The colletion of the iteration changes of the given id. Returns <code>null</code> if pull request is not valid.</returns>
         public IEnumerable<TfsPullRequestIterationChange> GetIterationChanges(int iterationId)
         {
             if (!this.ValidatePullRequest())
@@ -569,7 +571,7 @@
                     {
                         ChangeId = c.ChangeId,
                         ChangeTrackingId = c.ChangeTrackingId,
-                        ItemPath = c.Item.Path
+                        ItemPath = c.Item.Path.IsNullOrEmpty() ? null : new FilePath(c.Item.Path)
                     });
 
                 return tfsChanges;

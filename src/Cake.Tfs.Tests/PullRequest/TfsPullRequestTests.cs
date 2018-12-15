@@ -656,5 +656,102 @@
                 // ?? Nothing to validate here since the method returns void
             }
         }
+
+        public sealed class GetLatestIterationId
+        {
+            [Fact]
+            public void Should_Throw_If_Null_Is_Returned()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 11)
+                {
+                    GitClientFactory = new FakeNullForMethodsGitClientFactory()
+                };
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var result = Record.Exception(() => pullRequest.GetLatestIterationId());
+
+                // Then
+                result.IsTfsException();
+            }
+
+            [Fact]
+            public void Should_Return_Valid_Iteration_Id()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidAzureDevOpsUrl, 12);
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                int id = pullRequest.GetLatestIterationId();
+
+                // Then
+                id.ShouldBe(42);
+            }
+
+            [Fact]
+            public void Should_Return_Invalid_Id_If_Something_Is_Wrong_With_Iteration()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 13);
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                int id = pullRequest.GetLatestIterationId();
+
+                // Then
+                id.ShouldBe(-1);
+            }
+        }
+
+        public sealed class GetIterationChanges
+        {
+            [Fact]
+            public void Should_Not_Throw_If_Null_Is_Returned()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidAzureDevOpsUrl, 21)
+                {
+                    GitClientFactory = new FakeNullForMethodsGitClientFactory()
+                };
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var changes = pullRequest.GetIterationChanges(42);
+
+                // Then
+                changes.ShouldBeNull();
+            }
+
+            [Fact]
+            public void Should_Return_Collection_Of_Valid_Iteration_Changes()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 22);
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var changes = pullRequest.GetIterationChanges(500);
+
+                // Then
+                changes.ShouldNotBeNull();
+                changes.ShouldNotBeEmpty();
+                changes.Count().ShouldBe(2);
+
+                changes.First().ShouldNotBeNull();
+                changes.First().ShouldBeOfType<TfsPullRequestIterationChange>();
+                changes.First().ChangeId.ShouldBe(100);
+                changes.First().ChangeTrackingId.ShouldBe(1);
+                changes.First().ItemPath.ShouldBeOfType<FilePath>();
+                changes.First().ItemPath.FullPath.ShouldBe("/src/my/class1.cs");
+
+                changes.Skip(1).First().ShouldNotBeNull();
+                changes.Skip(1).First().ShouldBeOfType<TfsPullRequestIterationChange>();
+                changes.Skip(1).First().ChangeId.ShouldBe(200);
+                changes.Skip(1).First().ChangeTrackingId.ShouldBe(2);
+                changes.Skip(1).First().ItemPath.ShouldBeNull();
+            }
+        }
     }
 }

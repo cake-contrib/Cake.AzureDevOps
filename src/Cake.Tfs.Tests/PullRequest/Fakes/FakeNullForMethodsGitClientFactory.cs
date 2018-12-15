@@ -27,7 +27,13 @@
              .ReturnsAsync(() => new List<GitPullRequestCommentThread>());
 
             m.Setup(arg => arg.CreateThreadAsync(It.IsAny<GitPullRequestCommentThread>(), It.IsAny<Guid>(), It.IsAny<int>(), null, CancellationToken.None))
-                .ReturnsAsync(() => null);
+             .ReturnsAsync(() => null);
+
+            m.Setup(arg => arg.GetPullRequestIterationsAsync(It.IsAny<Guid>(), It.IsAny<int>(), null, null, CancellationToken.None))
+             .ReturnsAsync(() => null);
+
+            m.Setup(arg => arg.GetPullRequestIterationChangesAsync(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>(), null, null, null, null, CancellationToken.None))
+             .ReturnsAsync(() => null);
 
             return m;
         }

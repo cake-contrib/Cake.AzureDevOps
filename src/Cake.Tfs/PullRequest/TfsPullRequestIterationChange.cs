@@ -1,5 +1,7 @@
 ﻿namespace Cake.Tfs.PullRequest
 {
+    using Cake.Core.IO;
+
     /// <summary>
     /// Class representing an iteration change of the pull request.
     /// </summary>
@@ -8,7 +10,7 @@
         /// <summary>
         /// Gets or sets the file path the iteration change is associated with.
         /// </summary>
-        public string ItemPath { get; set; }
+        public FilePath ItemPath { get; set; }
 
         /// <summary>
         /// Gets or sets the id of the iteration change.
