@@ -134,8 +134,63 @@
                     It.IsAny<GitTargetVersionDescriptor>(),
                     null,
                     CancellationToken.None))
-             .ReturnsAsync((string prj, Guid rId, bool? b, int? t, int? s, GitBaseVersionDescriptor bvd, GitTargetVersionDescriptor tvd, object o1, CancellationToken c1)
+             .ReturnsAsync((string prj, Guid rId, bool? b, int? t, int? s, GitBaseVersionDescriptor bvd, GitTargetVersionDescriptor tvd, object o, CancellationToken c)
                     => gitCommitDiffs);
+
+            m.Setup(arg => arg.UpdateThreadAsync(
+                It.IsAny<GitPullRequestCommentThread>(),
+                It.IsAny<Guid>(),
+                It.IsAny<int>(),
+                It.IsAny<int>(),
+                null,
+                CancellationToken.None))
+             .ReturnsAsync((GitPullRequestCommentThread prct, Guid g, int prId, int thId, object o, CancellationToken c)
+                    => new GitPullRequestCommentThread { Id = thId, Status = prct.Status });
+
+            // Setup GitPullRequestCommentThread collection
+            var commentThreads = new List<GitPullRequestCommentThread>
+            {
+                new GitPullRequestCommentThread
+                {
+                    Id = 11,
+                    ThreadContext = new CommentThreadContext()
+                    {
+                        FilePath = "/some/path/to/file.cs"
+                    },
+                    Comments = new List<Comment>
+                    {
+                        new Comment { Content = "Hello", IsDeleted = false, CommentType = CommentType.CodeChange },
+                        new Comment { Content = "Goodbye", IsDeleted = true, CommentType = CommentType.Text }
+                    },
+                    Status = CommentThreadStatus.Active
+                },
+                new GitPullRequestCommentThread
+                {
+                    Id = 22,
+                    ThreadContext = null,
+                    Comments = new List<Comment>(),
+                    Status = CommentThreadStatus.Fixed
+                }
+            };
+
+            m.Setup(arg => arg.GetThreadsAsync(
+                It.IsAny<Guid>(),
+                It.IsAny<int>(),
+                null,
+                null,
+                null,
+                CancellationToken.None))
+             .ReturnsAsync((Guid rId, int prId, int? it, int? baseIt, object o, CancellationToken c)
+                    => commentThreads);
+
+            m.Setup(arg => arg.CreateThreadAsync(
+                It.IsAny<GitPullRequestCommentThread>(),
+                It.IsAny<Guid>(),
+                It.IsAny<int>(),
+                null,
+                CancellationToken.None))
+             .ReturnsAsync((GitPullRequestCommentThread prct, Guid g, int i, object o, CancellationToken c)
+                    => prct);
 
             return m;
         }

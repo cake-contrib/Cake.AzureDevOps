@@ -1,9 +1,11 @@
 ﻿namespace Cake.Tfs.Tests.PullRequest
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Cake.Core.IO;
     using Cake.Tfs.PullRequest;
+    using Cake.Tfs.PullRequest.CommentThread;
     using Cake.Tfs.Tests.PullRequest.Fakes;
     using Microsoft.VisualStudio.Services.Common;
     using Shouldly;
@@ -489,6 +491,169 @@
                 filePath.ShouldNotBeNull();
                 filePath.FullPath.ShouldNotBeEmpty();
                 filePath.FullPath.ShouldBe("src/project/myclass.cs");
+            }
+        }
+
+        public sealed class SetCommentThreadStatus
+        {
+            [Fact]
+            public void Should_Activate_Comment_Thread()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 12);
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                pullRequest.ActivateCommentThread(321);
+
+                // Then
+                // ?? Nothing to validate here since the method returns void
+            }
+
+            [Fact]
+            public void Should_Resolve_Comment_Thread()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidAzureDevOpsUrl, 21);
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                pullRequest.ResolveCommentThread(123);
+
+                // Then
+                // ?? Nothing to validate here since the method returns void
+            }
+
+            [Fact]
+            public void Should_Not_Throw_If_Null_Is_Returned()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 11)
+                {
+                    GitClientFactory = new FakeNullForMethodsGitClientFactory()
+                };
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                pullRequest.ActivateCommentThread(35);
+                pullRequest.ResolveCommentThread(53);
+
+                // Then
+                // ?? Nothing to validate here since the method returns void
+            }
+        }
+
+        public sealed class GetCommentThreads
+        {
+            [Fact]
+            public void Should_Not_Fail_If_Empty_List_Is_Returned()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 33)
+                {
+                    GitClientFactory = new FakeNullForMethodsGitClientFactory()
+                };
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var threads = pullRequest.GetCommentThreads();
+
+                // Then
+                threads.ShouldNotBeNull();
+                threads.ShouldBeEmpty();
+            }
+
+            [Fact]
+            public void Should_Return_Valid_Comment_Threads()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidAzureDevOpsUrl, 44);
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var threads = pullRequest.GetCommentThreads();
+
+                // Then
+                threads.ShouldNotBeNull();
+                threads.ShouldNotBeEmpty();
+                threads.Count().ShouldBe(2);
+
+                TfsPullRequestCommentThread thread1 = threads.First();
+                thread1.Id.ShouldBe(11);
+                thread1.Status.ShouldBe(TfsCommentThreadStatus.Active);
+                thread1.FilePath.ShouldNotBeNull();
+                thread1.FilePath.FullPath.ShouldBe("some/path/to/file.cs");
+
+                thread1.Comments.ShouldNotBeNull();
+                thread1.Comments.ShouldNotBeEmpty();
+                thread1.Comments.Count().ShouldBe(2);
+
+                TfsComment comment11 = thread1.Comments.First();
+                comment11.ShouldNotBeNull();
+                comment11.Content.ShouldBe("Hello");
+                comment11.IsDeleted.ShouldBe(false);
+                comment11.CommentType.ShouldBe(TfsCommentType.CodeChange);
+
+                TfsComment comment12 = thread1.Comments.Last();
+                comment12.ShouldNotBeNull();
+                comment12.Content.ShouldBe("Goodbye");
+                comment12.IsDeleted.ShouldBe(true);
+                comment12.CommentType.ShouldBe(TfsCommentType.Text);
+
+                TfsPullRequestCommentThread thread2 = threads.Last();
+                thread2.Id.ShouldBe(22);
+                thread2.Status.ShouldBe(TfsCommentThreadStatus.Fixed);
+                thread2.FilePath.ShouldBeNull();
+                thread2.Comments.ShouldNotBeNull();
+                thread2.Comments.ShouldBeEmpty();
+            }
+        }
+
+        public sealed class CreateCommentThread
+        {
+            [Fact]
+            public void Should_Throw_If_Input_Thread_Is_Null()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 100);
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var result = Record.Exception(() => pullRequest.CreateCommentThread(null));
+
+                // Then
+                Assert.IsType<NullReferenceException>(result);
+            }
+
+            [Fact]
+            public void Should_Not_Throw_If_Null_Is_Returned()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 100)
+                {
+                    GitClientFactory = new FakeNullForMethodsGitClientFactory()
+                };
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                pullRequest.CreateCommentThread(new TfsPullRequestCommentThread());
+
+                // Then
+                // ?? Nothing to validate here since the method returns void
+            }
+
+            [Fact]
+            public void Should_Create_Valid_Comment_Thread()
+            {
+                // Given
+                var fixture = new PullRequestFixture(PullRequestFixture.ValidAzureDevOpsUrl, 200);
+                var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                pullRequest.CreateCommentThread(new TfsPullRequestCommentThread { Id = 300, Status = TfsCommentThreadStatus.Pending, FilePath = "/index.html" });
+
+                // Then
+                // ?? Nothing to validate here since the method returns void
             }
         }
     }
