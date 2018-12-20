@@ -192,6 +192,53 @@
              .ReturnsAsync((GitPullRequestCommentThread prct, Guid g, int i, object o, CancellationToken c)
                     => prct);
 
+            m.Setup(arg => arg.GetPullRequestIterationsAsync(
+                It.IsAny<Guid>(),
+                It.Is<int>(i => i != 13),
+                null,
+                null,
+                CancellationToken.None))
+             .ReturnsAsync((Guid repoId, int prId, bool? b, object o, CancellationToken c)
+                    => new List<GitPullRequestIteration>
+                    {
+                        new GitPullRequestIteration { Id = 42, CreatedDate = DateTime.Today.AddDays(-3) },
+                        new GitPullRequestIteration { Id = 16, CreatedDate = DateTime.Today.AddDays(-1) }
+                    });
+
+            m.Setup(arg => arg.GetPullRequestIterationsAsync(
+                    It.IsAny<Guid>(),
+                    It.Is<int>(i => i == 13), // Just to emulate the unlucky case
+                    null,
+                    null,
+                    CancellationToken.None))
+                .ReturnsAsync((Guid repoId, int prId, bool? b, object o, CancellationToken c)
+                    => new List<GitPullRequestIteration>
+                    {
+                        new GitPullRequestIteration { Id = null }
+                    });
+
+            // Setup GitPullRequestIterationChanges collection
+            var changes = new GitPullRequestIterationChanges
+            {
+                ChangeEntries = new List<GitPullRequestChange>
+                {
+                    new GitPullRequestChange { ChangeId = 100, ChangeTrackingId = 1, Item = new GitItem { Path = "/src/my/class1.cs" } },
+                    new GitPullRequestChange { ChangeId = 200, ChangeTrackingId = 2, Item = new GitItem { Path = string.Empty } }
+                }
+            };
+
+            m.Setup(arg => arg.GetPullRequestIterationChangesAsync(
+                It.IsAny<Guid>(),
+                It.IsAny<int>(),
+                It.IsAny<int>(),
+                null,
+                null,
+                null,
+                null,
+                CancellationToken.None))
+             .ReturnsAsync((Guid repoId, int prId, int iterId, int? t, int? s, int? ct, object o, CancellationToken c)
+                    => changes);
+
             return m;
         }
     }
