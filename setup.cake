@@ -19,6 +19,6 @@ ToolSettings.SetToolSettings(
     dupFinderExcludePattern: new string[] { BuildParameters.RootDirectoryPath + "/src/Cake.Tfs.Tests/**/*.cs" },
     testCoverageFilter: "+[*]* -[xunit.*]* -[Cake.Core]* -[*.Tests]* ",
     testCoverageExcludeByAttribute: "*.ExcludeFromCodeCoverage*",
-    testCoverageExcludeByFile: "*/*Designer.cs;*/*.g.cs;*/*.g.i.cs");
+    testCoverageExcludeByFile: "*/*Designer.cs;*/*.g.cs;*/*.g.i.cs;Common.cs");
 
 Build.Run();
