@@ -7,6 +7,8 @@
     using Cake.Core.Diagnostics;
     using Cake.Core.IO;
     using Cake.Tfs;
+    using Cake.Tfs.PullRequest.CommentThread;
+    using Microsoft.TeamFoundation.Common;
     using Microsoft.TeamFoundation.SourceControl.WebApi;
     using TfsUrlParser;
 
@@ -446,6 +448,162 @@
                         !change.Item.IsFolder
                     select
                         new FilePath(change.Item.Path.TrimStart('/'));
+            }
+        }
+
+        /// <summary>
+        /// Gets the pull request comment threads.
+        /// </summary>
+        /// <returns>The list of comment threads of the pull request.</returns>
+        public IEnumerable<TfsPullRequestCommentThread> GetCommentThreads()
+        {
+            if (!this.ValidatePullRequest())
+            {
+                return new List<TfsPullRequestCommentThread>();
+            }
+
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials))
+            {
+                var threads = gitClient.GetThreadsAsync(this.RepositoryId, this.PullRequestId, null, null, null, CancellationToken.None).Result;
+
+                return threads.Select(t => new TfsPullRequestCommentThread(t));
+            }
+        }
+
+        /// <summary>
+        /// Sets the pull request comment thread status to <see cref="CommentThreadStatus.Fixed"/>.
+        /// </summary>
+        /// <param name="threadId">The Id of the comment thread.</param>
+        public void ResolveCommentThread(int threadId)
+        {
+            this.SetCommentThreadStatus(threadId, CommentThreadStatus.Fixed);
+        }
+
+        /// <summary>
+        /// Sets the pull request comment thread to <see cref="CommentThreadStatus.Active"/>.
+        /// </summary>
+        /// <param name="threadId">The Id of the comment thread.</param>
+        public void ActivateCommentThread(int threadId)
+        {
+            this.SetCommentThreadStatus(threadId, CommentThreadStatus.Active);
+        }
+
+        /// <summary>
+        /// Creates a new comment thread in the pull request.
+        /// </summary>
+        /// <param name="thread">The instance of the thread.</param>
+        public void CreateCommentThread(TfsPullRequestCommentThread thread)
+        {
+            if (!this.ValidatePullRequest())
+            {
+                return;
+            }
+
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials))
+            {
+                gitClient.CreateThreadAsync(
+                    thread.InnerThread,
+                    this.RepositoryId,
+                    this.PullRequestId,
+                    null,
+                    CancellationToken.None).Wait();
+            }
+        }
+
+        /// <summary>
+        /// Gets the Id of the latest pull request iteration.
+        /// </summary>
+        /// <returns>The Id of the pull request iteration. Returns -1 in case the pull request is not valid.</returns>
+        /// <exception cref="TfsException">If it is not possible to obtain a collection of <see cref="GitPullRequestIteration"/>.</exception>
+        public int GetLatestIterationId()
+        {
+            if (!this.ValidatePullRequest())
+            {
+                return -1;
+            }
+
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials))
+            {
+                var iterations = gitClient.GetPullRequestIterationsAsync(
+                                     this.RepositoryId,
+                                     this.PullRequestId,
+                                     null,
+                                     null,
+                                     CancellationToken.None).Result;
+
+                if (iterations == null)
+                {
+                    throw new TfsException("Could not retrieve the iterations");
+                }
+
+                var iterationId = iterations.Max(x => x.Id ?? -1);
+                return iterationId;
+            }
+        }
+
+        /// <summary>
+        /// Gets all the pull request changes of the given iteration.
+        /// </summary>
+        /// <param name="iterationId">The id of the iteration.</param>
+        /// <returns>The colletion of the iteration changes of the given id. Returns <code>null</code> if pull request is not valid.</returns>
+        public IEnumerable<TfsPullRequestIterationChange> GetIterationChanges(int iterationId)
+        {
+            if (!this.ValidatePullRequest())
+            {
+                return null;
+            }
+
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials))
+            {
+                var changes =
+                    gitClient.GetPullRequestIterationChangesAsync(
+                        this.RepositoryId,
+                        this.PullRequestId,
+                        iterationId,
+                        null,
+                        null,
+                        null,
+                        null,
+                        CancellationToken.None).Result;
+
+                var tfsChanges = changes?.ChangeEntries.Select(c =>
+                    new TfsPullRequestIterationChange
+                    {
+                        ChangeId = c.ChangeId,
+                        ChangeTrackingId = c.ChangeTrackingId,
+                        ItemPath = c.Item.Path.IsNullOrEmpty() ? null : new FilePath(c.Item.Path)
+                    });
+
+                return tfsChanges;
+            }
+        }
+
+        /// <summary>
+        /// Sets the pull request comment thread status.
+        /// </summary>
+        /// <param name="threadId">The Id of the comment thread.</param>
+        /// <param name="status">The comment thread status.</param>
+        private void SetCommentThreadStatus(int threadId, CommentThreadStatus status)
+        {
+            if (!this.ValidatePullRequest())
+            {
+                return;
+            }
+
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials))
+            {
+                var newThread = new GitPullRequestCommentThread
+                {
+                    Status = status
+                };
+
+                gitClient.UpdateThreadAsync(
+                    newThread,
+                    this.RepositoryId,
+                    this.PullRequestId,
+                    threadId,
+                    null,
+                    CancellationToken.None).Wait();
             }
         }
 
