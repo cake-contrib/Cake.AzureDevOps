@@ -29,19 +29,6 @@
             }
 
             [Fact]
-            public void Should_Throw_If_Log_Is_Null_Overload()
-            {
-                // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, "foo") { Log = null };
-
-                // When
-                var result = Record.Exception(() => new TfsPullRequest(fixture.Log, fixture.Settings));
-
-                // Then
-                result.IsArgumentNullException("log");
-            }
-
-            [Fact]
             public void Should_Throw_If_Settings_Are_Null()
             {
                 // Given
@@ -49,19 +36,6 @@
 
                 // When
                 var result = Record.Exception(() => new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory));
-
-                // Then
-                result.IsArgumentNullException("settings");
-            }
-
-            [Fact]
-            public void Should_Throw_If_Settings_Are_Null_Overload()
-            {
-                // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 42) { Settings = null };
-
-                // When
-                var result = Record.Exception(() => new TfsPullRequest(fixture.Log, fixture.Settings));
 
                 // Then
                 result.IsArgumentNullException("settings");
@@ -329,6 +303,72 @@
 
                 // Then
                 result.IsTfsPullRequestNotFoundException();
+            }
+        }
+
+        public sealed class Create
+        {
+            [Fact]
+            public void Should_Throw_Exception_If_Target_Branch_Not_Found()
+            {
+                // Given
+                var fixture =
+                    new CreatePullRequestFixture(
+                        BasePullRequestFixture.ValidTfsUrl,
+                        "testBranch",
+                        "NotExistingBranch",
+                        "test",
+                        "test");
+
+                // When
+                var result =
+                    Record.Exception(() => TfsPullRequest.Create(fixture.Log, fixture.GitClientFactory, fixture.Settings));
+
+                // Then
+                result.ShouldNotBe(null);
+                result.IsExpected("Create");
+                result.IsTfsBranchNotFoundException();
+                result.Message.ShouldBe($"Branch not found \"NotExistingBranch\"");
+            }
+
+            [Fact]
+            public void Should_Return_A_PullRequest()
+            {
+                // Given
+                var fixture =
+                    new CreatePullRequestFixture(
+                        BasePullRequestFixture.ValidTfsUrl,
+                        "testBranch",
+                        "master",
+                        "test",
+                        "test");
+
+                // When
+                var result =
+                    TfsPullRequest.Create(fixture.Log, fixture.GitClientFactory, fixture.Settings);
+
+                // Then
+                result.ShouldBeOfType<TfsPullRequest>();
+            }
+
+            [Fact]
+            public void Should_Return_A_PullRequest_With_Fallback_To_Master_As_DefaultBranch()
+            {
+                // Given
+                var fixture =
+                    new CreatePullRequestFixture(
+                        BasePullRequestFixture.ValidTfsUrl,
+                        "testBranch",
+                        null,
+                        "test",
+                        "test");
+
+                // When
+                var result =
+                    TfsPullRequest.Create(fixture.Log, fixture.GitClientFactory, fixture.Settings);
+
+                // Then
+                result.ShouldBeOfType<TfsPullRequest>();
             }
         }
 
