@@ -239,6 +239,50 @@
              .ReturnsAsync((Guid repoId, int prId, int iterId, int? t, int? s, int? ct, object o, CancellationToken c)
                     => changes);
 
+            // Setup pull request creation
+            m.Setup(arg => arg.GetRefsAsync(It.IsAny<string>(), "MyRepoName", "NotExistingBranch", null, null, null, CancellationToken.None))
+             .ReturnsAsync(() => new List<GitRef>());
+
+            m.Setup(args => args.GetRepositoryAsync(It.IsAny<string>(), "MyRepoName", null, null, CancellationToken.None))
+                .ReturnsAsync(() => new GitRepository() { DefaultBranch = "master" });
+
+            m.Setup(arg => arg.GetRefsAsync(It.IsAny<string>(), "MyRepoName", "master", null, null, null, CancellationToken.None))
+             .ReturnsAsync(() => new List<GitRef>()
+             {
+                 new GitRef("master")
+             });
+
+            m.Setup(
+                arg =>
+                    arg.CreatePullRequestAsync(
+                        It.IsAny<GitPullRequest>(),
+                        It.IsAny<string>(),
+                        It.IsAny<string>(),
+                        null,
+                        null,
+                        CancellationToken.None))
+             .ReturnsAsync(
+                (
+                    GitPullRequest gitPullRequestToCreate,
+                    string project,
+                    string repositoryId,
+                    bool? supportsIterations,
+                    object userState,
+                    CancellationToken cancellationToken) =>
+                {
+                     gitPullRequestToCreate.PullRequestId = 777;
+                    gitPullRequestToCreate.Repository = new GitRepository
+                    {
+                        Id = Guid.NewGuid(),
+                        Name = repositoryId
+                    };
+                    gitPullRequestToCreate.CodeReviewId = 123;
+                    gitPullRequestToCreate.LastMergeSourceCommit = new GitCommitRef { CommitId = "4a92b977" };
+                    gitPullRequestToCreate.LastMergeTargetCommit = new GitCommitRef { CommitId = "78a3c113" };
+
+                     return gitPullRequestToCreate;
+                 });
+
             return m;
         }
     }

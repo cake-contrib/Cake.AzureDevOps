@@ -174,5 +174,43 @@
 
             new TfsPullRequest(context.Log, settings, new GitClientFactory()).SetStatus(status);
         }
+
+        /// <summary>
+        /// Creates a pull request in Team Foundation Server or Azure DevOps
+        /// using the specified settings.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">Settings for creating the pull request.</param>
+        /// <returns>Returns a <see cref="PullRequest.TfsPullRequest" /> initialized with the
+        /// created pull request.</returns>
+        /// <example>
+        /// <para>Creates a pull request:</para>
+        /// <code>
+        /// <![CDATA[
+        ///     var pullRequestSettings =
+        ///         new TfsCreatePullRequestSettings(
+        ///             new Uri("http://myserver:8080/tfs/defaultcollection/myproject/_git/myrepository"),
+        ///             "refs/heads/feature/myfeature",
+        ///             "refs/heads/develop",
+        ///             "Merge my feature from myfeature",
+        ///             "Merge my feature from myfeature",
+        ///             TfsAuthenticationNtlm());
+        ///
+        ///     TfsCreatePullRequest(pullRequestSettings);
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <exception cref="TfsBranchNotFoundException">If the target branch could not be found.</exception>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Pull Request")]
+        public static TfsPullRequest TfsCreatePullRequest(
+            this ICakeContext context,
+            TfsCreatePullRequestSettings settings)
+        {
+            context.NotNull(nameof(context));
+            context.NotNull(nameof(settings));
+
+            return PullRequest.TfsPullRequest.Create(context.Log, new GitClientFactory(), settings);
+        }
     }
 }

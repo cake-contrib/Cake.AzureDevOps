@@ -26,48 +26,48 @@
             }
 
             [Fact]
-            public void Should_Throw_If_SourceBranch_Is_Null()
+            public void Should_Throw_If_SourceRefName_Is_Null()
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                string sourceBranch = null;
+                string sourceRefName = null;
                 ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
-                var result = Record.Exception(() => new TfsPullRequestSettings(repositoryUrl, sourceBranch, credentials));
+                var result = Record.Exception(() => new TfsPullRequestSettings(repositoryUrl, sourceRefName, credentials));
 
                 // Then
-                result.IsArgumentNullException("sourceBranch");
+                result.IsArgumentNullException("sourceRefName");
             }
 
             [Fact]
-            public void Should_Throw_If_SourceBranch_Is_Empty()
+            public void Should_Throw_If_SourceRefName_Is_Empty()
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceBranch = string.Empty;
+                var sourceRefName = string.Empty;
                 ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
-                var result = Record.Exception(() => new TfsPullRequestSettings(repositoryUrl, sourceBranch, credentials));
+                var result = Record.Exception(() => new TfsPullRequestSettings(repositoryUrl, sourceRefName, credentials));
 
                 // Then
-                result.IsArgumentOutOfRangeException("sourceBranch");
+                result.IsArgumentOutOfRangeException("sourceRefName");
             }
 
             [Fact]
-            public void Should_Throw_If_SourceBranch_Is_WhiteSpace()
+            public void Should_Throw_If_SourceRefName_Is_WhiteSpace()
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceBranch = " ";
+                var sourceRefName = " ";
                 ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
-                var result = Record.Exception(() => new TfsPullRequestSettings(repositoryUrl, sourceBranch, credentials));
+                var result = Record.Exception(() => new TfsPullRequestSettings(repositoryUrl, sourceRefName, credentials));
 
                 // Then
-                result.IsArgumentOutOfRangeException("sourceBranch");
+                result.IsArgumentOutOfRangeException("sourceRefName");
             }
 
             [Fact]
@@ -101,18 +101,18 @@
             }
 
             [Fact]
-            public void Should_Set_SourceBranch()
+            public void Should_Set_SourceRefName()
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceBranch = "foo";
+                var sourceRefName = "foo";
                 ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
-                var result = new TfsPullRequestSettings(repositoryUrl, sourceBranch, credentials);
+                var result = new TfsPullRequestSettings(repositoryUrl, sourceRefName, credentials);
 
                 // Then
-                result.SourceBranch.ShouldBe(sourceBranch);
+                result.SourceRefName.ShouldBe(sourceRefName);
             }
 
             [Fact]
@@ -302,7 +302,7 @@
                 var result = new TfsPullRequestSettings(settings);
 
                 // Then
-                result.SourceBranch.ShouldBe(sourceBranch);
+                result.SourceRefName.ShouldBe(sourceBranch);
             }
 
             [Fact]

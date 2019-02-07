@@ -4,9 +4,9 @@
     using Cake.Tfs.Authentication;
 
     /// <summary>
-    /// Settings for pull request aliases.
+    /// Settings for aliases handling pull requests.
     /// </summary>
-    public class TfsPullRequestSettings
+    public class TfsPullRequestSettings : BaseTfsPullRequestSettings
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TfsPullRequestSettings"/> class.
@@ -19,14 +19,8 @@
         /// <param name="credentials">Credentials to use to authenticate against Team Foundation Server or
         /// Azure DevOps.</param>
         public TfsPullRequestSettings(Uri repositoryUrl, string sourceBranch, ITfsCredentials credentials)
+            : base(repositoryUrl, sourceBranch, credentials)
         {
-            repositoryUrl.NotNull(nameof(repositoryUrl));
-            sourceBranch.NotNullOrWhiteSpace(nameof(sourceBranch));
-            credentials.NotNull(nameof(credentials));
-
-            this.RepositoryUrl = repositoryUrl;
-            this.SourceBranch = sourceBranch;
-            this.Credentials = credentials;
         }
 
         /// <summary>
@@ -40,14 +34,11 @@
         /// <param name="credentials">Credentials to use to authenticate against Team Foundation Server or
         /// Azure DevOps.</param>
         public TfsPullRequestSettings(Uri repositoryUrl, int pullRequestId, ITfsCredentials credentials)
+            : base(repositoryUrl, credentials)
         {
-            repositoryUrl.NotNull(nameof(repositoryUrl));
             pullRequestId.NotNegativeOrZero(nameof(pullRequestId));
-            credentials.NotNull(nameof(credentials));
 
-            this.RepositoryUrl = repositoryUrl;
             this.PullRequestId = pullRequestId;
-            this.Credentials = credentials;
         }
 
         /// <summary>
@@ -56,13 +47,9 @@
         /// </summary>
         /// <param name="settings">Settings containing the parameters.</param>
         public TfsPullRequestSettings(TfsPullRequestSettings settings)
+            : base(settings)
         {
-            settings.NotNull(nameof(settings));
-
-            this.RepositoryUrl = settings.RepositoryUrl;
-            this.SourceBranch = settings.SourceBranch;
             this.PullRequestId = settings.PullRequestId;
-            this.Credentials = settings.Credentials;
             this.ThrowExceptionIfPullRequestCouldNotBeFound = settings.ThrowExceptionIfPullRequestCouldNotBeFound;
         }
 
@@ -73,20 +60,8 @@
         /// <param name="credentials">Credentials to use to authenticate against Team Foundation Server or
         /// Azure DevOps.</param>
         public TfsPullRequestSettings(ITfsCredentials credentials)
+            : base(credentials)
         {
-            credentials.NotNull(nameof(credentials));
-
-            this.Credentials = credentials;
-
-            var repositoryUrl = Environment.GetEnvironmentVariable("BUILD_REPOSITORY_URI", EnvironmentVariableTarget.Process);
-            if (string.IsNullOrWhiteSpace(repositoryUrl))
-            {
-                throw new InvalidOperationException(
-                    "Failed to read the BUILD_REPOSITORY_URI environment variable. Make sure you are running in an Azure Pipelines or Team Foundation Server build.");
-            }
-
-            this.RepositoryUrl = new Uri(repositoryUrl);
-
             var pullRequestId = Environment.GetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", EnvironmentVariableTarget.Process);
             if (string.IsNullOrWhiteSpace(pullRequestId))
             {
@@ -108,29 +83,13 @@
         }
 
         /// <summary>
-        /// Gets the full URL of the Git repository, eg. <code>http://myserver:8080/tfs/defaultcollection/myproject/_git/myrepository</code>.
-        /// </summary>
-        public Uri RepositoryUrl { get; private set; }
-
-        /// <summary>
-        /// Gets the branch for which the pull request is made.
-        /// </summary>
-        public string SourceBranch { get; private set; }
-
-        /// <summary>
         /// Gets the ID of the pull request.
         /// </summary>
         public int? PullRequestId { get; private set; }
 
         /// <summary>
-        /// Gets the credentials used to authenticate against Team Foundation Server or
-        /// Azure DevOps.
-        /// </summary>
-        public ITfsCredentials Credentials { get; private set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether an exception should be thrown if
-        /// pull request for <see cref="SourceBranch"/> or <see cref="PullRequestId"/> could not be found.
+        /// pull request for <see cref="BaseTfsPullRequestSettings.SourceRefName"/> or <see cref="PullRequestId"/> could not be found.
         /// </summary>
         public bool ThrowExceptionIfPullRequestCouldNotBeFound { get; set; } = true;
 
