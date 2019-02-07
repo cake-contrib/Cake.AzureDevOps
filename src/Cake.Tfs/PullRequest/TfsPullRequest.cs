@@ -306,6 +306,10 @@
         /// <returns>Instance of the created pull request.</returns>
         public static TfsPullRequest Create(ICakeLog log, IGitClientFactory gitClientFactory, TfsCreatePullRequestSettings settings)
         {
+            log.NotNull(nameof(log));
+            gitClientFactory.NotNull(nameof(gitClientFactory));
+            settings.NotNull(nameof(settings));
+
             var repositoryDescription = new RepositoryDescription(settings.RepositoryUrl);
 
             using (var gitClient = gitClientFactory.CreateGitClient(repositoryDescription.CollectionUrl, settings.Credentials))

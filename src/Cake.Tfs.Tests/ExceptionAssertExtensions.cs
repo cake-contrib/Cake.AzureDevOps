@@ -82,9 +82,11 @@
         /// Checks if an exception is of type <see cref="TfsBranchNotFoundException"/>
         /// </summary>
         /// <param name="exception">Exception to check.</param>
-        public static void IsTfsBranchNotFoundException(this Exception exception)
+        /// <param name="message">Exception message which should be checked.</param>
+        public static void IsTfsBranchNotFoundException(this Exception exception, string message)
         {
             Assert.IsType<TfsBranchNotFoundException>(exception);
+            Assert.Equal(message, exception.Message);
         }
     }
 }

@@ -8,7 +8,7 @@
 
     public sealed class TfsPullRequestSettingsTests
     {
-        public sealed class TheCtorForSourceBranch
+        public sealed class TheCtorForSourceRefName
         {
             [Fact]
             public void Should_Throw_If_RepositoryUrl_Is_Null()
@@ -16,7 +16,7 @@
                 // Given
                 Uri repositoryUrl = null;
                 var sourceBranch = "foo";
-                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
                 var result = Record.Exception(() => new TfsPullRequestSettings(repositoryUrl, sourceBranch, credentials));
@@ -31,7 +31,7 @@
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
                 string sourceRefName = null;
-                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
                 var result = Record.Exception(() => new TfsPullRequestSettings(repositoryUrl, sourceRefName, credentials));
@@ -46,7 +46,7 @@
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
                 var sourceRefName = string.Empty;
-                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
                 var result = Record.Exception(() => new TfsPullRequestSettings(repositoryUrl, sourceRefName, credentials));
@@ -61,7 +61,7 @@
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
                 var sourceRefName = " ";
-                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
                 var result = Record.Exception(() => new TfsPullRequestSettings(repositoryUrl, sourceRefName, credentials));
@@ -91,7 +91,7 @@
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
                 var sourceBranch = "foo";
-                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
                 var result = new TfsPullRequestSettings(repositoryUrl, sourceBranch, credentials);
@@ -106,7 +106,7 @@
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
                 var sourceRefName = "foo";
-                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
                 var result = new TfsPullRequestSettings(repositoryUrl, sourceRefName, credentials);
@@ -121,7 +121,7 @@
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
                 var sourceBranch = "foo";
-                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
                 var result = new TfsPullRequestSettings(repositoryUrl, sourceBranch, credentials);
@@ -139,7 +139,7 @@
                 // Given
                 Uri repositoryUrl = null;
                 var pullRequestId = 41;
-                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
                 var result = Record.Exception(() => new TfsPullRequestSettings(repositoryUrl, pullRequestId, credentials));
@@ -154,7 +154,7 @@
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
                 var pullRequestId = 0;
-                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
                 var result = Record.Exception(() => new TfsPullRequestSettings(repositoryUrl, pullRequestId, credentials));
@@ -170,7 +170,7 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
                 var result = Record.Exception(() => new TfsPullRequestSettings(repositoryUrl, pullRequestId, credentials));
@@ -200,7 +200,7 @@
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
                 var pullRequestId = 41;
-                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
                 var result = new TfsPullRequestSettings(repositoryUrl, pullRequestId, credentials);
@@ -216,7 +216,7 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
                 var result = new TfsPullRequestSettings(repositoryUrl, pullRequestId, credentials);
@@ -231,7 +231,7 @@
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
                 var pullRequestId = 41;
-                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
                 var result = new TfsPullRequestSettings(repositoryUrl, pullRequestId, credentials);
@@ -262,7 +262,7 @@
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
                 var pullRequestId = 41;
-                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var credentials = AuthenticationProvider.AuthenticationNtlm();
                 var settings = new TfsPullRequestSettings(repositoryUrl, pullRequestId, credentials);
 
                 // When
@@ -279,7 +279,7 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var credentials = AuthenticationProvider.AuthenticationNtlm();
                 var settings = new TfsPullRequestSettings(repositoryUrl, pullRequestId, credentials);
 
                 // When
@@ -295,7 +295,7 @@
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
                 var sourceBranch = "foo";
-                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var credentials = AuthenticationProvider.AuthenticationNtlm();
                 var settings = new TfsPullRequestSettings(repositoryUrl, sourceBranch, credentials);
 
                 // When
@@ -311,7 +311,7 @@
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
                 var pullRequestId = 41;
-                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
+                var credentials = AuthenticationProvider.AuthenticationNtlm();
                 var settings = new TfsPullRequestSettings(repositoryUrl, pullRequestId, credentials);
 
                 // When
@@ -329,9 +329,11 @@
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
                 var pullRequestId = 41;
-                ITfsCredentials credentials = AuthenticationProvider.AuthenticationNtlm();
-                var settings = new TfsPullRequestSettings(repositoryUrl, pullRequestId, credentials);
-                settings.ThrowExceptionIfPullRequestCouldNotBeFound = value;
+                var credentials = AuthenticationProvider.AuthenticationNtlm();
+                var settings = new TfsPullRequestSettings(repositoryUrl, pullRequestId, credentials)
+                {
+                    ThrowExceptionIfPullRequestCouldNotBeFound = value
+                };
 
                 // When
                 var result = new TfsPullRequestSettings(settings);
