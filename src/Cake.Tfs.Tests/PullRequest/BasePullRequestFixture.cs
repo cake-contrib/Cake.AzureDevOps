@@ -1,9 +1,6 @@
 ﻿namespace Cake.Tfs.Tests.PullRequest
 {
-    using System;
     using Cake.Testing;
-    using Cake.Tfs.Authentication;
-    using Cake.Tfs.PullRequest;
     using Cake.Tfs.Tests.PullRequest.Fakes;
 
     internal abstract class BasePullRequestFixture

@@ -1,4 +1,4 @@
-﻿namespace Cake.Tfs.Tests.PullRequest
+﻿namespace Cake.Tfs.Tests.PullRequest.CommentThread
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -10,7 +10,7 @@
 
     public sealed class TfsPullRequestCommentThreadTests
     {
-        public sealed class Ctor
+        public sealed class TheCtor
         {
             [Fact]
             public void Should_Throw_If_Input_Thread_IsNull()
@@ -76,7 +76,7 @@
             }
         }
 
-        public sealed class FilePath
+        public sealed class TheFilePathProperty
         {
             [Fact]
             public void Should_Return_Null_If_Not_Initialized()
@@ -107,8 +107,10 @@
                 };
 
                 // When
-                var tfsThread = new TfsPullRequestCommentThread(thread);
-                tfsThread.FilePath = "/path/to/myclass.cs";
+                var tfsThread = new TfsPullRequestCommentThread(thread)
+                {
+                    FilePath = "/path/to/myclass.cs"
+                };
 
                 // Then
                 tfsThread.FilePath.ShouldNotBeNull();
@@ -116,7 +118,7 @@
             }
         }
 
-        public sealed class Comments
+        public sealed class TheCommentsProperty
         {
             [Fact]
             public void Should_Throw_If_Not_Set()
@@ -163,7 +165,7 @@
             }
         }
 
-        public sealed class Properties
+        public sealed class ThePropertiesProperty
         {
             [Fact]
             public void Should_Return_Null_If_Not_Set()
@@ -228,7 +230,7 @@
             }
         }
 
-        public sealed class GetValue
+        public sealed class TheGetValueMethod
         {
             [Fact]
             public void Should_Throw_If_Property_Name_Is_Null()
@@ -300,7 +302,7 @@
             }
         }
 
-        public sealed class SetValue
+        public sealed class TheSetValueMethod
         {
             [Fact]
             public void Should_Throw_If_Property_Name_Is_Null()
