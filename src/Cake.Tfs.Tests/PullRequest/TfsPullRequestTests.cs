@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Cake.Core.Diagnostics;
     using Cake.Core.IO;
     using Cake.Tfs.PullRequest;
     using Cake.Tfs.PullRequest.CommentThread;
@@ -19,20 +20,7 @@
             public void Should_Throw_If_Log_Is_Null()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, "foo") { Log = null };
-
-                // When
-                var result = Record.Exception(() => new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory));
-
-                // Then
-                result.IsArgumentNullException("log");
-            }
-
-            [Fact]
-            public void Should_Throw_If_Log_Is_Null_Overload()
-            {
-                // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, "foo") { Log = null };
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, "foo") { Log = null };
 
                 // When
                 var result = Record.Exception(() => new TfsPullRequest(fixture.Log, fixture.Settings));
@@ -45,20 +33,7 @@
             public void Should_Throw_If_Settings_Are_Null()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 42) { Settings = null };
-
-                // When
-                var result = Record.Exception(() => new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory));
-
-                // Then
-                result.IsArgumentNullException("settings");
-            }
-
-            [Fact]
-            public void Should_Throw_If_Settings_Are_Null_Overload()
-            {
-                // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 42) { Settings = null };
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 42) { Settings = null };
 
                 // When
                 var result = Record.Exception(() => new TfsPullRequest(fixture.Log, fixture.Settings));
@@ -68,10 +43,52 @@
             }
 
             [Fact]
+            public void Should_Throw_If_Tfs_Url_Is_Invalid()
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.InvalidTfsUrl, 42);
+
+                // When
+                var result = Record.Exception(() => new TfsPullRequest(fixture.Log, fixture.Settings));
+
+                // Then
+                result.IsUrlFormatException();
+            }
+        }
+
+        public sealed class TheCtorWithGitClientFactory
+        {
+            [Fact]
+            public void Should_Throw_If_Log_Is_Null()
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, "foo") { Log = null };
+
+                // When
+                var result = Record.Exception(() => new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory));
+
+                // Then
+                result.IsArgumentNullException("log");
+            }
+
+            [Fact]
+            public void Should_Throw_If_Settings_Are_Null()
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 42) { Settings = null };
+
+                // When
+                var result = Record.Exception(() => new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory));
+
+                // Then
+                result.IsArgumentNullException("settings");
+            }
+
+            [Fact]
             public void Should_Throw_If_Git_Client_Factory_Is_Null()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 42) { GitClientFactory = null };
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 42) { GitClientFactory = null };
 
                 // When
                 var result = Record.Exception(() => new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory));
@@ -84,7 +101,7 @@
             public void Should_Throw_If_Tfs_Url_Is_Invalid()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.InvalidTfsUrl, 42);
+                var fixture = new PullRequestFixture(BasePullRequestFixture.InvalidTfsUrl, 42);
 
                 // When
                 var result = Record.Exception(() => new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory));
@@ -97,7 +114,7 @@
             public void Should_Return_Valid_Tfs_Pull_Request_By_Id()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 42);
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 42);
 
                 // When
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
@@ -120,7 +137,7 @@
             public void Should_Return_Valid_Azure_DevOps_Pull_Request_By_Id()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidAzureDevOpsUrl, 16);
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsUrl, 16);
 
                 // When
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
@@ -143,7 +160,7 @@
             public void Should_Return_Valid_Tfs_Pull_Request_By_Source_Branch()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, "feature");
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, "feature");
 
                 // When
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
@@ -166,7 +183,7 @@
             public void Should_Return_Valid_Azure_DevOps_Pull_Request_By_Source_Branch()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidAzureDevOpsUrl, "feature");
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsUrl, "feature");
 
                 // When
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
@@ -190,7 +207,7 @@
             {
                 // Given
                 var fixture =
-                    new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 101)
+                    new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 101)
                     {
                         GitClientFactory = new FakeNullGitClientFactory(),
                         Settings = { ThrowExceptionIfPullRequestCouldNotBeFound = false }
@@ -218,7 +235,7 @@
             {
                 // Given
                 var fixture =
-                    new PullRequestFixture(PullRequestFixture.ValidAzureDevOpsUrl, 101)
+                    new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsUrl, 101)
                     {
                         GitClientFactory = new FakeNullGitClientFactory(),
                         Settings = { ThrowExceptionIfPullRequestCouldNotBeFound = false }
@@ -246,7 +263,7 @@
             {
                 // Given
                 var fixture =
-                    new PullRequestFixture(PullRequestFixture.ValidTfsUrl, "somebranch")
+                    new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, "somebranch")
                     {
                         GitClientFactory = new FakeNullGitClientFactory(),
                         Settings = { ThrowExceptionIfPullRequestCouldNotBeFound = false }
@@ -274,7 +291,7 @@
             {
                 // Given
                 var fixture =
-                    new PullRequestFixture(PullRequestFixture.ValidAzureDevOpsUrl, "somebranch")
+                    new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsUrl, "somebranch")
                     {
                         GitClientFactory = new FakeNullGitClientFactory(),
                         Settings = { ThrowExceptionIfPullRequestCouldNotBeFound = false }
@@ -302,7 +319,7 @@
             {
                 // Given
                 var fixture =
-                    new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 1)
+                    new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 1)
                     {
                         GitClientFactory = new FakeNullGitClientFactory()
                     };
@@ -319,7 +336,7 @@
             {
                 // Given
                 var fixture =
-                    new PullRequestFixture(PullRequestFixture.ValidTfsUrl, "feature")
+                    new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, "feature")
                     {
                         GitClientFactory = new FakeNullGitClientFactory()
                     };
@@ -332,13 +349,147 @@
             }
         }
 
-        public sealed class Vote
+        public sealed class TheCreateMethod
+        {
+            [Fact]
+            public void Should_Throw_If_Log_Is_Null()
+            {
+                // Given
+                var fixture =
+                    new CreatePullRequestFixture(
+                        BasePullRequestFixture.ValidTfsUrl,
+                        "testBranch",
+                        "NotExistingBranch",
+                        "test",
+                        "test");
+                ICakeLog log = null;
+
+                // When
+                var result =
+                    Record.Exception(() => TfsPullRequest.Create(log, fixture.GitClientFactory, fixture.Settings));
+
+                // Then
+                result.IsArgumentNullException("log");
+            }
+
+            [Fact]
+            public void Should_Throw_If_GitClientFactory_Is_Null()
+            {
+                // Given
+                var fixture =
+                    new CreatePullRequestFixture(
+                        BasePullRequestFixture.ValidTfsUrl,
+                        "testBranch",
+                        "NotExistingBranch",
+                        "test",
+                        "test");
+                IGitClientFactory gitClientFactory = null;
+
+                // When
+                var result =
+                    Record.Exception(() => TfsPullRequest.Create(fixture.Log, gitClientFactory, fixture.Settings));
+
+                // Then
+                result.IsArgumentNullException("gitClientFactory");
+            }
+
+            [Fact]
+            public void Should_Throw_If_Settings_Are_Null()
+            {
+                // Given
+                var fixture =
+                    new CreatePullRequestFixture(
+                        BasePullRequestFixture.ValidTfsUrl,
+                        "testBranch",
+                        "NotExistingBranch",
+                        "test",
+                        "test");
+                TfsCreatePullRequestSettings settings = null;
+
+                // When
+                var result =
+                    Record.Exception(() => TfsPullRequest.Create(fixture.Log, fixture.GitClientFactory, settings));
+
+                // Then
+                result.IsArgumentNullException("settings");
+            }
+
+            [Fact]
+            public void Should_Throw_If_Target_Branch_Not_Found()
+            {
+                // Given
+                var fixture =
+                    new CreatePullRequestFixture(
+                        BasePullRequestFixture.ValidTfsUrl,
+                        "testBranch",
+                        "NotExistingBranch",
+                        "test",
+                        "test");
+
+                // When
+                var result =
+                    Record.Exception(() => TfsPullRequest.Create(fixture.Log, fixture.GitClientFactory, fixture.Settings));
+
+                // Then
+                result.IsTfsBranchNotFoundException($"Branch not found \"NotExistingBranch\"");
+            }
+
+            [Fact]
+            public void Should_Return_A_PullRequest()
+            {
+                // Given
+                var sourceRefName = "testBranch";
+                var targetRefName = "master";
+                var title = "foo";
+                var description = "bar";
+                var fixture =
+                    new CreatePullRequestFixture(
+                        BasePullRequestFixture.ValidTfsUrl,
+                        sourceRefName,
+                        targetRefName,
+                        title,
+                        description);
+
+                // When
+                var result =
+                    TfsPullRequest.Create(fixture.Log, fixture.GitClientFactory, fixture.Settings);
+
+                // Then
+                // Return is a mocked pull request unrelated to the input values
+            }
+
+            [Fact]
+            public void Should_Return_A_PullRequest_With_Fallback_To_Default_Target_Branch()
+            {
+                // Given
+                var sourceRefName = "testBranch";
+                string targetRefName = null;
+                var title = "foo";
+                var description = "bar";
+                var fixture =
+                    new CreatePullRequestFixture(
+                        BasePullRequestFixture.ValidTfsUrl,
+                        sourceRefName,
+                        targetRefName,
+                        title,
+                        description);
+
+                // When
+                var result =
+                    TfsPullRequest.Create(fixture.Log, fixture.GitClientFactory, fixture.Settings);
+
+                // Then
+                // Return is a mocked pull request unrelated to the input values
+            }
+        }
+
+        public sealed class TheVoteMethod
         {
             [Fact]
             public void Should_Set_Approved_Vote_On_Tfs_Pull_Request()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 23);
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 23);
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
@@ -352,7 +503,7 @@
             public void Should_Throw_If_Vote_Value_Is_Invalid_On_Tfs_Pull_Request()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 23);
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 23);
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
@@ -368,7 +519,7 @@
             public void Should_Throw_If_Null_Is_Returned_On_Tfs_Pull_Request()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 23)
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 23)
                 {
                     GitClientFactory = new FakeNullForMethodsGitClientFactory()
                 };
@@ -384,13 +535,13 @@
             }
         }
 
-        public sealed class SetStatus
+        public sealed class TheSetStatusMethod
         {
             [Fact]
             public void Should_Throw_If_Tfs_Pull_Request_Status_Is_Null()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 16);
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 16);
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
@@ -404,7 +555,7 @@
             public void Should_Throw_If_Tfs_Pull_Request_State_Is_Invalid()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 16);
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 16);
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
                 var status = new TfsPullRequestStatus("whatever") { State = (TfsPullRequestStatusState)123 };
 
@@ -421,7 +572,7 @@
             public void Should_Set_Valid_Status_On_Tfs_Pull_Request()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 16);
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 16);
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
                 var status = new TfsPullRequestStatus("Hello") { State = TfsPullRequestStatusState.Succeeded };
 
@@ -436,7 +587,7 @@
             public void Should_Throw_If_Null_Is_Returned_On_Tfs_Pull_Request()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 16)
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 16)
                 {
                     GitClientFactory = new FakeNullForMethodsGitClientFactory()
                 };
@@ -453,13 +604,13 @@
             }
         }
 
-        public sealed class GetModifiedFiles
+        public sealed class TheGetModifiedFilesMethod
         {
             [Fact]
             public void Should_Return_Empty_Collection_If_No_Changes_Found()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 42) { GitClientFactory = new FakeNullForMethodsGitClientFactory() };
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 42) { GitClientFactory = new FakeNullForMethodsGitClientFactory() };
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
@@ -475,7 +626,7 @@
             public void Should_Return_Valid_Collection_Of_Modified_Files()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 42);
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 42);
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
@@ -494,13 +645,13 @@
             }
         }
 
-        public sealed class SetCommentThreadStatus
+        public sealed class TheSetCommentThreadStatusMethod
         {
             [Fact]
             public void Should_Activate_Comment_Thread()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 12);
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 12);
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
@@ -514,7 +665,7 @@
             public void Should_Resolve_Comment_Thread()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidAzureDevOpsUrl, 21);
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsUrl, 21);
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
@@ -528,7 +679,7 @@
             public void Should_Not_Throw_If_Null_Is_Returned()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 11)
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 11)
                 {
                     GitClientFactory = new FakeNullForMethodsGitClientFactory()
                 };
@@ -543,13 +694,13 @@
             }
         }
 
-        public sealed class GetCommentThreads
+        public sealed class TheGetCommentThreadsMethod
         {
             [Fact]
             public void Should_Not_Fail_If_Empty_List_Is_Returned()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 33)
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 33)
                 {
                     GitClientFactory = new FakeNullForMethodsGitClientFactory()
                 };
@@ -567,7 +718,7 @@
             public void Should_Return_Valid_Comment_Threads()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidAzureDevOpsUrl, 44);
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsUrl, 44);
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
@@ -609,13 +760,13 @@
             }
         }
 
-        public sealed class CreateCommentThread
+        public sealed class TheCreateCommentThreadMethod
         {
             [Fact]
             public void Should_Throw_If_Input_Thread_Is_Null()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 100);
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 100);
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
@@ -629,7 +780,7 @@
             public void Should_Not_Throw_If_Null_Is_Returned()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 100)
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 100)
                 {
                     GitClientFactory = new FakeNullForMethodsGitClientFactory()
                 };
@@ -646,7 +797,7 @@
             public void Should_Create_Valid_Comment_Thread()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidAzureDevOpsUrl, 200);
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsUrl, 200);
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
@@ -657,13 +808,13 @@
             }
         }
 
-        public sealed class GetLatestIterationId
+        public sealed class TheGetLatestIterationIdMethod
         {
             [Fact]
             public void Should_Throw_If_Null_Is_Returned()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 11)
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 11)
                 {
                     GitClientFactory = new FakeNullForMethodsGitClientFactory()
                 };
@@ -680,7 +831,7 @@
             public void Should_Return_Valid_Iteration_Id()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidAzureDevOpsUrl, 12);
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsUrl, 12);
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
@@ -694,7 +845,7 @@
             public void Should_Return_Invalid_Id_If_Something_Is_Wrong_With_Iteration()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 13);
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 13);
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
@@ -705,13 +856,13 @@
             }
         }
 
-        public sealed class GetIterationChanges
+        public sealed class TheGetIterationChangesMethod
         {
             [Fact]
             public void Should_Not_Throw_If_Null_Is_Returned()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidAzureDevOpsUrl, 21)
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsUrl, 21)
                 {
                     GitClientFactory = new FakeNullForMethodsGitClientFactory()
                 };
@@ -728,7 +879,7 @@
             public void Should_Return_Collection_Of_Valid_Iteration_Changes()
             {
                 // Given
-                var fixture = new PullRequestFixture(PullRequestFixture.ValidTfsUrl, 22);
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 22);
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When

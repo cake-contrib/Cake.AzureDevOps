@@ -7,6 +7,7 @@
     using Cake.Core.Diagnostics;
     using Cake.Core.IO;
     using Cake.Tfs;
+    using Cake.Tfs.Authentication;
     using Cake.Tfs.PullRequest.CommentThread;
     using Microsoft.TeamFoundation.Common;
     using Microsoft.TeamFoundation.SourceControl.WebApi;
@@ -18,7 +19,8 @@
     public sealed class TfsPullRequest
     {
         private readonly ICakeLog log;
-        private readonly TfsPullRequestSettings settings;
+        private readonly ITfsCredentials credentials;
+        private readonly bool throwExceptionIfPullRequestCouldNotBeFound;
         private readonly IGitClientFactory gitClientFactory;
         private readonly RepositoryDescription repositoryDescription;
         private readonly GitPullRequest pullRequest;
@@ -50,8 +52,9 @@
             gitClientFactory.NotNull(nameof(gitClientFactory));
 
             this.log = log;
-            this.settings = settings;
             this.gitClientFactory = gitClientFactory;
+            this.credentials = settings.Credentials;
+            this.throwExceptionIfPullRequestCouldNotBeFound = settings.ThrowExceptionIfPullRequestCouldNotBeFound;
 
             this.repositoryDescription = new RepositoryDescription(settings.RepositoryUrl);
 
@@ -78,15 +81,15 @@
                             this.repositoryDescription.RepositoryName,
                             settings.PullRequestId.Value).Result;
                 }
-                else if (!string.IsNullOrWhiteSpace(settings.SourceBranch))
+                else if (!string.IsNullOrWhiteSpace(settings.SourceRefName))
                 {
-                    this.log.Verbose("Read pull request for branch {0}", settings.SourceBranch);
+                    this.log.Verbose("Read pull request for branch {0}", settings.SourceRefName);
 
                     var pullRequestSearchCriteria =
                         new GitPullRequestSearchCriteria()
                         {
                             Status = PullRequestStatus.Active,
-                            SourceRefName = settings.SourceBranch
+                            SourceRefName = settings.SourceRefName
                         };
 
                     this.pullRequest =
@@ -100,13 +103,13 @@
                 {
                     throw new ArgumentOutOfRangeException(
                         nameof(settings),
-                        "Either PullRequestId or SourceBranch needs to be set");
+                        "Either PullRequestId or SourceRefName needs to be set");
                 }
             }
 
             if (this.pullRequest == null)
             {
-                if (this.settings.ThrowExceptionIfPullRequestCouldNotBeFound)
+                if (this.throwExceptionIfPullRequestCouldNotBeFound)
                 {
                     throw new TfsPullRequestNotFoundException("Pull request not found");
                 }
@@ -215,7 +218,7 @@
         }
 
         /// <summary>
-        /// Gets the name of the source branch
+        /// Gets the name of the source branch from the pull request
         /// </summary>
         /// Returns <see cref="string.Empty"/> if no pull request could be found and
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
@@ -295,6 +298,73 @@
         }
 
         /// <summary>
+        /// Create a pull request.
+        /// </summary>
+        /// <param name="log">The Cake log context.</param>
+        /// <param name="gitClientFactory">Git client factory.</param>
+        /// <param name="settings">Settings for accessing TFS.</param>
+        /// <returns>Instance of the created pull request.</returns>
+        public static TfsPullRequest Create(ICakeLog log, IGitClientFactory gitClientFactory, TfsCreatePullRequestSettings settings)
+        {
+            log.NotNull(nameof(log));
+            gitClientFactory.NotNull(nameof(gitClientFactory));
+            settings.NotNull(nameof(settings));
+
+            var repositoryDescription = new RepositoryDescription(settings.RepositoryUrl);
+
+            using (var gitClient = gitClientFactory.CreateGitClient(repositoryDescription.CollectionUrl, settings.Credentials))
+            {
+                var repository =
+                    gitClient
+                        .GetRepositoryAsync(repositoryDescription.ProjectName, repositoryDescription.RepositoryName)
+                        .GetAwaiter().GetResult();
+
+                var targetBranchName = settings.TargetRefName;
+                if (targetBranchName == null)
+                {
+                    targetBranchName = repository.DefaultBranch;
+                }
+
+                var targetBranch =
+                    gitClient.GetRefsAsync(
+                        repositoryDescription.ProjectName,
+                        repositoryDescription.RepositoryName,
+                        filter: targetBranchName.Replace("refs/", string.Empty))
+                    .GetAwaiter().GetResult()
+                    .SingleOrDefault();
+
+                if (targetBranch == null)
+                {
+                    throw new TfsBranchNotFoundException(targetBranchName);
+                }
+
+                var pullRequest = new GitPullRequest()
+                {
+                    SourceRefName = settings.SourceRefName,
+                    TargetRefName = targetBranch.Name,
+                    Title = settings.Title,
+                    Description = settings.Description
+                };
+
+                var createdPullRequest =
+                    gitClient
+                        .CreatePullRequestAsync(
+                            pullRequest,
+                            repositoryDescription.ProjectName,
+                            repositoryDescription.RepositoryName)
+                        .GetAwaiter().GetResult();
+
+                var pullRequestReadSettings =
+                    new TfsPullRequestSettings(
+                        settings.RepositoryUrl,
+                        createdPullRequest.PullRequestId,
+                        settings.Credentials);
+
+                return new TfsPullRequest(log, pullRequestReadSettings, gitClientFactory);
+            }
+        }
+
+        /// <summary>
         /// Votes for the pullrequest.
         /// </summary>
         /// <param name="vote">The vote for the pull request.</param>
@@ -307,7 +377,7 @@
                 return;
             }
 
-            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials, out var authorizedIdenity))
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials, out var authorizedIdenity))
             {
                 var request =
                     gitClient.CreatePullRequestReviewerAsync(
@@ -354,7 +424,7 @@
                 return;
             }
 
-            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials))
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
             {
                 var request =
                     gitClient.CreatePullRequestStatusAsync(
@@ -419,7 +489,7 @@
                 Version = this.LastTargetCommitId
             };
 
-            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials))
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
             {
                 var commitDiffs = gitClient.GetCommitDiffsAsync(
                     this.ProjectName,
@@ -462,7 +532,7 @@
                 return new List<TfsPullRequestCommentThread>();
             }
 
-            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials))
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
             {
                 var threads = gitClient.GetThreadsAsync(this.RepositoryId, this.PullRequestId, null, null, null, CancellationToken.None).Result;
 
@@ -499,7 +569,7 @@
                 return;
             }
 
-            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials))
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
             {
                 gitClient.CreateThreadAsync(
                     thread.InnerThread,
@@ -522,7 +592,7 @@
                 return -1;
             }
 
-            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials))
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
             {
                 var iterations = gitClient.GetPullRequestIterationsAsync(
                                      this.RepositoryId,
@@ -553,7 +623,7 @@
                 return null;
             }
 
-            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials))
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
             {
                 var changes =
                     gitClient.GetPullRequestIterationChangesAsync(
@@ -590,7 +660,7 @@
                 return;
             }
 
-            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.settings.Credentials))
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
             {
                 var newThread = new GitPullRequestCommentThread
                 {
@@ -622,7 +692,7 @@
                 return true;
             }
 
-            if (this.settings.ThrowExceptionIfPullRequestCouldNotBeFound)
+            if (this.throwExceptionIfPullRequestCouldNotBeFound)
             {
                 throw new TfsPullRequestNotFoundException("Pull request not found");
             }
