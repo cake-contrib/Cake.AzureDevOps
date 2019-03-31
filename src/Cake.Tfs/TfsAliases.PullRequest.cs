@@ -8,7 +8,6 @@
     /// <content>
     /// Contains functionality related to Team Foundation Server or Azure DevOps pull requests.
     /// </content>
-    [CakeNamespaceImport("Cake.Tfs.PullRequest")]
     public static partial class TfsAliases
     {
         /// <summary>
@@ -39,6 +38,7 @@
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.Tfs.PullRequest")]
         public static TfsPullRequest TfsPullRequest(
             this ICakeContext context,
             TfsPullRequestSettings settings)
@@ -80,6 +80,7 @@
         /// 'Allow Scripts to access OAuth token' option is not enabled on the build definition.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.Tfs.PullRequest")]
         public static TfsPullRequest TfsPullRequestUsingTfsBuildOAuthToken(
             this ICakeContext context)
         {
@@ -117,6 +118,7 @@
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.Tfs.PullRequest")]
         public static void TfsVotePullRequest(
             this ICakeContext context,
             TfsPullRequestSettings settings,
@@ -163,6 +165,7 @@
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.Tfs.PullRequest")]
         public static void TfsSetPullRequestStatus(
             this ICakeContext context,
             TfsPullRequestSettings settings,
@@ -203,6 +206,7 @@
         /// <exception cref="TfsBranchNotFoundException">If the target branch could not be found.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.Tfs.PullRequest")]
         public static TfsPullRequest TfsCreatePullRequest(
             this ICakeContext context,
             TfsCreatePullRequestSettings settings)

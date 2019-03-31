@@ -7,7 +7,6 @@
     /// <content>
     /// Contains functionality related to authenticating to Team Foundation Server or Azure DevOps.
     /// </content>
-    [CakeNamespaceImport("Cake.Tfs.Authentication")]
     public static partial class TfsAliases
     {
         /// <summary>
@@ -18,6 +17,7 @@
         /// <returns>Credentials for integrated / NTLM authentication</returns>
         [CakeMethodAlias]
         [CakeAliasCategory("Authentication")]
+        [CakeNamespaceImport("Cake.Tfs.Authentication")]
         public static ITfsCredentials TfsAuthenticationNtlm(
             this ICakeContext context)
         {
@@ -37,6 +37,7 @@
         /// <returns>Credentials for basic authentication.</returns>
         [CakeMethodAlias]
         [CakeAliasCategory("Authentication")]
+        [CakeNamespaceImport("Cake.Tfs.Authentication")]
         public static ITfsCredentials TfsAuthenticationBasic(
             this ICakeContext context,
             string userName,
@@ -58,6 +59,7 @@
         /// <returns>Credentials for authentication with a personal access token.</returns>
         [CakeMethodAlias]
         [CakeAliasCategory("Authentication")]
+        [CakeNamespaceImport("Cake.Tfs.Authentication")]
         public static ITfsCredentials TfsAuthenticationPersonalAccessToken(
             this ICakeContext context,
             string personalAccessToken)
@@ -77,6 +79,7 @@
         /// <returns>Credentials for OAuth authentication.</returns>
         [CakeMethodAlias]
         [CakeAliasCategory("Authentication")]
+        [CakeNamespaceImport("Cake.Tfs.Authentication")]
         public static ITfsCredentials TfsAuthenticationOAuth(
             this ICakeContext context,
             string accessToken)
@@ -97,6 +100,7 @@
         /// <returns>Credentials for authentication with an Azure Active Directory.</returns>
         [CakeMethodAlias]
         [CakeAliasCategory("Authentication")]
+        [CakeNamespaceImport("Cake.Tfs.Authentication")]
         public static ITfsCredentials TfsAuthenticationAzureActiveDirectory(
             this ICakeContext context,
             string userName,
