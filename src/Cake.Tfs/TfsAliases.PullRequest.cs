@@ -39,6 +39,7 @@
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
         [CakeNamespaceImport("Cake.Tfs.PullRequest")]
+        [CakeNamespaceImport("Cake.Tfs.PullRequest.CommentThread")]
         public static TfsPullRequest TfsPullRequest(
             this ICakeContext context,
             TfsPullRequestSettings settings)
@@ -81,6 +82,7 @@
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
         [CakeNamespaceImport("Cake.Tfs.PullRequest")]
+        [CakeNamespaceImport("Cake.Tfs.PullRequest.CommentThread")]
         public static TfsPullRequest TfsPullRequestUsingTfsBuildOAuthToken(
             this ICakeContext context)
         {
@@ -119,6 +121,7 @@
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
         [CakeNamespaceImport("Cake.Tfs.PullRequest")]
+        [CakeNamespaceImport("Cake.Tfs.PullRequest.CommentThread")]
         public static void TfsVotePullRequest(
             this ICakeContext context,
             TfsPullRequestSettings settings,
@@ -166,6 +169,7 @@
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
         [CakeNamespaceImport("Cake.Tfs.PullRequest")]
+        [CakeNamespaceImport("Cake.Tfs.PullRequest.CommentThread")]
         public static void TfsSetPullRequestStatus(
             this ICakeContext context,
             TfsPullRequestSettings settings,
@@ -207,6 +211,7 @@
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
         [CakeNamespaceImport("Cake.Tfs.PullRequest")]
+        [CakeNamespaceImport("Cake.Tfs.PullRequest.CommentThread")]
         public static TfsPullRequest TfsCreatePullRequest(
             this ICakeContext context,
             TfsCreatePullRequestSettings settings)
