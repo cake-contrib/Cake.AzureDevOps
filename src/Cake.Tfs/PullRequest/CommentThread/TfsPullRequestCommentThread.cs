@@ -119,14 +119,14 @@
         /// </summary>
         /// <typeparam name="T">Type of the value.</typeparam>
         /// <param name="propertyName">Name of the property.</param>
-        /// <returns>Value of the property.</returns>
+        /// <returns>Value of the property or default value for <typeparamref name="T"/> if property does not exist.</returns>
         public T GetValue<T>(string propertyName)
         {
             propertyName.NotNullOrWhiteSpace(nameof(propertyName));
 
             if (this.thread.Properties == null)
             {
-                throw new InvalidOperationException("Properties collection is not created.");
+                return default(T);
             }
 
             return this.thread.Properties.GetValue(propertyName, default(T));
@@ -138,6 +138,7 @@
         /// <typeparam name="T">Type of the value.</typeparam>
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="value">Value to set.</param>
+        /// <exception cref="InvalidOperationException">If properties collection is not created.</exception>
         public void SetValue<T>(string propertyName, T value)
         {
             propertyName.NotNullOrWhiteSpace(nameof(propertyName));

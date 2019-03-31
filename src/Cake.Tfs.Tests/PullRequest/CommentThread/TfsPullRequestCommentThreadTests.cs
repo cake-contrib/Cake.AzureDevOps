@@ -259,16 +259,67 @@
             }
 
             [Fact]
-            public void Should_Throw_If_Property_Collection_Is_Null()
+            public void Should_Return_Default_Value_If_Property_Collection_Is_Null_For_String_Value()
             {
                 // Given
                 var tfsThread = new TfsPullRequestCommentThread();
 
                 // When
-                var result = Record.Exception(() => tfsThread.GetValue<int>("key"));
+                var result = tfsThread.GetValue<string>("key");
 
                 // Then
-                result.IsInvalidOperationException();
+                result.ShouldBe(default(string));
+            }
+
+            [Fact]
+            public void Should_Return_Default_Value_If_Property_Collection_Is_Null_For_Integer_Value()
+            {
+                // Given
+                var tfsThread = new TfsPullRequestCommentThread();
+
+                // When
+                var result = tfsThread.GetValue<int>("key");
+
+                // Then
+                result.ShouldBe(default(int));
+            }
+
+            [Fact]
+            public void Should_Return_Default_Value_If_Property_Does_Not_Exist_For_String_Value()
+            {
+                // Given
+                var tfsThread = new TfsPullRequestCommentThread(
+                    new GitPullRequestCommentThread
+                    {
+                        Id = 42,
+                        Status = CommentThreadStatus.Active,
+                        Properties = new PropertiesCollection()
+                    });
+
+                // When
+                var result = tfsThread.GetValue<string>("key");
+
+                // Then
+                result.ShouldBe(default(string));
+            }
+
+            [Fact]
+            public void Should_Return_Default_Value_If_Property_Does_Not_Exist_For_Int_Value()
+            {
+                // Given
+                var tfsThread = new TfsPullRequestCommentThread(
+                    new GitPullRequestCommentThread
+                    {
+                        Id = 42,
+                        Status = CommentThreadStatus.Active,
+                        Properties = new PropertiesCollection()
+                    });
+
+                // When
+                var result = tfsThread.GetValue<int>("key");
+
+                // Then
+                result.ShouldBe(default(int));
             }
 
             [Fact]
