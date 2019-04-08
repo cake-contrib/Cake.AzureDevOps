@@ -123,6 +123,7 @@
                 pullRequest.ShouldNotBe(null);
                 pullRequest.HasPullRequestLoaded.ShouldBe(true);
                 pullRequest.PullRequestId.ShouldBe(42);
+                pullRequest.PullRequestStatus.ShouldBe(TfsPullRequestState.Active);
                 pullRequest.RepositoryName.ShouldBe("MyRepoName");
                 pullRequest.CollectionName.ShouldBe("MyCollection");
                 pullRequest.CodeReviewId.ShouldBe(123);
@@ -146,6 +147,7 @@
                 pullRequest.ShouldNotBe(null);
                 pullRequest.HasPullRequestLoaded.ShouldBe(true);
                 pullRequest.PullRequestId.ShouldBe(16);
+                pullRequest.PullRequestStatus.ShouldBe(TfsPullRequestState.Active);
                 pullRequest.RepositoryName.ShouldBe("MyRepoName");
                 pullRequest.CollectionName.ShouldBe("DefaultCollection");
                 pullRequest.CodeReviewId.ShouldBe(123);
@@ -169,6 +171,7 @@
                 pullRequest.ShouldNotBe(null);
                 pullRequest.HasPullRequestLoaded.ShouldBe(true);
                 pullRequest.PullRequestId.ShouldBe(777);
+                pullRequest.PullRequestStatus.ShouldBe(TfsPullRequestState.Active);
                 pullRequest.RepositoryName.ShouldBe("MyRepoName");
                 pullRequest.CollectionName.ShouldBe("MyCollection");
                 pullRequest.CodeReviewId.ShouldBe(123);
@@ -192,6 +195,7 @@
                 pullRequest.ShouldNotBe(null);
                 pullRequest.HasPullRequestLoaded.ShouldBe(true);
                 pullRequest.PullRequestId.ShouldBe(777);
+                pullRequest.PullRequestStatus.ShouldBe(TfsPullRequestState.Active);
                 pullRequest.RepositoryName.ShouldBe("MyRepoName");
                 pullRequest.CollectionName.ShouldBe("DefaultCollection");
                 pullRequest.CodeReviewId.ShouldBe(123);
@@ -223,6 +227,7 @@
                 pullRequest.CollectionName.ShouldBe("MyCollection");
                 pullRequest.ProjectName.ShouldBe("MyTeamProject");
                 pullRequest.PullRequestId.ShouldBe(0);
+                pullRequest.PullRequestStatus.ShouldBe(TfsPullRequestState.NotSet);
                 pullRequest.CodeReviewId.ShouldBe(0);
                 pullRequest.SourceRefName.ShouldBeEmpty();
                 pullRequest.TargetRefName.ShouldBeEmpty();
@@ -251,6 +256,7 @@
                 pullRequest.CollectionName.ShouldBe("DefaultCollection");
                 pullRequest.ProjectName.ShouldBe("MyProject");
                 pullRequest.PullRequestId.ShouldBe(0);
+                pullRequest.PullRequestStatus.ShouldBe(TfsPullRequestState.NotSet);
                 pullRequest.CodeReviewId.ShouldBe(0);
                 pullRequest.SourceRefName.ShouldBeEmpty();
                 pullRequest.TargetRefName.ShouldBeEmpty();
@@ -279,6 +285,7 @@
                 pullRequest.CollectionName.ShouldBe("MyCollection");
                 pullRequest.ProjectName.ShouldBe("MyTeamProject");
                 pullRequest.PullRequestId.ShouldBe(0);
+                pullRequest.PullRequestStatus.ShouldBe(TfsPullRequestState.NotSet);
                 pullRequest.CodeReviewId.ShouldBe(0);
                 pullRequest.SourceRefName.ShouldBeEmpty();
                 pullRequest.TargetRefName.ShouldBeEmpty();
@@ -307,6 +314,7 @@
                 pullRequest.CollectionName.ShouldBe("DefaultCollection");
                 pullRequest.ProjectName.ShouldBe("MyProject");
                 pullRequest.PullRequestId.ShouldBe(0);
+                pullRequest.PullRequestStatus.ShouldBe(TfsPullRequestState.NotSet);
                 pullRequest.CodeReviewId.ShouldBe(0);
                 pullRequest.SourceRefName.ShouldBeEmpty();
                 pullRequest.TargetRefName.ShouldBeEmpty();
