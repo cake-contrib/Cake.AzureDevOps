@@ -88,7 +88,7 @@
                     var pullRequestSearchCriteria =
                         new GitPullRequestSearchCriteria()
                         {
-                            Status = PullRequestStatus.Active,
+                            Status = Microsoft.TeamFoundation.SourceControl.WebApi.PullRequestStatus.Active,
                             SourceRefName = settings.SourceRefName
                         };
 
@@ -194,6 +194,26 @@
                 }
 
                 return this.pullRequest.PullRequestId;
+            }
+        }
+
+        /// <summary>
+        /// Gets the status of the pull request.
+        /// Returns <see cref="TfsPullRequestState.NotSet"/> if no pull request could be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public TfsPullRequestState PullRequestStatus
+        {
+            get
+            {
+                if (!this.ValidatePullRequest())
+                {
+                    return TfsPullRequestState.NotSet;
+                }
+
+                return this.pullRequest.Status.ToTfsPullRequestState();
             }
         }
 
