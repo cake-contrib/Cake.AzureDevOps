@@ -18,6 +18,7 @@
                 .ReturnsAsync((string project1, string repoId1, int prId, int i1, int i2, int i3, bool b1, bool b2, object o1, CancellationToken c1) => new GitPullRequest
                 {
                     PullRequestId = prId,
+                    Status = PullRequestStatus.Active,
                     Repository = new GitRepository
                     {
                         Id = Guid.NewGuid(),
@@ -45,6 +46,7 @@
                         new GitPullRequest
                         {
                             PullRequestId = 777,
+                            Status = PullRequestStatus.Active,
                             Repository = new GitRepository
                             {
                                 Id = Guid.NewGuid(),
