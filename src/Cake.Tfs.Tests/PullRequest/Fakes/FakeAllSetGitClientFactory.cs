@@ -242,13 +242,35 @@
                     => changes);
 
             // Setup pull request creation
-            m.Setup(arg => arg.GetRefsAsync(It.IsAny<string>(), "MyRepoName", "NotExistingBranch", null, null, null, CancellationToken.None))
+            m.Setup(arg => arg.GetRefsAsync(
+                It.IsAny<string>(),
+                "MyRepoName",
+                "NotExistingBranch",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                CancellationToken.None))
              .ReturnsAsync(() => new List<GitRef>());
 
-            m.Setup(args => args.GetRepositoryAsync(It.IsAny<string>(), "MyRepoName", null, null, CancellationToken.None))
+            m.Setup(args => args.GetRepositoryAsync(It.IsAny<string>(), "MyRepoName", null, CancellationToken.None))
                 .ReturnsAsync(() => new GitRepository() { DefaultBranch = "master" });
 
-            m.Setup(arg => arg.GetRefsAsync(It.IsAny<string>(), "MyRepoName", "master", null, null, null, CancellationToken.None))
+            m.Setup(arg => arg.GetRefsAsync(
+                It.IsAny<string>(),
+                "MyRepoName",
+                "master",
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                CancellationToken.None))
              .ReturnsAsync(() => new List<GitRef>()
              {
                  new GitRef("master")
