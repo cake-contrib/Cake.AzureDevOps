@@ -339,19 +339,30 @@
                         .GetRepositoryAsync(repositoryDescription.ProjectName, repositoryDescription.RepositoryName)
                         .GetAwaiter().GetResult();
 
+                if (repository == null)
+                {
+                    throw new TfsException("Could not read repository.");
+                }
+
                 var targetBranchName = settings.TargetRefName;
                 if (targetBranchName == null)
                 {
                     targetBranchName = repository.DefaultBranch;
                 }
 
-                var targetBranch =
+                var refs =
                     gitClient.GetRefsAsync(
                         repositoryDescription.ProjectName,
                         repositoryDescription.RepositoryName,
                         filter: targetBranchName.Replace("refs/", string.Empty))
-                    .GetAwaiter().GetResult()
-                    .SingleOrDefault();
+                    .GetAwaiter().GetResult();
+
+                if (refs == null)
+                {
+                    throw new TfsBranchNotFoundException(targetBranchName);
+                }
+
+                var targetBranch = refs.SingleOrDefault();
 
                 if (targetBranch == null)
                 {
