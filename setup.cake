@@ -10,6 +10,7 @@ BuildParameters.SetParameters(
     repositoryOwner: "cake-contrib",
     repositoryName: "Cake.Tfs",
     appVeyorAccountName: "cakecontrib",
+    shouldRunGitVersion: true,
     shouldDeployGraphDocumentation: false,
     shouldRunDotNetCorePack: true);
 
