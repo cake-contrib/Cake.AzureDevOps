@@ -22,13 +22,13 @@
                     Repository = new GitRepository
                     {
                         Id = Guid.NewGuid(),
-                        Name = repoId1
+                        Name = repoId1,
                     },
                     SourceRefName = "foo",
                     TargetRefName = "master",
                     CodeReviewId = 123,
                     LastMergeSourceCommit = new GitCommitRef { CommitId = "4a92b977" },
-                    LastMergeTargetCommit = new GitCommitRef { CommitId = "78a3c113" }
+                    LastMergeTargetCommit = new GitCommitRef { CommitId = "78a3c113" },
                 });
 
             mock.Setup(arg => arg.GetPullRequestsAsync(
@@ -50,14 +50,14 @@
                             Repository = new GitRepository
                             {
                                 Id = Guid.NewGuid(),
-                                Name = repoId2
+                                Name = repoId2,
                             },
                             SourceRefName = sc.SourceRefName,
                             TargetRefName = "master",
                             CodeReviewId = 123,
                             LastMergeSourceCommit = new GitCommitRef { CommitId = "4a92b977" },
-                            LastMergeTargetCommit = new GitCommitRef { CommitId = "78a3c113" }
-                        }
+                            LastMergeTargetCommit = new GitCommitRef { CommitId = "78a3c113" },
+                        },
                     }));
 
             mock = this.Setup(mock);
@@ -99,7 +99,7 @@
                     => new GitPullRequestStatus
                     {
                         Context = status.Context,
-                        State = status.State
+                        State = status.State,
                     });
 
             // Setup CommitDiffs object
@@ -109,21 +109,21 @@
                 {
                     ChangeId = 1,
                     ChangeType = VersionControlChangeType.Edit,
-                    Item = new GitItem("/src/project/myclass.cs", "ID1", GitObjectType.Commit, "6b13ff8", 0)
+                    Item = new GitItem("/src/project/myclass.cs", "ID1", GitObjectType.Commit, "6b13ff8", 0),
                 },
                 null,
                 new GitChange
                 {
                     ChangeId = 2,
                     ChangeType = VersionControlChangeType.Edit,
-                    Item = new GitItem("/tools/folder", "ID2", GitObjectType.Tree, "6b13ff8", 0)
-                }
+                    Item = new GitItem("/tools/folder", "ID2", GitObjectType.Tree, "6b13ff8", 0),
+                },
             };
 
             var gitCommitDiffs = new GitCommitDiffs
             {
                 ChangeCounts = new Dictionary<VersionControlChangeType, int> { { VersionControlChangeType.Edit, 2 } },
-                Changes = gitChanges
+                Changes = gitChanges,
             };
 
             m.Setup(arg => arg.GetCommitDiffsAsync(
@@ -157,22 +157,22 @@
                     Id = 11,
                     ThreadContext = new CommentThreadContext()
                     {
-                        FilePath = "/some/path/to/file.cs"
+                        FilePath = "/some/path/to/file.cs",
                     },
                     Comments = new List<Comment>
                     {
                         new Comment { Content = "Hello", IsDeleted = false, CommentType = CommentType.CodeChange },
-                        new Comment { Content = "Goodbye", IsDeleted = true, CommentType = CommentType.Text }
+                        new Comment { Content = "Goodbye", IsDeleted = true, CommentType = CommentType.Text },
                     },
-                    Status = CommentThreadStatus.Active
+                    Status = CommentThreadStatus.Active,
                 },
                 new GitPullRequestCommentThread
                 {
                     Id = 22,
                     ThreadContext = null,
                     Comments = new List<Comment>(),
-                    Status = CommentThreadStatus.Fixed
-                }
+                    Status = CommentThreadStatus.Fixed,
+                },
             };
 
             m.Setup(arg => arg.GetThreadsAsync(
@@ -204,7 +204,7 @@
                     => new List<GitPullRequestIteration>
                     {
                         new GitPullRequestIteration { Id = 42, CreatedDate = DateTime.Today.AddDays(-3) },
-                        new GitPullRequestIteration { Id = 16, CreatedDate = DateTime.Today.AddDays(-1) }
+                        new GitPullRequestIteration { Id = 16, CreatedDate = DateTime.Today.AddDays(-1) },
                     });
 
             m.Setup(arg => arg.GetPullRequestIterationsAsync(
@@ -216,7 +216,7 @@
                 .ReturnsAsync((Guid repoId, int prId, bool? b, object o, CancellationToken c)
                     => new List<GitPullRequestIteration>
                     {
-                        new GitPullRequestIteration { Id = null }
+                        new GitPullRequestIteration { Id = null },
                     });
 
             // Setup GitPullRequestIterationChanges collection
@@ -225,8 +225,8 @@
                 ChangeEntries = new List<GitPullRequestChange>
                 {
                     new GitPullRequestChange { ChangeId = 100, ChangeTrackingId = 1, Item = new GitItem { Path = "/src/my/class1.cs" } },
-                    new GitPullRequestChange { ChangeId = 200, ChangeTrackingId = 2, Item = new GitItem { Path = string.Empty } }
-                }
+                    new GitPullRequestChange { ChangeId = 200, ChangeTrackingId = 2, Item = new GitItem { Path = string.Empty } },
+                },
             };
 
             m.Setup(arg => arg.GetPullRequestIterationChangesAsync(
@@ -273,7 +273,7 @@
                 CancellationToken.None))
              .ReturnsAsync(() => new List<GitRef>()
              {
-                 new GitRef("master")
+                 new GitRef("master"),
              });
 
             m.Setup(
@@ -298,13 +298,13 @@
                     gitPullRequestToCreate.Repository = new GitRepository
                     {
                         Id = Guid.NewGuid(),
-                        Name = repositoryId
+                        Name = repositoryId,
                     };
                     gitPullRequestToCreate.CodeReviewId = 123;
                     gitPullRequestToCreate.LastMergeSourceCommit = new GitCommitRef { CommitId = "4a92b977" };
                     gitPullRequestToCreate.LastMergeTargetCommit = new GitCommitRef { CommitId = "78a3c113" };
 
-                     return gitPullRequestToCreate;
+                    return gitPullRequestToCreate;
                  });
 
             return m;

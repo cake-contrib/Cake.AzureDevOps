@@ -332,7 +332,7 @@
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
                 var settings = new TfsPullRequestSettings(repositoryUrl, pullRequestId, credentials)
                 {
-                    ThrowExceptionIfPullRequestCouldNotBeFound = value
+                    ThrowExceptionIfPullRequestCouldNotBeFound = value,
                 };
 
                 // When
@@ -696,7 +696,6 @@
             public void Should_Set_Pull_Request_Id()
             {
                 // Given
-                var creds = new TfsNtlmCredentials();
                 Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
                 Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");

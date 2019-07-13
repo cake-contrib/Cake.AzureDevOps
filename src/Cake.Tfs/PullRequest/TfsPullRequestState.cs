@@ -23,6 +23,6 @@
         /// <summary>
         /// Pull request is completed.
         /// </summary>
-        Completed
+        Completed,
     }
 }

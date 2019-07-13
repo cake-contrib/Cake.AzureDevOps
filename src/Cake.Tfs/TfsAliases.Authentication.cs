@@ -14,7 +14,7 @@
         /// Can only be used for on-premise Team Foundation Server.
         /// </summary>
         /// <param name="context">The context.</param>
-        /// <returns>Credentials for integrated / NTLM authentication</returns>
+        /// <returns>Credentials for integrated / NTLM authentication.</returns>
         [CakeMethodAlias]
         [CakeAliasCategory("Authentication")]
         [CakeNamespaceImport("Cake.Tfs.Authentication")]
