@@ -1,7 +1,7 @@
 ﻿namespace Cake.Tfs.Tests.Authentication
 {
+    using Cake.Tfs.Authentication;
     using Shouldly;
-    using Tfs.Authentication;
     using Xunit;
 
     public sealed class TfsBasicCredentialsTests

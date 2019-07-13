@@ -3,7 +3,7 @@
     using Microsoft.TeamFoundation.SourceControl.WebApi;
 
     /// <summary>
-    /// The wrapper around the native TFS API comment type
+    /// The wrapper around the native TFS API comment type.
     /// </summary>
     public enum TfsCommentType
     {
@@ -25,6 +25,6 @@
         /// <summary>
         /// System comment.
         /// </summary>
-        System = CommentType.System
+        System = CommentType.System,
     }
 }

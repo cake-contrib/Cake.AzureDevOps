@@ -28,6 +28,6 @@
         /// <summary>
         /// Status showing an error.
         /// </summary>
-        Error
+        Error,
     }
 }

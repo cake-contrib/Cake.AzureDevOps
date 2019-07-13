@@ -6,7 +6,7 @@
     using Microsoft.VisualStudio.Services.Identity;
 
     /// <summary>
-    /// The interface for a Git client factory
+    /// The interface for a Git client factory.
     /// </summary>
     public interface IGitClientFactory
     {

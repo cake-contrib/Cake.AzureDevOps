@@ -50,7 +50,7 @@
                     Status = CommentThreadStatus.Pending,
                     ThreadContext = new CommentThreadContext { FilePath = "/src/myclass.cs" },
                     Comments = new List<Comment> { new Comment { Content = "Hello", CommentType = CommentType.Text, IsDeleted = false } },
-                    Properties = new PropertiesCollection()
+                    Properties = new PropertiesCollection(),
                 };
 
                 // When
@@ -85,7 +85,7 @@
                 var thread = new GitPullRequestCommentThread
                 {
                     Id = 16,
-                    Status = CommentThreadStatus.Active
+                    Status = CommentThreadStatus.Active,
                 };
 
                 // When
@@ -103,13 +103,13 @@
                 var thread = new GitPullRequestCommentThread
                 {
                     Id = 100,
-                    Status = CommentThreadStatus.Active
+                    Status = CommentThreadStatus.Active,
                 };
 
                 // When
                 var tfsThread = new TfsPullRequestCommentThread(thread)
                 {
-                    FilePath = "/path/to/myclass.cs"
+                    FilePath = "/path/to/myclass.cs",
                 };
 
                 // Then
@@ -127,7 +127,7 @@
                 var thread = new GitPullRequestCommentThread
                 {
                     Id = 15,
-                    Status = CommentThreadStatus.Active
+                    Status = CommentThreadStatus.Active,
                 };
 
                 // When
@@ -145,13 +145,13 @@
                 var thread = new GitPullRequestCommentThread
                 {
                     Id = 15,
-                    Status = CommentThreadStatus.Active
+                    Status = CommentThreadStatus.Active,
                 };
 
                 // When
                 var tfsThread = new TfsPullRequestCommentThread(thread)
                 {
-                    Comments = new List<TfsComment> { new TfsComment("hi", false, CommentType.Text) }
+                    Comments = new List<TfsComment> { new TfsComment("hi", false, CommentType.Text) },
                 };
 
                 // Then
@@ -174,7 +174,7 @@
                 var thread = new GitPullRequestCommentThread
                 {
                     Id = 16,
-                    Status = CommentThreadStatus.Active
+                    Status = CommentThreadStatus.Active,
                 };
 
                 // When
@@ -191,13 +191,13 @@
                 var thread = new GitPullRequestCommentThread
                 {
                     Id = 16,
-                    Status = CommentThreadStatus.Active
+                    Status = CommentThreadStatus.Active,
                 };
 
                 // When
                 var tfsThread = new TfsPullRequestCommentThread(thread)
                 {
-                    Properties = new Dictionary<string, object>()
+                    Properties = new Dictionary<string, object>(),
                 };
 
                 // Then
@@ -214,7 +214,7 @@
                 {
                     Id = 16,
                     Status = CommentThreadStatus.Active,
-                    Properties = new PropertiesCollection()
+                    Properties = new PropertiesCollection(),
                 };
 
                 // When
@@ -293,7 +293,7 @@
                     {
                         Id = 42,
                         Status = CommentThreadStatus.Active,
-                        Properties = new PropertiesCollection()
+                        Properties = new PropertiesCollection(),
                     });
 
                 // When
@@ -312,7 +312,7 @@
                     {
                         Id = 42,
                         Status = CommentThreadStatus.Active,
-                        Properties = new PropertiesCollection()
+                        Properties = new PropertiesCollection(),
                     });
 
                 // When
@@ -331,7 +331,7 @@
                     {
                         Id = 42,
                         Status = CommentThreadStatus.Active,
-                        Properties = new PropertiesCollection { { "one", "way" }, { "two", 2 } }
+                        Properties = new PropertiesCollection { { "one", "way" }, { "two", 2 } },
                     });
 
                 // When
@@ -403,7 +403,7 @@
                     {
                         Id = 42,
                         Status = CommentThreadStatus.Active,
-                        Properties = new PropertiesCollection { { "one", 1 } }
+                        Properties = new PropertiesCollection { { "one", 1 } },
                     });
 
                 // When

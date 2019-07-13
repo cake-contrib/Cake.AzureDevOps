@@ -15,7 +15,7 @@
         /// <param name="collectionUrl">The URL of the TFS/Azure DevOps team project collection.</param>
         /// <param name="credentials">The credentials to connect to TFS/Azure DevOps.</param>
         /// <param name="authorizedIdentity">Returns identity which is authorized.</param>
-        /// <returns>Client object for communicating with Team Foundation Server or Azure DevOps</returns>
+        /// <returns>Client object for communicating with Team Foundation Server or Azure DevOps.</returns>
         public GitHttpClient CreateGitClient(Uri collectionUrl, ITfsCredentials credentials, out Identity authorizedIdentity)
         {
             var connection =
@@ -37,7 +37,7 @@
         /// </summary>
         /// <param name="collectionUrl">The URL of the TFS/Azure DevOps team project collection.</param>
         /// <param name="credentials">The credentials to connect to TFS/Azure DevOps.</param>
-        /// <returns>Client object for communicating with Team Foundation Server or Azure DevOps</returns>
+        /// <returns>Client object for communicating with Team Foundation Server or Azure DevOps.</returns>
         public GitHttpClient CreateGitClient(Uri collectionUrl, ITfsCredentials credentials)
         {
             return this.CreateGitClient(collectionUrl, credentials, out _);

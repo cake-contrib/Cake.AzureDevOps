@@ -31,6 +31,6 @@ namespace Cake.Tfs.PullRequest
         /// <summary>
         /// Approve the changes.
         /// </summary>
-        Approved = 10
+        Approved = 10,
     }
 }
