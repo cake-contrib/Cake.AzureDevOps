@@ -3,7 +3,7 @@
     using Microsoft.TeamFoundation.SourceControl.WebApi;
 
     /// <summary>
-    /// The wrapper around the native TFS API comment thread status
+    /// The wrapper around the native TFS API comment thread status.
     /// </summary>
     public enum TfsCommentThreadStatus
     {
@@ -40,6 +40,6 @@
         /// <summary>
         /// The comment thread won't be fixed.
         /// </summary>
-        WontFix = CommentThreadStatus.WontFix
+        WontFix = CommentThreadStatus.WontFix,
     }
 }

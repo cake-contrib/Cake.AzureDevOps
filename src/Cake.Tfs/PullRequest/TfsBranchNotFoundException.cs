@@ -17,23 +17,23 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TfsBranchNotFoundException"/> class with a specified error message.
+        /// Initializes a new instance of the <see cref="TfsBranchNotFoundException"/> class for a specific branch.
         /// </summary>
-        /// <param name="message">The message that describes the error. </param>
-        public TfsBranchNotFoundException(string message)
-            : base($"Branch not found \"{message}\"")
+        /// <param name="branchName">The name of the branch which could not be found. </param>
+        public TfsBranchNotFoundException(string branchName)
+            : base($"Branch not found \"{branchName}\"")
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TfsBranchNotFoundException"/> class with a specified error message
+        /// Initializes a new instance of the <see cref="TfsBranchNotFoundException"/> class for a specific branch
         /// and a reference to the inner exception that is the cause of this exception.
         /// </summary>
-        /// <param name="message">The error message that explains the reason for the exception.</param>
+        /// <param name="branchName">The name of the branch which could not be found. </param>
         /// <param name="innerException">The exception that is the cause of the current exception, or a null
         /// reference if no inner exception is specified.</param>
-        public TfsBranchNotFoundException(string message, Exception innerException)
-            : base($"Branch not found \"{message}\"", innerException)
+        public TfsBranchNotFoundException(string branchName, Exception innerException)
+            : base($"Branch not found \"{branchName}\"", innerException)
         {
         }
 
