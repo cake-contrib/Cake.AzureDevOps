@@ -66,19 +66,6 @@
             }
 
             [Fact]
-            public void Should_Return_Valid_Comment_Via_With_Specific_Comment_Type()
-            {
-                // Given, When
-                var comment = new TfsComment("What's up?", true, CommentType.Text);
-
-                // Then
-                comment.ShouldNotBeNull();
-                comment.Content.ShouldBe("What's up?");
-                comment.IsDeleted.ShouldBeTrue();
-                comment.CommentType.ShouldBe(TfsCommentType.Text);
-            }
-
-            [Fact]
             public void Should_Return_Valid_Comment_Via_Initializers()
             {
                 // Given, When

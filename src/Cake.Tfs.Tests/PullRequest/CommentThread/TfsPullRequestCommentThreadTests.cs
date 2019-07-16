@@ -151,7 +151,7 @@
                 // When
                 var tfsThread = new TfsPullRequestCommentThread(thread)
                 {
-                    Comments = new List<TfsComment> { new TfsComment("hi", false, CommentType.Text) },
+                    Comments = new List<TfsComment> { new TfsComment("hi", false) },
                 };
 
                 // Then
@@ -160,7 +160,7 @@
                 tfsThread.Comments.First().ShouldNotBeNull();
                 tfsThread.Comments.First().ShouldBeOfType<TfsComment>();
                 tfsThread.Comments.First().Content.ShouldBe("hi");
-                tfsThread.Comments.First().CommentType.ShouldBe(TfsCommentType.Text);
+                tfsThread.Comments.First().CommentType.ShouldBe(TfsCommentType.Unknown);
                 tfsThread.Comments.First().IsDeleted.ShouldBeFalse();
             }
         }
