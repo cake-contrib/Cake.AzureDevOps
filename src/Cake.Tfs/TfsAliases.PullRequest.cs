@@ -219,7 +219,7 @@
             context.NotNull(nameof(context));
             context.NotNull(nameof(settings));
 
-            return PullRequest.TfsPullRequest.Create(context.Log, new GitClientFactory(), settings);
+            return PullRequest.TfsPullRequest.Create(context.Log, settings);
         }
     }
 }
