@@ -45,7 +45,7 @@
         /// <param name="gitClientFactory">A factory to communicate with Git client.</param>
         /// <exception cref="TfsPullRequestNotFoundException">If <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/>
         /// is set to <c>true</c> and no pull request could be found.</exception>
-        public TfsPullRequest(ICakeLog log, TfsPullRequestSettings settings, IGitClientFactory gitClientFactory)
+        internal TfsPullRequest(ICakeLog log, TfsPullRequestSettings settings, IGitClientFactory gitClientFactory)
         {
             log.NotNull(nameof(log));
             settings.NotNull(nameof(settings));
@@ -321,78 +321,14 @@
         /// Create a pull request.
         /// </summary>
         /// <param name="log">The Cake log context.</param>
-        /// <param name="gitClientFactory">Git client factory.</param>
         /// <param name="settings">Settings for accessing TFS.</param>
         /// <returns>Instance of the created pull request.</returns>
-        public static TfsPullRequest Create(ICakeLog log, IGitClientFactory gitClientFactory, TfsCreatePullRequestSettings settings)
+        public static TfsPullRequest Create(ICakeLog log, TfsCreatePullRequestSettings settings)
         {
             log.NotNull(nameof(log));
-            gitClientFactory.NotNull(nameof(gitClientFactory));
             settings.NotNull(nameof(settings));
 
-            var repositoryDescription = new RepositoryDescription(settings.RepositoryUrl);
-
-            using (var gitClient = gitClientFactory.CreateGitClient(repositoryDescription.CollectionUrl, settings.Credentials))
-            {
-                var repository =
-                    gitClient
-                        .GetRepositoryAsync(repositoryDescription.ProjectName, repositoryDescription.RepositoryName)
-                        .GetAwaiter().GetResult();
-
-                if (repository == null)
-                {
-                    throw new TfsException("Could not read repository.");
-                }
-
-                var targetBranchName = settings.TargetRefName;
-                if (targetBranchName == null)
-                {
-                    targetBranchName = repository.DefaultBranch;
-                }
-
-                var refs =
-                    gitClient.GetRefsAsync(
-                        repositoryDescription.ProjectName,
-                        repositoryDescription.RepositoryName,
-                        filter: targetBranchName.Replace("refs/", string.Empty))
-                    .GetAwaiter().GetResult();
-
-                if (refs == null)
-                {
-                    throw new TfsBranchNotFoundException(targetBranchName);
-                }
-
-                var targetBranch = refs.SingleOrDefault();
-
-                if (targetBranch == null)
-                {
-                    throw new TfsBranchNotFoundException(targetBranchName);
-                }
-
-                var pullRequest = new GitPullRequest()
-                {
-                    SourceRefName = settings.SourceRefName,
-                    TargetRefName = targetBranch.Name,
-                    Title = settings.Title,
-                    Description = settings.Description,
-                };
-
-                var createdPullRequest =
-                    gitClient
-                        .CreatePullRequestAsync(
-                            pullRequest,
-                            repositoryDescription.ProjectName,
-                            repositoryDescription.RepositoryName)
-                        .GetAwaiter().GetResult();
-
-                var pullRequestReadSettings =
-                    new TfsPullRequestSettings(
-                        settings.RepositoryUrl,
-                        createdPullRequest.PullRequestId,
-                        settings.Credentials);
-
-                return new TfsPullRequest(log, pullRequestReadSettings, gitClientFactory);
-            }
+            return Create(log, new GitClientFactory(), settings);
         }
 
         /// <summary>
@@ -676,6 +612,84 @@
                     });
 
                 return tfsChanges;
+            }
+        }
+
+        /// <summary>
+        /// Create a pull request.
+        /// </summary>
+        /// <param name="log">The Cake log context.</param>
+        /// <param name="gitClientFactory">Git client factory.</param>
+        /// <param name="settings">Settings for accessing TFS.</param>
+        /// <returns>Instance of the created pull request.</returns>
+        internal static TfsPullRequest Create(ICakeLog log, IGitClientFactory gitClientFactory, TfsCreatePullRequestSettings settings)
+        {
+            log.NotNull(nameof(log));
+            gitClientFactory.NotNull(nameof(gitClientFactory));
+            settings.NotNull(nameof(settings));
+
+            var repositoryDescription = new RepositoryDescription(settings.RepositoryUrl);
+
+            using (var gitClient = gitClientFactory.CreateGitClient(repositoryDescription.CollectionUrl, settings.Credentials))
+            {
+                var repository =
+                    gitClient
+                        .GetRepositoryAsync(repositoryDescription.ProjectName, repositoryDescription.RepositoryName)
+                        .GetAwaiter().GetResult();
+
+                if (repository == null)
+                {
+                    throw new TfsException("Could not read repository.");
+                }
+
+                var targetBranchName = settings.TargetRefName;
+                if (targetBranchName == null)
+                {
+                    targetBranchName = repository.DefaultBranch;
+                }
+
+                var refs =
+                    gitClient.GetRefsAsync(
+                        repositoryDescription.ProjectName,
+                        repositoryDescription.RepositoryName,
+                        filter: targetBranchName.Replace("refs/", string.Empty))
+                    .GetAwaiter().GetResult();
+
+                if (refs == null)
+                {
+                    throw new TfsBranchNotFoundException(targetBranchName);
+                }
+
+                var targetBranch = refs.SingleOrDefault();
+
+                if (targetBranch == null)
+                {
+                    throw new TfsBranchNotFoundException(targetBranchName);
+                }
+
+                var pullRequest = new GitPullRequest()
+                {
+                    SourceRefName = settings.SourceRefName,
+                    TargetRefName = targetBranch.Name,
+                    Title = settings.Title,
+                    Description = settings.Description,
+                };
+
+                var createdPullRequest =
+                    gitClient
+                        .CreatePullRequestAsync(
+                            pullRequest,
+                            repositoryDescription.ProjectName,
+                            repositoryDescription.RepositoryName)
+                        .GetAwaiter().GetResult();
+
+                var pullRequestReadSettings =
+                    new TfsPullRequestSettings(
+                        settings.RepositoryUrl,
+                        createdPullRequest.PullRequestId,
+                        settings.Credentials);
+
+                return new TfsPullRequest(log, pullRequestReadSettings, gitClientFactory);
             }
         }
 

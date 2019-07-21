@@ -8,7 +8,7 @@
     /// <summary>
     /// The interface for a Git client factory.
     /// </summary>
-    public interface IGitClientFactory
+    internal interface IGitClientFactory
     {
         /// <summary>
         /// Creates the instance of the <see cref="GitHttpClient"/> class.
