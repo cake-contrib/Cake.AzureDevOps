@@ -41,6 +41,11 @@ if [ ! -d "$TOOLS_DIR" ]; then
   mkdir "$TOOLS_DIR"
 fi
 
+# Print Mono version.
+echo "Mono version:"
+mono --version
+echo ""
+
 ###########################################################################
 # INSTALL .NET CORE CLI
 ###########################################################################
