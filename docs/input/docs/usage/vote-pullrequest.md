@@ -1,27 +1,27 @@
 ---
 Order: 30
 Title: Voting for pull requests
-Description: Example how to approve or vote for pull requests using the Cake.Tfs addin.
+Description: Example how to approve or vote for pull requests using the Cake.AzureDevOps addin.
 ---
-The [Cake.Tfs addin] provides an alias for approving or voting on pull requests.
+The [Cake.AzureDevOps addin] provides an alias for approving or voting on pull requests.
 
-The following example will approve a pull request on a Azure DevOps Server:
+The following example will approve a pull request on an Azure DevOps Server:
 
 ```csharp
-#addin "Cake.Tfs"
+#addin "Cake.AzureDevOps"
 
 Task("Vote-PullRequest").Does(() =>
 {
     var pullRequestSettings =
-        new TfsPullRequestSettings(
-            new Uri("http://myserver:8080/tfs/defaultcollection/myproject/_git/myrepository"),
+        new AzureDevOpsPullRequestSettings(
+            new Uri("http://myserver:8080/defaultcollection/myproject/_git/myrepository"),
             "refs/heads/feature/myfeature",
-            TfsAuthenticationNtlm());
+            AzureDevOpsAuthenticationNtlm());
 
-    TfsVotePullRequest(
+    AzureDevOpsVotePullRequest(
         pullRequestSettings,
-        TfsPullRequestVote.Approved);
+        AzureDevOpsPullRequestVote.Approved);
 });
 ```
 
-[Cake.Tfs addin]: https://www.nuget.org/packages/Cake.Tfs
+[Cake.AzureDevOps addin]: https://www.nuget.org/packages/Cake.AzureDevOps

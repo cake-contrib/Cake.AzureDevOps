@@ -6,9 +6,9 @@ BuildParameters.SetParameters(
     context: Context, 
     buildSystem: BuildSystem,
     sourceDirectoryPath: "./src",
-    title: "Cake.Tfs",
+    title: "Cake.AzureDevOps",
     repositoryOwner: "cake-contrib",
-    repositoryName: "Cake.Tfs",
+    repositoryName: "Cake.AzureDevOps",
     appVeyorAccountName: "cakecontrib",
     shouldRunGitVersion: true,
     shouldDeployGraphDocumentation: false,
@@ -18,7 +18,7 @@ BuildParameters.PrintParameters(Context);
 
 ToolSettings.SetToolSettings(
     context: Context,
-    dupFinderExcludePattern: new string[] { BuildParameters.RootDirectoryPath + "/src/Cake.Tfs.Tests/**/*.cs" },
+    dupFinderExcludePattern: new string[] { BuildParameters.RootDirectoryPath + "/src/Cake.AzureDevOps.Tests/**/*.cs" },
     testCoverageFilter: "+[*]* -[xunit.*]* -[Cake.Core]* -[*.Tests]* -[Shouldly]*",
     testCoverageExcludeByAttribute: "*.ExcludeFromCodeCoverage*",
     testCoverageExcludeByFile: "*/*Designer.cs;*/*.g.cs;*/*.g.i.cs");
