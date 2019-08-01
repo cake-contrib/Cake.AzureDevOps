@@ -89,7 +89,7 @@
                         new GitPullRequestSearchCriteria()
                         {
                             Status = Microsoft.TeamFoundation.SourceControl.WebApi.PullRequestStatus.Active,
-                            SourceRefName = settings.SourceRefName
+                            SourceRefName = settings.SourceRefName,
                         };
 
                     this.pullRequest =
@@ -238,10 +238,10 @@
         }
 
         /// <summary>
-        /// Gets the name of the source branch from the pull request
+        /// Gets the name of the source branch from the pull request.
         /// </summary>
         /// Returns <see cref="string.Empty"/> if no pull request could be found and
-        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
+        /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false.</c>.
         /// <exception cref="TfsPullRequestNotFoundException">If pull request could not be found and
         /// <see cref="TfsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public string SourceRefName
@@ -339,19 +339,30 @@
                         .GetRepositoryAsync(repositoryDescription.ProjectName, repositoryDescription.RepositoryName)
                         .GetAwaiter().GetResult();
 
+                if (repository == null)
+                {
+                    throw new TfsException("Could not read repository.");
+                }
+
                 var targetBranchName = settings.TargetRefName;
                 if (targetBranchName == null)
                 {
                     targetBranchName = repository.DefaultBranch;
                 }
 
-                var targetBranch =
+                var refs =
                     gitClient.GetRefsAsync(
                         repositoryDescription.ProjectName,
                         repositoryDescription.RepositoryName,
                         filter: targetBranchName.Replace("refs/", string.Empty))
-                    .GetAwaiter().GetResult()
-                    .SingleOrDefault();
+                    .GetAwaiter().GetResult();
+
+                if (refs == null)
+                {
+                    throw new TfsBranchNotFoundException(targetBranchName);
+                }
+
+                var targetBranch = refs.SingleOrDefault();
 
                 if (targetBranch == null)
                 {
@@ -363,7 +374,7 @@
                     SourceRefName = settings.SourceRefName,
                     TargetRefName = targetBranch.Name,
                     Title = settings.Title,
-                    Description = settings.Description
+                    Description = settings.Description,
                 };
 
                 var createdPullRequest =
@@ -456,8 +467,8 @@
                             Context = new GitStatusContext()
                             {
                                 Name = status.Name,
-                                Genre = status.Genre
-                            }
+                                Genre = status.Genre,
+                            },
                         },
                         this.pullRequest.Repository.Id,
                         this.pullRequest.PullRequestId);
@@ -500,13 +511,13 @@
             var targetVersionDescriptor = new GitTargetVersionDescriptor
             {
                 VersionType = GitVersionType.Commit,
-                Version = this.LastSourceCommitId
+                Version = this.LastSourceCommitId,
             };
 
             var baseVersionDescriptor = new GitBaseVersionDescriptor
             {
                 VersionType = GitVersionType.Commit,
-                Version = this.LastTargetCommitId
+                Version = this.LastTargetCommitId,
             };
 
             using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
@@ -635,7 +646,7 @@
         /// Gets all the pull request changes of the given iteration.
         /// </summary>
         /// <param name="iterationId">The id of the iteration.</param>
-        /// <returns>The colletion of the iteration changes of the given id. Returns <code>null</code> if pull request is not valid.</returns>
+        /// <returns>The colletion of the iteration changes of the given id. Returns <c>null</c> if pull request is not valid.</returns>
         public IEnumerable<TfsPullRequestIterationChange> GetIterationChanges(int iterationId)
         {
             if (!this.ValidatePullRequest())
@@ -661,7 +672,7 @@
                     {
                         ChangeId = c.ChangeId,
                         ChangeTrackingId = c.ChangeTrackingId,
-                        ItemPath = c.Item.Path.IsNullOrEmpty() ? null : new FilePath(c.Item.Path)
+                        ItemPath = c.Item.Path.IsNullOrEmpty() ? null : new FilePath(c.Item.Path),
                     });
 
                 return tfsChanges;
@@ -684,7 +695,7 @@
             {
                 var newThread = new GitPullRequestCommentThread
                 {
-                    Status = status
+                    Status = status,
                 };
 
                 gitClient.UpdateThreadAsync(

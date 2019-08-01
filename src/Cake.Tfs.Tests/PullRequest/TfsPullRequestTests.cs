@@ -214,7 +214,7 @@
                     new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 101)
                     {
                         GitClientFactory = new FakeNullGitClientFactory(),
-                        Settings = { ThrowExceptionIfPullRequestCouldNotBeFound = false }
+                        Settings = { ThrowExceptionIfPullRequestCouldNotBeFound = false },
                     };
 
                 // When
@@ -243,7 +243,7 @@
                     new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsUrl, 101)
                     {
                         GitClientFactory = new FakeNullGitClientFactory(),
-                        Settings = { ThrowExceptionIfPullRequestCouldNotBeFound = false }
+                        Settings = { ThrowExceptionIfPullRequestCouldNotBeFound = false },
                     };
 
                 // When
@@ -272,7 +272,7 @@
                     new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, "somebranch")
                     {
                         GitClientFactory = new FakeNullGitClientFactory(),
-                        Settings = { ThrowExceptionIfPullRequestCouldNotBeFound = false }
+                        Settings = { ThrowExceptionIfPullRequestCouldNotBeFound = false },
                     };
 
                 // When
@@ -301,7 +301,7 @@
                     new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsUrl, "somebranch")
                     {
                         GitClientFactory = new FakeNullGitClientFactory(),
-                        Settings = { ThrowExceptionIfPullRequestCouldNotBeFound = false }
+                        Settings = { ThrowExceptionIfPullRequestCouldNotBeFound = false },
                     };
 
                 // When
@@ -329,7 +329,7 @@
                 var fixture =
                     new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 1)
                     {
-                        GitClientFactory = new FakeNullGitClientFactory()
+                        GitClientFactory = new FakeNullGitClientFactory(),
                     };
 
                 // When
@@ -346,7 +346,7 @@
                 var fixture =
                     new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, "feature")
                     {
-                        GitClientFactory = new FakeNullGitClientFactory()
+                        GitClientFactory = new FakeNullGitClientFactory(),
                     };
 
                 // When
@@ -459,8 +459,7 @@
                         description);
 
                 // When
-                var result =
-                    TfsPullRequest.Create(fixture.Log, fixture.GitClientFactory, fixture.Settings);
+                TfsPullRequest.Create(fixture.Log, fixture.GitClientFactory, fixture.Settings);
 
                 // Then
                 // Return is a mocked pull request unrelated to the input values
@@ -483,8 +482,7 @@
                         description);
 
                 // When
-                var result =
-                    TfsPullRequest.Create(fixture.Log, fixture.GitClientFactory, fixture.Settings);
+                TfsPullRequest.Create(fixture.Log, fixture.GitClientFactory, fixture.Settings);
 
                 // Then
                 // Return is a mocked pull request unrelated to the input values
@@ -529,7 +527,7 @@
                 // Given
                 var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 23)
                 {
-                    GitClientFactory = new FakeNullForMethodsGitClientFactory()
+                    GitClientFactory = new FakeNullForMethodsGitClientFactory(),
                 };
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
@@ -597,7 +595,7 @@
                 // Given
                 var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 16)
                 {
-                    GitClientFactory = new FakeNullForMethodsGitClientFactory()
+                    GitClientFactory = new FakeNullForMethodsGitClientFactory(),
                 };
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
                 var status = new TfsPullRequestStatus("One") { State = TfsPullRequestStatusState.Failed };
@@ -689,7 +687,7 @@
                 // Given
                 var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 11)
                 {
-                    GitClientFactory = new FakeNullForMethodsGitClientFactory()
+                    GitClientFactory = new FakeNullForMethodsGitClientFactory(),
                 };
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
@@ -710,7 +708,7 @@
                 // Given
                 var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 33)
                 {
-                    GitClientFactory = new FakeNullForMethodsGitClientFactory()
+                    GitClientFactory = new FakeNullForMethodsGitClientFactory(),
                 };
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
@@ -790,7 +788,7 @@
                 // Given
                 var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 100)
                 {
-                    GitClientFactory = new FakeNullForMethodsGitClientFactory()
+                    GitClientFactory = new FakeNullForMethodsGitClientFactory(),
                 };
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
@@ -824,7 +822,7 @@
                 // Given
                 var fixture = new PullRequestFixture(BasePullRequestFixture.ValidTfsUrl, 11)
                 {
-                    GitClientFactory = new FakeNullForMethodsGitClientFactory()
+                    GitClientFactory = new FakeNullForMethodsGitClientFactory(),
                 };
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
@@ -872,7 +870,7 @@
                 // Given
                 var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsUrl, 21)
                 {
-                    GitClientFactory = new FakeNullForMethodsGitClientFactory()
+                    GitClientFactory = new FakeNullForMethodsGitClientFactory(),
                 };
                 var pullRequest = new TfsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
