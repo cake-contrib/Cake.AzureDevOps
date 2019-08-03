@@ -21,7 +21,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/cake-contrib/Cake.AzureDevOps.git</RepositoryUrl>
-    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.AzureDevOps/releases/tag/0.3.1</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.AzureDevOps/releases/tag/0.3.2</PackageReleaseNotes>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);PackBuildOutputs</TargetsForTfmSpecificContentInPackage>
@@ -52,7 +52,37 @@
   
   <Target Name="PackBuildOutputs" DependsOnTargets="SatelliteDllsProjectOutputGroup;DebugSymbolsProjectOutputGroup">
     <ItemGroup>
-      <TfmSpecificPackageFile Include="$(OutputPath)\**\*" Exclude="$(OutputPath)\**\*.xml;$(OutputPath)\**\*.pdb;$(OutputPath)\**\Cake.Core.dll">
+      <TfmSpecificPackageFile Include="$(OutputPath)\**\3rdPartyLicense.txt">
+        <PackagePath>lib\$(TargetFramework)\</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="$(OutputPath)\**\Cake.AzureDevOps.*">
+        <PackagePath>lib\$(TargetFramework)\</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.IdentityModel.Clients.ActiveDirectory.dll">
+        <PackagePath>lib\$(TargetFramework)\</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.TeamFoundation.Common.dll">
+        <PackagePath>lib\$(TargetFramework)\</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.TeamFoundation.Core.WebApi.dll">
+        <PackagePath>lib\$(TargetFramework)\</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.TeamFoundation.SourceControl.WebApi.dll">
+        <PackagePath>lib\$(TargetFramework)\</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.VisualStudio.Services.Client.Interactive.dll">
+        <PackagePath>lib\$(TargetFramework)\</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.VisualStudio.Services.Common.dll">
+        <PackagePath>lib\$(TargetFramework)\</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.VisualStudio.Services.WebApi.dll">
+        <PackagePath>lib\$(TargetFramework)\</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="$(OutputPath)\**\System.Net.Http.Formatting.dll">
+        <PackagePath>lib\$(TargetFramework)\</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="$(OutputPath)\**\TfsUrlParser.dll">
         <PackagePath>lib\$(TargetFramework)\</PackagePath>
       </TfmSpecificPackageFile>
     </ItemGroup>
