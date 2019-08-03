@@ -26,7 +26,7 @@ Click on the build server and repository links to see the build definition or so
 
 |Build Server|Repository| |
 |:--:|:--:|:--:|
-|[Azure Pipelines](https://dev.azure.com/pberger/Cake.AzureDevOps-Demo/_build?definitionId=7)|[Azure Repos](https://dev.azure.com/pberger/_git/Cake.AzureDevOps-Demo)|[![Build Status](https://dev.azure.com/pberger/Cake.AzureDevOps-Demo/_apis/build/status/Cake.AzureDevOps-Demo/Cake.AzureDevOps-Demo%20CI?branchName=master)](https://dev.azure.com/pberger/Cake.AzureDevOps-Demo/_build/latest?definitionId=7&branchName=master)|
+|[Azure Pipelines](https://dev.azure.com/pberger/Cake.AzureDevOps-Demo/_build?definitionId=8)|[Azure Repos](https://dev.azure.com/pberger/_git/Cake.AzureDevOps-Demo)|[![Build Status](https://dev.azure.com/pberger/Cake.AzureDevOps-Demo/_apis/build/status/Cake.AzureDevOps-Demo?branchName=master)](https://dev.azure.com/pberger/Cake.AzureDevOps-Demo/_build/latest?definitionId=8&branchName=master)|
 
 ## Code Coverage
 
