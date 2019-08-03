@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -22,9 +23,6 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/cake-contrib/Cake.Tfs.git</RepositoryUrl>
     <PackageReleaseNotes>https://github.com/cake-contrib/Cake.Tfs/releases/tag/0.3.1</PackageReleaseNotes>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
-    <IncludeBuildOutput>false</IncludeBuildOutput>
-    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);PackBuildOutputs</TargetsForTfmSpecificContentInPackage>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
@@ -42,6 +40,7 @@
     <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="16.143.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Services.InteractiveClient" Version="16.143.2" PrivateAssets="All" />
     <PackageReference Include="TfsUrlParser" Version="1.3.0" PrivateAssets="All" />
+    <PackageReference Include="ILRepack.MSBuild.Task" Version="2.0.13" PrivateAssets="All"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -49,12 +48,36 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  
-  <Target Name="PackBuildOutputs" DependsOnTargets="SatelliteDllsProjectOutputGroup;DebugSymbolsProjectOutputGroup">
+
+  <Target Name="ILRepack" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+    <PropertyGroup>
+      <WorkingDirectory>$(MSBuildThisFileDirectory)bin\$(Configuration)\$(TargetFramework)</WorkingDirectory>
+    </PropertyGroup>
+
     <ItemGroup>
-      <TfmSpecificPackageFile Include="$(OutputPath)\**\*" Exclude="$(OutputPath)\**\*.xml;$(OutputPath)\**\*.pdb;$(OutputPath)\**\Cake.Core.dll">
-        <PackagePath>lib\$(TargetFramework)\</PackagePath>
-      </TfmSpecificPackageFile>
+      <InputAssemblies Include="Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
+      <InputAssemblies Include="Microsoft.TeamFoundation.Core.WebApi.dll" />
+      <InputAssemblies Include="Microsoft.TeamFoundation.Common.dll" />
+      <InputAssemblies Include="Microsoft.TeamFoundation.SourceControl.WebApi.dll" />
+      <InputAssemblies Include="Microsoft.VisualStudio.Services.Client.Interactive.dll" />
+      <InputAssemblies Include="Microsoft.VisualStudio.Services.Common.dll" />
+      <InputAssemblies Include="Microsoft.VisualStudio.Services.WebApi.dll" />
+      <InputAssemblies Include="System.Net.Http.Formatting.dll" />
+      <InputAssemblies Include="TfsUrlParser.dll" />
     </ItemGroup>
+
+    <ItemGroup>
+      <!-- Dot not internalize any types inside this assembly -->
+      <InternalizeExcludeAssemblies Include="Cake.Core.dll" />
+    </ItemGroup>
+
+    <Message Text="MERGING: @(InputAssemblies->'%(Filename)') into $(OutputAssembly)" Importance="High" />
+    <ILRepack
+      OutputType="$(OutputType)"
+      MainAssembly="$(AssemblyName).dll"
+      OutputAssembly="$(AssemblyName).dll"
+      InputAssemblies="@(InputAssemblies)"
+      InternalizeExcludeAssemblies="@(InternalizeExcludeAssemblies)"
+      WorkingDirectory="$(WorkingDirectory)" />
   </Target>
 </Project>
