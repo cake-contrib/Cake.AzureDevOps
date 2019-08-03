@@ -58,6 +58,9 @@
       <TfmSpecificPackageFile Include="$(OutputPath)\**\Cake.Tfs.*">
         <PackagePath>lib\$(TargetFramework)\</PackagePath>
       </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.IdentityModel.Clients.ActiveDirectory.dll">
+        <PackagePath>lib\$(TargetFramework)\</PackagePath>
+      </TfmSpecificPackageFile>
       <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.TeamFoundation.Common.dll">
         <PackagePath>lib\$(TargetFramework)\</PackagePath>
       </TfmSpecificPackageFile>
