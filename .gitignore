@@ -302,7 +302,9 @@ __pycache__/
 
 # End of https://www.gitignore.io/api/cake,visualstudio
 
-# Project specific 
+# Project specific
 
 BuildArtifacts/
 config.wyam.*
+
+.dotnet
