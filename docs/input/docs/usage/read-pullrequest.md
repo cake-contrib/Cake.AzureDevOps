@@ -26,4 +26,4 @@ Task("Read-PullRequest").Does(() =>
 });
 ```
 
-[Cake.AzureDevOps addin]: https://www.nuget.org/packages/Cake.TfAzureDevOpss
+[Cake.AzureDevOps addin]: https://www.nuget.org/packages/Cake.AzureDevOps
