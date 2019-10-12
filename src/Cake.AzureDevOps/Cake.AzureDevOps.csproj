@@ -16,7 +16,7 @@
     <Authors>Pascal Berger</Authors>
     <Copyright>Copyright © Pascal Berger</Copyright>
     <PackageTags>Cake Script Azure-DevOps Azure-DevOps-Server</PackageTags>
-    <PackageIconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics@a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</PackageIconUrl>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageProjectUrl>http://cake-contrib.github.io/Cake.AzureDevOps/</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
@@ -45,11 +45,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="3rdPartyLicense.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="3rdPartyLicense.txt" Pack="true" PackagePath="\" />
+    <None Include="icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
-  
+
   <Target Name="PackBuildOutputs" DependsOnTargets="SatelliteDllsProjectOutputGroup;DebugSymbolsProjectOutputGroup">
     <ItemGroup>
       <TfmSpecificPackageFile Include="$(OutputPath)\**\3rdPartyLicense.txt">
