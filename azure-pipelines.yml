@@ -6,6 +6,8 @@ trigger:
 
 pr:
 - develop
+- release/*
+- hotfix/*
 
 jobs:
 - job: Windows

@@ -196,6 +196,26 @@
         }
 
         /// <summary>
+        /// Gets if the pull request is in draft mode.
+        /// Returns <see cref="AzureDevOpsPullRequestState.NotSet"/> if no pull request could be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public bool? IsDraft
+        {
+            get
+            {
+                if (!this.ValidatePullRequest())
+                {
+                    return null;
+                }
+
+                return this.pullRequest.IsDraft;
+            }
+        }
+
+        /// <summary>
         /// Gets the status of the pull request.
         /// Returns <see cref="AzureDevOpsPullRequestState.NotSet"/> if no pull request could be found and
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.
