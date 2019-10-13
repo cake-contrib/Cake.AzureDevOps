@@ -1,29 +1,29 @@
 ---
 Order: 20
 Title: Reading pull requests
-Description: Example how to read pull request information using the Cake.Tfs addin.
+Description: Example how to read pull request information using the Cake.AzureDevOps addin.
 ---
-The [Cake.Tfs addin] provides an alias for reading pull request information.
+The [Cake.AzureDevOps addin] provides an alias for reading pull request information.
 
 The following example will read details of a pull request:
 
 ```csharp
-#addin "Cake.Tfs"
+#addin "Cake.AzureDevOps"
 
 Task("Read-PullRequest").Does(() =>
 {
     var pullRequestSettings =
-        new TfsPullRequestSettings(
-            new Uri("http://myserver:8080/tfs/defaultcollection/myproject/_git/myrepository"),
+        new AzureDevOpsPullRequestSettings(
+            new Uri("http://myserver:8080/defaultcollection/myproject/_git/myrepository"),
             "refs/heads/feature/myfeature",
-            TfsAuthenticationNtlm());
+            AzureDevOpsAuthenticationNtlm());
 
     var pullRequest =
-        TfsPullRequest(
+        AzureDevOpsPullRequest(
             pullRequestSettings);
 
     Information(pullRequest.TargetRefName);
 });
 ```
 
-[Cake.Tfs addin]: https://www.nuget.org/packages/Cake.Tfs
+[Cake.AzureDevOps addin]: https://www.nuget.org/packages/Cake.AzureDevOps

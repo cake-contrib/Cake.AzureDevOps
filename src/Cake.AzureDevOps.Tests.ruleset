@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Ruleset for Cake.AzureDevOps test cases" Description="Rules valid for Cake.AzureDevOps test cases" ToolsVersion="14.0">
+  <Include Path="Cake.AzureDevOps.ruleset" Action="Default" />
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA0001" Action="None" />
+    <Rule Id="SA1118" Action="None" />
+    <Rule Id="SA1600" Action="None" />
+    <Rule Id="SA1652" Action="None" />
+  </Rules>
+</RuleSet>
