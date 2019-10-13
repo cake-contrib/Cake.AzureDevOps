@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-	<link rel="self" href="http://cake-contrib.github.io/Cake.Tfs" />
-	<id>http://cake-contrib.github.io/Cake.Tfs</id>
-	<title>Cake.Tfs</title>
-	<rights>2018</rights>
-	<updated>2018-11-25T10:10:39Z</updated>
+	<id>http://cake-contrib.github.io/Cake.AzureDevOps</id>
+	<title>Cake.AzureDevOps</title>
+	<link rel="self" href="http://cake-contrib.github.io/Cake.AzureDevOps" />
+	<rights>2019</rights>
+	<updated>2019-10-13T11:35:52Z</updated>
 </feed>

@@ -39,196 +39,308 @@ var searchModule = function() {
     a(
         {
             id:0,
-            title:"TfsOAuthCredentials",
-            content:"TfsOAuthCredentials",
+            title:"IAzureDevOpsCredentials",
+            content:"IAzureDevOpsCredentials",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.Tfs/api/Cake.Tfs.Authentication/TfsOAuthCredentials',
-            title:"TfsOAuthCredentials",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/IAzureDevOpsCredentials',
+            title:"IAzureDevOpsCredentials",
             description:""
         }
     );
     a(
         {
             id:1,
-            title:"TfsPullRequestVote",
-            content:"TfsPullRequestVote",
+            title:"AzureDevOpsPullRequestStatusState",
+            content:"AzureDevOpsPullRequestStatusState",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestVote',
-            title:"TfsPullRequestVote",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestStatusState',
+            title:"AzureDevOpsPullRequestStatusState",
             description:""
         }
     );
     a(
         {
             id:2,
-            title:"TfsPullRequestStatusState",
-            content:"TfsPullRequestStatusState",
+            title:"AzureDevOpsBranchNotFoundException",
+            content:"AzureDevOpsBranchNotFoundException",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestStatusState',
-            title:"TfsPullRequestStatusState",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsBranchNotFoundException',
+            title:"AzureDevOpsBranchNotFoundException",
             description:""
         }
     );
     a(
         {
             id:3,
-            title:"ITfsCredentials",
-            content:"ITfsCredentials",
+            title:"AzureDevOpsAliases",
+            content:"AzureDevOpsAliases",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.Tfs/api/Cake.Tfs.Authentication/ITfsCredentials',
-            title:"ITfsCredentials",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases',
+            title:"AzureDevOpsAliases",
             description:""
         }
     );
     a(
         {
             id:4,
-            title:"TfsAadCredentials",
-            content:"TfsAadCredentials",
+            title:"AzureDevOpsCommentType",
+            content:"AzureDevOpsCommentType",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.Tfs/api/Cake.Tfs.Authentication/TfsAadCredentials',
-            title:"TfsAadCredentials",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest.CommentThread/AzureDevOpsCommentType',
+            title:"AzureDevOpsCommentType",
             description:""
         }
     );
     a(
         {
             id:5,
-            title:"IGitClientFactory",
-            content:"IGitClientFactory",
+            title:"AzureDevOpsCommentThreadStatus",
+            content:"AzureDevOpsCommentThreadStatus",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.Tfs/api/Cake.Tfs/IGitClientFactory',
-            title:"IGitClientFactory",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest.CommentThread/AzureDevOpsCommentThreadStatus',
+            title:"AzureDevOpsCommentThreadStatus",
             description:""
         }
     );
     a(
         {
             id:6,
-            title:"TfsPullRequest",
-            content:"TfsPullRequest",
+            title:"AzureDevOpsComment",
+            content:"AzureDevOpsComment",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequest',
-            title:"TfsPullRequest",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest.CommentThread/AzureDevOpsComment',
+            title:"AzureDevOpsComment",
             description:""
         }
     );
     a(
         {
             id:7,
-            title:"TfsPullRequestNotFoundException",
-            content:"TfsPullRequestNotFoundException",
+            title:"AzureDevOpsPullRequestState",
+            content:"AzureDevOpsPullRequestState",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestNotFoundException',
-            title:"TfsPullRequestNotFoundException",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestState',
+            title:"AzureDevOpsPullRequestState",
             description:""
         }
     );
     a(
         {
             id:8,
-            title:"TfsPullRequestStatus",
-            content:"TfsPullRequestStatus",
+            title:"AzureDevOpsException",
+            content:"AzureDevOpsException",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestStatus',
-            title:"TfsPullRequestStatus",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsException',
+            title:"AzureDevOpsException",
             description:""
         }
     );
     a(
         {
             id:9,
-            title:"TfsNtlmCredentials",
-            content:"TfsNtlmCredentials",
+            title:"BaseAzureDevOpsPullRequestSettings",
+            content:"BaseAzureDevOpsPullRequestSettings",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.Tfs/api/Cake.Tfs.Authentication/TfsNtlmCredentials',
-            title:"TfsNtlmCredentials",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/BaseAzureDevOpsPullRequestSettings',
+            title:"BaseAzureDevOpsPullRequestSettings",
             description:""
         }
     );
     a(
         {
             id:10,
-            title:"TfsAliases",
-            content:"TfsAliases",
+            title:"AzureDevOpsCreatePullRequestSettings",
+            content:"AzureDevOpsCreatePullRequestSettings",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.Tfs/api/Cake.Tfs/TfsAliases',
-            title:"TfsAliases",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsCreatePullRequestSettings',
+            title:"AzureDevOpsCreatePullRequestSettings",
             description:""
         }
     );
     a(
         {
             id:11,
-            title:"TfsPullRequestSettings",
-            content:"TfsPullRequestSettings",
+            title:"AzureDevOpsPullRequestIterationChange",
+            content:"AzureDevOpsPullRequestIterationChange",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.Tfs/api/Cake.Tfs.PullRequest/TfsPullRequestSettings',
-            title:"TfsPullRequestSettings",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestIterationChange',
+            title:"AzureDevOpsPullRequestIterationChange",
             description:""
         }
     );
     a(
         {
             id:12,
-            title:"TfsException",
-            content:"TfsException",
+            title:"AzureDevOpsAadCredentials",
+            content:"AzureDevOpsAadCredentials",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.Tfs/api/Cake.Tfs/TfsException',
-            title:"TfsException",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsAadCredentials',
+            title:"AzureDevOpsAadCredentials",
             description:""
         }
     );
     a(
         {
             id:13,
-            title:"TfsBasicCredentials",
-            content:"TfsBasicCredentials",
+            title:"AzureDevOpsPullRequestCommentThread",
+            content:"AzureDevOpsPullRequestCommentThread",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.Tfs/api/Cake.Tfs.Authentication/TfsBasicCredentials',
-            title:"TfsBasicCredentials",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest.CommentThread/AzureDevOpsPullRequestCommentThread',
+            title:"AzureDevOpsPullRequestCommentThread",
+            description:""
+        }
+    );
+    a(
+        {
+            id:14,
+            title:"AzureDevOpsPullRequestSettings",
+            content:"AzureDevOpsPullRequestSettings",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestSettings',
+            title:"AzureDevOpsPullRequestSettings",
+            description:""
+        }
+    );
+    a(
+        {
+            id:15,
+            title:"AzureDevOpsPullRequestVote",
+            content:"AzureDevOpsPullRequestVote",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestVote',
+            title:"AzureDevOpsPullRequestVote",
+            description:""
+        }
+    );
+    a(
+        {
+            id:16,
+            title:"AzureDevOpsPullRequestStatus",
+            content:"AzureDevOpsPullRequestStatus",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestStatus',
+            title:"AzureDevOpsPullRequestStatus",
+            description:""
+        }
+    );
+    a(
+        {
+            id:17,
+            title:"AzureDevOpsNtlmCredentials",
+            content:"AzureDevOpsNtlmCredentials",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsNtlmCredentials',
+            title:"AzureDevOpsNtlmCredentials",
+            description:""
+        }
+    );
+    a(
+        {
+            id:18,
+            title:"AzureDevOpsPullRequestNotFoundException",
+            content:"AzureDevOpsPullRequestNotFoundException",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestNotFoundException',
+            title:"AzureDevOpsPullRequestNotFoundException",
+            description:""
+        }
+    );
+    a(
+        {
+            id:19,
+            title:"AzureDevOpsPullRequest",
+            content:"AzureDevOpsPullRequest",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequest',
+            title:"AzureDevOpsPullRequest",
+            description:""
+        }
+    );
+    a(
+        {
+            id:20,
+            title:"AzureDevOpsOAuthCredentials",
+            content:"AzureDevOpsOAuthCredentials",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsOAuthCredentials',
+            title:"AzureDevOpsOAuthCredentials",
+            description:""
+        }
+    );
+    a(
+        {
+            id:21,
+            title:"AzureDevOpsBasicCredentials",
+            content:"AzureDevOpsBasicCredentials",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsBasicCredentials',
+            title:"AzureDevOpsBasicCredentials",
             description:""
         }
     );

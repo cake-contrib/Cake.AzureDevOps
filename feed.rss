@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0">
 	<channel>
-		<title>Cake.Tfs</title>
-		<link>http://cake-contrib.github.io/Cake.Tfs</link>
+		<title>Cake.AzureDevOps</title>
+		<link>http://cake-contrib.github.io/Cake.AzureDevOps</link>
 		<description />
-		<copyright>2018</copyright>
-		<pubDate>Sun, 25 Nov 2018 10:10:39 GMT</pubDate>
-		<lastBuildDate>Sun, 25 Nov 2018 10:10:39 GMT</lastBuildDate>
+		<copyright>2019</copyright>
+		<pubDate>Sun, 13 Oct 2019 11:35:52 GMT</pubDate>
+		<lastBuildDate>Sun, 13 Oct 2019 11:35:52 GMT</lastBuildDate>
 	</channel>
 </rss>
