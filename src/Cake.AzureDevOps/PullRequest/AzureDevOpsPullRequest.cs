@@ -574,6 +574,8 @@
         /// <param name="thread">The instance of the thread.</param>
         public void CreateCommentThread(AzureDevOpsPullRequestCommentThread thread)
         {
+            thread.NotNull(nameof(thread));
+
             if (!this.ValidatePullRequest())
             {
                 return;

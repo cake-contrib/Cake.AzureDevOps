@@ -841,7 +841,7 @@
                 var result = Record.Exception(() => pullRequest.CreateCommentThread(null));
 
                 // Then
-                Assert.IsType<NullReferenceException>(result);
+                result.IsArgumentNullException("thread");
             }
 
             [Fact]
