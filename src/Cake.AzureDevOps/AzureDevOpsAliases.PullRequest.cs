@@ -180,6 +180,48 @@
         }
 
         /// <summary>
+        /// Adds a new comment thread with a single comment to an Azure DevOps pull request using
+        /// the specified settings.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">Settings for accessing the pull request.</param>
+        /// <param name="comment">The comment which should be added to the pull request.</param>
+        /// <example>
+        /// <para>Add comment 'Hello World' to pull request:</para>
+        /// <code>
+        /// <![CDATA[
+        ///     var pullRequestSettings =
+        ///         new AzureDevOpsPullRequestSettings(
+        ///             new Uri("http://myserver:8080/defaultcollection/myproject/_git/myrepository"),
+        ///             "refs/heads/feature/myfeature",
+        ///             AzureDevOpsAuthenticationNtlm());
+        ///
+        ///     AzureDevOpsAddCommentToPullRequest(
+        ///         pullRequestSettings,
+        ///         "Hello World");
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
+        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
+        public static void AzureDevOpsAddCommentToPullRequest(
+            this ICakeContext context,
+            AzureDevOpsPullRequestSettings settings,
+            string comment)
+        {
+            context.NotNull(nameof(context));
+            settings.NotNull(nameof(settings));
+            comment.NotNullOrWhiteSpace(nameof(comment));
+
+            new AzureDevOpsPullRequest(context.Log, settings, new GitClientFactory())
+                .CreateComment(comment);
+        }
+
+        /// <summary>
         /// Creates a pull request in Azure DevOps using the specified settings.
         /// </summary>
         /// <param name="context">The context.</param>

@@ -544,6 +544,31 @@
         }
 
         /// <summary>
+        /// Creates a new comment thread with a single comment in the pull request.
+        /// </summary>
+        /// <param name="comment">Comment which should be added.</param>
+        public void CreateComment(string comment)
+        {
+            comment.NotNullOrWhiteSpace(nameof(comment));
+
+            var thread = new AzureDevOpsPullRequestCommentThread
+            {
+                Status = AzureDevOpsCommentThreadStatus.Active,
+                Comments = new List<AzureDevOpsComment>
+                {
+                    new AzureDevOpsComment
+                    {
+                        CommentType = AzureDevOpsCommentType.System,
+                        IsDeleted = false,
+                        Content = comment,
+                    },
+                },
+            };
+
+            this.CreateCommentThread(thread);
+        }
+
+        /// <summary>
         /// Creates a new comment thread in the pull request.
         /// </summary>
         /// <param name="thread">The instance of the thread.</param>

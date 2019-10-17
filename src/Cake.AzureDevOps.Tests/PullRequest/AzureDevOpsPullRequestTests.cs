@@ -766,6 +766,68 @@
             }
         }
 
+        public sealed class TheCreateCommentMethod
+        {
+            [Fact]
+            public void Should_Throw_If_Comment_Is_Null()
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var result = Record.Exception(() => pullRequest.CreateComment(null));
+
+                // Then
+                result.IsArgumentNullException("comment");
+            }
+
+            [Fact]
+            public void Should_Throw_If_Comment_Is_Empty()
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var result = Record.Exception(() => pullRequest.CreateComment(string.Empty));
+
+                // Then
+                result.IsArgumentOutOfRangeException("comment");
+            }
+
+            [Fact]
+            public void Should_Throw_If_Comment_Is_Whitespace()
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var result = Record.Exception(() => pullRequest.CreateComment(" "));
+
+                // Then
+                result.IsArgumentOutOfRangeException("comment");
+            }
+
+            [Fact]
+            public void Should_Not_Throw_If_Null_Is_Returned()
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100)
+                {
+                    GitClientFactory = new FakeNullForMethodsGitClientFactory(),
+                };
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                pullRequest.CreateComment("Foo");
+
+                // Then
+                // ?? Nothing to validate here since the method returns void
+            }
+        }
+
         public sealed class TheCreateCommentThreadMethod
         {
             [Fact]
