@@ -16,12 +16,12 @@
     <Authors>Pascal Berger</Authors>
     <Copyright>Copyright © Pascal Berger</Copyright>
     <PackageTags>Cake Script Azure-DevOps Azure-DevOps-Server</PackageTags>
-    <PackageIconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics@a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</PackageIconUrl>
+    <PackageIcon>icon.png</PackageIcon>
     <PackageProjectUrl>http://cake-contrib.github.io/Cake.AzureDevOps/</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/cake-contrib/Cake.AzureDevOps.git</RepositoryUrl>
-    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.AzureDevOps/releases/tag/0.4.0</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.AzureDevOps/releases/tag/0.4.1</PackageReleaseNotes>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);PackBuildOutputs</TargetsForTfmSpecificContentInPackage>
@@ -37,7 +37,7 @@
 
   <ItemGroup>
     <PackageReference Include="Cake.Core" Version="0.33.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.3" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.6" PrivateAssets="All" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
     <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="16.143.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Services.InteractiveClient" Version="16.143.2" PrivateAssets="All" />
@@ -45,11 +45,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="3rdPartyLicense.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="3rdPartyLicense.txt" Pack="true" PackagePath="\" />
+    <None Include="icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
-  
+
   <Target Name="PackBuildOutputs" DependsOnTargets="SatelliteDllsProjectOutputGroup;DebugSymbolsProjectOutputGroup">
     <ItemGroup>
       <TfmSpecificPackageFile Include="$(OutputPath)\**\3rdPartyLicense.txt">

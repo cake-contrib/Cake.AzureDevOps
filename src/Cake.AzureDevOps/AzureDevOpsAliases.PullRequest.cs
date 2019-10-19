@@ -19,15 +19,15 @@
         /// <para>Get a pull request based on the source branch:</para>
         /// <code>
         /// <![CDATA[
-        ///     var pullRequestSettings =
-        ///         new AzureDevOpsPullRequestSettings(
-        ///             new Uri("http://myserver:8080/defaultcollection/myproject/_git/myrepository"),
-        ///             "refs/heads/feature/myfeature",
-        ///             AzureDevOpsAuthenticationNtlm());
+        /// var pullRequestSettings =
+        ///     new AzureDevOpsPullRequestSettings(
+        ///         new Uri("http://myserver:8080/defaultcollection/myproject/_git/myrepository"),
+        ///         "refs/heads/feature/myfeature",
+        ///         AzureDevOpsAuthenticationNtlm());
         ///
-        ///     var pullRequest =
-        ///         AzureDevOpsPullRequest(
-        ///             pullRequestSettings);
+        /// var pullRequest =
+        ///     AzureDevOpsPullRequest(
+        ///         pullRequestSettings);
         /// ]]>
         /// </code>
         /// </example>
@@ -66,8 +66,8 @@
         /// <para>Get a pull request:</para>
         /// <code>
         /// <![CDATA[
-        ///     var pullRequest =
-        ///         AzureDevOpsPullRequestUsingAzurePipelinesOAuthToken();
+        /// var pullRequest =
+        ///     AzureDevOpsPullRequestUsingAzurePipelinesOAuthToken();
         /// ]]>
         /// </code>
         /// </example>
@@ -102,15 +102,15 @@
         /// <para>Vote 'Approved' to a Azure DevOps Server pull request:</para>
         /// <code>
         /// <![CDATA[
-        ///     var pullRequestSettings =
-        ///         new AzureDevOpsPullRequestSettings(
-        ///             new Uri("http://myserver:8080/defaultcollection/myproject/_git/myrepository"),
-        ///             "refs/heads/feature/myfeature",
-        ///             AzureDevOpsAuthenticationNtlm());
+        /// var pullRequestSettings =
+        ///     new AzureDevOpsPullRequestSettings(
+        ///         new Uri("http://myserver:8080/defaultcollection/myproject/_git/myrepository"),
+        ///         "refs/heads/feature/myfeature",
+        ///         AzureDevOpsAuthenticationNtlm());
         ///
-        ///     AzureDevOpsVotePullRequest(
-        ///         pullRequestSettings,
-        ///         AzureDevOpsVotePullRequest.Approved);
+        /// AzureDevOpsVotePullRequest(
+        ///     pullRequestSettings,
+        ///     AzureDevOpsVotePullRequest.Approved);
         /// ]]>
         /// </code>
         /// </example>
@@ -141,23 +141,23 @@
         /// <para>Set a custom status on the pull request:</para>
         /// <code>
         /// <![CDATA[
-        ///     var pullRequestSettings =
-        ///         new AzureDevOpsPullRequestSettings(
-        ///             new Uri("http://myserver:8080/defaultcollection/myproject/_git/myrepository"),
-        ///             "refs/heads/feature/myfeature",
-        ///             AzureDevOpsAuthenticationNtlm());
+        /// var pullRequestSettings =
+        ///     new AzureDevOpsPullRequestSettings(
+        ///         new Uri("http://myserver:8080/defaultcollection/myproject/_git/myrepository"),
+        ///         "refs/heads/feature/myfeature",
+        ///         AzureDevOpsAuthenticationNtlm());
         ///
-        ///     var pullRequstStatus =
-        ///         new AzureDevOpsPullRequestStatus("MyStatus")
-        ///         {
-        ///             Genre = "MyGenre",
-        ///             State = AzureDevOpsPullRequestStatusState.Succeeded,
-        ///             Description = "My custom status is successful"
-        ///         }
+        /// var pullRequstStatus =
+        ///     new AzureDevOpsPullRequestStatus("MyStatus")
+        ///     {
+        ///         Genre = "MyGenre",
+        ///         State = AzureDevOpsPullRequestStatusState.Succeeded,
+        ///         Description = "My custom status is successful"
+        ///     };
         ///
-        ///     AzureDevOpsSetPullRequestStatus(
-        ///         pullRequestSettings,
-        ///         pullRequstStatus);
+        /// AzureDevOpsSetPullRequestStatus(
+        ///     pullRequestSettings,
+        ///     pullRequstStatus);
         /// ]]>
         /// </code>
         /// </example>
@@ -180,6 +180,48 @@
         }
 
         /// <summary>
+        /// Adds a new comment thread with a single comment to an Azure DevOps pull request using
+        /// the specified settings.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">Settings for accessing the pull request.</param>
+        /// <param name="comment">The comment which should be added to the pull request.</param>
+        /// <example>
+        /// <para>Add comment 'Hello World' to pull request:</para>
+        /// <code>
+        /// <![CDATA[
+        /// var pullRequestSettings =
+        ///     new AzureDevOpsPullRequestSettings(
+        ///         new Uri("http://myserver:8080/defaultcollection/myproject/_git/myrepository"),
+        ///         "refs/heads/feature/myfeature",
+        ///         AzureDevOpsAuthenticationNtlm());
+        ///
+        /// AzureDevOpsAddCommentToPullRequest(
+        ///     pullRequestSettings,
+        ///     "Hello World");
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
+        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
+        public static void AzureDevOpsAddCommentToPullRequest(
+            this ICakeContext context,
+            AzureDevOpsPullRequestSettings settings,
+            string comment)
+        {
+            context.NotNull(nameof(context));
+            settings.NotNull(nameof(settings));
+            comment.NotNullOrWhiteSpace(nameof(comment));
+
+            new AzureDevOpsPullRequest(context.Log, settings, new GitClientFactory())
+                .CreateComment(comment);
+        }
+
+        /// <summary>
         /// Creates a pull request in Azure DevOps using the specified settings.
         /// </summary>
         /// <param name="context">The context.</param>
@@ -190,16 +232,16 @@
         /// <para>Creates a pull request:</para>
         /// <code>
         /// <![CDATA[
-        ///     var pullRequestSettings =
-        ///         new AzureDevOpsCreatePullRequestSettings(
-        ///             new Uri("http://myserver:8080/defaultcollection/myproject/_git/myrepository"),
-        ///             "refs/heads/feature/myfeature",
-        ///             "refs/heads/develop",
-        ///             "Merge my feature from myfeature",
-        ///             "Merge my feature from myfeature",
-        ///             AzureDevOpsAuthenticationNtlm());
+        /// var pullRequestSettings =
+        ///     new AzureDevOpsCreatePullRequestSettings(
+        ///         new Uri("http://myserver:8080/defaultcollection/myproject/_git/myrepository"),
+        ///         "refs/heads/feature/myfeature",
+        ///         "refs/heads/develop",
+        ///         "Merge my feature from myfeature",
+        ///         "Merge my feature from myfeature",
+        ///         AzureDevOpsAuthenticationNtlm());
         ///
-        ///     AzureDevOpsCreatePullRequest(pullRequestSettings);
+        /// AzureDevOpsCreatePullRequest(pullRequestSettings);
         /// ]]>
         /// </code>
         /// </example>
