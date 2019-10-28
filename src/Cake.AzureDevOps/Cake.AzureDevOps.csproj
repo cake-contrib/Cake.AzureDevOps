@@ -60,10 +60,16 @@
       <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.IdentityModel.Clients.ActiveDirectory.dll">
         <PackagePath>lib\$(TargetFramework)\</PackagePath>
       </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.TeamFoundation.Build2.WebApi.dll">
+        <PackagePath>lib\$(TargetFramework)\</PackagePath>
+      </TfmSpecificPackageFile>
       <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.TeamFoundation.Common.dll">
         <PackagePath>lib\$(TargetFramework)\</PackagePath>
       </TfmSpecificPackageFile>
       <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.TeamFoundation.Core.WebApi.dll">
+        <PackagePath>lib\$(TargetFramework)\</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.TeamFoundation.DistributedTask.Common.Contracts">
         <PackagePath>lib\$(TargetFramework)\</PackagePath>
       </TfmSpecificPackageFile>
       <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.TeamFoundation.SourceControl.WebApi.dll">
@@ -76,6 +82,9 @@
         <PackagePath>lib\$(TargetFramework)\</PackagePath>
       </TfmSpecificPackageFile>
       <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.VisualStudio.Services.WebApi.dll">
+        <PackagePath>lib\$(TargetFramework)\</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="$(OutputPath)\**\System.ComponentModel.Annotations.dll">
         <PackagePath>lib\$(TargetFramework)\</PackagePath>
       </TfmSpecificPackageFile>
       <TfmSpecificPackageFile Include="$(OutputPath)\**\System.Net.Http.Formatting.dll">
