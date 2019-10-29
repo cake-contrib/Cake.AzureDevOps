@@ -1,6 +1,8 @@
 ﻿namespace Cake.AzureDevOps.Build
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Cake.Core.Diagnostics;
     using Microsoft.TeamFoundation.Build.WebApi;
 
@@ -202,6 +204,34 @@
                 }
 
                 return this.build.Id;
+            }
+        }
+
+        /// <summary>
+        /// Gets the parameters passed to the build.
+        /// Returns an empty dictionary if no build could be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public IDictionary<string, string> Parameters
+        {
+            get
+            {
+                if (!this.ValidateBuild())
+                {
+                    return new Dictionary<string, string>();
+                }
+
+                // API returns a JSON string, which we parse into a dictionary.
+                return
+                    this.build.Parameters
+                        .Replace("{", string.Empty)
+                        .Replace("}", string.Empty)
+                        .Split(',')
+                        .ToDictionary(
+                            x => x.Split(':').First().Trim('"'),
+                            x => x.Split(':').Last().Trim('"'));
             }
         }
 
