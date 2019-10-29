@@ -23,13 +23,13 @@
 
             authorizedIdentity = connection.AuthorizedIdentity;
 
-            var gitClient = connection.GetClient<BuildHttpClient>();
-            if (gitClient == null)
+            var buildClient = connection.GetClient<BuildHttpClient>();
+            if (buildClient == null)
             {
                 throw new AzureDevOpsException("Could not retrieve the BuildHttpClient object");
             }
 
-            return gitClient;
+            return buildClient;
         }
 
         /// <summary>
