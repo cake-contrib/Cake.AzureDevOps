@@ -38,6 +38,7 @@
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
         public static AzureDevOpsPullRequest AzureDevOpsPullRequest(
@@ -80,6 +81,7 @@
         /// 'Allow Scripts to access OAuth token' option is not enabled on the build definition.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
         public static AzureDevOpsPullRequest AzureDevOpsPullRequestUsingAzurePipelinesOAuthToken(
@@ -118,6 +120,7 @@
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
         public static void AzureDevOpsVotePullRequest(
@@ -165,6 +168,7 @@
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
         public static void AzureDevOpsSetPullRequestStatus(
@@ -206,6 +210,7 @@
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
         public static void AzureDevOpsAddCommentToPullRequest(
@@ -248,6 +253,7 @@
         /// <exception cref="AzureDevOpsBranchNotFoundException">If the target branch could not be found.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
         public static AzureDevOpsPullRequest AzureDevOpsCreatePullRequest(

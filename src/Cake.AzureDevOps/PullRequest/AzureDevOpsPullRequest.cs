@@ -6,6 +6,7 @@
     using System.Threading;
     using Cake.AzureDevOps.Authentication;
     using Cake.AzureDevOps.PullRequest.CommentThread;
+    using Cake.AzureDevOps.Repos;
     using Cake.Core.Diagnostics;
     using Cake.Core.IO;
     using Microsoft.TeamFoundation.Common;
@@ -448,6 +449,30 @@
                     this.log.Error("Error posting pull request status: " + ex.InnerException?.Message);
                     throw;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Gets the commits contained in the pull request.
+        /// </summary>
+        /// <returns>The commits contained in the pull request or an empty list if no pull request could be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public IEnumerable<AzureDevOpsCommit> GetCommits()
+        {
+            if (!this.ValidatePullRequest())
+            {
+                return new List<AzureDevOpsCommit>();
+            }
+
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
+            {
+                return
+                    gitClient
+                        .GetPullRequestCommitsAsync(this.RepositoryId, this.PullRequestId)
+                        .Result
+                        .Select(x => x.ToAzureDevOpsCommit());
             }
         }
 
