@@ -53,5 +53,43 @@
         /// Gets the description of the pull request.
         /// </summary>
         public string Description { get; private set; }
+
+        /// <summary>
+        /// Constructs the settings object using the access token provided by Azure Pipelines.
+        /// </summary>
+        /// <param name="repositoryUrl">Full URL of the Git repository,
+        /// eg. <code>http://myserver:8080/defaultcollection/myproject/_git/myrepository</code>.
+        /// Supported URL schemes are HTTP, HTTPS and SSH.
+        /// URLs using SSH scheme are converted to HTTPS.</param>
+        /// <param name="sourceRefName">Branch for which the pull request is made.</param>
+        /// <param name="targetRefName">Target branch of the pull request.
+        /// If <see langword="null"/> or <see cref="string.Empty"/> the default branch of the repository will be used.</param>
+        /// <param name="title">Title of the pull request.</param>
+        /// <param name="description">Description of the pull request.</param>
+        /// <returns>The instance of <see cref="AzureDevOpsCreatePullRequestSettings"/> class.</returns>
+        public static AzureDevOpsCreatePullRequestSettings UsingAzurePipelinesOAuthToken(
+            Uri repositoryUrl,
+            string sourceRefName,
+            string targetRefName,
+            string title,
+            string description)
+        {
+            var accessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN", EnvironmentVariableTarget.Process);
+
+            if (string.IsNullOrWhiteSpace(accessToken))
+            {
+                throw new InvalidOperationException(
+                    "Failed to read the SYSTEM_ACCESSTOKEN environment variable. Make sure you are running in an Azure Pipelines build and that the 'Allow Scripts to access OAuth token' option is enabled.");
+            }
+
+            return
+                new AzureDevOpsCreatePullRequestSettings(
+                    repositoryUrl,
+                    sourceRefName,
+                    targetRefName,
+                    title,
+                    description,
+                    new AzureDevOpsOAuthCredentials(accessToken));
+        }
     }
 }
