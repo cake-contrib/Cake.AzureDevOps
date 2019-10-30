@@ -1,4 +1,4 @@
-﻿namespace Cake.AzureDevOps.Build
+﻿namespace Cake.AzureDevOps.Pipelines
 {
     /// <summary>
     /// Possible states of a build.
