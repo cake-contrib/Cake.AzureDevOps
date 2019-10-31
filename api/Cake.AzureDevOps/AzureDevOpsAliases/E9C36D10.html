@@ -57,7 +57,7 @@
                     <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                         <ul class="nav navbar-nav">                            
                                     <li><a href="/Cake.AzureDevOps/docs">Documentation</a></li>
-        <li class="active"><a href="/Cake.AzureDevOps/api">API</a></li>
+        <li class="active"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps">API</a></li>
  
                         </ul>       
                     </div>
@@ -141,11 +141,14 @@
 		<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases">AzureDevOpsAliases</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Method Members</li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/EA8AC7EF">Azure<wbr>Dev<wbr>Ops<wbr>Add<wbr>Comment<wbr>To<wbr>Pull<wbr>Request<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings, <wbr>string)<wbr></a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/07EF5E47">Azure<wbr>Dev<wbr>Ops<wbr>Authentication<wbr>Azure<wbr>Active<wbr>Directory<wbr>(ICakeContext, <wbr>string, <wbr>string)<wbr></a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/2938AC4E">Azure<wbr>Dev<wbr>Ops<wbr>Authentication<wbr>Basic<wbr>(ICakeContext, <wbr>string, <wbr>string)<wbr></a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/6F662C0D">Azure<wbr>Dev<wbr>Ops<wbr>Authentication<wbr>Ntlm<wbr>(ICakeContext)<wbr></a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/06009F4D">Azure<wbr>Dev<wbr>Ops<wbr>Authentication<wbr>O<wbr>Auth<wbr>(ICakeContext, <wbr>string)<wbr></a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/012CF536">Azure<wbr>Dev<wbr>Ops<wbr>Authentication<wbr>Personal<wbr>Access<wbr>Token<wbr>(ICakeContext, <wbr>string)<wbr></a></li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/82BC7B9B">AzureDevOpsBuild<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Settings)<wbr></a></li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/9815A414">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Using<wbr>Azure<wbr>Pipelines<wbr>O<wbr>Auth<wbr>Token<wbr>(ICakeContext)<wbr></a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/4AF97F03">Azure<wbr>Dev<wbr>Ops<wbr>Create<wbr>Pull<wbr>Request<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Create<wbr>Pull<wbr>Request<wbr>Settings)<wbr></a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/D4487FF2">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings)<wbr></a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/2220968F">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Using<wbr>Azure<wbr>Pipelines<wbr>O<wbr>Auth<wbr>Token<wbr>(ICakeContext)<wbr></a></li>
@@ -193,6 +196,7 @@
 	<h1 id="Syntax">Syntax</h1>
 	<pre><code>[CakeMethodAlias]
 [CakeAliasCategory("Pull Request")]
+[CakeNamespaceImport("Cake.AzureDevOps.Repos")]
 [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
 [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
 public static void AzureDevOpsSetPullRequestStatus(this ICakeContext context, AzureDevOpsPullRequestSettings settings, AzureDevOpsPullRequestStatus status)</code></pre>
@@ -201,22 +205,22 @@ public static void AzureDevOpsSetPullRequestStatus(this ICakeContext context, Az
 	<div>
      <p>Set a custom status on the pull request:</p>
      <pre><code class="cs"> var pullRequestSettings =
-         new AzureDevOpsPullRequestSettings(
-             new Uri("http://myserver:8080/defaultcollection/myproject/_git/myrepository"),
-             "refs/heads/feature/myfeature",
-             AzureDevOpsAuthenticationNtlm());
+     new AzureDevOpsPullRequestSettings(
+         new Uri("http://myserver:8080/defaultcollection/myproject/_git/myrepository"),
+         "refs/heads/feature/myfeature",
+         AzureDevOpsAuthenticationNtlm());
 
-     var pullRequstStatus =
-         new AzureDevOpsPullRequestStatus("MyStatus")
-         {
-             Genre = "MyGenre",
-             State = AzureDevOpsPullRequestStatusState.Succeeded,
-             Description = "My custom status is successful"
-         }
+ var pullRequstStatus =
+     new AzureDevOpsPullRequestStatus("MyStatus")
+     {
+         Genre = "MyGenre",
+         State = AzureDevOpsPullRequestStatusState.Succeeded,
+         Description = "My custom status is successful"
+     };
 
-     AzureDevOpsSetPullRequestStatus(
-         pullRequestSettings,
-         pullRequstStatus);</code></pre>
+ AzureDevOpsSetPullRequestStatus(
+     pullRequestSettings,
+     pullRequstStatus);</code></pre>
      </div>
 
 
@@ -236,6 +240,10 @@ public static void AzureDevOpsSetPullRequestStatus(this ICakeContext context, Az
 					</tr>
 					<tr>
 						<td>CakeAliasCategory</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>CakeNamespaceImport</td>
 						<td></td>
 					</tr>
 					<tr>
