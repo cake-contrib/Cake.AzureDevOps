@@ -345,6 +345,15 @@
 
         public sealed class TheCtorForEnvironmentVariables : IDisposable
         {
+            private readonly string originalRepositoryUri;
+            private readonly string originalPullRequestId;
+
+            public TheCtorForEnvironmentVariables()
+            {
+                this.originalRepositoryUri = Environment.GetEnvironmentVariable("BUILD_REPOSITORY_URI");
+                this.originalPullRequestId = Environment.GetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID");
+            }
+
             [Fact]
             public void Should_Throw_If_Credentials_Are_Null()
             {
@@ -510,17 +519,29 @@
 
             public void Dispose()
             {
-                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", null);
-                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", null);
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", this.originalRepositoryUri);
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", this.originalPullRequestId);
             }
         }
 
         public sealed class TheUsingAzurePipelinesOAuthTokenMethod : IDisposable
         {
+            private readonly string originalRepositoryUri;
+            private readonly string originalPullRequestId;
+            private readonly string originalAccessToken;
+
+            public TheUsingAzurePipelinesOAuthTokenMethod()
+            {
+                this.originalRepositoryUri = Environment.GetEnvironmentVariable("BUILD_REPOSITORY_URI");
+                this.originalPullRequestId = Environment.GetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID");
+                this.originalAccessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN");
+            }
+
             [Fact]
             public void Should_Throw_If_Repository_Url_Env_Var_Is_Not_Set()
             {
                 // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", null);
                 Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
 
@@ -566,6 +587,7 @@
             {
                 // Given
                 Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", null);
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
 
                 // When
@@ -641,6 +663,7 @@
                 // Given
                 Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
                 Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", null);
 
                 // When
                 var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken());
@@ -711,9 +734,9 @@
 
             public void Dispose()
             {
-                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", null);
-                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", null);
-                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", null);
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", this.originalRepositoryUri);
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", this.originalPullRequestId);
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", this.originalAccessToken);
             }
         }
     }
