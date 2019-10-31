@@ -1,6 +1,6 @@
 ﻿namespace Cake.AzureDevOps
 {
-    using Cake.AzureDevOps.Build;
+    using Cake.AzureDevOps.Pipelines;
     using Cake.Core;
     using Cake.Core.Annotations;
 
@@ -37,8 +37,8 @@
         /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
-        [CakeAliasCategory("Build")]
-        [CakeNamespaceImport("Cake.AzureDevOps.Build")]
+        [CakeAliasCategory("Azure Pipelines")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Pipelines")]
         public static AzureDevOpsBuild AzureDevOpsBuild(
             this ICakeContext context,
             AzureDevOpsBuildSettings settings)
@@ -77,7 +77,7 @@
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Build")]
-        [CakeNamespaceImport("Cake.AzureDevOps.Build")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Pipelines")]
         public static AzureDevOpsBuild AzureDevOpsBuildUsingAzurePipelinesOAuthToken(
             this ICakeContext context)
         {

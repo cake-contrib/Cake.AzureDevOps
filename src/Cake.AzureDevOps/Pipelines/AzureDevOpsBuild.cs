@@ -1,4 +1,4 @@
-﻿namespace Cake.AzureDevOps.Build
+﻿namespace Cake.AzureDevOps.Pipelines
 {
     using System;
     using System.Collections.Generic;

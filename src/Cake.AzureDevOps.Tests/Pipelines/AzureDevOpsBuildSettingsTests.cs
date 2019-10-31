@@ -1,8 +1,8 @@
-﻿namespace Cake.AzureDevOps.Tests.Build
+﻿namespace Cake.AzureDevOps.Tests.Pipelines
 {
     using System;
     using Cake.AzureDevOps.Authentication;
-    using Cake.AzureDevOps.Build;
+    using Cake.AzureDevOps.Pipelines;
     using Shouldly;
     using Xunit;
 
