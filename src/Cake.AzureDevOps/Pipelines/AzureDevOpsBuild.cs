@@ -228,6 +228,26 @@
         }
 
         /// <summary>
+        /// Gets the result of the build.
+        /// Returns 0 if no build could be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public AzureDevOpsBuildResult? Result
+        {
+            get
+            {
+                if (!this.ValidateBuild())
+                {
+                    return 0;
+                }
+
+                return this.build.Result?.ToAzureDevOpsBuildResult();
+            }
+        }
+
+        /// <summary>
         /// Gets the parameters passed to the build.
         /// Returns an empty dictionary if no build could be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.
