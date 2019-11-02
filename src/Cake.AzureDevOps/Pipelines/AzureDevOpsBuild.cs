@@ -60,17 +60,25 @@
                     {
                         this.log.Verbose("Read build with ID {0} from project with ID {1}", settings.BuildId, settings.ProjectGuid);
                         this.build =
-                            buildClient.GetBuildAsync(
-                                settings.ProjectGuid,
-                                settings.BuildId).GetAwaiter().GetResult();
+                            buildClient
+                                .GetBuildAsync(
+                                    settings.ProjectGuid,
+                                    settings.BuildId)
+                                .ConfigureAwait(false)
+                                .GetAwaiter()
+                                .GetResult();
                     }
                     else if (!string.IsNullOrWhiteSpace(settings.ProjectName))
                     {
                         this.log.Verbose("Read build with ID {0} from project with name {1}", settings.BuildId, settings.ProjectName);
                         this.build =
-                            buildClient.GetBuildAsync(
-                                settings.ProjectName,
-                                settings.BuildId).GetAwaiter().GetResult();
+                            buildClient
+                                .GetBuildAsync(
+                                    settings.ProjectName,
+                                    settings.BuildId)
+                                .ConfigureAwait(false)
+                                .GetAwaiter()
+                                .GetResult();
                     }
                     else
                     {
