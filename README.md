@@ -1,6 +1,6 @@
-# Azure DevOps and Azure DevOps Server support for Cake
+# Azure DevOps support for Cake
 
-This addin for Cake allows you to work with Azure DevOps or Azure DevOps Server.
+This addin for Cake allows you to work with Azure DevOps.
 
 [![License](http://img.shields.io/:license-mit-blue.svg)](https://github.com/cake-contrib/Cake.AzureDevOps/blob/feature/build/LICENSE)
 

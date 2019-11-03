@@ -12,7 +12,7 @@
 
   <PropertyGroup>
     <Title>Cake.AzureDevOps</Title>
-    <Description>Addin for the Cake build automation system for working with Azure DevOps or Azure DevOps Server.</Description>
+    <Description>Addin for the Cake build automation system for working with Azure DevOps.</Description>
     <Authors>Pascal Berger</Authors>
     <Copyright>Copyright © Pascal Berger</Copyright>
     <PackageTags>Cake Script Azure-DevOps Azure-DevOps-Server</PackageTags>
