@@ -56,6 +56,8 @@
         /// as set by a Azure Pipelines build.
         /// </summary>
         /// <param name="credentials">Credentials to use to authenticate against Azure DevOps.</param>
+        /// <exception cref="InvalidOperationException">If build is not running in Azure Pipelines,
+        /// or build is not for a pull request.</exception>
         public AzureDevOpsPullRequestSettings(IAzureDevOpsCredentials credentials)
             : base(credentials)
         {
@@ -94,17 +96,87 @@
         /// Constructs the settings object using the access token provided by Azure Pipelines.
         /// </summary>
         /// <returns>The instance of <see cref="AzureDevOpsPullRequestSettings"/> class.</returns>
+        /// <exception cref="InvalidOperationException">If build is not running in Azure Pipelines,
+        /// build is not for a pull request or 'Allow Scripts to access OAuth token' option is not enabled
+        /// on the build definition.</exception>
         public static AzureDevOpsPullRequestSettings UsingAzurePipelinesOAuthToken()
         {
-            var accessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN", EnvironmentVariableTarget.Process);
+            return UsingAzurePipelinesOAuthToken(true);
+        }
 
+        /// <summary>
+        /// Constructs the settings object using the access token provided by Azure Pipelines.
+        /// </summary>
+        /// <param name="throwExceptionIfVariablesDontExist">Value indicating whether an exception
+        /// should be thrown if required environment variables could not be found.</param>
+        /// <returns>The instance of <see cref="AzureDevOpsPullRequestSettings"/> class.
+        /// Returns <c>null</c> if variables don't exist and
+        /// <paramref name="throwExceptionIfVariablesDontExist"/> is set to <c>false</c>.</returns>
+        /// <exception cref="InvalidOperationException">If <paramref name="throwExceptionIfVariablesDontExist"/>
+        /// is set to <c>true</c> and build is not running in Azure Pipelines, build is not for a pull request
+        /// or 'Allow Scripts to access OAuth token' option is not enabled on the build definition.</exception>
+        public static AzureDevOpsPullRequestSettings UsingAzurePipelinesOAuthToken(bool throwExceptionIfVariablesDontExist)
+        {
+            var (valid, _, accessToken) = RetrieveAzurePipelinesVariables(throwExceptionIfVariablesDontExist);
+
+            if (!valid)
+            {
+                return null;
+            }
+
+            return new AzureDevOpsPullRequestSettings(new AzureDevOpsOAuthCredentials(accessToken));
+        }
+
+        /// <summary>
+        /// Validates and retrieves variables set by Azure Pipelines.
+        /// </summary>
+        /// <param name="throwExceptionIfVariablesDontExist">Value indicating whether an exception
+        /// should be thrown if required environment variables could not be found.</param>
+        /// <returns>Tuple containing a flag if variables are valid and the variable values.</returns>
+        private static (bool valid, int pullRequestId, string accessToken) RetrieveAzurePipelinesVariables(bool throwExceptionIfVariablesDontExist)
+        {
+            var accessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN", EnvironmentVariableTarget.Process);
             if (string.IsNullOrWhiteSpace(accessToken))
             {
+                if (!throwExceptionIfVariablesDontExist)
+                {
+                    return (false, 0, null);
+                }
+
                 throw new InvalidOperationException(
                     "Failed to read the SYSTEM_ACCESSTOKEN environment variable. Make sure you are running in an Azure Pipelines build and that the 'Allow Scripts to access OAuth token' option is enabled.");
             }
 
-            return new AzureDevOpsPullRequestSettings(new AzureDevOpsOAuthCredentials(accessToken));
+            var pullRequestId = Environment.GetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", EnvironmentVariableTarget.Process);
+            if (string.IsNullOrWhiteSpace(pullRequestId))
+            {
+                if (!throwExceptionIfVariablesDontExist)
+                {
+                    return (false, 0, null);
+                }
+
+                throw new InvalidOperationException(
+                    "Failed to read the SYSTEM_PULLREQUEST_PULLREQUESTID environment variable. Make sure you are running in an Azure Pipelines build.");
+            }
+
+            if (!int.TryParse(pullRequestId, out int pullRequestIdValue))
+            {
+                if (!throwExceptionIfVariablesDontExist)
+                {
+                    return (false, 0, null);
+                }
+
+                throw new InvalidOperationException(
+                    "SYSTEM_PULLREQUEST_PULLREQUESTID environment variable should contain integer value");
+            }
+
+            if (pullRequestIdValue <= 0)
+            {
+                throw new InvalidOperationException(
+                    "SYSTEM_PULLREQUEST_PULLREQUESTID environment variable should contain integer value and it should be greater than zero");
+            }
+
+            return (true, pullRequestIdValue, accessToken);
         }
     }
 }

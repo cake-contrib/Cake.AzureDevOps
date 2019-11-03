@@ -38,6 +38,7 @@
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
         public static AzureDevOpsPullRequest AzureDevOpsPullRequest(
@@ -71,15 +72,14 @@
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>Description of the pull request.
-        /// Returns null if pull request could not be found and
-        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.</returns>
-        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
-        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        /// <exception cref="InvalidOperationException">If build is not running in Azure Pipelines or
-        /// 'Allow Scripts to access OAuth token' option is not enabled on the build definition.</exception>
+        /// <returns>Description of the pull request.</returns>
+        /// <exception cref="InvalidOperationException">If build is not running in Azure Pipelines,
+        /// build is not for a pull request or 'Allow Scripts to access OAuth token' option is not enabled
+        /// on the build definition.</exception>
+        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
         public static AzureDevOpsPullRequest AzureDevOpsPullRequestUsingAzurePipelinesOAuthToken(
@@ -87,7 +87,46 @@
         {
             context.NotNull(nameof(context));
 
-            var settings = AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken();
+            return context.AzureDevOpsPullRequestUsingAzurePipelinesOAuthToken(true);
+        }
+
+        /// <summary>
+        /// Gets an Azure DevOps pull request using the settings provided by an Azure Pipelines build.
+        /// Make sure the build has the 'Allow Scripts to access OAuth token' option enabled.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="throwExceptionIfPullRequestCouldNotBeFound">Value indicating whether an exception
+        /// should be thrown if pull request could not be found.</param>
+        /// <example>
+        /// <para>Get a pull request:</para>
+        /// <code>
+        /// <![CDATA[
+        /// var pullRequest =
+        ///     AzureDevOpsPullRequestUsingAzurePipelinesOAuthToken(false);
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <returns>Description of the pull request.
+        /// Returns <c>null</c> if pull request could not be found and
+        /// <paramref name="throwExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="InvalidOperationException">If build is not running in Azure Pipelines,
+        /// build is not for a pull request or 'Allow Scripts to access OAuth token' option is not enabled
+        /// on the build definition.</exception>
+        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
+        /// <paramref name="throwExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
+        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
+        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
+        public static AzureDevOpsPullRequest AzureDevOpsPullRequestUsingAzurePipelinesOAuthToken(
+            this ICakeContext context,
+            bool throwExceptionIfPullRequestCouldNotBeFound)
+        {
+            context.NotNull(nameof(context));
+
+            var settings = AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(throwExceptionIfPullRequestCouldNotBeFound);
+            settings.ThrowExceptionIfPullRequestCouldNotBeFound = throwExceptionIfPullRequestCouldNotBeFound;
 
             return AzureDevOpsPullRequest(context, settings);
         }
@@ -118,6 +157,7 @@
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
         public static void AzureDevOpsVotePullRequest(
@@ -165,6 +205,7 @@
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
         public static void AzureDevOpsSetPullRequestStatus(
@@ -206,6 +247,7 @@
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
         public static void AzureDevOpsAddCommentToPullRequest(
@@ -248,6 +290,7 @@
         /// <exception cref="AzureDevOpsBranchNotFoundException">If the target branch could not be found.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
         [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
         public static AzureDevOpsPullRequest AzureDevOpsCreatePullRequest(
