@@ -52,7 +52,7 @@
 
         /// <summary>
         /// Returns credentials for authentication with a personal access token.
-        /// Can be used for Azure DevOps Server and Azure DevOps.
+        /// Can be used for Azure DevOps Server and Azure DevOps Service.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="personalAccessToken">Personal access token.</param>
