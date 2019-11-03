@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Cake.AzureDevOps/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Cake.AzureDevOps/assets/img/favicon.ico" type="image/x-icon">
-        <title>Cake.AzureDevOps - API - AzureDevOpsPullRequestSettings.AzureDevOpsPullRequestSettings(IAzureDevOpsCredentials) Constructor</title>
+        <title>Cake.AzureDevOps - API - AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(bool) Method</title>
         <link href="/Cake.AzureDevOps/assets/css/highlight.css" rel="stylesheet">
         <link href="/Cake.AzureDevOps/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Cake.AzureDevOps/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -142,7 +142,7 @@
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestSettings/177C16AC">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings<wbr>(Uri, <wbr>string, <wbr>I<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Credentials)<wbr></a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestSettings/BEC119A4">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings<wbr>(Uri, <wbr>int, <wbr>I<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Credentials)<wbr></a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestSettings/7001DBCE">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings<wbr>(<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings)<wbr></a></li>
-				<li class="selected"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestSettings/C0322D36">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings<wbr>(<wbr>I<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Credentials)<wbr></a></li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestSettings/C0322D36">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings<wbr>(<wbr>I<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Credentials)<wbr></a></li>
 			<li class="header">Property Members</li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/BaseAzureDevOpsPullRequestSettings/CAC95F8E">Credentials</a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestSettings/8EFC7B61">PullRequestId</a></li>
@@ -152,7 +152,7 @@
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestSettings/82A0EFEE">Throw<wbr>Exception<wbr>If<wbr>Pull<wbr>Request<wbr>Could<wbr>Not<wbr>Be<wbr>Found</a></li>
 			<li class="header">Method Members</li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestSettings/D64AF1F4">Using<wbr>Azure<wbr>Pipelines<wbr>O<wbr>Auth<wbr>Token<wbr>()<wbr></a></li>
-				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestSettings/94496337">Using<wbr>Azure<wbr>Pipelines<wbr>O<wbr>Auth<wbr>Token<wbr>(bool)<wbr></a></li>
+				<li class="selected"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestSettings/94496337">Using<wbr>Azure<wbr>Pipelines<wbr>O<wbr>Auth<wbr>Token<wbr>(bool)<wbr></a></li>
 
 
                     </ul>
@@ -168,15 +168,14 @@
 
 <section class="content-header">
 			<h3><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestSettings">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings</a>.</h3>
-	<h1>Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings<wbr>(<wbr>I<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Credentials)<wbr> <small>Constructor</small></h1>
+	<h1>Using<wbr>Azure<wbr>Pipelines<wbr>O<wbr>Auth<wbr>Token<wbr>(bool)<wbr> <small>Method</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Initializes a new instance of the <code class="cs"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestSettings">AzureDevOpsPullRequestSettings</a></code> class using environment variables
-    as set by a Azure Pipelines build.
+    Constructs the settings object using the access token provided by Azure Pipelines.
     </div>
 
 		<div class="panel panel-default">
@@ -194,7 +193,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public AzureDevOpsPullRequestSettings(IAzureDevOpsCredentials credentials)</code></pre>
+	<pre><code>public static AzureDevOpsPullRequestSettings UsingAzurePipelinesOAuthToken(bool throwExceptionIfVariablesDontExist)</code></pre>
 
 
 
@@ -212,9 +211,10 @@
 					</tr>
 				</thead>
 					<tbody><tr>
-						<td>credentials</td>
-						<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/IAzureDevOpsCredentials">I<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Credentials</a></td>
-						<td>Credentials to use to authenticate against Azure DevOps.</td>
+						<td>throwExceptionIfVariablesDontExist</td>
+						<td>bool</td>
+						<td>Value indicating whether an exception
+    should be thrown if required environment variables could not be found.</td>
 					</tr>
 			</tbody></table>
 		</div>
@@ -231,8 +231,10 @@
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>void</td>
-					<td></td>
+					<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestSettings">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings</a></td>
+					<td>The instance of <code class="cs"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestSettings">AzureDevOpsPullRequestSettings</a></code> class.
+    Returns <code class="cs">null</code> if variables don't exist and
+    <span name="throwExceptionIfVariablesDontExist" class="paramref">throwExceptionIfVariablesDontExist</span> is set to <code class="cs">false</code>.</td>
 				</tr>
 			</tbody></table>
 		</div>

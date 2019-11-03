@@ -39,6 +39,20 @@ var searchModule = function() {
     a(
         {
             id:0,
+            title:"AzureDevOpsPullRequestStatusState",
+            content:"AzureDevOpsPullRequestStatusState",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestStatusState',
+            title:"AzureDevOpsPullRequestStatusState",
+            description:""
+        }
+    );
+    a(
+        {
+            id:1,
             title:"AzureDevOpsPullRequestIterationChange",
             content:"AzureDevOpsPullRequestIterationChange",
             description:'',
@@ -52,147 +66,7 @@ var searchModule = function() {
     );
     a(
         {
-            id:1,
-            title:"AzureDevOpsCommit",
-            content:"AzureDevOpsCommit",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Repos/AzureDevOpsCommit',
-            title:"AzureDevOpsCommit",
-            description:""
-        }
-    );
-    a(
-        {
             id:2,
-            title:"AzureDevOpsPullRequestVote",
-            content:"AzureDevOpsPullRequestVote",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestVote',
-            title:"AzureDevOpsPullRequestVote",
-            description:""
-        }
-    );
-    a(
-        {
-            id:3,
-            title:"AzureDevOpsPullRequestCommentThread",
-            content:"AzureDevOpsPullRequestCommentThread",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest.CommentThread/AzureDevOpsPullRequestCommentThread',
-            title:"AzureDevOpsPullRequestCommentThread",
-            description:""
-        }
-    );
-    a(
-        {
-            id:4,
-            title:"AzureDevOpsCreatePullRequestSettings",
-            content:"AzureDevOpsCreatePullRequestSettings",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsCreatePullRequestSettings',
-            title:"AzureDevOpsCreatePullRequestSettings",
-            description:""
-        }
-    );
-    a(
-        {
-            id:5,
-            title:"AzureDevOpsPullRequestSettings",
-            content:"AzureDevOpsPullRequestSettings",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestSettings',
-            title:"AzureDevOpsPullRequestSettings",
-            description:""
-        }
-    );
-    a(
-        {
-            id:6,
-            title:"AzureDevOpsNtlmCredentials",
-            content:"AzureDevOpsNtlmCredentials",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsNtlmCredentials',
-            title:"AzureDevOpsNtlmCredentials",
-            description:""
-        }
-    );
-    a(
-        {
-            id:7,
-            title:"AzureDevOpsPullRequest",
-            content:"AzureDevOpsPullRequest",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequest',
-            title:"AzureDevOpsPullRequest",
-            description:""
-        }
-    );
-    a(
-        {
-            id:8,
-            title:"IAzureDevOpsCredentials",
-            content:"IAzureDevOpsCredentials",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/IAzureDevOpsCredentials',
-            title:"IAzureDevOpsCredentials",
-            description:""
-        }
-    );
-    a(
-        {
-            id:9,
-            title:"AzureDevOpsPullRequestNotFoundException",
-            content:"AzureDevOpsPullRequestNotFoundException",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestNotFoundException',
-            title:"AzureDevOpsPullRequestNotFoundException",
-            description:""
-        }
-    );
-    a(
-        {
-            id:10,
-            title:"AzureDevOpsPullRequestStatus",
-            content:"AzureDevOpsPullRequestStatus",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestStatus',
-            title:"AzureDevOpsPullRequestStatus",
-            description:""
-        }
-    );
-    a(
-        {
-            id:11,
             title:"AzureDevOpsBuildNotFoundException",
             content:"AzureDevOpsBuildNotFoundException",
             description:'',
@@ -206,35 +80,49 @@ var searchModule = function() {
     );
     a(
         {
-            id:12,
-            title:"AzureDevOpsBasicCredentials",
-            content:"AzureDevOpsBasicCredentials",
+            id:3,
+            title:"AzureDevOpsPullRequestVote",
+            content:"AzureDevOpsPullRequestVote",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsBasicCredentials',
-            title:"AzureDevOpsBasicCredentials",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestVote',
+            title:"AzureDevOpsPullRequestVote",
             description:""
         }
     );
     a(
         {
-            id:13,
-            title:"AzureDevOpsAadCredentials",
-            content:"AzureDevOpsAadCredentials",
+            id:4,
+            title:"AzureDevOpsComment",
+            content:"AzureDevOpsComment",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsAadCredentials',
-            title:"AzureDevOpsAadCredentials",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest.CommentThread/AzureDevOpsComment',
+            title:"AzureDevOpsComment",
             description:""
         }
     );
     a(
         {
-            id:14,
+            id:5,
+            title:"AzureDevOpsPullRequestCommentThread",
+            content:"AzureDevOpsPullRequestCommentThread",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest.CommentThread/AzureDevOpsPullRequestCommentThread',
+            title:"AzureDevOpsPullRequestCommentThread",
+            description:""
+        }
+    );
+    a(
+        {
+            id:6,
             title:"AzureDevOpsCommentType",
             content:"AzureDevOpsCommentType",
             description:'',
@@ -248,21 +136,77 @@ var searchModule = function() {
     );
     a(
         {
-            id:15,
-            title:"AzureDevOpsBuildStatus",
-            content:"AzureDevOpsBuildStatus",
+            id:7,
+            title:"AzureDevOpsPullRequestStatus",
+            content:"AzureDevOpsPullRequestStatus",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildStatus',
-            title:"AzureDevOpsBuildStatus",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestStatus',
+            title:"AzureDevOpsPullRequestStatus",
             description:""
         }
     );
     a(
         {
-            id:16,
+            id:8,
+            title:"AzureDevOpsBasicCredentials",
+            content:"AzureDevOpsBasicCredentials",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsBasicCredentials',
+            title:"AzureDevOpsBasicCredentials",
+            description:""
+        }
+    );
+    a(
+        {
+            id:9,
+            title:"AzureDevOpsOAuthCredentials",
+            content:"AzureDevOpsOAuthCredentials",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsOAuthCredentials',
+            title:"AzureDevOpsOAuthCredentials",
+            description:""
+        }
+    );
+    a(
+        {
+            id:10,
+            title:"AzureDevOpsBranchNotFoundException",
+            content:"AzureDevOpsBranchNotFoundException",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsBranchNotFoundException',
+            title:"AzureDevOpsBranchNotFoundException",
+            description:""
+        }
+    );
+    a(
+        {
+            id:11,
+            title:"IAzureDevOpsCredentials",
+            content:"IAzureDevOpsCredentials",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/IAzureDevOpsCredentials',
+            title:"IAzureDevOpsCredentials",
+            description:""
+        }
+    );
+    a(
+        {
+            id:12,
             title:"BaseAzureDevOpsPullRequestSettings",
             content:"BaseAzureDevOpsPullRequestSettings",
             description:'',
@@ -276,15 +220,71 @@ var searchModule = function() {
     );
     a(
         {
-            id:17,
-            title:"AzureDevOpsBuild",
-            content:"AzureDevOpsBuild",
+            id:13,
+            title:"AzureDevOpsNtlmCredentials",
+            content:"AzureDevOpsNtlmCredentials",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuild',
-            title:"AzureDevOpsBuild",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsNtlmCredentials',
+            title:"AzureDevOpsNtlmCredentials",
+            description:""
+        }
+    );
+    a(
+        {
+            id:14,
+            title:"AzureDevOpsPullRequest",
+            content:"AzureDevOpsPullRequest",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequest',
+            title:"AzureDevOpsPullRequest",
+            description:""
+        }
+    );
+    a(
+        {
+            id:15,
+            title:"AzureDevOpsCommit",
+            content:"AzureDevOpsCommit",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Repos/AzureDevOpsCommit',
+            title:"AzureDevOpsCommit",
+            description:""
+        }
+    );
+    a(
+        {
+            id:16,
+            title:"AzureDevOpsBuildResult",
+            content:"AzureDevOpsBuildResult",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildResult',
+            title:"AzureDevOpsBuildResult",
+            description:""
+        }
+    );
+    a(
+        {
+            id:17,
+            title:"AzureDevOpsPullRequestSettings",
+            content:"AzureDevOpsPullRequestSettings",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestSettings',
+            title:"AzureDevOpsPullRequestSettings",
             description:""
         }
     );
@@ -305,62 +305,34 @@ var searchModule = function() {
     a(
         {
             id:19,
-            title:"AzureDevOpsBranchNotFoundException",
-            content:"AzureDevOpsBranchNotFoundException",
+            title:"AzureDevOpsAadCredentials",
+            content:"AzureDevOpsAadCredentials",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsBranchNotFoundException',
-            title:"AzureDevOpsBranchNotFoundException",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsAadCredentials',
+            title:"AzureDevOpsAadCredentials",
             description:""
         }
     );
     a(
         {
             id:20,
-            title:"AzureDevOpsPullRequestState",
-            content:"AzureDevOpsPullRequestState",
+            title:"AzureDevOpsBuildStatus",
+            content:"AzureDevOpsBuildStatus",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestState',
-            title:"AzureDevOpsPullRequestState",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildStatus',
+            title:"AzureDevOpsBuildStatus",
             description:""
         }
     );
     a(
         {
             id:21,
-            title:"AzureDevOpsException",
-            content:"AzureDevOpsException",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsException',
-            title:"AzureDevOpsException",
-            description:""
-        }
-    );
-    a(
-        {
-            id:22,
-            title:"AzureDevOpsCommentThreadStatus",
-            content:"AzureDevOpsCommentThreadStatus",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest.CommentThread/AzureDevOpsCommentThreadStatus',
-            title:"AzureDevOpsCommentThreadStatus",
-            description:""
-        }
-    );
-    a(
-        {
-            id:23,
             title:"AzureDevOpsAliases",
             content:"AzureDevOpsAliases",
             description:'',
@@ -374,43 +346,85 @@ var searchModule = function() {
     );
     a(
         {
-            id:24,
-            title:"AzureDevOpsPullRequestStatusState",
-            content:"AzureDevOpsPullRequestStatusState",
+            id:22,
+            title:"AzureDevOpsBuild",
+            content:"AzureDevOpsBuild",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestStatusState',
-            title:"AzureDevOpsPullRequestStatusState",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuild',
+            title:"AzureDevOpsBuild",
+            description:""
+        }
+    );
+    a(
+        {
+            id:23,
+            title:"AzureDevOpsCommentThreadStatus",
+            content:"AzureDevOpsCommentThreadStatus",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest.CommentThread/AzureDevOpsCommentThreadStatus',
+            title:"AzureDevOpsCommentThreadStatus",
+            description:""
+        }
+    );
+    a(
+        {
+            id:24,
+            title:"AzureDevOpsPullRequestState",
+            content:"AzureDevOpsPullRequestState",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestState',
+            title:"AzureDevOpsPullRequestState",
             description:""
         }
     );
     a(
         {
             id:25,
-            title:"AzureDevOpsComment",
-            content:"AzureDevOpsComment",
+            title:"AzureDevOpsException",
+            content:"AzureDevOpsException",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest.CommentThread/AzureDevOpsComment',
-            title:"AzureDevOpsComment",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsException',
+            title:"AzureDevOpsException",
             description:""
         }
     );
     a(
         {
             id:26,
-            title:"AzureDevOpsOAuthCredentials",
-            content:"AzureDevOpsOAuthCredentials",
+            title:"AzureDevOpsCreatePullRequestSettings",
+            content:"AzureDevOpsCreatePullRequestSettings",
             description:'',
             tags:''
         },
         {
-            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsOAuthCredentials',
-            title:"AzureDevOpsOAuthCredentials",
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsCreatePullRequestSettings',
+            title:"AzureDevOpsCreatePullRequestSettings",
+            description:""
+        }
+    );
+    a(
+        {
+            id:27,
+            title:"AzureDevOpsPullRequestNotFoundException",
+            content:"AzureDevOpsPullRequestNotFoundException",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestNotFoundException',
+            title:"AzureDevOpsPullRequestNotFoundException",
             description:""
         }
     );
