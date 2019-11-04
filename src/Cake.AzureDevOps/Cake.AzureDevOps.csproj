@@ -69,7 +69,7 @@
       <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.TeamFoundation.Core.WebApi.dll">
         <PackagePath>lib\$(TargetFramework)\</PackagePath>
       </TfmSpecificPackageFile>
-      <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.TeamFoundation.DistributedTask.Common.Contracts">
+      <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.TeamFoundation.DistributedTask.Common.Contracts.dll">
         <PackagePath>lib\$(TargetFramework)\</PackagePath>
       </TfmSpecificPackageFile>
       <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.TeamFoundation.SourceControl.WebApi.dll">
