@@ -90,6 +90,53 @@
         }
 
         /// <summary>
+        /// Returns if the Azure DevOps build is failing.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">Settings for getting the build.</param>
+        /// <example>
+        /// <para>Get changes associated with an Azure Pipelines build:</para>
+        /// <code>
+        /// <![CDATA[
+        /// var buildSettings =
+        ///     new AzureDevOpsBuildSettings(
+        ///         new Uri("http://myserver:8080/defaultcollection"),
+        ///         "MyProject",
+        ///         42,
+        ///         AzureDevOpsAuthenticationNtlm());
+        ///
+        /// var isFailing =
+        ///     AzureDevOpsBuildIsFailing(
+        ///         buildSettings);
+        ///
+        /// if (isFailing)
+        /// {
+        ///     Information("Build is failing");
+        /// }
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <returns>The changes associated with the build.
+        /// Returns an empty list if build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Azure Pipelines")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Pipelines")]
+        public static bool AzureDevOpsBuildIsFailing(
+            this ICakeContext context,
+            AzureDevOpsBuildSettings settings)
+        {
+            context.NotNull(nameof(context));
+            settings.NotNull(nameof(settings));
+
+            return
+                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory())
+                    .IsBuildFailing();
+        }
+
+        /// <summary>
         /// Gets the changes associated with an Azure Pipelines build.
         /// </summary>
         /// <param name="context">The context.</param>
