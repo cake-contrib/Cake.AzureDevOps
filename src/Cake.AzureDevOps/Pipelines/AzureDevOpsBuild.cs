@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Cake.AzureDevOps.Authentication;
     using Cake.Core.Diagnostics;
     using Microsoft.TeamFoundation.Build.WebApi;
 
@@ -12,6 +13,7 @@
     public sealed class AzureDevOpsBuild
     {
         private readonly ICakeLog log;
+        private readonly IAzureDevOpsCredentials credentials;
         private readonly bool throwExceptionIfBuildCouldNotBeFound;
         private readonly IBuildClientFactory buildClientFactory;
         private readonly Build build;
@@ -44,6 +46,7 @@
 
             this.log = log;
             this.buildClientFactory = buildClientFactory;
+            this.credentials = settings.Credentials;
             this.CollectionUrl = settings.CollectionUrl;
             this.throwExceptionIfBuildCouldNotBeFound = settings.ThrowExceptionIfBuildCouldNotBeFound;
 
@@ -280,6 +283,33 @@
                         .ToDictionary(
                             x => x.Split(':').First().Trim('"'),
                             x => x.Split(':').Last().Trim('"'));
+            }
+        }
+
+        /// <summary>
+        /// Gets the timeline entries for a build.
+        /// </summary>
+        /// <returns>The timeline entries for the build or an empty list if no build could be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public IEnumerable<AzureDevOpsTimelineRecord> GetTimelineRecords()
+        {
+            if (!this.ValidateBuild())
+            {
+                return new List<AzureDevOpsTimelineRecord>();
+            }
+
+            using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.credentials))
+            {
+                return
+                    buildClient
+                        .GetBuildTimelineAsync(this.ProjectId, this.BuildId)
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult()
+                        .Records
+                        .Select(x => x.ToAzureDevOpsTimelineRecord());
             }
         }
 
