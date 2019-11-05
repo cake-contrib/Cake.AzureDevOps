@@ -126,6 +126,12 @@
             context.NotNull(nameof(context));
 
             var settings = AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(throwExceptionIfPullRequestCouldNotBeFound);
+
+            if (settings == null)
+            {
+                return null;
+            }
+
             settings.ThrowExceptionIfPullRequestCouldNotBeFound = throwExceptionIfPullRequestCouldNotBeFound;
 
             return AzureDevOpsPullRequest(context, settings);
