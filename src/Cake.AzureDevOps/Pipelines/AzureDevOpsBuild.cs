@@ -287,6 +287,32 @@
         }
 
         /// <summary>
+        /// Gets the changes associated with a build.
+        /// </summary>
+        /// <returns>The changes associated with a build or an empty list if no build could be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public IEnumerable<AzureDevOpsChange> GetChanges()
+        {
+            if (!this.ValidateBuild())
+            {
+                return new List<AzureDevOpsChange>();
+            }
+
+            using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.credentials))
+            {
+                return
+                    buildClient
+                        .GetBuildChangesAsync(this.ProjectId, this.BuildId)
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult()
+                        .Select(x => x.ToAzureDevOpsChange());
+            }
+        }
+
+        /// <summary>
         /// Gets the timeline entries for a build.
         /// </summary>
         /// <returns>The timeline entries for the build or an empty list if no build could be found and
