@@ -1,5 +1,6 @@
 ﻿namespace Cake.AzureDevOps
 {
+    using System.Collections.Generic;
     using Cake.AzureDevOps.Pipelines;
     using Cake.Core;
     using Cake.Core.Annotations;
@@ -86,6 +87,102 @@
             var settings = AzureDevOpsBuildSettings.UsingAzurePipelinesOAuthToken();
 
             return AzureDevOpsBuild(context, settings);
+        }
+
+        /// <summary>
+        /// Gets the changes associated with an Azure Pipelines build.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">Settings for getting the build.</param>
+        /// <example>
+        /// <para>Get changes associated with an Azure Pipelines build:</para>
+        /// <code>
+        /// <![CDATA[
+        /// var buildSettings =
+        ///     new AzureDevOpsBuildSettings(
+        ///         new Uri("http://myserver:8080/defaultcollection"),
+        ///         "MyProject",
+        ///         42,
+        ///         AzureDevOpsAuthenticationNtlm());
+        ///
+        /// var changes =
+        ///     AzureDevOpsBuildChanges(
+        ///         buildSettings);
+        ///
+        /// Information("Changes:");
+        /// foreach (var change in changes)
+        /// {
+        ///     Information("  {0}: {1}", change.Id, change.Message);
+        /// }
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <returns>The changes associated with the build.
+        /// Returns an empty list if build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Azure Pipelines")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Pipelines")]
+        public static IEnumerable<AzureDevOpsChange> AzureDevOpsBuildChanges(
+            this ICakeContext context,
+            AzureDevOpsBuildSettings settings)
+        {
+            context.NotNull(nameof(context));
+            settings.NotNull(nameof(settings));
+
+            return
+                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory())
+                    .GetChanges();
+        }
+
+        /// <summary>
+        /// Gets the timeline entries for an Azure Pipelines build.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">Settings for getting the build.</param>
+        /// <example>
+        /// <para>Get timeline entries for an Azure Pipelines build:</para>
+        /// <code>
+        /// <![CDATA[
+        /// var buildSettings =
+        ///     new AzureDevOpsBuildSettings(
+        ///         new Uri("http://myserver:8080/defaultcollection"),
+        ///         "MyProject",
+        ///         42,
+        ///         AzureDevOpsAuthenticationNtlm());
+        ///
+        /// var timelineRecords =
+        ///     AzureDevOpsBuildTimelineRecords(
+        ///         buildSettings);
+        ///
+        /// Information("Timeline:");
+        /// foreach (var timelineRecord in timelineRecords)
+        /// {
+        ///     Information("  {0}: {1}", timelineRecord.Name, timelineRecord.Result);
+        /// }
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <returns>The timeline entries for the build.
+        /// Returns an empty list if build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Azure Pipelines")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Pipelines")]
+        public static IEnumerable<AzureDevOpsTimelineRecord> AzureDevOpsBuildTimelineRecords(
+            this ICakeContext context,
+            AzureDevOpsBuildSettings settings)
+        {
+            context.NotNull(nameof(context));
+            settings.NotNull(nameof(settings));
+
+            return
+                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory())
+                    .GetTimelineRecords();
         }
     }
 }
