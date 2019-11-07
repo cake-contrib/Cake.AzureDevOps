@@ -16,7 +16,7 @@
         /// <param name="context">The context.</param>
         /// <param name="settings">Settings for getting the build.</param>
         /// <example>
-        /// <para>Get a pull request based on the source branch:</para>
+        /// <para>Get a build running on Azure DevOps Server:</para>
         /// <code>
         /// <![CDATA[
         /// var buildSettings =
