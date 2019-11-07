@@ -243,6 +243,10 @@
         /// Returns 0 if no build could be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.
         /// </summary>
+        /// <remarks>
+        /// Result is only available after a build has been finished.
+        /// The check if a running build is failing you can call <see cref="IsBuildFailing"/>.
+        /// </remarks>
         /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public AzureDevOpsBuildResult? Result
@@ -310,6 +314,19 @@
                         .GetResult()
                         .Select(x => x.ToAzureDevOpsChange());
             }
+        }
+
+        /// <summary>
+        /// Checks if the build is failing.
+        /// </summary>
+        /// <returns><c>true</c> if build is failing.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public bool IsBuildFailing()
+        {
+            return
+                this.ValidateBuild() &&
+                this.GetTimelineRecords().Any(x => x.Result.HasValue && x.Result.Value == AzureDevOpsTaskResult.Failed);
         }
 
         /// <summary>
