@@ -76,10 +76,14 @@
                 {
                     this.log.Verbose("Read pull request with ID {0}", settings.PullRequestId.Value);
                     this.pullRequest =
-                        gitClient.GetPullRequestAsync(
-                            this.repositoryDescription.ProjectName,
-                            this.repositoryDescription.RepositoryName,
-                            settings.PullRequestId.Value).Result;
+                        gitClient
+                            .GetPullRequestAsync(
+                                this.repositoryDescription.ProjectName,
+                                this.repositoryDescription.RepositoryName,
+                                settings.PullRequestId.Value)
+                            .ConfigureAwait(false)
+                            .GetAwaiter()
+                            .GetResult();
                 }
                 else if (!string.IsNullOrWhiteSpace(settings.SourceRefName))
                 {
@@ -93,11 +97,16 @@
                         };
 
                     this.pullRequest =
-                        gitClient.GetPullRequestsAsync(
-                            this.repositoryDescription.ProjectName,
-                            this.repositoryDescription.RepositoryName,
-                            pullRequestSearchCriteria,
-                            top: 1).Result.SingleOrDefault();
+                        gitClient
+                            .GetPullRequestsAsync(
+                                this.repositoryDescription.ProjectName,
+                                this.repositoryDescription.RepositoryName,
+                                pullRequestSearchCriteria,
+                                top: 1)
+                            .ConfigureAwait(false)
+                            .GetAwaiter()
+                            .GetResult()
+                            .SingleOrDefault();
                 }
                 else
                 {
@@ -365,33 +374,26 @@
 
             using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials, out var authorizedIdenity))
             {
-                var request =
-                    gitClient.CreatePullRequestReviewerAsync(
-                        new IdentityRefWithVote() { Vote = (short)vote },
-                        this.pullRequest.Repository.Id,
-                        this.pullRequest.PullRequestId,
-                        authorizedIdenity.Id.ToString(),
-                        CancellationToken.None);
-
-                try
-                {
-                    var createdReviewer = request.Result;
-
-                    if (createdReviewer == null)
-                    {
-                        throw new AzureDevOpsPullRequestNotFoundException(
+                var createdReviewer =
+                    gitClient
+                        .CreatePullRequestReviewerAsync(
+                            new IdentityRefWithVote() { Vote = (short)vote },
                             this.pullRequest.Repository.Id,
-                            this.pullRequest.PullRequestId);
-                    }
+                            this.pullRequest.PullRequestId,
+                            authorizedIdenity.Id.ToString())
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult();
 
-                    var createdVote = (AzureDevOpsPullRequestVote)createdReviewer.Vote;
-                    this.log.Verbose("Voted for pull request with '{0}'.", createdVote.ToString());
-                }
-                catch (Exception ex)
+                if (createdReviewer == null)
                 {
-                    this.log.Error("Error voting on pull request: " + ex.InnerException?.Message);
-                    throw;
+                    throw new AzureDevOpsPullRequestNotFoundException(
+                        this.pullRequest.Repository.Id,
+                        this.pullRequest.PullRequestId);
                 }
+
+                var createdVote = (AzureDevOpsPullRequestVote)createdReviewer.Vote;
+                this.log.Verbose("Voted for pull request with '{0}'.", createdVote.ToString());
             }
         }
 
@@ -412,43 +414,37 @@
 
             using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
             {
-                var request =
-                    gitClient.CreatePullRequestStatusAsync(
-                        new GitPullRequestStatus
-                        {
-                            State = status.State.ToGitStatusState(),
-                            Description = status.Description,
-                            TargetUrl = status.TargetUrl?.ToString(),
-                            Context = new GitStatusContext()
+                var postedStatus =
+                    gitClient
+                        .CreatePullRequestStatusAsync(
+                            new GitPullRequestStatus
                             {
-                                Name = status.Name,
-                                Genre = status.Genre,
+                                State = status.State.ToGitStatusState(),
+                                Description = status.Description,
+                                TargetUrl = status.TargetUrl?.ToString(),
+                                Context = new GitStatusContext()
+                                {
+                                    Name = status.Name,
+                                    Genre = status.Genre,
+                                },
                             },
-                        },
+                            this.pullRequest.Repository.Id,
+                            this.pullRequest.PullRequestId)
+                       .ConfigureAwait(false)
+                       .GetAwaiter()
+                       .GetResult();
+
+                if (postedStatus == null)
+                {
+                    throw new AzureDevOpsPullRequestNotFoundException(
                         this.pullRequest.Repository.Id,
                         this.pullRequest.PullRequestId);
-
-                try
-                {
-                    var postedStatus = request.Result;
-
-                    if (postedStatus == null)
-                    {
-                        throw new AzureDevOpsPullRequestNotFoundException(
-                            this.pullRequest.Repository.Id,
-                            this.pullRequest.PullRequestId);
-                    }
-
-                    this.log.Verbose(
-                        "Set status '{0}' to {1}.",
-                        postedStatus.Context?.Name,
-                        postedStatus.State.ToString());
                 }
-                catch (Exception ex)
-                {
-                    this.log.Error("Error posting pull request status: " + ex.InnerException?.Message);
-                    throw;
-                }
+
+                this.log.Verbose(
+                    "Set status '{0}' to {1}.",
+                    postedStatus.Context?.Name,
+                    postedStatus.State.ToString());
             }
         }
 
@@ -471,7 +467,9 @@
                 return
                     gitClient
                         .GetPullRequestCommitsAsync(this.RepositoryId, this.PullRequestId)
-                        .Result
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult()
                         .Select(x => x.ToAzureDevOpsCommit());
             }
         }
@@ -501,16 +499,20 @@
 
             using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
             {
-                var commitDiffs = gitClient.GetCommitDiffsAsync(
-                    this.ProjectName,
-                    this.RepositoryId,
-                    true, // bool? diffCommonCommit
-                    null, // int? top
-                    null, // int? skip
-                    baseVersionDescriptor,
-                    targetVersionDescriptor,
-                    null, // object userState
-                    CancellationToken.None).Result;
+                var commitDiffs =
+                    gitClient
+                        .GetCommitDiffsAsync(
+                        this.ProjectName,
+                        this.RepositoryId,
+                        true, // bool? diffCommonCommit
+                        null, // int? top
+                        null, // int? skip
+                        baseVersionDescriptor,
+                        targetVersionDescriptor,
+                        null) // object userState
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
 
                 this.log.Verbose(
                     "Found {0} changed file(s) in the pull request",
@@ -544,9 +546,13 @@
 
             using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
             {
-                var threads = gitClient.GetThreadsAsync(this.RepositoryId, this.PullRequestId, null, null, null, CancellationToken.None).Result;
-
-                return threads.Select(t => new AzureDevOpsPullRequestCommentThread(t));
+                return
+                    gitClient
+                        .GetThreadsAsync(this.RepositoryId, this.PullRequestId)
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult()
+                        .Select(x => new AzureDevOpsPullRequestCommentThread(x));
             }
         }
 
@@ -608,12 +614,14 @@
 
             using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
             {
-                gitClient.CreateThreadAsync(
-                    thread.InnerThread,
-                    this.RepositoryId,
-                    this.PullRequestId,
-                    null,
-                    CancellationToken.None).Wait();
+                gitClient
+                    .CreateThreadAsync(
+                        thread.InnerThread,
+                        this.RepositoryId,
+                        this.PullRequestId)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
             }
         }
 
@@ -631,12 +639,14 @@
 
             using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
             {
-                var iterations = gitClient.GetPullRequestIterationsAsync(
-                                     this.RepositoryId,
-                                     this.PullRequestId,
-                                     null,
-                                     null,
-                                     CancellationToken.None).Result;
+                var iterations =
+                    gitClient
+                        .GetPullRequestIterationsAsync(
+                            this.RepositoryId,
+                            this.PullRequestId)
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult();
 
                 if (iterations == null)
                 {
@@ -663,15 +673,14 @@
             using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
             {
                 var changes =
-                    gitClient.GetPullRequestIterationChangesAsync(
-                        this.RepositoryId,
-                        this.PullRequestId,
-                        iterationId,
-                        null,
-                        null,
-                        null,
-                        null,
-                        CancellationToken.None).Result;
+                    gitClient
+                        .GetPullRequestIterationChangesAsync(
+                            this.RepositoryId,
+                            this.PullRequestId,
+                            iterationId)
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult();
 
                 var azureDevOpsChanges = changes?.ChangeEntries.Select(c =>
                     new AzureDevOpsPullRequestIterationChange
@@ -705,7 +714,9 @@
                 var repository =
                     gitClient
                         .GetRepositoryAsync(repositoryDescription.ProjectName, repositoryDescription.RepositoryName)
-                        .GetAwaiter().GetResult();
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult();
 
                 if (repository == null)
                 {
@@ -719,11 +730,14 @@
                 }
 
                 var refs =
-                    gitClient.GetRefsAsync(
-                        repositoryDescription.ProjectName,
-                        repositoryDescription.RepositoryName,
-                        filter: targetBranchName.Replace("refs/", string.Empty))
-                    .GetAwaiter().GetResult();
+                    gitClient
+                        .GetRefsAsync(
+                            repositoryDescription.ProjectName,
+                            repositoryDescription.RepositoryName,
+                            filter: targetBranchName.Replace("refs/", string.Empty))
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult();
 
                 if (refs == null)
                 {
@@ -751,7 +765,9 @@
                             pullRequest,
                             repositoryDescription.ProjectName,
                             repositoryDescription.RepositoryName)
-                        .GetAwaiter().GetResult();
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult();
 
                 var pullRequestReadSettings =
                     new AzureDevOpsPullRequestSettings(
@@ -782,13 +798,15 @@
                     Status = status,
                 };
 
-                gitClient.UpdateThreadAsync(
-                    newThread,
-                    this.RepositoryId,
-                    this.PullRequestId,
-                    threadId,
-                    null,
-                    CancellationToken.None).Wait();
+                gitClient
+                    .UpdateThreadAsync(
+                        newThread,
+                        this.RepositoryId,
+                        this.PullRequestId,
+                        threadId)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
             }
         }
 

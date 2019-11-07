@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Cake.AzureDevOps.Authentication;
     using Cake.Core.Diagnostics;
     using Microsoft.TeamFoundation.Build.WebApi;
 
@@ -12,6 +13,7 @@
     public sealed class AzureDevOpsBuild
     {
         private readonly ICakeLog log;
+        private readonly IAzureDevOpsCredentials credentials;
         private readonly bool throwExceptionIfBuildCouldNotBeFound;
         private readonly IBuildClientFactory buildClientFactory;
         private readonly Build build;
@@ -44,6 +46,7 @@
 
             this.log = log;
             this.buildClientFactory = buildClientFactory;
+            this.credentials = settings.Credentials;
             this.CollectionUrl = settings.CollectionUrl;
             this.throwExceptionIfBuildCouldNotBeFound = settings.ThrowExceptionIfBuildCouldNotBeFound;
 
@@ -60,17 +63,25 @@
                     {
                         this.log.Verbose("Read build with ID {0} from project with ID {1}", settings.BuildId, settings.ProjectGuid);
                         this.build =
-                            buildClient.GetBuildAsync(
-                                settings.ProjectGuid,
-                                settings.BuildId).GetAwaiter().GetResult();
+                            buildClient
+                                .GetBuildAsync(
+                                    settings.ProjectGuid,
+                                    settings.BuildId)
+                                .ConfigureAwait(false)
+                                .GetAwaiter()
+                                .GetResult();
                     }
                     else if (!string.IsNullOrWhiteSpace(settings.ProjectName))
                     {
                         this.log.Verbose("Read build with ID {0} from project with name {1}", settings.BuildId, settings.ProjectName);
                         this.build =
-                            buildClient.GetBuildAsync(
-                                settings.ProjectName,
-                                settings.BuildId).GetAwaiter().GetResult();
+                            buildClient
+                                .GetBuildAsync(
+                                    settings.ProjectName,
+                                    settings.BuildId)
+                                .ConfigureAwait(false)
+                                .GetAwaiter()
+                                .GetResult();
                     }
                     else
                     {
@@ -232,6 +243,10 @@
         /// Returns 0 if no build could be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.
         /// </summary>
+        /// <remarks>
+        /// Result is only available after a build has been finished.
+        /// The check if a running build is failing you can call <see cref="IsBuildFailing"/>.
+        /// </remarks>
         /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public AzureDevOpsBuildResult? Result
@@ -272,6 +287,72 @@
                         .ToDictionary(
                             x => x.Split(':').First().Trim('"'),
                             x => x.Split(':').Last().Trim('"'));
+            }
+        }
+
+        /// <summary>
+        /// Gets the changes associated with a build.
+        /// </summary>
+        /// <returns>The changes associated with a build or an empty list if no build could be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public IEnumerable<AzureDevOpsChange> GetChanges()
+        {
+            if (!this.ValidateBuild())
+            {
+                return new List<AzureDevOpsChange>();
+            }
+
+            using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.credentials))
+            {
+                return
+                    buildClient
+                        .GetBuildChangesAsync(this.ProjectId, this.BuildId)
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult()
+                        .Select(x => x.ToAzureDevOpsChange());
+            }
+        }
+
+        /// <summary>
+        /// Checks if the build is failing.
+        /// </summary>
+        /// <returns><c>true</c> if build is failing.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public bool IsBuildFailing()
+        {
+            return
+                this.ValidateBuild() &&
+                this.GetTimelineRecords().Any(x => x.Result.HasValue && x.Result.Value == AzureDevOpsTaskResult.Failed);
+        }
+
+        /// <summary>
+        /// Gets the timeline entries for a build.
+        /// </summary>
+        /// <returns>The timeline entries for the build or an empty list if no build could be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public IEnumerable<AzureDevOpsTimelineRecord> GetTimelineRecords()
+        {
+            if (!this.ValidateBuild())
+            {
+                return new List<AzureDevOpsTimelineRecord>();
+            }
+
+            using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.credentials))
+            {
+                return
+                    buildClient
+                        .GetBuildTimelineAsync(this.ProjectId, this.BuildId)
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult()
+                        .Records
+                        .Select(x => x.ToAzureDevOpsTimelineRecord());
             }
         }
 
