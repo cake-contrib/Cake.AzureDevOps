@@ -77,7 +77,7 @@
         /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
-        [CakeAliasCategory("Build")]
+        [CakeAliasCategory("Azure Pipelines")]
         [CakeNamespaceImport("Cake.AzureDevOps.Pipelines")]
         public static AzureDevOpsBuild AzureDevOpsBuildUsingAzurePipelinesOAuthToken(
             this ICakeContext context)
