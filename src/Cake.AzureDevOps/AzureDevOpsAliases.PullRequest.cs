@@ -1,7 +1,9 @@
 ﻿namespace Cake.AzureDevOps
 {
     using System;
+    using System.Collections.Generic;
     using Cake.AzureDevOps.PullRequest;
+    using Cake.AzureDevOps.Repos;
     using Cake.Core;
     using Cake.Core.Annotations;
 
@@ -267,6 +269,56 @@
 
             new AzureDevOpsPullRequest(context.Log, settings, new GitClientFactory())
                 .CreateComment(comment);
+        }
+
+        /// <summary>
+        /// Gets the commits contained in the Azure DevOps pull request using
+        /// the specified settings.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">Settings for accessing the pull request.</param>
+        /// <example>
+        /// <para>Lists id and message of commits of a pull request:</para>
+        /// <code>
+        /// <![CDATA[
+        /// var pullRequestSettings =
+        ///     new AzureDevOpsPullRequestSettings(
+        ///         new Uri("http://myserver:8080/defaultcollection/myproject/_git/myrepository"),
+        ///         "refs/heads/feature/myfeature",
+        ///         AzureDevOpsAuthenticationNtlm());
+        ///
+        /// var commits =
+        ///     AzureDevOpsGetPullRequestCommits(
+        ///         pullRequestSettings);
+        ///
+        /// Information("Commits");
+        /// foreach (var commit in commits)
+        /// {
+        ///     Information("  {0}: {1}", commit.Id, commit.Message);
+        /// }
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <returns>The commits contained in the pull request.
+        /// Returns an empty list if pull request could not be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Pull Request")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
+        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
+        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
+        public static IEnumerable<AzureDevOpsCommit> AzureDevOpsGetPullRequestCommits(
+            this ICakeContext context,
+            AzureDevOpsPullRequestSettings settings)
+        {
+            context.NotNull(nameof(context));
+            settings.NotNull(nameof(settings));
+
+            return
+                new AzureDevOpsPullRequest(context.Log, settings, new GitClientFactory())
+                    .GetCommits();
         }
 
         /// <summary>
