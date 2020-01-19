@@ -17,6 +17,7 @@ CAKE_EXE=$TOOLS_DIR/Cake.$CAKE_VERSION/Cake.exe
 export CAKE_SETTINGS_SKIPVERIFICATION='true'
 
 # Define default arguments.
+SCRIPT="recipe.cake"
 TARGET="Default"
 CONFIGURATION="Release"
 VERBOSITY="verbose"
@@ -99,4 +100,4 @@ fi
 ###########################################################################
 
 # Start Cake
-exec mono "$CAKE_EXE" recipe.cake --verbosity=$VERBOSITY --configuration=$CONFIGURATION --target=$TARGET $DRYRUN "${SCRIPT_ARGUMENTS[@]}"
+exec mono "$CAKE_EXE" $SCRIPT --verbosity=$VERBOSITY --configuration=$CONFIGURATION --target=$TARGET $DRYRUN "${SCRIPT_ARGUMENTS[@]}"
