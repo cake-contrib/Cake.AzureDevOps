@@ -36,5 +36,17 @@ jobs:
     vmImage: 'ubuntu-16.04'
   steps:
   - bash: |
-      ./build.sh
+      mono --version
+    displayName: 'Show Mono version'
+  # Use Mono 6.6.0 until Cake.Recipe is compatible with Cake 0.37.0 which fixes this issue
+  - bash: |
+      sudo apt-get remove mono-complete mono-devel mono-gac mono-runtime-common monodoc-manual \
+      && sudo apt-get autoremove \
+      && echo "deb https://download.mono-project.com/repo/ubuntu stable-xenial/snapshots/6.6.0.161 main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list \
+      && sudo apt-get update \
+      && sudo apt-get install -y --no-install-recommends mono-complete \
+      && mono --version
+    displayName: 'Downgrade Mono to 6.6.0'
+  - bash: |
+      ./build.sh --verbosity diagnostic
     displayName: 'Cake Build'
