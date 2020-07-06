@@ -53,7 +53,7 @@
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureDevOpsPullRequestSettings"/> class using environment variables
-        /// as set by a Azure Pipelines build.
+        /// as set by an Azure Pipelines build.
         /// </summary>
         /// <param name="credentials">Credentials to use to authenticate against Azure DevOps.</param>
         /// <exception cref="InvalidOperationException">If build is not running in Azure Pipelines,

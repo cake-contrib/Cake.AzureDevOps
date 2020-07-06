@@ -35,6 +35,25 @@
         /// </summary>
         /// <param name="log">The Cake log context.</param>
         /// <param name="settings">Settings for accessing AzureDevOps.</param>
+        /// <param name="build">The build.</param>
+        internal AzureDevOpsBuild(ICakeLog log, AzureDevOpsBuildsSettings settings, Build build)
+        {
+            log.NotNull(nameof(log));
+            settings.NotNull(nameof(settings));
+            build.NotNull(nameof(build));
+
+            this.log = log;
+            this.build = build;
+            this.buildClientFactory = new BuildClientFactory();
+            this.credentials = settings.Credentials;
+            this.CollectionUrl = settings.CollectionUrl;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AzureDevOpsBuild"/> class.
+        /// </summary>
+        /// <param name="log">The Cake log context.</param>
+        /// <param name="settings">Settings for accessing AzureDevOps.</param>
         /// <param name="buildClientFactory">A factory to communicate with Build client.</param>
         /// <exception cref="AzureDevOpsBuildNotFoundException">If <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/>
         /// is set to <c>true</c> and no build could be found.</exception>
