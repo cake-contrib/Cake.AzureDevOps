@@ -357,6 +357,32 @@
         }
 
         /// <summary>
+        /// Gets the artifacts associated with a build.
+        /// </summary>
+        /// <returns>The artifacts associated with a build or an empty list if no build could be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public IEnumerable<AzureDevOpsBuildArtifact> GetArtifacts()
+        {
+            if (!this.ValidateBuild())
+            {
+                return new List<AzureDevOpsBuildArtifact>();
+            }
+
+            using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.credentials))
+            {
+                return
+                    buildClient
+                        .GetArtifactsAsync(this.ProjectId, this.BuildId)
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult()
+                        .Select(x => x.ToAzureDevOpsBuildArtifact());
+            }
+        }
+
+        /// <summary>
         /// Validates if a build could be found.
         /// Depending on <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/>
         /// the build instance can be null for subsequent calls.
