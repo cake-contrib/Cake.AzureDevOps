@@ -90,6 +90,43 @@
         }
 
         /// <summary>
+        /// Gets Azure Pipelines builds using the specified settings.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">Settings for getting the build.</param>
+        /// <example>
+        /// <para>Get builds running on Azure DevOps Server:</para>
+        /// <code>
+        /// <![CDATA[
+        /// var buildSettings =
+        ///     new AzureDevOpsBuildsSettings(
+        ///         new Uri("http://myserver:8080/defaultcollection"),
+        ///         "MyProject",
+        ///         AzureDevOpsAuthenticationNtlm());
+        ///
+        /// var builds =
+        ///     AzureDevOpsBuilds(
+        ///         buildSettings);
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <returns>Description of the builds or an empty list of builds.</returns>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Azure Pipelines")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Pipelines")]
+        public static IEnumerable<AzureDevOpsBuild> AzureDevOpsBuilds(
+            this ICakeContext context,
+            AzureDevOpsBuildsSettings settings)
+        {
+            context.NotNull(nameof(context));
+            settings.NotNull(nameof(settings));
+
+            return AzureDevOpsBuildsHelper.GetAzureDevOpsBuilds(
+                context.Log,
+                settings);
+        }
+
+        /// <summary>
         /// Returns if the Azure DevOps build is failing.
         /// </summary>
         /// <param name="context">The context.</param>
