@@ -371,7 +371,7 @@
             }
 
             [Fact]
-            public void Should_Set_ProjectGuid_Url()
+            public void Should_Set_ProjectGuid()
             {
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
@@ -388,7 +388,7 @@
             }
 
             [Fact]
-            public void Should_Set_ProjectName_Url()
+            public void Should_Set_ProjectName()
             {
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
@@ -649,7 +649,7 @@
             }
 
             [Fact]
-            public void Should_Set_Project_Name_Url()
+            public void Should_Set_Project_Name()
             {
                 // Given
                 var projectName = "MyProject";
@@ -666,7 +666,7 @@
             }
 
             [Fact]
-            public void Should_Set_Build_Id_Url()
+            public void Should_Set_Build_Id()
             {
                 // Given
                 var buildId = 42;
@@ -939,7 +939,7 @@
             }
 
             [Fact]
-            public void Should_Set_Project_Name_Url()
+            public void Should_Set_Project_Name()
             {
                 // Given
                 var projectName = "MyProject";
@@ -957,7 +957,7 @@
             }
 
             [Fact]
-            public void Should_Set_Build_Id_Url()
+            public void Should_Set_Build_Id()
             {
                 // Given
                 var buildId = 42;
