@@ -840,6 +840,40 @@
             }
 
             [Fact]
+            public void Should_Throw_If_Build_Id_Env_Var_Is_Set_But_Ctor_Build_Id_Value_Zero()
+            {
+                // Given
+                var creds = new AzureDevOpsNtlmCredentials();
+                Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
+                Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
+                Environment.SetEnvironmentVariable("BUILD_BUILDID", "20");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => new AzureDevOpsBuildSettings(0, creds));
+
+                // Then
+                result.IsArgumentOutOfRangeException("buildId");
+            }
+
+            [Fact]
+            public void Should_Throw_If_Build_Id_Env_Var_Is_Set_But_Ctor_Build_Id_Value_Negative()
+            {
+                // Given
+                var creds = new AzureDevOpsNtlmCredentials();
+                Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
+                Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
+                Environment.SetEnvironmentVariable("BUILD_BUILDID", "20");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => new AzureDevOpsBuildSettings(-1, creds));
+
+                // Then
+                result.IsArgumentOutOfRangeException("buildId");
+            }
+
+            [Fact]
             public void Should_Throw_If_Build_Id_Env_Var_Is_Not_Integer()
             {
                 // Given
@@ -874,7 +908,7 @@
             }
 
             [Fact]
-            public void Should_Throw_If_System_Access_Token_Env_Var_Is_Not_Set()
+            public void Should_Throw_If_System_Access_Token_Env_Var_Is_Not_Set_With_OAuthToken()
             {
                 // Given
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
@@ -890,7 +924,7 @@
             }
 
             [Fact]
-            public void Should_Throw_If_System_Access_Token_Env_Var_Is_Empty()
+            public void Should_Throw_If_System_Access_Token_Env_Var_Is_Empty_With_OAuthToken()
             {
                 // Given
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
@@ -906,7 +940,7 @@
             }
 
             [Fact]
-            public void Should_Throw_If_System_Access_Token_Env_Var_Is_WhiteSpace()
+            public void Should_Throw_If_System_Access_Token_Env_Var_Is_WhiteSpace_With_OAuthToken()
             {
                 // Given
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
@@ -916,6 +950,88 @@
 
                 // When
                 var result = Record.Exception(() => AzureDevOpsBuildSettings.UsingAzurePipelinesOAuthToken());
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_System_Access_Token_Env_Var_Is_Not_Set_And_Correct_Build_Id()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
+                Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
+                Environment.SetEnvironmentVariable("BUILD_BUILDID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", null);
+
+                // When
+                var result = Record.Exception(() => AzureDevOpsBuildSettings.UsingAzurePipelinesOAuthToken(42));
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_System_Access_Token_Env_Var_Is_Empty_And_Correct_Build_Id_With_OAuthToken()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
+                Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
+                Environment.SetEnvironmentVariable("BUILD_BUILDID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", string.Empty);
+
+                // When
+                var result = Record.Exception(() => AzureDevOpsBuildSettings.UsingAzurePipelinesOAuthToken(42));
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_Build_Id_Env_Var_Is_Set_But_Ctor_Build_Id_Value_Zero_With_OAuthToken()
+            {
+                // Given
+                var creds = new AzureDevOpsNtlmCredentials();
+                Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
+                Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
+                Environment.SetEnvironmentVariable("BUILD_BUILDID", "20");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => AzureDevOpsBuildSettings.UsingAzurePipelinesOAuthToken(0));
+
+                // Then
+                result.IsArgumentOutOfRangeException("buildId");
+            }
+
+            [Fact]
+            public void Should_Throw_If_Build_Id_Env_Var_Is_Set_But_Ctor_Build_Id_Value_Negative_With_OAuthToken()
+            {
+                // Given
+                var creds = new AzureDevOpsNtlmCredentials();
+                Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
+                Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
+                Environment.SetEnvironmentVariable("BUILD_BUILDID", "20");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => AzureDevOpsBuildSettings.UsingAzurePipelinesOAuthToken(-1));
+
+                // Then
+                result.IsArgumentOutOfRangeException("buildId");
+            }
+
+            [Fact]
+            public void Should_Throw_If_System_Access_Token_Env_Var_Is_WhiteSpace_And_Correct_Build_Id_With_OAuthToken()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
+                Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
+                Environment.SetEnvironmentVariable("BUILD_BUILDID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", " ");
+
+                // When
+                var result = Record.Exception(() => AzureDevOpsBuildSettings.UsingAzurePipelinesOAuthToken(42));
 
                 // Then
                 result.IsInvalidOperationException();
@@ -969,6 +1085,24 @@
 
                 // When
                 var settings = new AzureDevOpsBuildSettings(creds);
+
+                // Then
+                settings.BuildId.ShouldBe(buildId);
+            }
+
+            [Fact]
+            public void Should_Set_Build_Id_With_Ctor()
+            {
+                // Given
+                var buildId = 42;
+                var creds = new AzureDevOpsNtlmCredentials();
+                Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
+                Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
+                Environment.SetEnvironmentVariable("BUILD_BUILDID", "20");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var settings = new AzureDevOpsBuildSettings(buildId, creds);
 
                 // Then
                 settings.BuildId.ShouldBe(buildId);
