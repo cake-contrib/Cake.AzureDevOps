@@ -83,25 +83,24 @@
             this.Credentials = credentials;
             this.CollectionUrl = EnvironmentVariableHelper.GetSystemTeamFoundationCollectionUri();
             this.ProjectName = EnvironmentVariableHelper.GetSystemTeamProject();
+            this.BuildId = EnvironmentVariableHelper.GetBuildId();
+        }
 
-            var buildId = Environment.GetEnvironmentVariable("BUILD_BUILDID", EnvironmentVariableTarget.Process);
-            if (string.IsNullOrWhiteSpace(buildId))
-            {
-                throw new InvalidOperationException(
-                    "Failed to read the BUILD_BUILDID environment variable. Make sure you are running in an Azure Pipelines build.");
-            }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AzureDevOpsBuildSettings"/> class using environment variables
+        /// as set by an Azure Pipelines build.
+        /// </summary>
+        /// <param name="buildId">ID of the build.</param>
+        /// <param name="credentials">Credentials to use to authenticate against Azure DevOps.</param>
+        public AzureDevOpsBuildSettings(int buildId, IAzureDevOpsCredentials credentials)
+        {
+            buildId.NotNegativeOrZero(nameof(buildId));
+            credentials.NotNull(nameof(credentials));
 
-            if (!int.TryParse(buildId, out int buildIdValue))
-            {
-                throw new InvalidOperationException("BUILD_BUILDID environment variable should contain integer value");
-            }
-
-            if (buildIdValue <= 0)
-            {
-                throw new InvalidOperationException("BUILD_BUILDID environment variable should contain integer value and it should be greater than zero");
-            }
-
-            this.BuildId = buildIdValue;
+            this.BuildId = buildId;
+            this.Credentials = credentials;
+            this.CollectionUrl = EnvironmentVariableHelper.GetSystemTeamFoundationCollectionUri();
+            this.ProjectName = EnvironmentVariableHelper.GetSystemTeamProject();
         }
 
         /// <summary>
@@ -145,6 +144,19 @@
         {
             var accessToken = EnvironmentVariableHelper.GetSystemAccessToken();
             return new AzureDevOpsBuildSettings(new AzureDevOpsOAuthCredentials(accessToken));
+        }
+
+        /// <summary>
+        /// Constructs the settings object for a specific build using the access token provided by Azure Pipelines.
+        /// </summary>
+        /// <param name="buildId">ID of the build.</param>
+        /// <returns>The instance of <see cref="AzureDevOpsBuildSettings"/> class.</returns>
+        public static AzureDevOpsBuildSettings UsingAzurePipelinesOAuthToken(int buildId)
+        {
+            buildId.NotNegativeOrZero(nameof(buildId));
+
+            var accessToken = EnvironmentVariableHelper.GetSystemAccessToken();
+            return new AzureDevOpsBuildSettings(buildId, new AzureDevOpsOAuthCredentials(accessToken));
         }
     }
 }

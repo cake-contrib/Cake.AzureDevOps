@@ -90,6 +90,41 @@
         }
 
         /// <summary>
+        /// Gets the description of a specific build which is running the access token provided by Azure Pipelines.
+        /// Make sure the build has the 'Allow Scripts to access OAuth token' option enabled.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="buildId">ID of the build.</param>
+        /// <example>
+        /// <para>Get an Azure Pipelines build:</para>
+        /// <code>
+        /// <![CDATA[
+        /// var build =
+        ///     AzureDevOpsBuildUsingAzurePipelinesOAuthToken();
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <returns>Description of the build.
+        /// Returns <c>null</c> if build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Azure Pipelines")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Pipelines")]
+        public static AzureDevOpsBuild AzureDevOpsBuildUsingAzurePipelinesOAuthToken(
+            this ICakeContext context,
+            int buildId)
+        {
+            context.NotNull(nameof(context));
+            buildId.NotNegativeOrZero(nameof(buildId));
+
+            var settings = AzureDevOpsBuildSettings.UsingAzurePipelinesOAuthToken(buildId);
+
+            return AzureDevOpsBuild(context, settings);
+        }
+
+        /// <summary>
         /// Gets Azure Pipelines builds using the specified settings.
         /// </summary>
         /// <param name="context">The context.</param>

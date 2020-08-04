@@ -57,5 +57,32 @@
 
             return projectName;
         }
+
+        /// <summary>
+        /// Gets the value for the environment variable 'BUILD_BUILDID'.
+        /// </summary>
+        /// <returns>The value for the environment variable 'BUILD_BUILDID'.</returns>
+        /// <exception cref="InvalidOperationException">If the environment variable was not found, the value is whitespace or less than 1.</exception>
+        public static int GetBuildId()
+        {
+            var buildId = Environment.GetEnvironmentVariable("BUILD_BUILDID", EnvironmentVariableTarget.Process);
+            if (string.IsNullOrWhiteSpace(buildId))
+            {
+                throw new InvalidOperationException(
+                    "Failed to read the BUILD_BUILDID environment variable. Make sure you are running in an Azure Pipelines build.");
+            }
+
+            if (!int.TryParse(buildId, out int buildIdValue))
+            {
+                throw new InvalidOperationException("BUILD_BUILDID environment variable should contain integer value");
+            }
+
+            if (buildIdValue <= 0)
+            {
+                throw new InvalidOperationException("BUILD_BUILDID environment variable should contain integer value and it should be greater than zero");
+            }
+
+            return buildIdValue;
+        }
     }
 }
