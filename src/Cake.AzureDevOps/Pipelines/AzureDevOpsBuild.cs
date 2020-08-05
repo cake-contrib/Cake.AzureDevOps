@@ -3,9 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Cake.AzureDevOps.Authentication;
     using Cake.Core.Diagnostics;
     using Microsoft.TeamFoundation.Build.WebApi;
+    using Microsoft.TeamFoundation.TestManagement.WebApi;
 
     /// <summary>
     /// Class for writing issues to Azure DevOps pull requests.
@@ -16,6 +18,7 @@
         private readonly IAzureDevOpsCredentials credentials;
         private readonly bool throwExceptionIfBuildCouldNotBeFound;
         private readonly IBuildClientFactory buildClientFactory;
+        private readonly ITestManagementClientFactory testClientFactory;
         private readonly Build build;
 
         /// <summary>
@@ -45,6 +48,7 @@
             this.log = log;
             this.build = build;
             this.buildClientFactory = new BuildClientFactory();
+            this.testClientFactory = new TestManagementClientFactory();
             this.credentials = settings.Credentials;
             this.CollectionUrl = settings.CollectionUrl;
         }
@@ -65,6 +69,7 @@
 
             this.log = log;
             this.buildClientFactory = buildClientFactory;
+            this.testClientFactory = new TestManagementClientFactory();
             this.credentials = settings.Credentials;
             this.CollectionUrl = settings.CollectionUrl;
             this.throwExceptionIfBuildCouldNotBeFound = settings.ThrowExceptionIfBuildCouldNotBeFound;
@@ -399,6 +404,62 @@
                         .GetResult()
                         .Select(x => x.ToAzureDevOpsBuildArtifact());
             }
+        }
+
+        /// <summary>
+        /// Gets the test run ID's of a build.
+        /// </summary>
+        /// <returns>A list of RunIDs as int.</returns>
+        public IEnumerable<AzureDevOpsTestRun> GetTestRuns()
+        {
+            if (!this.ValidateBuild())
+            {
+                return new List<AzureDevOpsTestRun>();
+            }
+
+            using (var testClient = this.testClientFactory.CreateTestManagementClient(this.CollectionUrl, this.credentials.ToVssCredentials()))
+            {
+                return
+                    testClient
+                    .GetTestResultDetailsForBuildAsync(this.ProjectId, this.build.Id)
+                    .GetAwaiter()
+                    .GetResult()
+                    .ResultsForGroup
+                        .SelectMany(testResultGroup => testResultGroup.Results).ToList()
+                        .GroupBy(testResult => testResult.TestRun.Id)
+                        .Select(runGroup => int.Parse(runGroup.Key))
+                        .Select(runId =>
+                            new AzureDevOpsTestRun
+                            {
+                                RunId = runId,
+                                TestResults =
+                                    this.GetTestResults(testClient, runId)
+                                    .GetAwaiter()
+                                    .GetResult(),
+                            });
+            }
+        }
+
+        /// <summary>
+        /// Gets the test runs of this build.
+        /// </summary>
+        /// <param name="testClient">Instance of a <see cref="TestManagementHttpClient"/> class.</param>
+        /// <param name="runId">Id of the test run.</param>
+        /// <returns>The test results for a build or an empty list if no build could be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        private async Task<IEnumerable<AzureDevOpsTestResult>> GetTestResults(TestManagementHttpClient testClient, int runId)
+        {
+            return
+                (await testClient.GetTestResultsAsync(this.ProjectId, runId).ConfigureAwait(false))
+                .Select(test =>
+                    new AzureDevOpsTestResult
+                    {
+                        AutomatedTestName = test.AutomatedTestName,
+                        Outcome = test.Outcome,
+                        ErrorMessage = test.ErrorMessage,
+                    });
         }
 
         /// <summary>
