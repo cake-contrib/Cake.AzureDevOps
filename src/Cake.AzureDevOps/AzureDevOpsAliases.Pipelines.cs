@@ -303,5 +303,53 @@
                 new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory())
                     .GetTimelineRecords();
         }
+
+        /// <summary>
+        /// Gets the build artifacts for an Azure Pipelines build.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">Settings for getting the build.</param>
+        /// <example>
+        /// <para>Get build artifacts for an Azure Pipelines build:</para>
+        /// <code>
+        /// <![CDATA[
+        /// var buildSettings =
+        ///     new AzureDevOpsBuildSettings(
+        ///         new Uri("http://myserver:8080/defaultcollection"),
+        ///         "MyProject",
+        ///         42,
+        ///         AzureDevOpsAuthenticationNtlm());
+        ///
+        /// var buildArtifacts =
+        ///     AzureDevOpsBuildArtifacts(
+        ///         buildSettings);
+        ///
+        /// Information("Build artifacts:");
+        /// foreach (var buildArtifact in buildArtifacts)
+        /// {
+        ///     Information("  {0}: {1}", buildArtifact.Name, buildArtifact.Resource.Url);
+        /// }
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <returns>The artifacts of the build.
+        /// Returns an empty list if build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Azure Pipelines")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Pipelines")]
+        public static IEnumerable<AzureDevOpsBuildArtifact> AzureDevOpsBuildArtifacts(
+            this ICakeContext context,
+            AzureDevOpsBuildSettings settings)
+        {
+            context.NotNull(nameof(context));
+            settings.NotNull(nameof(settings));
+
+            return
+                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory())
+                    .GetArtifacts();
+        }
     }
 }
