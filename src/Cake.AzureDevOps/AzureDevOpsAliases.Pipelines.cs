@@ -351,5 +351,53 @@
                 new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory())
                     .GetArtifacts();
         }
+
+        /// <summary>
+        /// Gets the test runs for an Azure Pipelines build.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">Settings for getting the build.</param>
+        /// <example>
+        /// <para>Get test runs for an Azure Pipelines build:</para>
+        /// <code>
+        /// <![CDATA[
+        /// var buildSettings =
+        ///     new AzureDevOpsBuildSettings(
+        ///         new Uri("http://myserver:8080/defaultcollection"),
+        ///         "MyProject",
+        ///         42,
+        ///         AzureDevOpsAuthenticationNtlm());
+        ///
+        /// var testRuns =
+        ///     AzureDevOpsBuildTestRuns(
+        ///         buildSettings);
+        ///
+        /// Information("Test runs:");
+        /// foreach (var testRun in testRuns)
+        /// {
+        ///     Information("  {0}: {1}", testRun.RunId, testRun.TestResults.Count());
+        /// }
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <returns>Test runs for the build.
+        /// Returns an empty list if build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Azure Pipelines")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Pipelines")]
+        public static IEnumerable<AzureDevOpsTestRun> AzureDevOpsBuildTestRuns(
+            this ICakeContext context,
+            AzureDevOpsBuildSettings settings)
+        {
+            context.NotNull(nameof(context));
+            settings.NotNull(nameof(settings));
+
+            return
+                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory())
+                    .GetTestRuns();
+        }
     }
 }
