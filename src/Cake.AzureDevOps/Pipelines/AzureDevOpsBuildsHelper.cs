@@ -128,7 +128,6 @@
                         .ConfigureAwait(false)
                         .GetAwaiter()
                         .GetResult();
-
             }
             else if (!string.IsNullOrWhiteSpace(settings.ProjectName))
             {
