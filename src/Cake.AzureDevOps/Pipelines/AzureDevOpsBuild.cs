@@ -436,7 +436,7 @@
                                     this.GetTestResults(testClient, runId)
                                     .GetAwaiter()
                                     .GetResult(),
-                            });
+                            }).ToList();
             }
         }
 
