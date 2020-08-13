@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Cake.AzureDevOps.Pipelines
+﻿namespace Cake.AzureDevOps.Pipelines
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Represents a resource associated with a <see cref="AzureDevOpsBuildArtifact" />.
     /// </summary>
