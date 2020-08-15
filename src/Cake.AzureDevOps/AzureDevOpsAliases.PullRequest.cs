@@ -2,8 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using Cake.AzureDevOps.PullRequest;
     using Cake.AzureDevOps.Repos;
+    using Cake.AzureDevOps.Repos.PullRequest;
+    using Cake.AzureDevOps.Repos.PullRequest.GitClient;
     using Cake.Core;
     using Cake.Core.Annotations;
 
@@ -41,8 +42,8 @@
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
         [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
-        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
-        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos.PullRequest")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos.PullRequest.CommentThread")]
         public static AzureDevOpsPullRequest AzureDevOpsPullRequest(
             this ICakeContext context,
             AzureDevOpsPullRequestSettings settings)
@@ -82,8 +83,8 @@
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
         [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
-        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
-        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos.PullRequest")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos.PullRequest.CommentThread")]
         public static AzureDevOpsPullRequest AzureDevOpsPullRequestUsingAzurePipelinesOAuthToken(
             this ICakeContext context)
         {
@@ -119,8 +120,8 @@
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
         [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
-        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
-        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos.PullRequest")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos.PullRequest.CommentThread")]
         public static AzureDevOpsPullRequest AzureDevOpsPullRequestUsingAzurePipelinesOAuthToken(
             this ICakeContext context,
             bool throwExceptionIfPullRequestCouldNotBeFound)
@@ -166,8 +167,8 @@
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
         [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
-        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
-        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos.PullRequest")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos.PullRequest.CommentThread")]
         public static void AzureDevOpsVotePullRequest(
             this ICakeContext context,
             AzureDevOpsPullRequestSettings settings,
@@ -214,8 +215,8 @@
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
         [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
-        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
-        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos.PullRequest")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos.PullRequest.CommentThread")]
         public static void AzureDevOpsSetPullRequestStatus(
             this ICakeContext context,
             AzureDevOpsPullRequestSettings settings,
@@ -256,8 +257,8 @@
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
         [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
-        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
-        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos.PullRequest")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos.PullRequest.CommentThread")]
         public static void AzureDevOpsAddCommentToPullRequest(
             this ICakeContext context,
             AzureDevOpsPullRequestSettings settings,
@@ -307,8 +308,8 @@
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
         [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
-        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
-        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos.PullRequest")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos.PullRequest.CommentThread")]
         public static IEnumerable<AzureDevOpsCommit> AzureDevOpsGetPullRequestCommits(
             this ICakeContext context,
             AzureDevOpsPullRequestSettings settings)
@@ -326,7 +327,7 @@
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="settings">Settings for creating the pull request.</param>
-        /// <returns>Returns a <see cref="PullRequest.AzureDevOpsPullRequest" /> initialized with the
+        /// <returns>Returns a <see cref="Repos.PullRequest.AzureDevOpsPullRequest" /> initialized with the
         /// created pull request.</returns>
         /// <example>
         /// <para>Creates a pull request:</para>
@@ -349,8 +350,8 @@
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
         [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
-        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest")]
-        [CakeNamespaceImport("Cake.AzureDevOps.PullRequest.CommentThread")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos.PullRequest")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Repos.PullRequest.CommentThread")]
         public static AzureDevOpsPullRequest AzureDevOpsCreatePullRequest(
             this ICakeContext context,
             AzureDevOpsCreatePullRequestSettings settings)
@@ -358,7 +359,7 @@
             context.NotNull(nameof(context));
             context.NotNull(nameof(settings));
 
-            return PullRequest.AzureDevOpsPullRequest.Create(context.Log, new GitClientFactory(), settings);
+            return Repos.PullRequest.AzureDevOpsPullRequest.Create(context.Log, new GitClientFactory(), settings);
         }
     }
 }
