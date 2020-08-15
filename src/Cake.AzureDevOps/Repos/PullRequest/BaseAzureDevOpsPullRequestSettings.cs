@@ -6,7 +6,7 @@
     /// <summary>
     /// Base class for settings for aliases handling pull requests.
     /// </summary>
-    public abstract class BaseAzureDevOpsPullRequestSettings
+    public abstract class BaseAzureDevOpsPullRequestSettings : BaseAzureDevOpsCredentialsSettings
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseAzureDevOpsPullRequestSettings"/> class.
@@ -17,12 +17,11 @@
         /// URLs using SSH scheme are converted to HTTPS.</param>
         /// <param name="credentials">Credentials to use to authenticate against Azure DevOps.</param>
         protected BaseAzureDevOpsPullRequestSettings(Uri repositoryUrl, IAzureDevOpsCredentials credentials)
+            : base(credentials)
         {
             repositoryUrl.NotNull(nameof(repositoryUrl));
-            credentials.NotNull(nameof(credentials));
 
             this.RepositoryUrl = repositoryUrl;
-            this.Credentials = credentials;
         }
 
         /// <summary>
@@ -37,14 +36,13 @@
         /// <param name="credentials">Credentials to use to authenticate against Azure DevOps.
         /// <see cref="ArgumentException"/> if <see langword="null"/>.</param>
         protected BaseAzureDevOpsPullRequestSettings(Uri repositoryUrl, string sourceRefName, IAzureDevOpsCredentials credentials)
+            : base(credentials)
         {
             repositoryUrl.NotNull(nameof(repositoryUrl));
             sourceRefName.NotNullOrWhiteSpace(nameof(sourceRefName));
-            credentials.NotNull(nameof(credentials));
 
             this.RepositoryUrl = repositoryUrl;
             this.SourceRefName = sourceRefName;
-            this.Credentials = credentials;
         }
 
         /// <summary>
@@ -54,12 +52,10 @@
         /// <param name="settings">Settings containing the parameters.
         /// <see cref="ArgumentException"/> if <see langword="null"/>.</param>
         protected BaseAzureDevOpsPullRequestSettings(BaseAzureDevOpsPullRequestSettings settings)
+            : base(settings)
         {
-            settings.NotNull(nameof(settings));
-
             this.RepositoryUrl = settings.RepositoryUrl;
             this.SourceRefName = settings.SourceRefName;
-            this.Credentials = settings.Credentials;
         }
 
         /// <summary>
@@ -68,11 +64,8 @@
         /// </summary>
         /// <param name="credentials">Credentials to use to authenticate against Azure DevOps.</param>
         protected BaseAzureDevOpsPullRequestSettings(IAzureDevOpsCredentials credentials)
+            : base(credentials)
         {
-            credentials.NotNull(nameof(credentials));
-
-            this.Credentials = credentials;
-
             var repositoryUrl = Environment.GetEnvironmentVariable("BUILD_REPOSITORY_URI", EnvironmentVariableTarget.Process);
             if (string.IsNullOrWhiteSpace(repositoryUrl))
             {
@@ -98,10 +91,5 @@
         /// Gets the branch for which the pull request is made.
         /// </summary>
         public string SourceRefName { get; private set; }
-
-        /// <summary>
-        /// Gets the credentials used to authenticate against Azure DevOps.
-        /// </summary>
-        public IAzureDevOpsCredentials Credentials { get; private set; }
     }
 }

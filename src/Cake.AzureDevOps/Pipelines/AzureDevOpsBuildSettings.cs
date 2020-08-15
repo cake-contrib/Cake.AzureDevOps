@@ -6,7 +6,7 @@
     /// <summary>
     /// Settings for aliases handling builds.
     /// </summary>
-    public class AzureDevOpsBuildSettings
+    public class AzureDevOpsBuildSettings : BaseAzureDevOpsProjectSettings
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureDevOpsBuildSettings"/> class.
@@ -17,20 +17,11 @@
         /// <param name="buildId">ID of the build.</param>
         /// <param name="credentials">Credentials to use to authenticate against Azure DevOps.</param>
         public AzureDevOpsBuildSettings(Uri collectionUrl, Guid projectGuid, int buildId, IAzureDevOpsCredentials credentials)
+            : base(collectionUrl, projectGuid, credentials)
         {
-            collectionUrl.NotNull(nameof(collectionUrl));
             buildId.NotNegativeOrZero(nameof(buildId));
-            credentials.NotNull(nameof(credentials));
 
-            if (projectGuid == Guid.Empty)
-            {
-                throw new ArgumentOutOfRangeException(nameof(projectGuid));
-            }
-
-            this.CollectionUrl = collectionUrl;
-            this.ProjectGuid = projectGuid;
             this.BuildId = buildId;
-            this.Credentials = credentials;
         }
 
         /// <summary>
@@ -42,16 +33,11 @@
         /// <param name="buildId">ID of the build.</param>
         /// <param name="credentials">Credentials to use to authenticate against Azure DevOps.</param>
         public AzureDevOpsBuildSettings(Uri collectionUrl, string projectName, int buildId, IAzureDevOpsCredentials credentials)
+            : base(collectionUrl, projectName, credentials)
         {
-            collectionUrl.NotNull(nameof(collectionUrl));
-            projectName.NotNullOrWhiteSpace(nameof(projectName));
             buildId.NotNegativeOrZero(nameof(buildId));
-            credentials.NotNull(nameof(credentials));
 
-            this.CollectionUrl = collectionUrl;
-            this.ProjectName = projectName;
             this.BuildId = buildId;
-            this.Credentials = credentials;
         }
 
         /// <summary>
@@ -60,13 +46,8 @@
         /// </summary>
         /// <param name="settings">Settings containing the parameters.</param>
         public AzureDevOpsBuildSettings(AzureDevOpsBuildSettings settings)
+            : base(settings)
         {
-            settings.NotNull(nameof(settings));
-
-            this.CollectionUrl = settings.CollectionUrl;
-            this.ProjectGuid = settings.ProjectGuid;
-            this.ProjectName = settings.ProjectName;
-            this.Credentials = settings.Credentials;
             this.BuildId = settings.BuildId;
             this.ThrowExceptionIfBuildCouldNotBeFound = settings.ThrowExceptionIfBuildCouldNotBeFound;
         }
@@ -77,12 +58,8 @@
         /// </summary>
         /// <param name="credentials">Credentials to use to authenticate against Azure DevOps.</param>
         public AzureDevOpsBuildSettings(IAzureDevOpsCredentials credentials)
+            : base(credentials)
         {
-            credentials.NotNull(nameof(credentials));
-
-            this.Credentials = credentials;
-            this.CollectionUrl = EnvironmentVariableHelper.GetSystemTeamFoundationCollectionUri();
-            this.ProjectName = EnvironmentVariableHelper.GetSystemTeamProject();
             this.BuildId = EnvironmentVariableHelper.GetBuildId();
         }
 
@@ -93,37 +70,12 @@
         /// <param name="buildId">ID of the build.</param>
         /// <param name="credentials">Credentials to use to authenticate against Azure DevOps.</param>
         public AzureDevOpsBuildSettings(int buildId, IAzureDevOpsCredentials credentials)
+            : base(credentials)
         {
             buildId.NotNegativeOrZero(nameof(buildId));
-            credentials.NotNull(nameof(credentials));
 
             this.BuildId = buildId;
-            this.Credentials = credentials;
-            this.CollectionUrl = EnvironmentVariableHelper.GetSystemTeamFoundationCollectionUri();
-            this.ProjectName = EnvironmentVariableHelper.GetSystemTeamProject();
         }
-
-        /// <summary>
-        /// Gets the full URL of the Azure DevOps collection, eg. <code>http://myserver:8080/defaultcollection</code>.
-        /// </summary>
-        public Uri CollectionUrl { get; private set; }
-
-        /// <summary>
-        /// Gets the Guid of the project.
-        /// Can be <see cref="Guid.Empty"/> if <see cref="ProjectName"/> is set.
-        /// </summary>
-        public Guid ProjectGuid { get; private set; }
-
-        /// <summary>
-        /// Gets the name of the project.
-        /// Can be <c>null</c> if <see cref="ProjectGuid"/> is set.
-        /// </summary>
-        public string ProjectName { get; private set; }
-
-        /// <summary>
-        /// Gets the credentials used to authenticate against Azure DevOps.
-        /// </summary>
-        public IAzureDevOpsCredentials Credentials { get; private set; }
 
         /// <summary>
         /// Gets the ID of the build.
