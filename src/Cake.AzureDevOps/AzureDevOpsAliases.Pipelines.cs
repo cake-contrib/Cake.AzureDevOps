@@ -47,7 +47,7 @@
             context.NotNull(nameof(context));
             settings.NotNull(nameof(settings));
 
-            var build = new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory());
+            var build = new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory());
 
             if (build.HasBuildLoaded)
             {
@@ -204,7 +204,7 @@
             settings.NotNull(nameof(settings));
 
             return
-                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory())
+                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory())
                     .IsBuildFailing();
         }
 
@@ -252,7 +252,7 @@
             settings.NotNull(nameof(settings));
 
             return
-                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory())
+                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory())
                     .GetChanges();
         }
 
@@ -300,7 +300,7 @@
             settings.NotNull(nameof(settings));
 
             return
-                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory())
+                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory())
                     .GetTimelineRecords();
         }
 
@@ -348,7 +348,7 @@
             settings.NotNull(nameof(settings));
 
             return
-                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory())
+                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory())
                     .GetArtifacts();
         }
 
@@ -396,7 +396,7 @@
             settings.NotNull(nameof(settings));
 
             return
-                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory())
+                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory())
                     .GetTestRuns();
         }
     }
