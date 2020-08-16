@@ -2,7 +2,7 @@
 {
     using System;
     using Cake.AzureDevOps.Authentication;
-    using Cake.AzureDevOps.Repos.PullRequest.GitClient;
+    using Cake.AzureDevOps.Repos;
     using Microsoft.TeamFoundation.SourceControl.WebApi;
     using Microsoft.VisualStudio.Services.Identity;
     using Moq;

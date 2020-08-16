@@ -1,11 +1,8 @@
 ﻿namespace Cake.AzureDevOps
 {
     using System;
-    using Cake.AzureDevOps.Authentication;
-    using Microsoft.TeamFoundation.Build.WebApi;
     using Microsoft.TeamFoundation.TestManagement.WebApi;
     using Microsoft.VisualStudio.Services.Common;
-    using Microsoft.VisualStudio.Services.Identity;
 
     /// <summary>
     /// The interface for a Git client factory.

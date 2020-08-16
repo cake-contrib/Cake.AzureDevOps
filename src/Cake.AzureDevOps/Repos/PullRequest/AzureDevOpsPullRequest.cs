@@ -3,11 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
     using Cake.AzureDevOps.Authentication;
     using Cake.AzureDevOps.Repos;
     using Cake.AzureDevOps.Repos.PullRequest.CommentThread;
-    using Cake.AzureDevOps.Repos.PullRequest.GitClient;
     using Cake.Core.Diagnostics;
     using Cake.Core.IO;
     using Microsoft.TeamFoundation.Common;

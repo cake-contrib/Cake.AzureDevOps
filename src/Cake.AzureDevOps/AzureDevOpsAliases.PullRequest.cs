@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using Cake.AzureDevOps.Repos;
     using Cake.AzureDevOps.Repos.PullRequest;
-    using Cake.AzureDevOps.Repos.PullRequest.GitClient;
     using Cake.Core;
     using Cake.Core.Annotations;
 
