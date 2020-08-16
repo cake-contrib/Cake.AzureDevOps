@@ -23,8 +23,8 @@
         /// </summary>
         /// <param name="collectionUrl">The URL of the Azure DevOps team project collection.</param>
         /// <param name="credentials">The credentials to connect to Azure DevOps.</param>
-        /// <param name="identity">Returns identity which is authorized.</param>
+        /// <param name="authorizedIdentity">Returns identity which is authorized.</param>
         /// <returns>The instance of <see cref="GitHttpClient"/> class.</returns>
-        GitHttpClient CreateGitClient(Uri collectionUrl, IAzureDevOpsCredentials credentials, out Identity identity);
+        GitHttpClient CreateGitClient(Uri collectionUrl, IAzureDevOpsCredentials credentials, out Identity authorizedIdentity);
     }
 }
