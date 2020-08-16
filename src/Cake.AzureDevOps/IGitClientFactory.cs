@@ -1,4 +1,4 @@
-﻿namespace Cake.AzureDevOps.Repos.PullRequest.GitClient
+﻿namespace Cake.AzureDevOps.Repos
 {
     using System;
     using Cake.AzureDevOps.Authentication;

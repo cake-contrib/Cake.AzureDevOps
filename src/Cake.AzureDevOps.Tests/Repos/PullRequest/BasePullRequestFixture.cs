@@ -1,6 +1,6 @@
 ﻿namespace Cake.AzureDevOps.Tests.Repos.PullRequest
 {
-    using Cake.AzureDevOps.Repos.PullRequest.GitClient;
+    using Cake.AzureDevOps.Repos;
     using Cake.AzureDevOps.Tests.Repos.PullRequest.Fakes;
     using Cake.Testing;
 

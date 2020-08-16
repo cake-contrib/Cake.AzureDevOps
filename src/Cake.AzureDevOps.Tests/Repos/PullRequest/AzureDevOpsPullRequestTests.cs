@@ -1,11 +1,10 @@
 ﻿namespace Cake.AzureDevOps.Tests.Repos.PullRequest
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Cake.AzureDevOps.Repos;
     using Cake.AzureDevOps.Repos.PullRequest;
     using Cake.AzureDevOps.Repos.PullRequest.CommentThread;
-    using Cake.AzureDevOps.Repos.PullRequest.GitClient;
     using Cake.AzureDevOps.Tests.Repos.PullRequest.Fakes;
     using Cake.Core.Diagnostics;
     using Cake.Core.IO;
