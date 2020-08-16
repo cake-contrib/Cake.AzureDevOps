@@ -417,7 +417,7 @@
                 return new List<AzureDevOpsTestRun>();
             }
 
-            using (var testClient = this.testClientFactory.CreateTestManagementClient(this.CollectionUrl, this.credentials.ToVssCredentials()))
+            using (var testClient = this.testClientFactory.CreateTestManagementClient(this.CollectionUrl, this.credentials))
             {
                 return
                     testClient
