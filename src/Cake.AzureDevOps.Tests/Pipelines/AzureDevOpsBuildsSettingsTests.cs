@@ -6,7 +6,7 @@
     using Shouldly;
     using Xunit;
 
-    public sealed class AzureDevOpsBuildsSettingsTests
+    public sealed class BaseAzureDevOpsCredentialsSettingsTests
     {
         public sealed class TheCtorForProjectGuid
         {

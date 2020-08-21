@@ -1,7 +1,7 @@
 ﻿namespace Cake.AzureDevOps.Tests
 {
     using System;
-    using Cake.AzureDevOps.PullRequest;
+    using Cake.AzureDevOps.Repos.PullRequest;
     using Xunit;
 
     /// <summary>

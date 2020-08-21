@@ -21,7 +21,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/cake-contrib/Cake.AzureDevOps.git</RepositoryUrl>
-    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.AzureDevOps/releases/tag/0.4.7</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.AzureDevOps/releases/tag/0.5.0</PackageReleaseNotes>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);PackBuildOutputs</TargetsForTfmSpecificContentInPackage>

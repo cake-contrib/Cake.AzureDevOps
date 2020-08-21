@@ -29,7 +29,7 @@
         /// <exception cref="AzureDevOpsBuildNotFoundException">If <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/>
         /// is set to <c>true</c> and no build could be found.</exception>
         public AzureDevOpsBuild(ICakeLog log, AzureDevOpsBuildSettings settings)
-            : this(log, settings, new BuildClientFactory())
+            : this(log, settings, new BuildClientFactory(), new TestManagementClientFactory())
         {
         }
 
@@ -58,18 +58,24 @@
         /// </summary>
         /// <param name="log">The Cake log context.</param>
         /// <param name="settings">Settings for accessing AzureDevOps.</param>
-        /// <param name="buildClientFactory">A factory to communicate with Build client.</param>
+        /// <param name="buildClientFactory">A factory to communicate with build client.</param>
+        /// <param name="testManagementClientFactory">A factory to communicate with test management client.</param>
         /// <exception cref="AzureDevOpsBuildNotFoundException">If <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/>
         /// is set to <c>true</c> and no build could be found.</exception>
-        internal AzureDevOpsBuild(ICakeLog log, AzureDevOpsBuildSettings settings, IBuildClientFactory buildClientFactory)
+        internal AzureDevOpsBuild(
+            ICakeLog log,
+            AzureDevOpsBuildSettings settings,
+            IBuildClientFactory buildClientFactory,
+            ITestManagementClientFactory testManagementClientFactory)
         {
             log.NotNull(nameof(log));
             settings.NotNull(nameof(settings));
             buildClientFactory.NotNull(nameof(buildClientFactory));
+            testManagementClientFactory.NotNull(nameof(testManagementClientFactory));
 
             this.log = log;
             this.buildClientFactory = buildClientFactory;
-            this.testClientFactory = new TestManagementClientFactory();
+            this.testClientFactory = testManagementClientFactory;
             this.credentials = settings.Credentials;
             this.CollectionUrl = settings.CollectionUrl;
             this.throwExceptionIfBuildCouldNotBeFound = settings.ThrowExceptionIfBuildCouldNotBeFound;
@@ -417,7 +423,7 @@
                 return new List<AzureDevOpsTestRun>();
             }
 
-            using (var testClient = this.testClientFactory.CreateTestManagementClient(this.CollectionUrl, this.credentials.ToVssCredentials()))
+            using (var testClient = this.testClientFactory.CreateTestManagementClient(this.CollectionUrl, this.credentials))
             {
                 return
                     testClient
