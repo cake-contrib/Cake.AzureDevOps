@@ -34,11 +34,11 @@
                      authorizedIdenity.Id,
                      authorizedIdenity.DisplayName);
 
-                BuildDefinitionReference buildDefinition = null;
+                AzureDevOpsBuildDefinition buildDefinition = null;
 
                 if (!string.IsNullOrEmpty(settings.BuildDefinitionName))
                 {
-                    buildDefinition = GetBuildDefinition(log, buildHttpClient, settings);
+                    buildDefinition = GetBuildDefinition(log, settings);
                     if (buildDefinition == null)
                     {
                         throw new InvalidOperationException($"Build definition '{settings.BuildDefinitionName}' not found");
@@ -105,45 +105,21 @@
         /// Returns the build definition for the <paramref name="settings"/>.
         /// </summary>
         /// <param name="log">The Cake log context.</param>
-        /// <param name="buildHttpClient">The Http build client.</param>
         /// <param name="settings">Settings for accessing AzureDevOps.</param>
         /// <returns>The build definition for the BuildDefinitionName on <paramref name="settings"/>.
         /// <c>null</c> if the BuildDefinitionName was not set or no build definition was found.</returns>
-        private static BuildDefinitionReference GetBuildDefinition(
+        private static AzureDevOpsBuildDefinition GetBuildDefinition(
             ICakeLog log,
-            BuildHttpClient buildHttpClient,
             AzureDevOpsBuildsSettings settings)
         {
             log.NotNull(nameof(log));
-            buildHttpClient.NotNull(nameof(buildHttpClient));
             settings.NotNull(nameof(settings));
 
-            List<BuildDefinitionReference> buildDefinitions = null;
-
-            if (settings.ProjectGuid != Guid.Empty)
-            {
-                buildDefinitions =
-                    buildHttpClient
-                        .GetDefinitionsAsync(settings.ProjectGuid)
-                        .ConfigureAwait(false)
-                        .GetAwaiter()
-                        .GetResult();
-            }
-            else if (!string.IsNullOrWhiteSpace(settings.ProjectName))
-            {
-                buildDefinitions =
-                    buildHttpClient
-                        .GetDefinitionsAsync(settings.ProjectName)
-                        .ConfigureAwait(false)
-                        .GetAwaiter()
-                        .GetResult();
-            }
-            else
-            {
-                throw new ArgumentOutOfRangeException(
-                    nameof(settings),
-                    "Either ProjectGuid or ProjectName needs to be set");
-            }
+            var buildDefinitions =
+                AzureDevOpsBuildsDefinitionHelper
+                    .GetAzureDevOpsBuildDefinitions(
+                        log,
+                        settings);
 
             var buildDefinition =
                 buildDefinitions
