@@ -26,5 +26,25 @@
                     throw new System.Exception("Unknown value");
             }
         }
+
+        /// <summary>
+        /// Converts a <see cref="AzureDevOpsDefinitionQueueStatus"/> to an <see cref="DefinitionQueueStatus"/>.
+        /// </summary>
+        /// <param name="status">Status to convert.</param>
+        /// <returns>Converted status.</returns>
+        public static DefinitionQueueStatus ToDefinitionQueueStatus(this AzureDevOpsDefinitionQueueStatus status)
+        {
+            switch (status)
+            {
+                case AzureDevOpsDefinitionQueueStatus.Enabled:
+                    return DefinitionQueueStatus.Enabled;
+                case AzureDevOpsDefinitionQueueStatus.Paused:
+                    return DefinitionQueueStatus.Paused;
+                case AzureDevOpsDefinitionQueueStatus.Disabled:
+                    return DefinitionQueueStatus.Disabled;
+                default:
+                    throw new System.Exception("Unknown value");
+            }
+        }
     }
 }
