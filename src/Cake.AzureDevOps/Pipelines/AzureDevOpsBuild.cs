@@ -413,6 +413,70 @@
         }
 
         /// <summary>
+        /// Create an artifact link, such as a file or folder path or a version control path.
+        /// </summary>
+        /// <param name="name">The artifact name.</param>
+        /// <param name="type">The artifact type.
+        /// The following artifact types are supported:
+        /// <list type="table">
+        ///     <listheader>
+        ///         <term>Type</term>
+        ///         <description>Description</description>
+        ///     </listheader>
+        ///     <item>
+        ///         <term>FilePath</term>
+        ///         <description>File path type</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>GitRef</term>
+        ///         <description>Git reference type</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>TFVCLabel</term>
+        ///         <description>TFVC label type</description>
+        ///     </item>
+        ///     <item>
+        ///         <term>VersionControl</term>
+        ///         <description>Version control path type</description>
+        ///     </item>
+        /// </list>
+        /// </param>
+        /// <param name="location">The link path or value.</param>
+        /// <returns>Description of the new artifact or <c>null</c> if no build could be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public AzureDevOpsBuildArtifact LinkArtifact(string name, string type, string location)
+        {
+            if (!this.ValidateBuild())
+            {
+                return null;
+            }
+
+            using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.credentials))
+            {
+                var artifact =
+                    new BuildArtifact
+                    {
+                        Name = name,
+                        Resource =
+                            new ArtifactResource
+                            {
+                                Type = type,
+                                Data = location,
+                            },
+                    };
+                return
+                    buildClient
+                        .CreateArtifactAsync(artifact, this.ProjectId, this.BuildId)
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult()
+                        .ToAzureDevOpsBuildArtifact();
+            }
+        }
+
+        /// <summary>
         /// Gets the test run ID's of a build.
         /// </summary>
         /// <returns>A list of RunIDs as int.</returns>
