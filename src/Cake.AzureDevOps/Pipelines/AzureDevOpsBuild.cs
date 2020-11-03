@@ -293,6 +293,26 @@
         }
 
         /// <summary>
+        /// Gets the finish time of the build.
+        /// Returns <c>null</c> if no build could be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public DateTime? FinishTime
+        {
+            get
+            {
+                if (!this.ValidateBuild())
+                {
+                    return null;
+                }
+
+                return this.build.FinishTime;
+            }
+        }
+
+        /// <summary>
         /// Gets the parameters passed to the build.
         /// Returns an empty dictionary if no build could be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.
