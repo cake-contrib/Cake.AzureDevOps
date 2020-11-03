@@ -477,10 +477,27 @@
         }
 
         /// <summary>
-        /// Gets the test run ID's of a build.
+        /// Gets the test runs of the build including test results.
         /// </summary>
-        /// <returns>A list of RunIDs as int.</returns>
+        /// <returns>A list of test runs or an empty list if no build could be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public IEnumerable<AzureDevOpsTestRun> GetTestRuns()
+        {
+            return this.GetTestRuns(null);
+        }
+
+        /// <summary>
+        /// Gets the test runs of the build including test results.
+        /// </summary>
+        /// <param name="maxResultsPerTestRun">Number of maximum test results to read for every test run.
+        /// <c>0</c> for skipping reading of test results. <c>null</c> for reading all test results in batches.</param>
+        /// <returns>A list of test runs or an empty list if no build could be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public IEnumerable<AzureDevOpsTestRun> GetTestRuns(int? maxResultsPerTestRun)
         {
             if (!this.ValidateBuild())
             {
@@ -489,24 +506,35 @@
 
             using (var testClient = this.testClientFactory.CreateTestManagementClient(this.CollectionUrl, this.credentials))
             {
-                return
+                // Read test result details for current build.
+                var testResultDetails =
                     testClient
-                    .GetTestResultDetailsForBuildAsync(this.ProjectId, this.build.Id)
-                    .GetAwaiter()
-                    .GetResult()
-                    .ResultsForGroup
-                        .SelectMany(testResultGroup => testResultGroup.Results).ToList()
-                        .GroupBy(testResult => testResult.TestRun.Id)
-                        .Select(runGroup => int.Parse(runGroup.Key))
-                        .Select(runId =>
+                        .GetTestResultDetailsForBuildAsync(this.ProjectId, this.build.Id)
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult();
+
+                // Group result by test runs.
+                var testRuns =
+                    testResultDetails
+                        .ResultsForGroup
+                        .SelectMany(testResultGroup => testResultGroup.Results)
+                        .GroupBy(testResult => int.Parse(testResult.TestRun.Id));
+
+                // Read result details for every test run.
+                return
+                    testRuns
+                        .Select(testRun =>
                             new AzureDevOpsTestRun
                             {
-                                RunId = runId,
+                                RunId = testRun.Key,
                                 TestResults =
-                                    this.GetTestResults(testClient, runId)
+                                    this.GetTestResults(testClient, testRun.Key, testRun.Count(), maxResultsPerTestRun)
+                                    .ConfigureAwait(false)
                                     .GetAwaiter()
                                     .GetResult(),
-                            }).ToList();
+                            })
+                        .ToList();
             }
         }
 
@@ -515,21 +543,50 @@
         /// </summary>
         /// <param name="testClient">Instance of a <see cref="TestManagementHttpClient"/> class.</param>
         /// <param name="runId">Id of the test run.</param>
-        /// <returns>The test results for a build or an empty list if no build could be found and
-        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
-        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
-        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        private async Task<IEnumerable<AzureDevOpsTestResult>> GetTestResults(TestManagementHttpClient testClient, int runId)
+        /// <param name="testCount">Number of tests in the test run.</param>
+        /// <param name="maxResults">Number of maximum test results to read.
+        /// <c>0</c> for skipping reading of test results. <c>null</c> for reading all test results in batches.</param>
+        /// <returns>The test results for a build.</returns>
+        private async Task<IEnumerable<AzureDevOpsTestResult>> GetTestResults(
+            TestManagementHttpClient testClient,
+            int runId,
+            int testCount,
+            int? maxResults)
         {
-            return
-                (await testClient.GetTestResultsAsync(this.ProjectId, runId).ConfigureAwait(false))
-                .Select(test =>
-                    new AzureDevOpsTestResult
-                    {
-                        AutomatedTestName = test.AutomatedTestName,
-                        Outcome = test.Outcome,
-                        ErrorMessage = test.ErrorMessage,
-                    });
+            var testResults = new List<AzureDevOpsTestResult>();
+
+            if (maxResults <= 0)
+            {
+                return testResults;
+            }
+
+            const int maxPagingSize = 10000;
+            var resultCount = 0;
+            var remainingResultsToRead = maxResults.HasValue ? Math.Min(testCount, maxResults.Value) : testCount;
+            do
+            {
+                var resultsToRead = Math.Min(remainingResultsToRead, maxPagingSize);
+                testResults.AddRange(
+                    (await testClient
+                        .GetTestResultsAsync(
+                            this.ProjectId,
+                            runId,
+                            skip: resultCount,
+                            top: resultsToRead)
+                        .ConfigureAwait(false))
+                    .Select(test =>
+                        new AzureDevOpsTestResult
+                        {
+                            AutomatedTestName = test.AutomatedTestName,
+                            Outcome = test.Outcome,
+                            ErrorMessage = test.ErrorMessage,
+                        }));
+
+                resultCount += resultsToRead;
+                remainingResultsToRead = Math.Max(remainingResultsToRead - resultsToRead, 0);
+            } while (remainingResultsToRead > 0);
+
+            return testResults;
         }
 
         /// <summary>
