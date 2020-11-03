@@ -1,7 +1,6 @@
 ﻿namespace Cake.AzureDevOps.Tests.Repos.PullRequest
 {
-    using Cake.AzureDevOps.Repos;
-    using Cake.AzureDevOps.Tests.Repos.PullRequest.Fakes;
+    using Cake.AzureDevOps.Tests.Fakes;
     using Cake.Testing;
 
     internal abstract class BasePullRequestFixture

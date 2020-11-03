@@ -1,8 +1,7 @@
-﻿namespace Cake.AzureDevOps.Tests.Repos.PullRequest.Fakes
+﻿namespace Cake.AzureDevOps.Tests.Fakes
 {
     using System;
     using Cake.AzureDevOps.Authentication;
-    using Cake.AzureDevOps.Repos;
     using Microsoft.TeamFoundation.SourceControl.WebApi;
     using Microsoft.VisualStudio.Services.Identity;
     using Moq;

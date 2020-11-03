@@ -1,4 +1,4 @@
-﻿namespace Cake.AzureDevOps.Repos
+﻿namespace Cake.AzureDevOps
 {
     using System;
     using Cake.AzureDevOps.Authentication;

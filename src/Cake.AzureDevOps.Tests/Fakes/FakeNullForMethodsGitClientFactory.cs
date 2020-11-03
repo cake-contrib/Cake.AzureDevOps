@@ -1,4 +1,4 @@
-﻿namespace Cake.AzureDevOps.Tests.Repos.PullRequest.Fakes
+﻿namespace Cake.AzureDevOps.Tests.Fakes
 {
     using System;
     using System.Collections.Generic;
