@@ -39,7 +39,7 @@
     <PackageReference Include="Cake.Core" Version="0.33.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="16.143.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="16.153.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Services.InteractiveClient" Version="16.143.2" PrivateAssets="All" />
     <PackageReference Include="TfsUrlParser" Version="1.3.0" PrivateAssets="All" />
   </ItemGroup>
