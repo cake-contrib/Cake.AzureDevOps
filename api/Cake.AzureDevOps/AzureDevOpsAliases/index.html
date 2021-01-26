@@ -139,6 +139,9 @@
 			<li class="header">Class Types</li>
 				<li class="selected"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases">AzureDevOpsAliases</a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsException">AzureDevOpsException</a></li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsCollectionSettings">Base<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Collection<wbr>Settings</a></li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsCredentialsSettings">Base<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Credentials<wbr>Settings</a></li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsProjectSettings">Base<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Project<wbr>Settings</a></li>
 
 
                     </ul>
@@ -239,7 +242,7 @@ public static class AzureDevOpsAliases</code></pre>
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/EA8AC7EF">Azure<wbr>Dev<wbr>Ops<wbr>Add<wbr>Comment<wbr>To<wbr>Pull<wbr>Request<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings, <wbr>string)<wbr></a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/506C3C0E">Azure<wbr>Dev<wbr>Ops<wbr>Add<wbr>Comment<wbr>To<wbr>Pull<wbr>Request<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings, <wbr>string)<wbr></a></td>
 								<td>void</td>
 								<td>
 									<div>
@@ -316,6 +319,66 @@ public static class AzureDevOpsAliases</code></pre>
 								</td>
 							</tr>
 							<tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/FECEE8BF">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Artifacts<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Settings)<wbr></a></td>
+								<td>IEnumerable<wbr>&lt;<a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildArtifact">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Artifact</a>&gt;<wbr></td>
+								<td>
+									<div>
+     Gets the build artifacts for an Azure Pipelines build.
+     </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/0659C7C6">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Changes<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Settings)<wbr></a></td>
+								<td>IEnumerable<wbr>&lt;<a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsChange">AzureDevOpsChange</a>&gt;<wbr></td>
+								<td>
+									<div>
+     Gets the changes associated with an Azure Pipelines build.
+     </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/0A5B1764">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Is<wbr>Failing<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Settings)<wbr></a></td>
+								<td>bool</td>
+								<td>
+									<div>
+     Returns if the Azure DevOps build is failing.
+     </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/EF73B95F">AzureDevOpsBuilds<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Builds<wbr>Settings)<wbr></a></td>
+								<td>IEnumerable<wbr>&lt;<a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuild">AzureDevOpsBuild</a>&gt;<wbr></td>
+								<td>
+									<div>
+     Gets Azure Pipelines builds using the specified settings.
+     </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/78438287">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Test<wbr>Runs<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Settings)<wbr></a></td>
+								<td>IEnumerable<wbr>&lt;<a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsTestRun">AzureDevOpsTestRun</a>&gt;<wbr></td>
+								<td>
+									<div>
+     Gets the test runs for an Azure Pipelines build.
+     </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/006FFA70">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Timeline<wbr>Records<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Settings)<wbr></a></td>
+								<td>IEnumerable<wbr>&lt;<a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsTimelineRecord">Azure<wbr>Dev<wbr>Ops<wbr>Timeline<wbr>Record</a>&gt;<wbr></td>
+								<td>
+									<div>
+     Gets the timeline entries for an Azure Pipelines build.
+     </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
 								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/9815A414">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Using<wbr>Azure<wbr>Pipelines<wbr>O<wbr>Auth<wbr>Token<wbr>(ICakeContext)<wbr></a></td>
 								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuild">AzureDevOpsBuild</a></td>
 								<td>
@@ -327,8 +390,19 @@ public static class AzureDevOpsAliases</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/4AF97F03">Azure<wbr>Dev<wbr>Ops<wbr>Create<wbr>Pull<wbr>Request<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Create<wbr>Pull<wbr>Request<wbr>Settings)<wbr></a></td>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequest">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request</a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/E6FA5D0A">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Using<wbr>Azure<wbr>Pipelines<wbr>O<wbr>Auth<wbr>Token<wbr>(ICakeContext, <wbr>int)<wbr></a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuild">AzureDevOpsBuild</a></td>
+								<td>
+									<div>
+    Gets the description of a specific build which is running the access token provided by Azure Pipelines.
+    Make sure the build has the 'Allow Scripts to access OAuth token' option enabled.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/618FFDFF">Azure<wbr>Dev<wbr>Ops<wbr>Create<wbr>Pull<wbr>Request<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Create<wbr>Pull<wbr>Request<wbr>Settings)<wbr></a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Repos.PullRequest/AzureDevOpsPullRequest">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request</a></td>
 								<td>
 									<div>
      Creates a pull request in Azure DevOps using the specified settings.
@@ -337,8 +411,19 @@ public static class AzureDevOpsAliases</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/D4487FF2">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings)<wbr></a></td>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequest">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request</a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/2B1A87CF">Azure<wbr>Dev<wbr>Ops<wbr>Get<wbr>Pull<wbr>Request<wbr>Commits<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings)<wbr></a></td>
+								<td>IEnumerable<wbr>&lt;<a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Repos/AzureDevOpsCommit">AzureDevOpsCommit</a>&gt;<wbr></td>
+								<td>
+									<div>
+     Gets the commits contained in the Azure DevOps pull request using
+     the specified settings.
+     </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/11FB544D">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings)<wbr></a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Repos.PullRequest/AzureDevOpsPullRequest">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request</a></td>
 								<td>
 									<div>
      Gets an Azure DevOps pull request using the specified settings.
@@ -348,7 +433,7 @@ public static class AzureDevOpsAliases</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/2220968F">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Using<wbr>Azure<wbr>Pipelines<wbr>O<wbr>Auth<wbr>Token<wbr>(ICakeContext)<wbr></a></td>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequest">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request</a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Repos.PullRequest/AzureDevOpsPullRequest">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request</a></td>
 								<td>
 									<div>
     Gets an Azure DevOps pull request using the settings provided by an Azure Pipelines build.
@@ -359,7 +444,7 @@ public static class AzureDevOpsAliases</code></pre>
 							</tr>
 							<tr>
 								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/9FA7771D">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Using<wbr>Azure<wbr>Pipelines<wbr>O<wbr>Auth<wbr>Token<wbr>(ICakeContext, <wbr>bool)<wbr></a></td>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequest">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request</a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Repos.PullRequest/AzureDevOpsPullRequest">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request</a></td>
 								<td>
 									<div>
     Gets an Azure DevOps pull request using the settings provided by an Azure Pipelines build.
@@ -369,7 +454,7 @@ public static class AzureDevOpsAliases</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/E9C36D10">Azure<wbr>Dev<wbr>Ops<wbr>Set<wbr>Pull<wbr>Request<wbr>Status<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Status)<wbr></a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/12942E59">Azure<wbr>Dev<wbr>Ops<wbr>Set<wbr>Pull<wbr>Request<wbr>Status<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Status)<wbr></a></td>
 								<td>void</td>
 								<td>
 									<div>
@@ -379,7 +464,7 @@ public static class AzureDevOpsAliases</code></pre>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/157AD108">Azure<wbr>Dev<wbr>Ops<wbr>Vote<wbr>Pull<wbr>Request<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Vote)<wbr></a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases/F1B950FE">Azure<wbr>Dev<wbr>Ops<wbr>Vote<wbr>Pull<wbr>Request<wbr>(ICakeContext, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Settings, <wbr>Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Vote)<wbr></a></td>
 								<td>void</td>
 								<td>
 									<div>
@@ -419,12 +504,9 @@ public static class AzureDevOpsAliases</code></pre>
         <div class="github-button">
     <a href="https://github.com/cake-contrib/Cake.AzureDevOps" target="_blank"><i class="fa fa-github"></i> GitHub</a>
 </div>
-<script>
-    ((window.gitter = {}).chat = {}).options = {
-        room: 'cake-contrib/Lobby'
-    };
-</script>
-<script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async="" defer=""></script>
+<div class="github-button">
+    <a href="https://github.com/cake-build/cake/discussions" target="_blank"><i class="fa fa-comment"></i> Discussions</a>
+</div>
 
 <script type="text/javascript" src="/Cake.AzureDevOps/assets/js/anchor.min.js"></script>
 <script type="text/javascript" src="/Cake.AzureDevOps/assets/js/clipboard.min.js"></script>

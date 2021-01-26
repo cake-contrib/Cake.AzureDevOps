@@ -144,11 +144,14 @@
 			<li class=" selected"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines">Cake<wbr>.AzureDevOps<wbr>.Pipelines</a></li>
 
 				<li class="treeview">
-				<a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest">Cake<wbr>.AzureDevOps<wbr>.PullRequest</a> <a href="#" class="expand"></a>
+				<a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Repos">Cake<wbr>.AzureDevOps<wbr>.Repos</a> <a href="#" class="expand"></a>
 				<ul class="treeview-menu">
-						<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest.CommentThread">Cake<wbr>.AzureDevOps<wbr>.PullRequest<wbr>.CommentThread</a></li>
-</ul></li>			<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Repos">Cake<wbr>.AzureDevOps<wbr>.Repos</a></li>
-</ul></li></ul></li>      
+			
+				<li class="treeview">
+				<a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Repos.PullRequest">Cake<wbr>.AzureDevOps<wbr>.Repos<wbr>.PullRequest</a> <a href="#" class="expand"></a>
+				<ul class="treeview-menu">
+						<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Repos.PullRequest.CommentThread">Cake<wbr>.AzureDevOps<wbr>.Repos<wbr>.PullRequest<wbr>.CommentThread</a></li>
+</ul></li></ul></li></ul></li></ul></li>      
 
                     </ul>
                             
@@ -181,9 +184,21 @@
 							</tr>
 						</thead>
 							<tbody><tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsArtifactResource">Azure<wbr>Dev<wbr>Ops<wbr>Artifact<wbr>Resource</a></td>
+									<td>
+    Represents a resource associated with a <code class="cs"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildArtifact">AzureDevOpsBuildArtifact</a></code>.
+    </td>
+							</tr>
+							<tr>
 								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuild">AzureDevOpsBuild</a></td>
 									<td>
     Class for writing issues to Azure DevOps pull requests.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildArtifact">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Artifact</a></td>
+									<td>
+    Represents an artifact associated with a build.
     </td>
 							</tr>
 							<tr>
@@ -196,6 +211,36 @@
 								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildSettings">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Settings</a></td>
 									<td>
     Settings for aliases handling builds.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildsSettings">Azure<wbr>Dev<wbr>Ops<wbr>Builds<wbr>Settings</a></td>
+									<td>
+    Settings for aliases handling builds.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsChange">AzureDevOpsChange</a></td>
+									<td>
+    Represents a change associated with a build.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsTestResult">Azure<wbr>Dev<wbr>Ops<wbr>Test<wbr>Result</a></td>
+									<td>
+    Represents a test result associated with a <code class="cs"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsTestRun">AzureDevOpsTestRun</a></code>.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsTestRun">AzureDevOpsTestRun</a></td>
+									<td>
+    Represents a test run associated with a <code class="cs"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuild">AzureDevOpsBuild</a></code>.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsTimelineRecord">Azure<wbr>Dev<wbr>Ops<wbr>Timeline<wbr>Record</a></td>
+									<td>
+    Represents of an entry in a build's timeline.
     </td>
 							</tr>
 					</tbody></table>
@@ -214,6 +259,12 @@
 							</tr>
 						</thead>
 							<tbody><tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildQueryOrder">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Query<wbr>Order</a></td>
+									<td>
+    Possible order of a build query.
+    </td>
+							</tr>
+							<tr>
 								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildResult">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Result</a></td>
 									<td>
     Possible results of a build.
@@ -223,6 +274,18 @@
 								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildStatus">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Status</a></td>
 									<td>
     Possible states of a build.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsTaskResult">Azure<wbr>Dev<wbr>Ops<wbr>Task<wbr>Result</a></td>
+									<td>
+    Results of an Azure Pipelines task.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsTimelineRecordState">Azure<wbr>Dev<wbr>Ops<wbr>Timeline<wbr>Record<wbr>State</a></td>
+									<td>
+    State of an Azure Pipelines timeline record.
     </td>
 							</tr>
 					</tbody></table>
@@ -254,12 +317,9 @@
         <div class="github-button">
     <a href="https://github.com/cake-contrib/Cake.AzureDevOps" target="_blank"><i class="fa fa-github"></i> GitHub</a>
 </div>
-<script>
-    ((window.gitter = {}).chat = {}).options = {
-        room: 'cake-contrib/Lobby'
-    };
-</script>
-<script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async="" defer=""></script>
+<div class="github-button">
+    <a href="https://github.com/cake-build/cake/discussions" target="_blank"><i class="fa fa-comment"></i> Discussions</a>
+</div>
 
 <script type="text/javascript" src="/Cake.AzureDevOps/assets/js/anchor.min.js"></script>
 <script type="text/javascript" src="/Cake.AzureDevOps/assets/js/clipboard.min.js"></script>

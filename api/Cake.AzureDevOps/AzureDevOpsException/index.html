@@ -139,6 +139,9 @@
 			<li class="header">Class Types</li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsAliases">AzureDevOpsAliases</a></li>
 				<li class="selected"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/AzureDevOpsException">AzureDevOpsException</a></li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsCollectionSettings">Base<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Collection<wbr>Settings</a></li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsCredentialsSettings">Base<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Credentials<wbr>Settings</a></li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsProjectSettings">Base<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Project<wbr>Settings</a></li>
 
 
                     </ul>
@@ -190,9 +193,9 @@
 								<dt>Derived Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestNotFoundException">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Not<wbr>Found<wbr>Exception</a></li>								
 											<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildNotFoundException">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Not<wbr>Found<wbr>Exception</a></li>								
-											<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsBranchNotFoundException">Azure<wbr>Dev<wbr>Ops<wbr>Branch<wbr>Not<wbr>Found<wbr>Exception</a></li>								
+											<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Repos.PullRequest/AzureDevOpsBranchNotFoundException">Azure<wbr>Dev<wbr>Ops<wbr>Branch<wbr>Not<wbr>Found<wbr>Exception</a></li>								
+											<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Repos.PullRequest/AzureDevOpsPullRequestNotFoundException">Azure<wbr>Dev<wbr>Ops<wbr>Pull<wbr>Request<wbr>Not<wbr>Found<wbr>Exception</a></li>								
 									</ul>
 								</dd>			
 							
@@ -206,12 +209,12 @@
 	Type-.-&gt;Interface0["ISerializable"]
 	Type["AzureDevOpsException"]
 class Type type-node
-	Derived0["AzureDevOpsPullRequestNotFoundException"]--&gt;Type
-	click Derived0 "/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsPullRequestNotFoundException"
-	Derived1["AzureDevOpsBuildNotFoundException"]--&gt;Type
-	click Derived1 "/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildNotFoundException"
-	Derived2["AzureDevOpsBranchNotFoundException"]--&gt;Type
-	click Derived2 "/Cake.AzureDevOps/api/Cake.AzureDevOps.PullRequest/AzureDevOpsBranchNotFoundException"
+	Derived0["AzureDevOpsBuildNotFoundException"]--&gt;Type
+	click Derived0 "/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildNotFoundException"
+	Derived1["AzureDevOpsBranchNotFoundException"]--&gt;Type
+	click Derived1 "/Cake.AzureDevOps/api/Cake.AzureDevOps.Repos.PullRequest/AzureDevOpsBranchNotFoundException"
+	Derived2["AzureDevOpsPullRequestNotFoundException"]--&gt;Type
+	click Derived2 "/Cake.AzureDevOps/api/Cake.AzureDevOps.Repos.PullRequest/AzureDevOpsPullRequestNotFoundException"
 
 						</div>
 					</div>
@@ -316,12 +319,9 @@ public class AzureDevOpsException : Exception, ISerializable</code></pre>
         <div class="github-button">
     <a href="https://github.com/cake-contrib/Cake.AzureDevOps" target="_blank"><i class="fa fa-github"></i> GitHub</a>
 </div>
-<script>
-    ((window.gitter = {}).chat = {}).options = {
-        room: 'cake-contrib/Lobby'
-    };
-</script>
-<script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async="" defer=""></script>
+<div class="github-button">
+    <a href="https://github.com/cake-build/cake/discussions" target="_blank"><i class="fa fa-comment"></i> Discussions</a>
+</div>
 
 <script type="text/javascript" src="/Cake.AzureDevOps/assets/js/anchor.min.js"></script>
 <script type="text/javascript" src="/Cake.AzureDevOps/assets/js/clipboard.min.js"></script>

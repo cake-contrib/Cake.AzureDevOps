@@ -138,12 +138,22 @@
 		<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines">Cake<wbr>.AzureDevOps<wbr>.Pipelines</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Class Types</li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsArtifactResource">Azure<wbr>Dev<wbr>Ops<wbr>Artifact<wbr>Resource</a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuild">AzureDevOpsBuild</a></li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildArtifact">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Artifact</a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildNotFoundException">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Not<wbr>Found<wbr>Exception</a></li>
 				<li class="selected"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildSettings">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Settings</a></li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildsSettings">Azure<wbr>Dev<wbr>Ops<wbr>Builds<wbr>Settings</a></li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsChange">AzureDevOpsChange</a></li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsTestResult">Azure<wbr>Dev<wbr>Ops<wbr>Test<wbr>Result</a></li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsTestRun">AzureDevOpsTestRun</a></li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsTimelineRecord">Azure<wbr>Dev<wbr>Ops<wbr>Timeline<wbr>Record</a></li>
 			<li class="header">Enum Types</li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildQueryOrder">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Query<wbr>Order</a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildResult">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Result</a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildStatus">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Status</a></li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsTaskResult">Azure<wbr>Dev<wbr>Ops<wbr>Task<wbr>Result</a></li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsTimelineRecordState">Azure<wbr>Dev<wbr>Ops<wbr>Timeline<wbr>Record<wbr>State</a></li>
 
 
                     </ul>
@@ -182,6 +192,9 @@
 								<dd>
 									<ul class="list-unstyled">										
 											<li>object</li>								
+											<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsCredentialsSettings">Base<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Credentials<wbr>Settings</a></li>								
+											<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsCollectionSettings">Base<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Collection<wbr>Settings</a></li>								
+											<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsProjectSettings">Base<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Project<wbr>Settings</a></li>								
 									</ul>
 								</dd>				
 							
@@ -191,7 +204,13 @@
 					<div class="col-md-6">
 						<div class="mermaid">
 							graph BT
-	Type--&gt;Base0["object"]
+	Type--&gt;Base0["BaseAzureDevOpsProjectSettings"]
+	click Base0 "/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsProjectSettings"
+	Base0--&gt;Base1["BaseAzureDevOpsCollectionSettings"]
+	click Base1 "/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsCollectionSettings"
+	Base1--&gt;Base2["BaseAzureDevOpsCredentialsSettings"]
+	click Base2 "/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsCredentialsSettings"
+	Base2--&gt;Base3["object"]
 	Type["AzureDevOpsBuildSettings"]
 class Type type-node
 
@@ -202,7 +221,7 @@ class Type type-node
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public class AzureDevOpsBuildSettings</code></pre>
+	<pre><code>public class AzureDevOpsBuildSettings : BaseAzureDevOpsProjectSettings</code></pre>
 
 
 
@@ -231,7 +250,14 @@ class Type type-node
 								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildSettings/688CBCD9">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Settings<wbr>(<wbr>I<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Credentials)<wbr></a></td>
 									<td>
     Initializes a new instance of the <code class="cs"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildSettings">AzureDevOpsBuildSettings</a></code> class using environment variables
-    as set by a Azure Pipelines build.
+    as set by an Azure Pipelines build.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildSettings/DA216B4B">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Settings<wbr>(int, <wbr>I<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Credentials)<wbr></a></td>
+									<td>
+    Initializes a new instance of the <code class="cs"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildSettings">AzureDevOpsBuildSettings</a></code> class using environment variables
+    as set by an Azure Pipelines build.
     </td>
 							</tr>
 							<tr>
@@ -274,41 +300,45 @@ class Type type-node
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildSettings/67F4D0E3">CollectionUrl</a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsCollectionSettings/47D9E371">CollectionUrl</a></td>
 								<td>Uri</td>
 								<td>
 									<div>
     Gets the full URL of the Azure DevOps collection, eg. <pre><code class="cs">http://myserver:8080/defaultcollection</code></pre>.
     </div>
+											<div><small><em>Inherited from <a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsCollectionSettings">Base<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Collection<wbr>Settings</a></em></small></div>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildSettings/F8D6C107">Credentials</a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsCredentialsSettings/4FBE59BC">Credentials</a></td>
 								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/IAzureDevOpsCredentials">I<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Credentials</a></td>
 								<td>
 									<div>
     Gets the credentials used to authenticate against Azure DevOps.
     </div>
+											<div><small><em>Inherited from <a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsCredentialsSettings">Base<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Credentials<wbr>Settings</a></em></small></div>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildSettings/635D89A9">ProjectGuid</a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsProjectSettings/78F3870B">ProjectGuid</a></td>
 								<td>Guid</td>
 								<td>
 									<div>
     Gets the Guid of the project.
-    Can be <code class="cs">System.Guid.Empty</code> if <code class="cs"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildSettings/D7ECC5DC">ProjectName</a></code> is set.
+    Can be <code class="cs">System.Guid.Empty</code> if <code class="cs"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsProjectSettings/CC42CB7E">ProjectName</a></code> is set.
     </div>
+											<div><small><em>Inherited from <a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsProjectSettings">Base<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Project<wbr>Settings</a></em></small></div>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildSettings/D7ECC5DC">ProjectName</a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsProjectSettings/CC42CB7E">ProjectName</a></td>
 								<td>string</td>
 								<td>
 									<div>
     Gets the name of the project.
-    Can be <code class="cs">null</code> if <code class="cs"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildSettings/635D89A9">ProjectGuid</a></code> is set.
+    Can be <code class="cs">null</code> if <code class="cs"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsProjectSettings/78F3870B">ProjectGuid</a></code> is set.
     </div>
+											<div><small><em>Inherited from <a href="/Cake.AzureDevOps/api/Cake.AzureDevOps/BaseAzureDevOpsProjectSettings">Base<wbr>Azure<wbr>Dev<wbr>Ops<wbr>Project<wbr>Settings</a></em></small></div>
 								</td>
 							</tr>
 							<tr>
@@ -347,6 +377,16 @@ class Type type-node
 											<div><small><em>static</em></small></div>
 								</td>
 							</tr>
+							<tr>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildSettings/8F86BBFA">Using<wbr>Azure<wbr>Pipelines<wbr>O<wbr>Auth<wbr>Token<wbr>(int)<wbr></a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildSettings">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Settings</a></td>
+								<td>
+									<div>
+    Constructs the settings object for a specific build using the access token provided by Azure Pipelines.
+    </div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
 					</tbody></table>
 				</div>
 			</div>
@@ -378,12 +418,9 @@ class Type type-node
         <div class="github-button">
     <a href="https://github.com/cake-contrib/Cake.AzureDevOps" target="_blank"><i class="fa fa-github"></i> GitHub</a>
 </div>
-<script>
-    ((window.gitter = {}).chat = {}).options = {
-        room: 'cake-contrib/Lobby'
-    };
-</script>
-<script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async="" defer=""></script>
+<div class="github-button">
+    <a href="https://github.com/cake-build/cake/discussions" target="_blank"><i class="fa fa-comment"></i> Discussions</a>
+</div>
 
 <script type="text/javascript" src="/Cake.AzureDevOps/assets/js/anchor.min.js"></script>
 <script type="text/javascript" src="/Cake.AzureDevOps/assets/js/clipboard.min.js"></script>
