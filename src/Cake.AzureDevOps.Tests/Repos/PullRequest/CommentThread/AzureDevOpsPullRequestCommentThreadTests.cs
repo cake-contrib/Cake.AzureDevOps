@@ -345,7 +345,6 @@
                 prop1.ShouldNotBeEmpty();
                 prop1.ShouldBe("way");
 
-                prop2.ShouldNotBeNull();
                 prop2.ShouldBeOfType<int>();
                 prop2.ShouldBe(2);
 
