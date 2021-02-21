@@ -1,6 +1,7 @@
 ﻿namespace Cake.AzureDevOps.Pipelines
 {
     using System.Collections.Generic;
+    using Cake.Common.Build.AzurePipelines.Data;
 
     /// <summary>
     /// Represents a resource associated with a <see cref="AzureDevOpsBuildArtifact" />.
@@ -20,7 +21,7 @@
         /// <summary>
         /// Gets the type of the resource.
         /// </summary>
-        public string Type { get; internal set; }
+        public AzurePipelinesArtifactType Type { get; internal set; }
 
         /// <summary>
         /// Gets the full http link to the resource.

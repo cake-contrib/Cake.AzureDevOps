@@ -1,5 +1,7 @@
 ﻿namespace Cake.AzureDevOps.Pipelines
 {
+    using System;
+    using Cake.Common.Build.AzurePipelines.Data;
     using Microsoft.TeamFoundation.Build.WebApi;
 
     /// <summary>
@@ -16,12 +18,17 @@
         {
             artifactResource.NotNull(nameof(artifactResource));
 
+            if (!Enum.TryParse(artifactResource.Type, out AzurePipelinesArtifactType type))
+            {
+                throw new Exception($"Unexpected value for artifact type '{artifactResource.Type}'");
+            }
+
             return
                 new AzureDevOpsArtifactResource
                 {
                     Data = artifactResource.Data,
                     DownloadUrl = artifactResource.DownloadUrl,
-                    Type = artifactResource.Type,
+                    Type = type,
                     Url = artifactResource.Url,
                     Properties = artifactResource.Properties,
                 };
