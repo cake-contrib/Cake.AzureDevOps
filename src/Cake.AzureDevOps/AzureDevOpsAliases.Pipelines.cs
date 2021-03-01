@@ -399,5 +399,91 @@
                 new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory())
                     .GetTestRuns();
         }
+
+        /// <summary>
+        /// Gets Azure Pipelines build definitions for the specified settings.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">Settings for getting the build definitions.</param>
+        /// <example>
+        /// <para>Get build definitions running on Azure DevOps Server:</para>
+        /// <code>
+        /// <![CDATA[
+        /// var buildSettings =
+        ///     new AzureDevOpsBuildsSettings(
+        ///         new Uri("http://myserver:8080/defaultcollection"),
+        ///         "MyProject",
+        ///         AzureDevOpsAuthenticationNtlm());
+        ///
+        /// var buildDefinitions =
+        ///     AzureDevOpsBuildDefinitions(
+        ///         buildSettings);
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <returns>The build definitions or an empty list of build definitions.</returns>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Azure Pipelines")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Pipelines")]
+        public static IEnumerable<AzureDevOpsBuildDefinition> AzureDevOpsBuildDefinitions(
+            this ICakeContext context,
+            AzureDevOpsBuildsSettings settings)
+        {
+            context.NotNull(nameof(context));
+            settings.NotNull(nameof(settings));
+
+            return AzureDevOpsBuildsDefinitionHelper.GetAzureDevOpsBuildDefinitions(
+                context.Log,
+                settings);
+        }
+
+        /// <summary>
+        /// Updates a build definition for the specified settings and return the updated build definition.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">Settings for accessing AzureDevOps.</param>
+        /// <param name="updateBuildDefinitionSettings">The settings to update the build definition.</param>
+        /// <example>
+        /// <para>Updates a build definition running on Azure DevOps Server:</para>
+        /// <code>
+        /// <![CDATA[
+        /// var buildSettings =
+        ///     new AzureDevOpsBuildsSettings(
+        ///         new Uri("http://myserver:8080/defaultcollection"),
+        ///         "MyProject",
+        ///         AzureDevOpsAuthenticationNtlm());
+        ///
+        /// var updateBuildDefinitionSettings =
+        ///     new AzureDevOpsUpdateBuildDefinitionSettings()
+        ///         {
+        ///             Id = 12,
+        ///             QueueStatus = AzureDevOpsDefinitionQueueStatus.Disabled,
+        ///             Comment = "Disable the queue.",
+        ///         };
+        ///
+        /// var updatedBuildDefinition =
+        ///     UpdateAzureDevOpsBuildDefinition(
+        ///         buildSettings,
+        ///         updateBuildDefinitionSettings);
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <returns>The updated Azure DevOps build definition.</returns>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Azure Pipelines")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Pipelines")]
+        public static AzureDevOpsBuildDefinition UpdateAzureDevOpsBuildDefinition(
+            this ICakeContext context,
+            AzureDevOpsBuildsSettings settings,
+            AzureDevOpsUpdateBuildDefinitionSettings updateBuildDefinitionSettings)
+        {
+            context.NotNull(nameof(context));
+            settings.NotNull(nameof(settings));
+
+            return AzureDevOpsBuildsDefinitionHelper.UpdateBuildDefinition(
+                context.Log,
+                settings,
+                updateBuildDefinitionSettings);
+        }
     }
 }
