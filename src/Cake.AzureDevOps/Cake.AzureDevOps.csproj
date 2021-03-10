@@ -16,7 +16,7 @@
     <Description>Addin for the Cake build automation system for working with Azure DevOps.</Description>
     <Authors>Pascal Berger</Authors>
     <Copyright>Copyright © Pascal Berger</Copyright>
-    <PackageTags>Cake Script Azure-DevOps Azure-DevOps-Server</PackageTags>
+    <PackageTags>cake cake-addin azure-devops azure-devops-server</PackageTags>
     <PackageIcon>icon.png</PackageIcon>
     <PackageProjectUrl>http://cake-contrib.github.io/Cake.AzureDevOps/</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
