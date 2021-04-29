@@ -1,0 +1,54 @@
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/src"
+  schedule:
+    interval: daily
+    time: "04:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: Cake.Common
+    versions:
+    - "> 1.0.0, < 2"
+  - dependency-name: Cake.Core
+    versions:
+    - ">= 0.34.a, < 0.35"
+  - dependency-name: Cake.Core
+    versions:
+    - ">= 0.35.a, < 0.36"
+  - dependency-name: Cake.Core
+    versions:
+    - ">= 0.36.a, < 0.37"
+  - dependency-name: Cake.Core
+    versions:
+    - ">= 0.37.a, < 0.38"
+  - dependency-name: Cake.Core
+    versions:
+    - ">= 0.38.a, < 0.39"
+  - dependency-name: Cake.Core
+    versions:
+    - "> 1.0.0, < 2"
+  - dependency-name: Cake.Testing
+    versions:
+    - ">= 0.34.a, < 0.35"
+  - dependency-name: Cake.Testing
+    versions:
+    - ">= 0.35.a, < 0.36"
+  - dependency-name: Cake.Testing
+    versions:
+    - ">= 0.36.a, < 0.37"
+  - dependency-name: Cake.Testing
+    versions:
+    - ">= 0.37.a, < 0.38"
+  - dependency-name: Cake.Testing
+    versions:
+    - ">= 0.38.a, < 0.39"
+  - dependency-name: Cake.Testing
+    versions:
+    - "> 1.0.0, < 2"
+  - dependency-name: Microsoft.CodeAnalysis.FxCopAnalyzers
+    versions:
+    - 3.3.2
+  - dependency-name: Cake.Testing
+    versions:
+    - 1.0.0
