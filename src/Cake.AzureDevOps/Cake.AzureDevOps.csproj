@@ -7,6 +7,7 @@
   <PropertyGroup>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
     <CodeAnalysisRuleSet>..\Cake.AzureDevOps.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
@@ -15,13 +16,13 @@
     <Description>Addin for the Cake build automation system for working with Azure DevOps.</Description>
     <Authors>Pascal Berger</Authors>
     <Copyright>Copyright © Pascal Berger</Copyright>
-    <PackageTags>Cake Script Azure-DevOps Azure-DevOps-Server</PackageTags>
+    <PackageTags>cake cake-addin azure-devops azure-devops-server</PackageTags>
     <PackageIcon>icon.png</PackageIcon>
     <PackageProjectUrl>http://cake-contrib.github.io/Cake.AzureDevOps/</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/cake-contrib/Cake.AzureDevOps.git</RepositoryUrl>
-    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.AzureDevOps/releases/tag/0.5.1</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.AzureDevOps/releases/tag/1.0.0</PackageReleaseNotes>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);PackBuildOutputs</TargetsForTfmSpecificContentInPackage>
@@ -36,8 +37,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cake.Core" Version="0.33.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.3.1" PrivateAssets="All" />
+    <PackageReference Include="Cake.Common" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Cake.Core" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="5.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
     <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="16.143.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Services.InteractiveClient" Version="16.143.2" PrivateAssets="All" />

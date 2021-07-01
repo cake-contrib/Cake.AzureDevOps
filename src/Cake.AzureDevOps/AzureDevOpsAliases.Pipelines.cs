@@ -399,5 +399,42 @@
                 new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory())
                     .GetTestRuns();
         }
+
+        /// <summary>
+        /// Gets Azure Pipelines build definitions for the specified settings.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">Settings for getting the build definitions.</param>
+        /// <example>
+        /// <para>Get build definitions running on Azure DevOps Server:</para>
+        /// <code>
+        /// <![CDATA[
+        /// var buildSettings =
+        ///     new AzureDevOpsBuildsSettings(
+        ///         new Uri("http://myserver:8080/defaultcollection"),
+        ///         "MyProject",
+        ///         AzureDevOpsAuthenticationNtlm());
+        ///
+        /// var buildDefinitions =
+        ///     AzureDevOpsBuildDefinitions(
+        ///         buildSettings);
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <returns>The build definitions or an empty list of build definitions.</returns>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Azure Pipelines")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Pipelines")]
+        public static IEnumerable<AzureDevOpsBuildDefinition> AzureDevOpsBuildDefinitions(
+            this ICakeContext context,
+            AzureDevOpsBuildsSettings settings)
+        {
+            context.NotNull(nameof(context));
+            settings.NotNull(nameof(settings));
+
+            return AzureDevOpsBuildsDefinitionHelper.GetAzureDevOpsBuildDefinitions(
+                context.Log,
+                settings);
+        }
     }
 }

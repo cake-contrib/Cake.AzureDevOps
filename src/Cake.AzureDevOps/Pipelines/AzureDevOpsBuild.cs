@@ -441,23 +441,23 @@
         /// <list type="table">
         ///     <listheader>
         ///         <term>Type</term>
-        ///         <description>Description</description>
+        ///         <term>Description</term>
         ///     </listheader>
         ///     <item>
         ///         <term>FilePath</term>
-        ///         <description>File path type</description>
+        ///         <term>File path type</term>
         ///     </item>
         ///     <item>
         ///         <term>GitRef</term>
-        ///         <description>Git reference type</description>
+        ///         <term>Git reference type</term>
         ///     </item>
         ///     <item>
         ///         <term>TFVCLabel</term>
-        ///         <description>TFVC label type</description>
+        ///         <term>TFVC label type</term>
         ///     </item>
         ///     <item>
         ///         <term>VersionControl</term>
-        ///         <description>Version control path type</description>
+        ///         <term>Version control path type</term>
         ///     </item>
         /// </list>
         /// </param>
