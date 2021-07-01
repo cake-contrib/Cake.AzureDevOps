@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Cake.AzureDevOps/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Cake.AzureDevOps/assets/img/favicon.ico" type="image/x-icon">
-        <title>Cake.AzureDevOps - API - AzureDevOpsBuildArtifact Class</title>
+        <title>Cake.AzureDevOps - API - AzureDevOpsBuildDefinition Class</title>
         <link href="/Cake.AzureDevOps/assets/css/highlight.css" rel="stylesheet">
         <link href="/Cake.AzureDevOps/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Cake.AzureDevOps/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -138,8 +138,8 @@
 			<li class="header">Class Types</li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsArtifactResource">Azure<wbr>Dev<wbr>Ops<wbr>Artifact<wbr>Resource</a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuild">AzureDevOpsBuild</a></li>
-				<li class="selected"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildArtifact">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Artifact</a></li>
-				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildDefinition">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Definition</a></li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildArtifact">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Artifact</a></li>
+				<li class="selected"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildDefinition">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Definition</a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildNotFoundException">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Not<wbr>Found<wbr>Exception</a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildSettings">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Settings</a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildsSettings">Azure<wbr>Dev<wbr>Ops<wbr>Builds<wbr>Settings</a></li>
@@ -168,14 +168,14 @@
 
 
 <section class="content-header">
-	<h1>Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Artifact <small>Class</small></h1>
+	<h1>Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Definition <small>Class</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Represents an artifact associated with a build.
+    Representation of a build definition.
     </div>
 
 		<div class="panel panel-default">
@@ -202,7 +202,7 @@
 						<div class="mermaid">
 							graph BT
 	Type--&gt;Base0["object"]
-	Type["AzureDevOpsBuildArtifact"]
+	Type["AzureDevOpsBuildDefinition"]
 class Type type-node
 
 						</div>
@@ -212,7 +212,7 @@ class Type type-node
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public class AzureDevOpsBuildArtifact</code></pre>
+	<pre><code>public class AzureDevOpsBuildDefinition</code></pre>
 
 
 
@@ -235,29 +235,29 @@ class Type type-node
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildArtifact/FB5E1F63">Id</a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildDefinition/C24A6492">Id</a></td>
 								<td>int</td>
 								<td>
 									<div>
-    Gets the id of the artifact.
+    Gets the ID of the build definition.
     </div>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildArtifact/0A4FD54C">Name</a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildDefinition/B6E78B58">Name</a></td>
 								<td>string</td>
 								<td>
 									<div>
-    Gets the name of the artifact.
+    Gets the name of the build definition.
     </div>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildArtifact/7AF3B162">Resource</a></td>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsArtifactResource">Azure<wbr>Dev<wbr>Ops<wbr>Artifact<wbr>Resource</a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildDefinition/7708CFDD">QueueStatus</a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsDefinitionQueueStatus">Azure<wbr>Dev<wbr>Ops<wbr>Definition<wbr>Queue<wbr>Status</a></td>
 								<td>
 									<div>
-    Gets the artifact resource.
+    Gets the queue status.
     </div>
 								</td>
 							</tr>

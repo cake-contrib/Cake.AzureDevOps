@@ -180,10 +180,10 @@
 								<dt>Implementing Types</dt>
 								<dd>
 									<ul class="list-unstyled">
-											<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsNtlmCredentials">Azure<wbr>Dev<wbr>Ops<wbr>Ntlm<wbr>Credentials</a></li>								
-											<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsAadCredentials">Azure<wbr>Dev<wbr>Ops<wbr>Aad<wbr>Credentials</a></li>								
 											<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsOAuthCredentials">Azure<wbr>Dev<wbr>Ops<wbr>O<wbr>Auth<wbr>Credentials</a></li>								
+											<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsNtlmCredentials">Azure<wbr>Dev<wbr>Ops<wbr>Ntlm<wbr>Credentials</a></li>								
 											<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsBasicCredentials">Azure<wbr>Dev<wbr>Ops<wbr>Basic<wbr>Credentials</a></li>								
+											<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsAadCredentials">Azure<wbr>Dev<wbr>Ops<wbr>Aad<wbr>Credentials</a></li>								
 									</ul>
 								</dd>				
 						</dl>
@@ -193,14 +193,14 @@
 							graph BT
 	Type["IAzureDevOpsCredentials"]
 class Type type-node
-	Implementing0["AzureDevOpsNtlmCredentials"]-.-&gt;Type
-	click Implementing0 "/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsNtlmCredentials"
-	Implementing1["AzureDevOpsAadCredentials"]-.-&gt;Type
-	click Implementing1 "/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsAadCredentials"
-	Implementing2["AzureDevOpsOAuthCredentials"]-.-&gt;Type
-	click Implementing2 "/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsOAuthCredentials"
-	Implementing3["AzureDevOpsBasicCredentials"]-.-&gt;Type
-	click Implementing3 "/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsBasicCredentials"
+	Implementing0["AzureDevOpsOAuthCredentials"]-.-&gt;Type
+	click Implementing0 "/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsOAuthCredentials"
+	Implementing1["AzureDevOpsNtlmCredentials"]-.-&gt;Type
+	click Implementing1 "/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsNtlmCredentials"
+	Implementing2["AzureDevOpsBasicCredentials"]-.-&gt;Type
+	click Implementing2 "/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsBasicCredentials"
+	Implementing3["AzureDevOpsAadCredentials"]-.-&gt;Type
+	click Implementing3 "/Cake.AzureDevOps/api/Cake.AzureDevOps.Authentication/AzureDevOpsAadCredentials"
 
 						</div>
 					</div>

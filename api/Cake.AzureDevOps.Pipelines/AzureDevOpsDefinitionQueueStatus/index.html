@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Cake.AzureDevOps/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Cake.AzureDevOps/assets/img/favicon.ico" type="image/x-icon">
-        <title>Cake.AzureDevOps - API - AzureDevOpsBuildArtifact Class</title>
+        <title>Cake.AzureDevOps - API - AzureDevOpsDefinitionQueueStatus Enum</title>
         <link href="/Cake.AzureDevOps/assets/css/highlight.css" rel="stylesheet">
         <link href="/Cake.AzureDevOps/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/Cake.AzureDevOps/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -73,7 +73,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
-<p><a href="#Properties">Properties</a></p>
+<p><a href="#fields">Fields</a></p>
 <hr class="infobar-hidden">
 </div>
 
@@ -138,7 +138,7 @@
 			<li class="header">Class Types</li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsArtifactResource">Azure<wbr>Dev<wbr>Ops<wbr>Artifact<wbr>Resource</a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuild">AzureDevOpsBuild</a></li>
-				<li class="selected"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildArtifact">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Artifact</a></li>
+				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildArtifact">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Artifact</a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildDefinition">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Definition</a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildNotFoundException">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Not<wbr>Found<wbr>Exception</a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildSettings">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Settings</a></li>
@@ -151,7 +151,7 @@
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildQueryOrder">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Query<wbr>Order</a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildResult">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Result</a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildStatus">Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Status</a></li>
-				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsDefinitionQueueStatus">Azure<wbr>Dev<wbr>Ops<wbr>Definition<wbr>Queue<wbr>Status</a></li>
+				<li class="selected"><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsDefinitionQueueStatus">Azure<wbr>Dev<wbr>Ops<wbr>Definition<wbr>Queue<wbr>Status</a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsTaskResult">Azure<wbr>Dev<wbr>Ops<wbr>Task<wbr>Result</a></li>
 				<li><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsTimelineRecordState">Azure<wbr>Dev<wbr>Ops<wbr>Timeline<wbr>Record<wbr>State</a></li>
 
@@ -168,14 +168,14 @@
 
 
 <section class="content-header">
-	<h1>Azure<wbr>Dev<wbr>Ops<wbr>Build<wbr>Artifact <small>Class</small></h1>
+	<h1>Azure<wbr>Dev<wbr>Ops<wbr>Definition<wbr>Queue<wbr>Status <small>Enum</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Represents an artifact associated with a build.
+    Possible states of a build queue.
     </div>
 
 		<div class="panel panel-default">
@@ -187,11 +187,21 @@
 								<dt>Namespace</dt>
 								<dd><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines">Cake<wbr>.AzureDevOps<wbr>.Pipelines</a></dd>
 											
+								<dt>Interfaces</dt>
+								<dd>
+									<ul class="list-unstyled">
+											<li>IComparable</li>								
+											<li>IFormattable</li>								
+											<li>IConvertible</li>								
+									</ul>
+								</dd>
 							
 								<dt>Base Types</dt>
 								<dd>
 									<ul class="list-unstyled">										
 											<li>object</li>								
+											<li>ValueType</li>								
+											<li>Enum</li>								
 									</ul>
 								</dd>				
 							
@@ -201,8 +211,13 @@
 					<div class="col-md-6">
 						<div class="mermaid">
 							graph BT
-	Type--&gt;Base0["object"]
-	Type["AzureDevOpsBuildArtifact"]
+	Type--&gt;Base0["Enum"]
+	Base0--&gt;Base1["ValueType"]
+	Base1--&gt;Base2["object"]
+	Type-.-&gt;Interface0["IComparable"]
+	Type-.-&gt;Interface1["IFormattable"]
+	Type-.-&gt;Interface2["IConvertible"]
+	Type["AzureDevOpsDefinitionQueueStatus"]
 class Type type-node
 
 						</div>
@@ -212,7 +227,7 @@ class Type type-node
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public class AzureDevOpsBuildArtifact</code></pre>
+	<pre><code>public enum AzureDevOpsDefinitionQueueStatus</code></pre>
 
 
 
@@ -222,49 +237,54 @@ class Type type-node
 
 
 
-
-			<h1 id="Properties">Properties</h1>
+			<h1 id="fields">Fields</h1>
 			<div class="box">
 				<div class="box-body no-padding table-responsive">
 					<table class="table table-striped table-hover three-cols">
 						<thead>
 							<tr>
 								<th>Name</th>
-								<th>Value</th>
+								<th>Constant Value</th>
 								<th>Summary</th>
 							</tr>
 						</thead>
 							<tbody><tr>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildArtifact/FB5E1F63">Id</a></td>
-								<td>int</td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsDefinitionQueueStatus/E73D2EEB">Disabled</a></td>
+								<td>2</td>
 								<td>
-									<div>
-    Gets the id of the artifact.
-    </div>
+									<div></div>
+											<div><small><em>static</em></small></div>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildArtifact/0A4FD54C">Name</a></td>
-								<td>string</td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsDefinitionQueueStatus/525EDD30">Enabled</a></td>
+								<td>0</td>
 								<td>
 									<div>
-    Gets the name of the artifact.
+    When enabled the definition queue allows builds to be queued by users.
+    The system will queue scheduled, gated and continuous integration builds,
+    and the queued builds will be started by the system.
     </div>
+											<div><small><em>static</em></small></div>
 								</td>
 							</tr>
 							<tr>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsBuildArtifact/7AF3B162">Resource</a></td>
-								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsArtifactResource">Azure<wbr>Dev<wbr>Ops<wbr>Artifact<wbr>Resource</a></td>
+								<td><a href="/Cake.AzureDevOps/api/Cake.AzureDevOps.Pipelines/AzureDevOpsDefinitionQueueStatus/044DDAD2">Paused</a></td>
+								<td>1</td>
 								<td>
 									<div>
-    Gets the artifact resource.
+    When paused the definition queue allows builds to be queued by users and the
+    system will queue scheduled, gated and continuous integration builds.
+    Builds in the queue will not be started by the system.
     </div>
+											<div><small><em>static</em></small></div>
 								</td>
 							</tr>
 					</tbody></table>
 				</div>
 			</div>
 		
+
 
 
 
