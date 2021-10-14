@@ -10,7 +10,21 @@
     public static class ExceptionAssertExtensions
     {
         /// <summary>
-        /// Checks if an execption is of type <see cref="ArgumentNullException"/>.
+        /// Checks if an exception is of type <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">The <see cref="ArgumentException"/> or one of its descendants.</typeparam>
+        /// <param name="exception">Exception to check.</param>
+        /// <param name="expectedExceptionType">The expected type of the exception.</param>
+        /// <param name="parameterName">Expected name of the parameter which has caused the exception.</param>
+        public static void IsArgumentException<T>(this T exception, Type expectedExceptionType, string parameterName)
+            where T : ArgumentException
+        {
+            Assert.IsType(expectedExceptionType, exception);
+            Assert.Equal(parameterName, exception.ParamName);
+        }
+
+        /// <summary>
+        /// Checks if an exception is of type <see cref="ArgumentNullException"/>.
         /// </summary>
         /// <param name="exception">Exception to check.</param>
         /// <param name="parameterName">Expected name of the parameter which has caused the exception.</param>
@@ -21,7 +35,7 @@
         }
 
         /// <summary>
-        /// Checks if an execption is of type <see cref="ArgumentOutOfRangeException"/>.
+        /// Checks if an exception is of type <see cref="ArgumentOutOfRangeException"/>.
         /// </summary>
         /// <param name="exception">Exception to check.</param>
         /// <param name="parameterName">Expected name of the parameter which has caused the exception.</param>
@@ -32,7 +46,7 @@
         }
 
         /// <summary>
-        /// Checks if an execption is of type <see cref="ArgumentException"/>.
+        /// Checks if an exception is of type <see cref="ArgumentException"/>.
         /// </summary>
         /// <param name="exception">Exception to check.</param>
         /// <param name="parameterName">Expected name of the parameter which has caused the exception.</param>
@@ -43,7 +57,7 @@
         }
 
         /// <summary>
-        /// Checks if an execption is of type <see cref="InvalidOperationException"/>.
+        /// Checks if an exception is of type <see cref="InvalidOperationException"/>.
         /// </summary>
         /// <param name="exception">Exception to check.</param>
         public static void IsInvalidOperationException(this Exception exception)
@@ -70,7 +84,7 @@
         }
 
         /// <summary>
-        /// Checks if an exception is of type <see cref="AzureDevOpsException"/>
+        /// Checks if an exception is of type <see cref="AzureDevOpsException"/>.
         /// </summary>
         /// <param name="exception">Exception to check.</param>
         public static void IsAzureDevOpsException(this Exception exception)
@@ -79,7 +93,7 @@
         }
 
         /// <summary>
-        /// Checks if an exception is of type <see cref="AzureDevOpsBranchNotFoundException"/>
+        /// Checks if an exception is of type <see cref="AzureDevOpsBranchNotFoundException"/>.
         /// </summary>
         /// <param name="exception">Exception to check.</param>
         /// <param name="message">Exception message which should be checked.</param>
