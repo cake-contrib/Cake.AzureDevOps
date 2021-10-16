@@ -1,5 +1,6 @@
 ﻿namespace Cake.AzureDevOps.Tests.Repos.PullRequest
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Cake.AzureDevOps.Repos.PullRequest;
@@ -767,50 +768,26 @@
 
         public sealed class TheCreateCommentMethod
         {
-            [Fact]
-            public void Should_Throw_If_Comment_Is_Null()
+            [Theory]
+            [InlineData((string)null, typeof(ArgumentNullException))]
+            [InlineData("", typeof(ArgumentOutOfRangeException))]
+            [InlineData(" ", typeof(ArgumentOutOfRangeException))]
+            public void Should_Throw_If_Comment_Is_Null_Or_Empty_Or_Whitespace(string comment, Type expectedExceptionType)
             {
                 // Given
                 var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
                 var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
-                var result = Record.Exception(() => pullRequest.CreateComment(null));
+                var result = Record.Exception(() => pullRequest.CreateComment(comment)) as ArgumentException;
 
                 // Then
-                result.IsArgumentNullException("comment");
+                result.ShouldNotBeNull();
+                result.IsArgumentException(expectedExceptionType, "comment");
             }
 
             [Fact]
-            public void Should_Throw_If_Comment_Is_Empty()
-            {
-                // Given
-                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
-                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
-
-                // When
-                var result = Record.Exception(() => pullRequest.CreateComment(string.Empty));
-
-                // Then
-                result.IsArgumentOutOfRangeException("comment");
-            }
-
-            [Fact]
-            public void Should_Throw_If_Comment_Is_Whitespace()
-            {
-                // Given
-                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
-                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
-
-                // When
-                var result = Record.Exception(() => pullRequest.CreateComment(" "));
-
-                // Then
-                result.IsArgumentOutOfRangeException("comment");
-            }
-
-            [Fact]
-            public void Should_Not_Throw_If_Null_Is_Returned()
+            public void Should_Return_Null_If_Null_Is_Returned_From_Git_Client()
             {
                 // Given
                 var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100)
@@ -820,10 +797,32 @@
                 var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
-                pullRequest.CreateComment("Foo");
+                var thread = pullRequest.CreateComment("Foo");
 
                 // Then
-                // ?? Nothing to validate here since the method returns void
+                thread.ShouldBeNull();
+            }
+
+            [Fact]
+            public void Should_Create_Valid_Thread_With_One_Comment()
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var thread = pullRequest.CreateComment("Valid");
+
+                // Then
+                thread.ShouldNotBeNull();
+                thread.Status.ShouldBe(AzureDevOpsCommentThreadStatus.Active);
+                thread.Comments.ShouldNotBeNull();
+                thread.Comments.Count().ShouldBe(1);
+
+                var comment = thread.Comments.First();
+                comment.CommentType.ShouldBe(AzureDevOpsCommentType.System);
+                comment.IsDeleted.ShouldBeFalse();
+                comment.Content.ShouldBe("Valid");
             }
         }
 
@@ -844,20 +843,40 @@
             }
 
             [Fact]
-            public void Should_Not_Throw_If_Null_Is_Returned()
+            public void Should_Return_Null_If_Pull_Request_Is_Invalid()
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100)
+                {
+                    GitClientFactory = new FakeNullGitClientFactory(),
+                };
+                fixture.Settings.ThrowExceptionIfPullRequestCouldNotBeFound = false;
+
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var outThread = pullRequest.CreateCommentThread(new AzureDevOpsPullRequestCommentThread());
+
+                // Then
+                outThread.ShouldBeNull();
+            }
+
+            [Fact]
+            public void Should_Return_Null_If_Null_Is_Returned_From_Git_Client()
             {
                 // Given
                 var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100)
                 {
                     GitClientFactory = new FakeNullForMethodsGitClientFactory(),
                 };
+
                 var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
-                pullRequest.CreateCommentThread(new AzureDevOpsPullRequestCommentThread());
+                var outThread = pullRequest.CreateCommentThread(new AzureDevOpsPullRequestCommentThread());
 
                 // Then
-                // ?? Nothing to validate here since the method returns void
+                outThread.ShouldBeNull();
             }
 
             [Fact]
@@ -866,12 +885,15 @@
                 // Given
                 var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsUrl, 200);
                 var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+                var inThread = new AzureDevOpsPullRequestCommentThread { Id = 300, Status = AzureDevOpsCommentThreadStatus.Pending, FilePath = "/index.html" };
 
                 // When
-                pullRequest.CreateCommentThread(new AzureDevOpsPullRequestCommentThread { Id = 300, Status = AzureDevOpsCommentThreadStatus.Pending, FilePath = "/index.html" });
+                var outThread = pullRequest.CreateCommentThread(inThread);
 
                 // Then
-                // ?? Nothing to validate here since the method returns void
+                outThread.Id.ShouldBe(inThread.Id);
+                outThread.Status.ShouldBe(inThread.Status);
+                outThread.FilePath.ShouldBeEquivalentTo(inThread.FilePath);
             }
         }
 
