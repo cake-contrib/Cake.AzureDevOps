@@ -577,7 +577,8 @@
         /// Creates a new comment thread with a single comment in the pull request.
         /// </summary>
         /// <param name="comment">Comment which should be added.</param>
-        public void CreateComment(string comment)
+        /// <returns>A newly created comment thread, or null if it can't be created.</returns>
+        public AzureDevOpsPullRequestCommentThread CreateComment(string comment)
         {
             comment.NotNullOrWhiteSpace(nameof(comment));
 
@@ -595,33 +596,41 @@
                 },
             };
 
-            this.CreateCommentThread(thread);
+            return this.CreateCommentThread(thread);
         }
 
         /// <summary>
         /// Creates a new comment thread in the pull request.
         /// </summary>
         /// <param name="thread">The instance of the thread.</param>
-        public void CreateCommentThread(AzureDevOpsPullRequestCommentThread thread)
+        /// <returns>A newly created comment thread, or null if it can't be created.</returns>
+        public AzureDevOpsPullRequestCommentThread CreateCommentThread(AzureDevOpsPullRequestCommentThread thread)
         {
             thread.NotNull(nameof(thread));
 
+            AzureDevOpsPullRequestCommentThread resultingThread = null;
             if (!this.ValidatePullRequest())
             {
-                return;
+                return resultingThread;
             }
 
             using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
             {
-                gitClient
-                    .CreateThreadAsync(
+                var newThread = gitClient.CreateThreadAsync(
                         thread.InnerThread,
                         this.RepositoryId,
                         this.PullRequestId)
                     .ConfigureAwait(false)
                     .GetAwaiter()
                     .GetResult();
+
+                if (newThread != null)
+                {
+                    resultingThread = new AzureDevOpsPullRequestCommentThread(newThread);
+                }
             }
+
+            return resultingThread;
         }
 
         /// <summary>
