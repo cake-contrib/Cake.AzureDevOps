@@ -132,10 +132,13 @@
                 }
             }
 
-            this.log.Verbose(
-                "Build information:\n  Id: {0}\n  BuildNumber: {1}",
-                this.build.Id,
-                this.build.BuildNumber);
+            if (this.build != null)
+            {
+                this.log.Verbose(
+                    "Build information:\n  Id: {0}\n  BuildNumber: {1}",
+                    this.build.Id,
+                    this.build.BuildNumber);
+            }
         }
 
         /// <summary>
@@ -513,11 +516,13 @@
         /// </summary>
         /// <param name="maxResultsPerTestRun">Number of maximum test results to read for every test run.
         /// <c>0</c> for skipping reading of test results. <c>null</c> for reading all test results in batches.</param>
+        /// <param name="testOutcomes">List of test outcomes to look for in the test results.
+        /// <c>null</c> for reading all test results.</param>
         /// <returns>A list of test runs or an empty list if no build could be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
         /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public IEnumerable<AzureDevOpsTestRun> GetTestRuns(int? maxResultsPerTestRun)
+        public IEnumerable<AzureDevOpsTestRun> GetTestRuns(int? maxResultsPerTestRun, IEnumerable<string> testOutcomes = null)
         {
             if (!this.ValidateBuild())
             {
@@ -549,7 +554,7 @@
                             {
                                 RunId = testRun.Key,
                                 TestResults =
-                                    this.GetTestResults(testClient, testRun.Key, testRun.Count(), maxResultsPerTestRun)
+                                    this.GetTestResults(testClient, testRun.Key, testRun.Count(), maxResultsPerTestRun, testOutcomes)
                                     .ConfigureAwait(false)
                                     .GetAwaiter()
                                     .GetResult(),
@@ -566,12 +571,15 @@
         /// <param name="testCount">Number of tests in the test run.</param>
         /// <param name="maxResults">Number of maximum test results to read.
         /// <c>0</c> for skipping reading of test results. <c>null</c> for reading all test results in batches.</param>
+        /// <param name="filterOutcomes">List of test outcomes to look for in the test results.
+        /// <c>null</c> for reading all test results.</param>
         /// <returns>The test results for a build.</returns>
         private async Task<IEnumerable<AzureDevOpsTestResult>> GetTestResults(
             TestManagementHttpClient testClient,
             int runId,
             int testCount,
-            int? maxResults)
+            int? maxResults,
+            IEnumerable<string> filterOutcomes)
         {
             var testResults = new List<AzureDevOpsTestResult>();
 
@@ -592,7 +600,8 @@
                             this.ProjectId,
                             runId,
                             skip: resultCount,
-                            top: resultsToRead)
+                            top: resultsToRead,
+                            outcomes: filterOutcomes?.Select(o => (TestOutcome)Enum.Parse(typeof(TestOutcome), o, true)).ToList())
                         .ConfigureAwait(false))
                     .Select(test =>
                         new AzureDevOpsTestResult
