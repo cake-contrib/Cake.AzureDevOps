@@ -40,7 +40,7 @@ jobs:
     inputs:
       version: '2.1.x'
       ./build.sh
-  displayName: 'Cake Build'
+    displayName: 'Cake Build'
 
 - job: Ubuntu
   pool:
