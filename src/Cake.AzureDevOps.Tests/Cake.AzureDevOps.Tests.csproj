@@ -29,4 +29,8 @@
     <ProjectReference Include="..\Cake.AzureDevOps\Cake.AzureDevOps.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
 </Project>
