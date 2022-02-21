@@ -750,12 +750,14 @@
                 comment11.Content.ShouldBe("Hello");
                 comment11.IsDeleted.ShouldBe(false);
                 comment11.CommentType.ShouldBe(AzureDevOpsCommentType.CodeChange);
+                ((int)comment11.Id).ShouldBeGreaterThan(0);
 
                 AzureDevOpsComment comment12 = thread1.Comments.Last();
                 comment12.ShouldNotBeNull();
                 comment12.Content.ShouldBe("Goodbye");
                 comment12.IsDeleted.ShouldBe(true);
                 comment12.CommentType.ShouldBe(AzureDevOpsCommentType.Text);
+                ((int)comment12.Id).ShouldBeGreaterThan(0);
 
                 AzureDevOpsPullRequestCommentThread thread2 = threads.Last();
                 thread2.Id.ShouldBe(22);
@@ -823,6 +825,59 @@
                 comment.CommentType.ShouldBe(AzureDevOpsCommentType.System);
                 comment.IsDeleted.ShouldBeFalse();
                 comment.Content.ShouldBe("Valid");
+            }
+        }
+
+        public sealed class TheDeleteCommentMethod
+        {
+            [Theory]
+            [InlineData(0, typeof(ArgumentOutOfRangeException))]
+            [InlineData(-1, typeof(ArgumentOutOfRangeException))]
+            [InlineData(-55, typeof(ArgumentOutOfRangeException))]
+            public void Should_Throw_If_ThreadId_Is_Zero_Or_Below(int threadId, Type expectedExceptionType)
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var result = Record.Exception(() => pullRequest.DeleteComment(threadId, 5)) as ArgumentException;
+
+                // Then
+                result.ShouldNotBeNull();
+                result.IsArgumentException(expectedExceptionType, "threadId");
+            }
+
+            [Theory]
+            [InlineData(0, typeof(ArgumentOutOfRangeException))]
+            [InlineData(-1, typeof(ArgumentOutOfRangeException))]
+            [InlineData(-55, typeof(ArgumentOutOfRangeException))]
+            public void Should_Throw_If_CommentId_Is_Zero_Or_Below(int commentId, Type expectedExceptionType)
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var result = Record.Exception(() => pullRequest.DeleteComment(5, commentId)) as ArgumentException;
+
+                // Then
+                result.ShouldNotBeNull();
+                result.IsArgumentException(expectedExceptionType, "commentId");
+            }
+
+            [Fact]
+            public void Should_Delete_Comment()
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                pullRequest.DeleteComment(5, 1);
+
+                // Then
+                // ?? Nothing to validate here since the method returns void
             }
         }
 

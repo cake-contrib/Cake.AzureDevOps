@@ -41,6 +41,14 @@
         }
 
         /// <summary>
+        /// Gets the comment id.
+        /// </summary>
+        public short Id
+        {
+            get => this.comment.Id;
+        }
+
+        /// <summary>
         /// Gets or sets the content of the pull request comment.
         /// </summary>
         public string Content

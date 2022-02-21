@@ -161,8 +161,8 @@
                     },
                     Comments = new List<Comment>
                     {
-                        new Comment { Content = "Hello", IsDeleted = false, CommentType = CommentType.CodeChange },
-                        new Comment { Content = "Goodbye", IsDeleted = true, CommentType = CommentType.Text },
+                        new Comment { Content = "Hello", IsDeleted = false, CommentType = CommentType.CodeChange, Id = 1 },
+                        new Comment { Content = "Goodbye", IsDeleted = true, CommentType = CommentType.Text, Id = 2 },
                     },
                     Status = CommentThreadStatus.Active,
                 },

@@ -600,6 +600,30 @@
         }
 
         /// <summary>
+        /// Deletes the comment in the given thread.
+        /// </summary>
+        /// <param name="threadId">The id of the thread containing the comment.</param>
+        /// <param name="commentId">The id of the comment to delete.</param>
+        public void DeleteComment(int threadId, int commentId)
+        {
+            threadId.NotNegativeOrZero(nameof(threadId));
+            commentId.NotNegativeOrZero(nameof(commentId));
+
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
+            {
+                gitClient
+                    .DeleteCommentAsync(
+                        this.RepositoryId,
+                        this.PullRequestId,
+                        threadId,
+                        commentId)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
+            }
+        }
+
+        /// <summary>
         /// Creates a new comment thread in the pull request.
         /// </summary>
         /// <param name="thread">The instance of the thread.</param>
