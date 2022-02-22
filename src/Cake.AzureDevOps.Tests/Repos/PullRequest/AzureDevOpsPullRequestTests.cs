@@ -828,6 +828,123 @@
             }
         }
 
+        public sealed class TheCreateCommentWithFileMethod
+        {
+            [Theory]
+            [InlineData((string)null, typeof(ArgumentNullException))]
+            [InlineData("", typeof(ArgumentOutOfRangeException))]
+            [InlineData(" ", typeof(ArgumentOutOfRangeException))]
+            public void Should_Throw_If_Comment_Is_Null_Or_Empty_Or_Whitespace(string comment, Type expectedExceptionType)
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var result = Record.Exception(() => pullRequest.CreateComment(comment, new FilePath("text.txt"), 0, 0)) as ArgumentException;
+
+                // Then
+                result.ShouldNotBeNull();
+                result.IsArgumentException(expectedExceptionType, "comment");
+            }
+
+            [Theory]
+            [InlineData((FilePath)null, typeof(ArgumentNullException))]
+            [InlineData("", typeof(ArgumentOutOfRangeException))]
+            [InlineData(" ", typeof(ArgumentOutOfRangeException))]
+            public void Should_Throw_If_FilePath_Is_Null_Or_Empty_Or_Whitespace(FilePath filePath, Type expectedExceptionType)
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var result = Record.Exception(() => pullRequest.CreateComment("test", filePath, 0, 0)) as ArgumentException;
+
+                // Then
+                result.ShouldNotBeNull();
+                result.IsArgumentException(expectedExceptionType, "filePath");
+            }
+
+            [Theory]
+            [InlineData(0, typeof(ArgumentOutOfRangeException))]
+            [InlineData(-1, typeof(ArgumentOutOfRangeException))]
+            [InlineData(-50, typeof(ArgumentOutOfRangeException))]
+            public void Should_Throw_If_LineNumber_Is_Negative_Or_Zeror(int lineNumber, Type expectedExceptionType)
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var result = Record.Exception(() => pullRequest.CreateComment("test", new FilePath("test.txt"), lineNumber, 0)) as ArgumentException;
+
+                // Then
+                result.ShouldNotBeNull();
+                result.IsArgumentException(expectedExceptionType, "lineNumber");
+            }
+
+            [Theory]
+            [InlineData(-1, typeof(ArgumentOutOfRangeException))]
+            [InlineData(-50, typeof(ArgumentOutOfRangeException))]
+            public void Should_Throw_If_Offset_Is_Negative(int offset, Type expectedExceptionType)
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var result = Record.Exception(() => pullRequest.CreateComment("test", new FilePath("test.txt"), 1, offset)) as ArgumentException;
+
+                // Then
+                result.ShouldNotBeNull();
+                result.IsArgumentException(expectedExceptionType, "offset");
+            }
+
+            [Fact]
+            public void Should_Return_Null_If_Null_Is_Returned_From_Git_Client()
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100)
+                {
+                    GitClientFactory = new FakeNullForMethodsGitClientFactory(),
+                };
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var thread = pullRequest.CreateComment("Foo", new FilePath("test.txt"), 10, 50);
+
+                // Then
+                thread.ShouldBeNull();
+            }
+
+            [Fact]
+            public void Should_Create_Valid_Thread_With_One_Comment()
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var thread = pullRequest.CreateComment("Valid", new FilePath("src/test.txt"), 10, 50);
+
+                // Then
+                thread.ShouldNotBeNull();
+                thread.Status.ShouldBe(AzureDevOpsCommentThreadStatus.Active);
+                thread.FilePath.FullPath.ShouldBe("src/test.txt");
+                thread.LineNumber.ShouldBe(10);
+                thread.Offset.ShouldBe(50);
+
+                thread.Comments.ShouldNotBeNull();
+                thread.Comments.Count().ShouldBe(1);
+
+                var comment = thread.Comments.First();
+                comment.CommentType.ShouldBe(AzureDevOpsCommentType.System);
+                comment.IsDeleted.ShouldBeFalse();
+                comment.Content.ShouldBe("Valid");
+            }
+        }
+
         public sealed class TheDeleteCommentMethod
         {
             [Theory]

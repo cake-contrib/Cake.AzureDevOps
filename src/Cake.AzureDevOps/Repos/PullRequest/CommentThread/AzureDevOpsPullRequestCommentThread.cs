@@ -80,6 +80,76 @@
         }
 
         /// <summary>
+        /// Gets or sets the line number of the right file.
+        /// Returns 'null' for the comment threads not related to any particular file and position.
+        /// </summary>
+        public int? LineNumber
+        {
+            get
+            {
+                if (this.thread.ThreadContext?.RightFileStart != null)
+                {
+                    return this.thread.ThreadContext?.RightFileStart.Line;
+                }
+
+                return null;
+            }
+
+            set
+            {
+                if (value != null)
+                {
+                    if (this.thread.ThreadContext == null)
+                    {
+                        this.thread.ThreadContext = new CommentThreadContext();
+                    }
+
+                    if (this.thread.ThreadContext.RightFileStart == null)
+                    {
+                        this.thread.ThreadContext.RightFileStart = new CommentPosition();
+                    }
+
+                    this.thread.ThreadContext.RightFileStart.Line = value.Value;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the character offset inside of a line.
+        /// Returns 'null' for the comment threads not related to any particular file and position.
+        /// </summary>
+        public int? Offset
+        {
+            get
+            {
+                if (this.thread.ThreadContext?.RightFileStart != null)
+                {
+                    return this.thread.ThreadContext?.RightFileStart.Offset;
+                }
+
+                return null;
+            }
+
+            set
+            {
+                if (value != null)
+                {
+                    if (this.thread.ThreadContext == null)
+                    {
+                        this.thread.ThreadContext = new CommentThreadContext();
+                    }
+
+                    if (this.thread.ThreadContext.RightFileStart == null)
+                    {
+                        this.thread.ThreadContext.RightFileStart = new CommentPosition();
+                    }
+
+                    this.thread.ThreadContext.RightFileStart.Offset = value.Value;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the collection of comments in the pull request comment thread.
         /// </summary>
         public IEnumerable<AzureDevOpsComment> Comments

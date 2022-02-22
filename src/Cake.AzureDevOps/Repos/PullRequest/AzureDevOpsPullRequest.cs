@@ -600,6 +600,41 @@
         }
 
         /// <summary>
+        /// Creates a new comment thread for the given file and position.
+        /// </summary>
+        /// <param name="comment">Comment which should be added.</param>
+        /// <param name="filePath">Path to the file to create the comment for.</param>
+        /// <param name="lineNumber">The line number of a thread's position. Starts at 1.</param>
+        /// <param name="offset">The character offset of a thread's position inside of a line. Starts at 0.</param>
+        /// <returns>A newly created comment thread, or null if it can't be created.</returns>
+        public AzureDevOpsPullRequestCommentThread CreateComment(string comment, FilePath filePath, int lineNumber, int offset)
+        {
+            comment.NotNullOrWhiteSpace(nameof(comment));
+            filePath.NotNullOrWhiteSpace(nameof(filePath));
+            lineNumber.NotNegativeOrZero(nameof(lineNumber));
+            offset.NotNegative(nameof(offset));
+
+            var thread = new AzureDevOpsPullRequestCommentThread
+            {
+                Status = AzureDevOpsCommentThreadStatus.Active,
+                Comments = new List<AzureDevOpsComment>
+                {
+                    new AzureDevOpsComment
+                    {
+                        CommentType = AzureDevOpsCommentType.System,
+                        IsDeleted = false,
+                        Content = comment,
+                    },
+                },
+                FilePath = filePath,
+                LineNumber = lineNumber,
+                Offset = offset,
+            };
+
+            return this.CreateCommentThread(thread);
+        }
+
+        /// <summary>
         /// Deletes the comment in the given thread.
         /// </summary>
         /// <param name="threadId">The id of the thread containing the comment.</param>

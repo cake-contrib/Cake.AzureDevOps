@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics;
+    using Cake.Core.IO;
 
     /// <summary>
     /// Common runtime checks that throw <see cref="ArgumentException"/> upon failure.
@@ -41,6 +42,27 @@
             }
 
             if (string.IsNullOrWhiteSpace(value))
+            {
+                throw new ArgumentOutOfRangeException(parameterName);
+            }
+        }
+
+        /// <summary>
+        /// Throws an exception if the specified parameter's value is null, empty or consists only of white-space characters.
+        /// </summary>
+        /// <param name="value">The value of the argument.</param>
+        /// <param name="parameterName">The name of the parameter to include in any thrown exception.</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is empty or consists only of white-space characters.</exception>
+        [DebuggerStepThrough]
+        public static void NotNullOrWhiteSpace([ValidatedNotNull] this FilePath value, string parameterName)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(parameterName);
+            }
+
+            if (string.IsNullOrWhiteSpace(value.FullPath))
             {
                 throw new ArgumentOutOfRangeException(parameterName);
             }
