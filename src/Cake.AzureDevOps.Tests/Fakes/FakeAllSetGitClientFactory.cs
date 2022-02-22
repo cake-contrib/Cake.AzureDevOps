@@ -307,6 +307,21 @@
                     return gitPullRequestToCreate;
                  });
 
+            m.Setup(arg => arg.UpdateCommentAsync(
+                   It.IsAny<Comment>(),
+                   It.IsAny<Guid>(),
+                   It.IsAny<int>(),
+                   It.IsAny<int>(),
+                   It.IsAny<int>(),
+                   null,
+                   CancellationToken.None))
+               .ReturnsAsync((Comment comment, Guid repositoryId, int prId, int threadId, int commentId, object o, CancellationToken c)
+                   => new Comment
+                   {
+                        Id = comment.Id,
+                        Content = comment.Content,
+                   });
+
             return m;
         }
     }

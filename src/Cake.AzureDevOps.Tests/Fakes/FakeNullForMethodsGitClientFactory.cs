@@ -35,6 +35,9 @@
             m.Setup(arg => arg.GetPullRequestIterationChangesAsync(It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>(), null, null, null, null, CancellationToken.None))
              .ReturnsAsync(() => null);
 
+            m.Setup(arg => arg.UpdateCommentAsync(It.IsAny<Comment>(), It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), null, CancellationToken.None))
+            .ReturnsAsync(() => null);
+
             return m;
         }
     }

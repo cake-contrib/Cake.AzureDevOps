@@ -879,6 +879,109 @@
                 // Then
                 // ?? Nothing to validate here since the method returns void
             }
+
+            [Fact]
+            public void Should_Throw_If_Comment_Is_Null()
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var result = Record.Exception(() => pullRequest.DeleteComment(null)) as ArgumentException;
+
+                // Then
+                result.ShouldNotBeNull();
+                result.IsArgumentNullException("comment");
+            }
+
+            [Fact]
+            public void Should_Delete_Comment_By_Comment_Properties()
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+                var inComment = new AzureDevOpsComment(new Microsoft.TeamFoundation.SourceControl.WebApi.Comment { Id = 1 }, 5);
+                inComment.Content = "new Content";
+
+                // When
+                pullRequest.DeleteComment(inComment);
+
+                // Then
+                // ?? Nothing to validate here since the method returns void
+            }
+        }
+
+        public sealed class TheUpdateCommentMethod
+        {
+            [Fact]
+            public void Should_Throw_If_Comment_Is_Null()
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var result = Record.Exception(() => pullRequest.UpdateComment(null)) as ArgumentException;
+
+                // Then
+                result.ShouldNotBeNull();
+                result.IsArgumentNullException("comment");
+            }
+
+            [Fact]
+            public void Should_Return_Null_If_Pull_Request_Is_Invalid()
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100)
+                {
+                    GitClientFactory = new FakeNullGitClientFactory(),
+                };
+                fixture.Settings.ThrowExceptionIfPullRequestCouldNotBeFound = false;
+
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var outThread = pullRequest.UpdateComment(new AzureDevOpsComment());
+
+                // Then
+                outThread.ShouldBeNull();
+            }
+
+            [Fact]
+            public void Should_Return_Null_If_Null_Is_Returned_From_Git_Client()
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100)
+                {
+                    GitClientFactory = new FakeNullForMethodsGitClientFactory(),
+                };
+
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                var outThread = pullRequest.UpdateComment(new AzureDevOpsComment());
+
+                // Then
+                outThread.ShouldBeNull();
+            }
+
+            [Fact]
+            public void Should_Return_Updated_Comment()
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsUrl, 200);
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+                var inComment = new AzureDevOpsComment(new Microsoft.TeamFoundation.SourceControl.WebApi.Comment { Id = 1 }, 5);
+                inComment.Content = "new Content";
+
+                // When
+                var outComment = pullRequest.UpdateComment(inComment);
+
+                // Then
+                outComment.Id.ShouldBe(inComment.Id);
+                outComment.Content.ShouldBe(inComment.Content);
+            }
         }
 
         public sealed class TheCreateCommentThreadMethod

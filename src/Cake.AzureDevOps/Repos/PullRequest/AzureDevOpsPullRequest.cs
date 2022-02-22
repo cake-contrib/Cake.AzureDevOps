@@ -624,6 +624,54 @@
         }
 
         /// <summary>
+        /// Deletes the comment.
+        /// </summary>
+        /// <param name="comment">The comment to delete.</param>am>
+        public void DeleteComment(AzureDevOpsComment comment)
+        {
+            comment.NotNull(nameof(comment));
+
+            this.DeleteComment(comment.ThreadId, comment.Id);
+        }
+
+        /// <summary>
+        /// Updates the comment.
+        /// </summary>
+        /// <param name="comment">The updated comment.</param>
+        /// <returns>The updated comment, or null if it can't be updated.</returns>
+        public AzureDevOpsComment UpdateComment(AzureDevOpsComment comment)
+        {
+            comment.NotNull(nameof(comment));
+
+            AzureDevOpsComment resultingComment = null;
+            if (!this.ValidatePullRequest())
+            {
+                return resultingComment;
+            }
+
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
+            {
+                var newComment = gitClient
+                    .UpdateCommentAsync(
+                        comment.Comment,
+                        this.RepositoryId,
+                        this.PullRequestId,
+                        comment.ThreadId,
+                        comment.Id)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
+
+                if (newComment != null)
+                {
+                    resultingComment = new AzureDevOpsComment(newComment, comment.ThreadId);
+                }
+            }
+
+            return resultingComment;
+        }
+
+        /// <summary>
         /// Creates a new comment thread in the pull request.
         /// </summary>
         /// <param name="thread">The instance of the thread.</param>

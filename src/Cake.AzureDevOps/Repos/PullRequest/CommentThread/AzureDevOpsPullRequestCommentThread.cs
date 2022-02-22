@@ -91,7 +91,7 @@
                     throw new InvalidOperationException("Comments list is not created.");
                 }
 
-                return this.thread.Comments.Select(x => new AzureDevOpsComment(x));
+                return this.thread.Comments.Select(x => new AzureDevOpsComment(x, this.thread.Id));
             }
 
             set
