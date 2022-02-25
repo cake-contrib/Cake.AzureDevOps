@@ -28,6 +28,10 @@
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);PackBuildOutputs</TargetsForTfmSpecificContentInPackage>
   </PropertyGroup>
 
+  <ItemGroup>
+    <InternalsVisibleTo Include="Cake.AzureDevOps.Tests"/>
+  </ItemGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard2.0\Cake.AzureDevOps.xml</DocumentationFile>
   </PropertyGroup>
