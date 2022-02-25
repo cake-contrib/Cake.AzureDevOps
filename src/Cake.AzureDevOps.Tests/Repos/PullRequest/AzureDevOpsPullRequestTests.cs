@@ -1,8 +1,5 @@
 ﻿namespace Cake.AzureDevOps.Tests.Repos.PullRequest
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Cake.AzureDevOps.Repos.PullRequest;
     using Cake.AzureDevOps.Repos.PullRequest.CommentThread;
     using Cake.AzureDevOps.Tests.Fakes;
@@ -10,6 +7,9 @@
     using Cake.Core.IO;
     using Microsoft.VisualStudio.Services.Common;
     using Shouldly;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Xunit;
 
     public sealed class AzureDevOpsPullRequestTests
@@ -849,17 +849,17 @@
             }
 
             [Theory]
-            [InlineData((FilePath)null, typeof(ArgumentNullException))]
+            [InlineData((string)null, typeof(ArgumentNullException))]
             [InlineData("", typeof(ArgumentOutOfRangeException))]
             [InlineData(" ", typeof(ArgumentOutOfRangeException))]
-            public void Should_Throw_If_FilePath_Is_Null_Or_Empty_Or_Whitespace(FilePath filePath, Type expectedExceptionType)
+            public void Should_Throw_If_FilePath_Is_Null_Or_Empty_Or_Whitespace(string filePath, Type expectedExceptionType)
             {
                 // Given
                 var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
                 var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
-                var result = Record.Exception(() => pullRequest.CreateComment("test", filePath, 0, 0)) as ArgumentException;
+                var result = Record.Exception(() => pullRequest.CreateComment("test", filePath == null ? null : new FilePath(filePath), 0, 0)) as ArgumentException;
 
                 // Then
                 result.ShouldNotBeNull();
