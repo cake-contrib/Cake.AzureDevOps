@@ -8,6 +8,7 @@
     public class AzureDevOpsComment
     {
         private readonly Comment comment;
+        private readonly int threadId;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureDevOpsComment"/> class.
@@ -19,13 +20,14 @@
             content.NotNullOrWhiteSpace(nameof(content));
 
             this.comment = new Comment { Content = content, IsDeleted = isDeleted };
+            this.threadId = 0;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureDevOpsComment"/> class with empty Git comment.
         /// </summary>
         public AzureDevOpsComment()
-            : this(new Comment())
+            : this(new Comment(), 0)
         {
         }
 
@@ -33,11 +35,30 @@
         /// Initializes a new instance of the <see cref="AzureDevOpsComment"/> class with real Git comment.
         /// </summary>
         /// <param name="comment">The original Azure DevOps pull request comment.</param>
-        internal AzureDevOpsComment(Comment comment)
+        /// <param name="threadId">The parent thread ID.</param>
+        internal AzureDevOpsComment(Comment comment, int threadId)
         {
             comment.NotNull(nameof(comment));
+            threadId.NotNegative(nameof(threadId));
 
             this.comment = comment;
+            this.threadId = threadId;
+        }
+
+        /// <summary>
+        /// Gets the comment id.
+        /// </summary>
+        public short Id
+        {
+            get => this.comment.Id;
+        }
+
+        /// <summary>
+        /// Gets the thread id.
+        /// </summary>
+        public int ThreadId
+        {
+            get => this.threadId;
         }
 
         /// <summary>
@@ -65,6 +86,14 @@
         {
             get => (AzureDevOpsCommentType)this.comment.CommentType;
             set => this.comment.CommentType = (CommentType)value;
+        }
+
+        /// <summary>
+        /// Gets the internal comment.
+        /// </summary>
+        internal Comment Comment
+        {
+            get => this.comment;
         }
     }
 }
