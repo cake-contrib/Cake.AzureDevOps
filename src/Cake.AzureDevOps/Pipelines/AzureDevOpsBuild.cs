@@ -516,13 +516,27 @@
         /// </summary>
         /// <param name="maxResultsPerTestRun">Number of maximum test results to read for every test run.
         /// <c>0</c> for skipping reading of test results. <c>null</c> for reading all test results in batches.</param>
+        /// <returns>A list of test runs or an empty list if no build could be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public IEnumerable<AzureDevOpsTestRun> GetTestRuns(int? maxResultsPerTestRun)
+        {
+            return this.GetTestRuns(maxResultsPerTestRun, null);
+        }
+
+        /// <summary>
+        /// Gets the test runs of the build including test results.
+        /// </summary>
+        /// <param name="maxResultsPerTestRun">Number of maximum test results to read for every test run.
+        /// <c>0</c> for skipping reading of test results. <c>null</c> for reading all test results in batches.</param>
         /// <param name="testOutcomes">List of test outcomes to look for in the test results.
         /// <c>null</c> for reading all test results.</param>
         /// <returns>A list of test runs or an empty list if no build could be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
         /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public IEnumerable<AzureDevOpsTestRun> GetTestRuns(int? maxResultsPerTestRun, IEnumerable<string> testOutcomes = null)
+        public IEnumerable<AzureDevOpsTestRun> GetTestRuns(int? maxResultsPerTestRun, IEnumerable<string> testOutcomes)
         {
             if (!this.ValidateBuild())
             {
