@@ -604,7 +604,8 @@
 
                 resultCount += resultsToRead;
                 remainingResultsToRead = Math.Max(remainingResultsToRead - resultsToRead, 0);
-            } while (remainingResultsToRead > 0);
+            }
+            while (remainingResultsToRead > 0);
 
             return testResults;
         }
