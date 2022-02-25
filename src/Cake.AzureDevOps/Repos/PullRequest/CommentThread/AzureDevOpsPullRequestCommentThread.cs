@@ -1,11 +1,11 @@
 ﻿namespace Cake.AzureDevOps.Repos.PullRequest.CommentThread
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Cake.Core.IO;
     using Microsoft.TeamFoundation.SourceControl.WebApi;
     using Microsoft.VisualStudio.Services.WebApi;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Class for dealing with comments in pull requests.
@@ -99,15 +99,7 @@
             {
                 if (value != null)
                 {
-                    if (this.thread.ThreadContext == null)
-                    {
-                        this.thread.ThreadContext = new CommentThreadContext();
-                    }
-
-                    if (this.thread.ThreadContext.RightFileStart == null)
-                    {
-                        this.thread.ThreadContext.RightFileStart = new CommentPosition();
-                    }
+                    this.EnsureRightFileStartExists();
 
                     this.thread.ThreadContext.RightFileStart.Line = value.Value;
                 }
@@ -134,15 +126,7 @@
             {
                 if (value != null)
                 {
-                    if (this.thread.ThreadContext == null)
-                    {
-                        this.thread.ThreadContext = new CommentThreadContext();
-                    }
-
-                    if (this.thread.ThreadContext.RightFileStart == null)
-                    {
-                        this.thread.ThreadContext.RightFileStart = new CommentPosition();
-                    }
+                    this.EnsureRightFileStartExists();
 
                     this.thread.ThreadContext.RightFileStart.Offset = value.Value;
                 }
@@ -225,6 +209,19 @@
             else
             {
                 this.thread.Properties.Add(propertyName, value);
+            }
+        }
+
+        private void EnsureRightFileStartExists()
+        {
+            if (this.thread.ThreadContext == null)
+            {
+                this.thread.ThreadContext = new CommentThreadContext();
+            }
+
+            if (this.thread.ThreadContext.RightFileStart == null)
+            {
+                this.thread.ThreadContext.RightFileStart = new CommentPosition();
             }
         }
     }
