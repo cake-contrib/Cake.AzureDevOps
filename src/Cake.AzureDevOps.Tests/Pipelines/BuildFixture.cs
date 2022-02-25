@@ -1,0 +1,35 @@
+﻿namespace Cake.AzureDevOps.Tests.Pipelines
+{
+    using System;
+    using Cake.AzureDevOps.Authentication;
+    using Cake.AzureDevOps.Pipelines;
+    using Cake.AzureDevOps.Tests.Fakes;
+    using Cake.Core.Diagnostics;
+    using Cake.Testing;
+
+    internal class BuildFixture
+    {
+        public const string ValidAzureDevOpsCollectionUrl = "https://my-account.visualstudio.com/DefaultCollection";
+
+        public BuildFixture(string collectionUrl, string projectName, int buildId)
+        {
+            this.Settings = new AzureDevOpsBuildSettings(new Uri(collectionUrl), projectName, buildId, new AzureDevOpsNtlmCredentials());
+            this.InitialzeFakes();
+        }
+
+        public ICakeLog Log { get; set; }
+
+        public IBuildClientFactory BuildClientFactory { get; set; }
+
+        public ITestManagementClientFactory TestManagementClientFactory { get; set; }
+
+        public AzureDevOpsBuildSettings Settings { get; set; }
+
+        private void InitialzeFakes()
+        {
+            this.Log = new FakeLog();
+            this.BuildClientFactory = new FakeAllSetBuildClientFactory();
+            this.TestManagementClientFactory = new FakeAllSetTestManagementClientFactory();
+        }
+    }
+}
