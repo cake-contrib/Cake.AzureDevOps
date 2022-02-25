@@ -7,7 +7,7 @@ image: Visual Studio 2022
 #  Build Script                   #
 #---------------------------------#
 build_script:
-  - ps: .\build.ps1 -Target AppVeyor
+  - ps: .\build.ps1 -Target CI
 
 # Tests
 test: off
