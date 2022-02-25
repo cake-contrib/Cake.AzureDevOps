@@ -27,10 +27,6 @@
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);PackBuildOutputs</TargetsForTfmSpecificContentInPackage>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-  <ItemGroup>
-    <InternalsVisibleTo Include="Cake.AzureDevOps.Tests"/>
-  </ItemGroup>
-
   </PropertyGroup>
 
   <ItemGroup>
@@ -53,10 +49,6 @@
   <ItemGroup>
     <None Include="3rdPartyLicense.txt" Pack="true" PackagePath="\" />
     <None Include="icon.png" Pack="true" PackagePath="\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Properties\" />
   </ItemGroup>
 
   <Target Name="PackBuildOutputs" DependsOnTargets="SatelliteDllsProjectOutputGroup;DebugSymbolsProjectOutputGroup">
