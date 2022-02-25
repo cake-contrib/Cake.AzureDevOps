@@ -1,11 +1,11 @@
 ﻿namespace Cake.AzureDevOps.Repos.PullRequest.CommentThread
 {
-    using Cake.Core.IO;
-    using Microsoft.TeamFoundation.SourceControl.WebApi;
-    using Microsoft.VisualStudio.Services.WebApi;
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Cake.Core.IO;
+    using Microsoft.TeamFoundation.SourceControl.WebApi;
+    using Microsoft.VisualStudio.Services.WebApi;
 
     /// <summary>
     /// Class for dealing with comments in pull requests.

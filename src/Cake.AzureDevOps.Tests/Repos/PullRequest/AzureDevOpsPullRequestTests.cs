@@ -1,5 +1,8 @@
 ﻿namespace Cake.AzureDevOps.Tests.Repos.PullRequest
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Cake.AzureDevOps.Repos.PullRequest;
     using Cake.AzureDevOps.Repos.PullRequest.CommentThread;
     using Cake.AzureDevOps.Tests.Fakes;
@@ -7,9 +10,6 @@
     using Cake.Core.IO;
     using Microsoft.VisualStudio.Services.Common;
     using Shouldly;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Xunit;
 
     public sealed class AzureDevOpsPullRequestTests
