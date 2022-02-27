@@ -1,5 +1,3 @@
-$ErrorActionPreference = 'Stop'
-
 $SCRIPT_NAME = "recipe.cake"
 
 Write-Host "Restoring .NET Core tools"
