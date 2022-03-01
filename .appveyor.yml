@@ -1,7 +1,8 @@
 #---------------------------------#
 #  Build Image                    #
 #---------------------------------#
-image: Visual Studio 2022
+# Cake recipe requires .NET Core 2.1 which is not available on newer images
+image: Visual Studio 2019
 
 #---------------------------------#
 #  Build Script                   #
