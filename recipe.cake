@@ -29,6 +29,7 @@ ToolSettings.SetToolSettings(
 // Workaround until https://github.com/cake-contrib/Cake.Recipe/issues/862 has been fixed in Cake.Recipe
 ToolSettings.SetToolPreprocessorDirectives(
     reSharperTools: "#tool nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2021.3.1",
+    coverallsGlobalTool: "#tool dotnet:?package=coveralls.net&version=3.0.0",
     gitVersionGlobalTool: "#tool dotnet:?package=GitVersion.Tool&version=5.8.1");
 
 Build.RunDotNetCore();
