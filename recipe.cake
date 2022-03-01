@@ -14,8 +14,8 @@ BuildParameters.SetParameters(
     shouldRunDupFinder: false, // dupFinder is missing in 2021.3.0-eap
     shouldRunDotNetCorePack: true,
     shouldGenerateDocumentation: false, // Fails to restore tool on AppVeyor
-    ShouldRunCoveralls: false, // Fails to restore tool on AppVeyor
-    ShouldRunCodecov: false); // Fails to restore tool on AppVeyor
+    shouldRunCoveralls: false, // Fails to restore tool on AppVeyor
+    shouldRunCodecov: false); // Fails to restore tool on AppVeyor
 
 BuildParameters.PrintParameters(Context);
 
