@@ -32,4 +32,7 @@ ToolSettings.SetToolPreprocessorDirectives(
     coverallsGlobalTool: "#tool dotnet:?package=coveralls.net&version=3.0.0",
     gitVersionGlobalTool: "#tool dotnet:?package=GitVersion.Tool&version=5.8.1");
 
+// Disable Upload-Coveralls-Report task since it fails to install the tool on AppVeyor
+BuildParameters.Tasks.UploadCoverallsReportTask.WithCriteria(() => false);
+
 Build.RunDotNetCore();
