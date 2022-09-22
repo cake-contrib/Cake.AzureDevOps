@@ -23,7 +23,7 @@
         /// When disabled the definition queue will not allow builds to be queued by users
         /// and the system will not queue scheduled, gated or continuous integration builds.
         /// Builds already in the queue will not be started by the system.
-        /// <summary>
+        /// </summary>
         Disabled = 2,
     }
 }

@@ -13,10 +13,20 @@
             public void Should_Throw_If_Comment_Is_Null()
             {
                 // Given, When
-                var result = Record.Exception(() => new AzureDevOpsComment(null));
+                var result = Record.Exception(() => new AzureDevOpsComment(null, 1));
 
                 // Then
                 result.IsArgumentNullException("comment");
+            }
+
+            [Fact]
+            public void Should_Throw_If_ThreadId_Is_Negative()
+            {
+                // Given, When
+                var result = Record.Exception(() => new AzureDevOpsComment(new Comment(), -1));
+
+                // Then
+                result.IsArgumentOutOfRangeException("threadId");
             }
 
             [Fact]
@@ -50,6 +60,7 @@
                 comment.Content.ShouldBe(default(string));
                 comment.IsDeleted.ShouldBe(default(bool));
                 comment.CommentType.ShouldBe(default(AzureDevOpsCommentType));
+                comment.ThreadId.ShouldBe(0);
             }
 
             [Fact]
@@ -63,6 +74,7 @@
                 comment.Content.ShouldBe("Hello");
                 comment.IsDeleted.ShouldBeFalse();
                 comment.CommentType.ShouldBe(default(AzureDevOpsCommentType));
+                comment.ThreadId.ShouldBe(0);
             }
 
             [Fact]

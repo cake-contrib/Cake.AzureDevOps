@@ -9,10 +9,10 @@ updates:
   ignore:
   - dependency-name: Cake.Core
     versions:
-    - "> 1.0.0, < 2"
+    - "> 1.0.0, < 3"
   - dependency-name: Cake.Common
     versions:
-    - "> 1.0.0, < 2"
+    - "> 1.0.0, < 3"
   - dependency-name: Cake.Testing
     versions:
-    - "> 1.0.0, < 2"
+    - "> 1.0.0, < 3"

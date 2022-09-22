@@ -600,6 +600,113 @@
         }
 
         /// <summary>
+        /// Creates a new comment thread for the given file and position.
+        /// </summary>
+        /// <param name="comment">Comment which should be added.</param>
+        /// <param name="filePath">Path to the file to create the comment for.</param>
+        /// <param name="lineNumber">The line number of a thread's position. Starts at 1.</param>
+        /// <param name="offset">The character offset of a thread's position inside of a line. Starts at 0.</param>
+        /// <returns>A newly created comment thread, or null if it can't be created.</returns>
+        public AzureDevOpsPullRequestCommentThread CreateComment(string comment, FilePath filePath, int lineNumber, int offset)
+        {
+            comment.NotNullOrWhiteSpace(nameof(comment));
+            filePath.NotNullOrWhiteSpace(nameof(filePath));
+            lineNumber.NotNegativeOrZero(nameof(lineNumber));
+            offset.NotNegative(nameof(offset));
+
+            var thread = new AzureDevOpsPullRequestCommentThread
+            {
+                Status = AzureDevOpsCommentThreadStatus.Active,
+                Comments = new List<AzureDevOpsComment>
+                {
+                    new AzureDevOpsComment
+                    {
+                        CommentType = AzureDevOpsCommentType.System,
+                        IsDeleted = false,
+                        Content = comment,
+                    },
+                },
+                FilePath = filePath,
+                LineNumber = lineNumber,
+                Offset = offset,
+            };
+
+            return this.CreateCommentThread(thread);
+        }
+
+        /// <summary>
+        /// Deletes the comment in the given thread.
+        /// </summary>
+        /// <param name="threadId">The id of the thread containing the comment.</param>
+        /// <param name="commentId">The id of the comment to delete.</param>
+        public void DeleteComment(int threadId, int commentId)
+        {
+            threadId.NotNegativeOrZero(nameof(threadId));
+            commentId.NotNegativeOrZero(nameof(commentId));
+
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
+            {
+                gitClient
+                    .DeleteCommentAsync(
+                        this.RepositoryId,
+                        this.PullRequestId,
+                        threadId,
+                        commentId)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
+            }
+        }
+
+        /// <summary>
+        /// Deletes the comment.
+        /// </summary>
+        /// <param name="comment">The comment to delete.</param>am>
+        public void DeleteComment(AzureDevOpsComment comment)
+        {
+            comment.NotNull(nameof(comment));
+
+            this.DeleteComment(comment.ThreadId, comment.Id);
+        }
+
+        /// <summary>
+        /// Updates the comment.
+        /// </summary>
+        /// <param name="comment">The updated comment.</param>
+        /// <returns>The updated comment, or null if it can't be updated.</returns>
+        public AzureDevOpsComment UpdateComment(AzureDevOpsComment comment)
+        {
+            comment.NotNull(nameof(comment));
+
+            AzureDevOpsComment resultingComment = null;
+            if (!this.ValidatePullRequest())
+            {
+                return resultingComment;
+            }
+
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
+            {
+                var newComment = gitClient
+                    .UpdateCommentAsync(
+                        comment.Comment,
+                        this.RepositoryId,
+                        this.PullRequestId,
+                        comment.ThreadId,
+                        comment.Id)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
+
+                if (newComment != null)
+                {
+                    resultingComment = new AzureDevOpsComment(newComment, comment.ThreadId);
+                }
+            }
+
+            return resultingComment;
+        }
+
+        /// <summary>
         /// Creates a new comment thread in the pull request.
         /// </summary>
         /// <param name="thread">The instance of the thread.</param>

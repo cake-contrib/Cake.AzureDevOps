@@ -161,8 +161,8 @@
                     },
                     Comments = new List<Comment>
                     {
-                        new Comment { Content = "Hello", IsDeleted = false, CommentType = CommentType.CodeChange },
-                        new Comment { Content = "Goodbye", IsDeleted = true, CommentType = CommentType.Text },
+                        new Comment { Content = "Hello", IsDeleted = false, CommentType = CommentType.CodeChange, Id = 1 },
+                        new Comment { Content = "Goodbye", IsDeleted = true, CommentType = CommentType.Text, Id = 2 },
                     },
                     Status = CommentThreadStatus.Active,
                 },
@@ -306,6 +306,21 @@
 
                     return gitPullRequestToCreate;
                  });
+
+            m.Setup(arg => arg.UpdateCommentAsync(
+                   It.IsAny<Comment>(),
+                   It.IsAny<Guid>(),
+                   It.IsAny<int>(),
+                   It.IsAny<int>(),
+                   It.IsAny<int>(),
+                   null,
+                   CancellationToken.None))
+               .ReturnsAsync((Comment comment, Guid repositoryId, int prId, int threadId, int commentId, object o, CancellationToken c)
+                   => new Comment
+                   {
+                        Id = comment.Id,
+                        Content = comment.Content,
+                   });
 
             return m;
         }
