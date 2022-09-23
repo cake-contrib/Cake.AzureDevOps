@@ -32,9 +32,9 @@
                 // Then
                 thread.ShouldNotBeNull();
                 thread.InnerThread.ShouldBeOfType(typeof(GitPullRequestCommentThread));
-                thread.Id.ShouldBe(default(int));
+                thread.Id.ShouldBe(default);
                 thread.FilePath.ShouldBeNull();
-                thread.Status.ShouldBe(default(AzureDevOpsCommentThreadStatus));
+                thread.Status.ShouldBe(default);
                 thread.Properties.ShouldBeNull();
 
                 getCommentsResult.IsInvalidOperationException();
@@ -268,7 +268,7 @@
                 var result = azureDevOpsThread.GetValue<string>("key");
 
                 // Then
-                result.ShouldBe(default(string));
+                result.ShouldBe(default);
             }
 
             [Fact]
@@ -281,7 +281,7 @@
                 var result = azureDevOpsThread.GetValue<int>("key");
 
                 // Then
-                result.ShouldBe(default(int));
+                result.ShouldBe(default);
             }
 
             [Fact]
@@ -300,7 +300,7 @@
                 var result = azureDevOpsThread.GetValue<string>("key");
 
                 // Then
-                result.ShouldBe(default(string));
+                result.ShouldBe(default);
             }
 
             [Fact]
@@ -319,7 +319,7 @@
                 var result = azureDevOpsThread.GetValue<int>("key");
 
                 // Then
-                result.ShouldBe(default(int));
+                result.ShouldBe(default);
             }
 
             [Fact]
