@@ -13,7 +13,7 @@
         {
             var mock = new Mock<BuildHttpClient>(MockBehavior.Loose, collectionUrl, credentials.ToVssCredentials());
 
-            mock.Setup(arg => arg.GetBuildAsync(It.IsAny<Guid>(), It.IsAny<int>(), null, null, default(CancellationToken)))
+            mock.Setup(arg => arg.GetBuildAsync(It.IsAny<Guid>(), It.IsAny<int>(), null, null, default))
                 .ReturnsAsync((Guid projectId, int buildId, string propertyFilters, object userState, CancellationToken token) => new Build
                 {
                     Id = buildId,
@@ -21,7 +21,7 @@
                     Project = new TeamProjectReference { Id = projectId },
                 });
 
-            mock.Setup(arg => arg.GetBuildAsync(It.IsAny<string>(), It.IsAny<int>(), null, null, default(CancellationToken)))
+            mock.Setup(arg => arg.GetBuildAsync(It.IsAny<string>(), It.IsAny<int>(), null, null, default))
                 .ReturnsAsync((string projectName, int buildId, string propertyFilters, object userState, CancellationToken token) => new Build
                 {
                     Id = buildId,

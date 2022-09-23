@@ -57,9 +57,9 @@
 
                 // Then
                 comment.ShouldNotBeNull();
-                comment.Content.ShouldBe(default(string));
-                comment.IsDeleted.ShouldBe(default(bool));
-                comment.CommentType.ShouldBe(default(AzureDevOpsCommentType));
+                comment.Content.ShouldBe(default);
+                comment.IsDeleted.ShouldBe(default);
+                comment.CommentType.ShouldBe(default);
                 comment.ThreadId.ShouldBe(0);
             }
 
@@ -73,7 +73,7 @@
                 comment.ShouldNotBeNull();
                 comment.Content.ShouldBe("Hello");
                 comment.IsDeleted.ShouldBeFalse();
-                comment.CommentType.ShouldBe(default(AzureDevOpsCommentType));
+                comment.CommentType.ShouldBe(default);
                 comment.ThreadId.ShouldBe(0);
             }
 

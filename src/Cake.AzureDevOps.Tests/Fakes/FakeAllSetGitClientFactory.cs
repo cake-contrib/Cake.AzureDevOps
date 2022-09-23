@@ -14,7 +14,7 @@
         {
             var mock = new Mock<GitHttpClient>(MockBehavior.Loose, collectionUrl, credentials.ToVssCredentials());
 
-            mock.Setup(arg => arg.GetPullRequestAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), null, null, null, null, null, null, default(CancellationToken)))
+            mock.Setup(arg => arg.GetPullRequestAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), null, null, null, null, null, null, default))
                 .ReturnsAsync((string project1, string repoId1, int prId, int i1, int i2, int i3, bool b1, bool b2, object o1, CancellationToken c1) => new GitPullRequest
                 {
                     PullRequestId = prId,
@@ -39,7 +39,7 @@
                     null,
                     1,
                     null,
-                    default(CancellationToken)))
+                    default))
                 .ReturnsAsync((string project2, string repoId2, GitPullRequestSearchCriteria sc, int j1, int j2, int top, object o2, CancellationToken c2)
                     => new List<GitPullRequest>(new[]
                     {
@@ -73,7 +73,7 @@
                     It.IsAny<int>(),
                     It.IsAny<string>(),
                     It.IsAny<object>(),
-                    default(CancellationToken)))
+                    default))
              .ReturnsAsync((IdentityRefWithVote identity, Guid project, int prId, string reviewerId, object o, CancellationToken c)
                     => new IdentityRefWithVote
                     {
@@ -86,7 +86,7 @@
                     It.IsAny<int>(),
                     It.IsAny<string>(),
                     It.IsAny<object>(),
-                    default(CancellationToken)))
+                    default))
              .Throws(new Exception("Something went wrong"));
 
             m.Setup(arg => arg.CreatePullRequestStatusAsync(

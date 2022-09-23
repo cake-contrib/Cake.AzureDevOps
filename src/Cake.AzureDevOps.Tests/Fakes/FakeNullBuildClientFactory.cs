@@ -12,10 +12,10 @@
         {
             var mock = new Mock<BuildHttpClient>(MockBehavior.Loose, collectionUrl, credentials.ToVssCredentials());
 
-            mock.Setup(arg => arg.GetBuildAsync(It.IsAny<Guid>(), It.IsAny<int>(), null, null, default(CancellationToken)))
+            mock.Setup(arg => arg.GetBuildAsync(It.IsAny<Guid>(), It.IsAny<int>(), null, null, default))
                 .ReturnsAsync(() => null);
 
-            mock.Setup(arg => arg.GetBuildAsync(It.IsAny<string>(), It.IsAny<int>(), null, null, default(CancellationToken)))
+            mock.Setup(arg => arg.GetBuildAsync(It.IsAny<string>(), It.IsAny<int>(), null, null, default))
                 .ReturnsAsync(() => null);
 
             mock = this.Setup(mock);

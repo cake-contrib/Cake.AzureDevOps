@@ -10,7 +10,7 @@
     {
         protected override Mock<GitHttpClient> Setup(Mock<GitHttpClient> m)
         {
-            m.Setup(arg => arg.CreatePullRequestReviewerAsync(It.IsAny<IdentityRefWithVote>(), It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<object>(), default(CancellationToken)))
+            m.Setup(arg => arg.CreatePullRequestReviewerAsync(It.IsAny<IdentityRefWithVote>(), It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<string>(), It.IsAny<object>(), default))
              .ReturnsAsync(() => null);
 
             m.Setup(arg => arg.CreatePullRequestStatusAsync(It.IsAny<GitPullRequestStatus>(), It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<object>(), It.IsAny<CancellationToken>()))

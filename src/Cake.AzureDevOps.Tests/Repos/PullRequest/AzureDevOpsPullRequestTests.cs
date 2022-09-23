@@ -1018,8 +1018,10 @@
                 // Given
                 var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
                 var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
-                var inComment = new AzureDevOpsComment(new Microsoft.TeamFoundation.SourceControl.WebApi.Comment { Id = 1 }, 5);
-                inComment.Content = "new Content";
+                var inComment = new AzureDevOpsComment(new Microsoft.TeamFoundation.SourceControl.WebApi.Comment { Id = 1 }, 5)
+                {
+                    Content = "new Content",
+                };
 
                 // When
                 pullRequest.DeleteComment(inComment);
@@ -1089,8 +1091,10 @@
                 // Given
                 var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsUrl, 200);
                 var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
-                var inComment = new AzureDevOpsComment(new Microsoft.TeamFoundation.SourceControl.WebApi.Comment { Id = 1 }, 5);
-                inComment.Content = "new Content";
+                var inComment = new AzureDevOpsComment(new Microsoft.TeamFoundation.SourceControl.WebApi.Comment { Id = 1 }, 5)
+                {
+                    Content = "new Content",
+                };
 
                 // When
                 var outComment = pullRequest.UpdateComment(inComment);
