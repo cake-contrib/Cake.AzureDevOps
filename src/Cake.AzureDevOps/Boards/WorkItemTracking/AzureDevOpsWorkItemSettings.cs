@@ -53,6 +53,21 @@
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="AzureDevOpsWorkItemSettings"/> class
+        /// based on the instance of a <see cref="AzureDevOpsWorkItemSettings"/> class.
+        /// </summary>
+        /// <param name="settings">Settings containing the parameters.</param>
+        /// <param name="workItemId">ID of the work item.</param>
+        public AzureDevOpsWorkItemSettings(AzureDevOpsWorkItemSettings settings, int workItemId)
+            : base(settings)
+        {
+            workItemId.NotNegativeOrZero(nameof(workItemId));
+
+            this.WorkItemId = workItemId;
+            this.ThrowExceptionIfWorkItemCouldNotBeFound = settings.ThrowExceptionIfWorkItemCouldNotBeFound;
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="AzureDevOpsWorkItemSettings"/> class using environment variables
         /// as set by an Azure Pipelines build.
         /// </summary>

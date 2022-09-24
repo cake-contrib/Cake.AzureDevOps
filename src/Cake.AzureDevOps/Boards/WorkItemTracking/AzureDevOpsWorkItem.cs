@@ -14,8 +14,7 @@
     public sealed class AzureDevOpsWorkItem
     {
         private readonly ICakeLog log;
-        private readonly IAzureDevOpsCredentials credentials;
-        private readonly bool throwExceptionIfWorkItemCouldNotBeFound;
+        private readonly AzureDevOpsWorkItemSettings settings;
         private readonly IWorkItemTrackingClientFactory workItemTrackingClientFactory;
         private readonly WorkItem workItem;
 
@@ -46,8 +45,7 @@
             this.log = log;
             this.workItem = workItem;
             this.workItemTrackingClientFactory = new WorkItemTrackingClientFactory();
-            this.credentials = settings.Credentials;
-            this.CollectionUrl = settings.CollectionUrl;
+            this.settings = settings;
         }
 
         /// <summary>
@@ -69,9 +67,7 @@
 
             this.log = log;
             this.workItemTrackingClientFactory = workItemTrackingClientFactory;
-            this.credentials = settings.Credentials;
-            this.CollectionUrl = settings.CollectionUrl;
-            this.throwExceptionIfWorkItemCouldNotBeFound = settings.ThrowExceptionIfWorkItemCouldNotBeFound;
+            this.settings = settings;
 
             using (var workItemTrackingClient = this.workItemTrackingClientFactory.CreateWorkItemTrackingClient(settings.CollectionUrl, settings.Credentials, out var authorizedIdenity))
             {
@@ -89,7 +85,8 @@
                             workItemTrackingClient
                                 .GetWorkItemAsync(
                                     settings.ProjectGuid,
-                                    settings.WorkItemId)
+                                    settings.WorkItemId,
+                                    expand: WorkItemExpand.Relations)
                                 .ConfigureAwait(false)
                                 .GetAwaiter()
                                 .GetResult();
@@ -101,7 +98,8 @@
                             workItemTrackingClient
                                 .GetWorkItemAsync(
                                     settings.ProjectName,
-                                    settings.WorkItemId)
+                                    settings.WorkItemId,
+                                    expand: WorkItemExpand.Relations)
                                 .ConfigureAwait(false)
                                 .GetAwaiter()
                                 .GetResult();
@@ -115,7 +113,7 @@
                 }
                 catch (VssServiceException ex)
                 {
-                    if (this.throwExceptionIfWorkItemCouldNotBeFound)
+                    if (settings.ThrowExceptionIfWorkItemCouldNotBeFound)
                     {
                         throw new AzureDevOpsWorkItemNotFoundException("Work item not found", ex);
                     }
@@ -142,7 +140,7 @@
         /// <summary>
         /// Gets the URL for accessing the web portal of the Azure DevOps collection.
         /// </summary>
-        public Uri CollectionUrl { get; }
+        public Uri CollectionUrl => this.settings.CollectionUrl;        
 
         /// <summary>
         /// Gets the ID of the work item.
@@ -385,6 +383,44 @@
         }
 
         /// <summary>
+        /// Gets the id of the parent work item.
+        /// Returns zero if no work item could be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public int ParentWorkItemId
+        {
+            get
+            {
+                if (!this.ValidateWorkItem())
+                {
+                    return 0;
+                }
+
+                return this.GetFieldAsInt("System.Parent");
+            }
+        }
+
+        /// <summary>
+        /// Gets the parent work item or null of no parent exists.
+        /// </summary>
+        /// <returns>The parent work item.</returns>
+        /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public AzureDevOpsWorkItem GetParentWorkItem()
+        {
+            if (this.ParentWorkItemId > 0)
+            {
+                var parentSettings = new AzureDevOpsWorkItemSettings(this.settings, this.ParentWorkItemId);
+
+                return new AzureDevOpsWorkItem(this.log, parentSettings, this.workItemTrackingClientFactory);
+            }
+
+            return null;
+        }
+
+        /// <summary>
         /// Validates if a work item could be found.
         /// Depending on <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/>
         /// the work item instance can be null for subsequent calls.
@@ -399,7 +435,7 @@
                 return true;
             }
 
-            if (this.throwExceptionIfWorkItemCouldNotBeFound)
+            if (this.settings.ThrowExceptionIfWorkItemCouldNotBeFound)
             {
                 throw new AzureDevOpsWorkItemNotFoundException("Work item not found");
             }
@@ -429,6 +465,18 @@
             else
             {
                 return DateTime.MinValue;
+            }
+        }
+
+        private int GetFieldAsInt(string fieldName)
+        {
+            if (this.workItem.Fields.TryGetValue(fieldName, out var field))
+            {
+                return Convert.ToInt32(field);
+            }
+            else
+            {
+                return 0;
             }
         }
     }
