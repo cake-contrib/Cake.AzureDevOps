@@ -1,9 +1,9 @@
 ﻿namespace Cake.AzureDevOps
 {
+    using System.Collections.Generic;
     using Cake.AzureDevOps.Pipelines;
     using Cake.Core;
     using Cake.Core.Annotations;
-    using System.Collections.Generic;
 
     /// <content>
     /// Contains functionality related to Azure Pipeline builds.

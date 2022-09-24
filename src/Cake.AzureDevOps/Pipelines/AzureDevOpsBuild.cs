@@ -1,13 +1,13 @@
 ﻿namespace Cake.AzureDevOps.Pipelines
 {
-    using Cake.AzureDevOps.Authentication;
-    using Cake.Core.Diagnostics;
-    using Microsoft.TeamFoundation.Build.WebApi;
-    using Microsoft.TeamFoundation.TestManagement.WebApi;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Cake.AzureDevOps.Authentication;
+    using Cake.Core.Diagnostics;
+    using Microsoft.TeamFoundation.Build.WebApi;
+    using Microsoft.TeamFoundation.TestManagement.WebApi;
 
     /// <summary>
     /// Class for writing issues to Azure DevOps pull requests.
