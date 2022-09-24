@@ -1,4 +1,4 @@
-﻿namespace Cake.AzureDevOps.WorkItemTracking
+﻿namespace Cake.AzureDevOps.Boards.WorkItemTracking
 {
     using System;
     using System.Collections.Generic;
@@ -413,7 +413,7 @@
             if (this.workItem.Fields.TryGetValue(fieldName, out var field))
             {
                 return field.ToString();
-            } 
+            }
             else
             {
                 return string.Empty;

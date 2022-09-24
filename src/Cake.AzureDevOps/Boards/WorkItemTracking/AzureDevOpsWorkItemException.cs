@@ -1,4 +1,4 @@
-﻿namespace Cake.AzureDevOps.WorkItemTracking
+﻿namespace Cake.AzureDevOps.Boards.WorkItemTracking
 {
     using System;
     using System.Runtime.Serialization;

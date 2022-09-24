@@ -1,8 +1,8 @@
-﻿namespace Cake.AzureDevOps.Tests.WorkItemTracking
+﻿namespace Cake.AzureDevOps.Tests.Boards.WorkItemTracking
 {
     using System;
     using Cake.AzureDevOps.Authentication;
-    using Cake.AzureDevOps.WorkItemTracking;
+    using Cake.AzureDevOps.Boards.WorkItemTracking;
     using Shouldly;
     using Xunit;
 

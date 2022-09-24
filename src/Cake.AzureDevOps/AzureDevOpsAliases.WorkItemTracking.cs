@@ -1,6 +1,6 @@
 ﻿namespace Cake.AzureDevOps
 {
-    using Cake.AzureDevOps.WorkItemTracking;
+    using Cake.AzureDevOps.Boards.WorkItemTracking;
     using Cake.Core;
     using Cake.Core.Annotations;
 
@@ -37,8 +37,8 @@
         /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
         /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
-        [CakeAliasCategory("Azure DevOps Work Item Tracking")]
-        [CakeNamespaceImport("Cake.AzureDevOps.WorkItemTracking")]
+        [CakeAliasCategory("Azure Boards")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Boards.WorkItemTracking")]
         public static AzureDevOpsWorkItem AzureDevOpsWorkItem(
             this ICakeContext context,
             AzureDevOpsWorkItemSettings settings)
@@ -77,8 +77,8 @@
         /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
         /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
-        [CakeAliasCategory("Azure DevOps Work Item Tracking")]
-        [CakeNamespaceImport("Cake.AzureDevOps.WorkItemTracking")]
+        [CakeAliasCategory("Azure Boards")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Boards.WorkItemTracking")]
         public static AzureDevOpsWorkItem AzureDevOpsWorkItemUsingAzurePipelinesOAuthToken(
             this ICakeContext context,
             int workItemId)
@@ -114,8 +114,8 @@
         /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
         /// <paramref name="throwExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
         [CakeMethodAlias]
-        [CakeAliasCategory("Azure DevvOps Work Item Tracking")]
-        [CakeNamespaceImport("Cake.AzureDevOps.WorkItemTracking")]
+        [CakeAliasCategory("Azure Boards")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Boards.WorkItemTracking")]
         public static AzureDevOpsWorkItem AzureDevOpsWorkItemUsingAzurePipelinesOAuthToken(
             this ICakeContext context,
             int workItemId,
