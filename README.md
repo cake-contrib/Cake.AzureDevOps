@@ -11,14 +11,12 @@ This addin for Cake allows you to work with Azure DevOps.
 |GitHub Release|-|[![GitHub release](https://img.shields.io/github/release/cake-contrib/Cake.AzureDevOps.svg)](https://github.com/cake-contrib/Cake.AzureDevOps/releases/latest)|
 |NuGet|[![NuGet](https://img.shields.io/nuget/v/Cake.AzureDevOps.svg)](https://www.nuget.org/packages/Cake.AzureDevOps)|[![NuGet](https://img.shields.io/nuget/vpre/Cake.AzureDevOps.svg)](https://www.nuget.org/packages/Cake.AzureDevOps)|
 
-## Build Status
+## Build & Test Status
 
-| | Develop | Master |
-|:--:|:--:|:--:|
-|AppVeyor Windows|[![Build status](https://ci.appveyor.com/api/projects/status/45blf3csh70opuos/branch/develop?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-azuredevops/branch/develop)|[![Build status](https://ci.appveyor.com/api/projects/status/45blf3csh70opuos/branch/master?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-azuredevops/branch/master)|
-|Azure DevOps Windows|[![Build Status](https://dev.azure.com/cake-contrib/Cake.AzureDevOps/_apis/build/status/cake-contrib.Cake.AzureDevOps?branchName=develop&jobName=Windows)](https://dev.azure.com/cake-contrib/Cake.AzureDevOps/_build/latest?definitionId=24&branchName=develop)|[![Build Status](https://dev.azure.com/cake-contrib/Cake.AzureDevOps/_apis/build/status/cake-contrib.Cake.AzureDevOps?branchName=master&jobName=Windows)](https://dev.azure.com/cake-contrib/Cake.AzureDevOps/_build/latest?definitionId=24&branchName=master)|
-|Azure DevOps macOS|[![Build Status](https://dev.azure.com/cake-contrib/Cake.AzureDevOps/_apis/build/status/cake-contrib.Cake.AzureDevOps?branchName=develop&jobName=macOS)](https://dev.azure.com/cake-contrib/Cake.AzureDevOps/_build/latest?definitionId=24&branchName=develop)|[![Build Status](https://dev.azure.com/cake-contrib/Cake.AzureDevOps/_apis/build/status/cake-contrib.Cake.AzureDevOps?branchName=master&jobName=macOS)](https://dev.azure.com/cake-contrib/Cake.AzureDevOps/_build/latest?definitionId=24&branchName=master)|
-|Azure DevOps Ubuntu|[![Build Status](https://dev.azure.com/cake-contrib/Cake.AzureDevOps/_apis/build/status/cake-contrib.Cake.AzureDevOps?branchName=develop&jobName=Ubuntu)](https://dev.azure.com/cake-contrib/Cake.AzureDevOps/_build/latest?definitionId=24&branchName=develop)|[![Build Status](https://dev.azure.com/cake-contrib/Cake.AzureDevOps/_apis/build/status/cake-contrib.Cake.AzureDevOps?branchName=master&jobName=Ubuntu)](https://dev.azure.com/cake-contrib/Cake.AzureDevOps/_build/latest?definitionId=24&branchName=master)|
+| Type               | CI Server    | Runner | Operating System | Develop | Master |
+|:------------------:|:------------:|:------:|:----------------:|:-------:|:------:|
+| Build & Unit Tests | AppVeyor     | N/A    | Windows          |[![Build status](https://ci.appveyor.com/api/projects/status/45blf3csh70opuos/branch/develop?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-azuredevops/branch/develop)|[![Build status](https://ci.appveyor.com/api/projects/status/45blf3csh70opuos/branch/master?svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-azuredevops/branch/master)|
+| Build & Unit Tests | Azure DevOps | N/A    | Windows          |[![Build Status](https://dev.azure.com/cake-contrib/Cake.AzureDevOps/_apis/build/status/cake-contrib.Cake.AzureDevOps?branchName=develop&jobName=Build_Windows)](https://dev.azure.com/cake-contrib/Cake.AzureDevOps/_build/latest?definitionId=24&branchName=develop)|[![Build Status](https://dev.azure.com/cake-contrib/Cake.AzureDevOps/_apis/build/status/cake-contrib.Cake.AzureDevOps?branchName=master&jobName=Build_Windows)](https://dev.azure.com/cake-contrib/Cake.AzureDevOps/_build/latest?definitionId=24&branchName=master)|
 
 ## Demos
 
