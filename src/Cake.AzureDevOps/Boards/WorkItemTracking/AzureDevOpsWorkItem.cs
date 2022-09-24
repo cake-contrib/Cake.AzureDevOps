@@ -2,8 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using Cake.AzureDevOps.Authentication;
     using Cake.Core.Diagnostics;
     using Microsoft.TeamFoundation.WorkItemTracking.WebApi.Models;
     using Microsoft.VisualStudio.Services.Common;
@@ -36,15 +34,17 @@
         /// <param name="log">The Cake log context.</param>
         /// <param name="settings">Settings for accessing AzureDevOps.</param>
         /// <param name="workItem">The work item.</param>
-        internal AzureDevOpsWorkItem(ICakeLog log, AzureDevOpsWorkItemSettings settings, WorkItem workItem)
+        /// <param name="workItemTrackingClientFactory">A factory to communicate with work item tracking client.</param>
+        internal AzureDevOpsWorkItem(ICakeLog log, AzureDevOpsWorkItemSettings settings, WorkItem workItem, IWorkItemTrackingClientFactory workItemTrackingClientFactory)
         {
             log.NotNull(nameof(log));
             settings.NotNull(nameof(settings));
             workItem.NotNull(nameof(workItem));
+            workItemTrackingClientFactory.NotNull(nameof(workItemTrackingClientFactory));
 
             this.log = log;
             this.workItem = workItem;
-            this.workItemTrackingClientFactory = new WorkItemTrackingClientFactory();
+            this.workItemTrackingClientFactory = workItemTrackingClientFactory;
             this.settings = settings;
         }
 
@@ -136,11 +136,6 @@
         /// Gets a value indicating whether a work item has been successfully loaded.
         /// </summary>
         public bool HasWorkItemLoaded => this.workItem != null;
-
-        /// <summary>
-        /// Gets the URL for accessing the web portal of the Azure DevOps collection.
-        /// </summary>
-        public Uri CollectionUrl => this.settings.CollectionUrl;        
 
         /// <summary>
         /// Gets the ID of the work item.

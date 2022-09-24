@@ -82,6 +82,16 @@
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="AzureDevOpsWorkItemSettings"/> class
+        /// based on the instance of a <see cref="AzureDevOpsWorkItemTrackingSettings"/> class.
+        /// </summary>
+        /// <param name="settings">Settings containing the parameters.</param>
+        public AzureDevOpsWorkItemSettings(AzureDevOpsWorkItemTrackingSettings settings)
+            : base(settings)
+        {
+        }
+
+        /// <summary>
         /// Gets the ID of the work item.
         /// </summary>
         public int WorkItemId { get; private set; }
