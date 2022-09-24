@@ -1,6 +1,8 @@
 ﻿namespace Cake.AzureDevOps.WorkItemTracking
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Cake.AzureDevOps.Authentication;
     using Cake.Core.Diagnostics;
     using Microsoft.TeamFoundation.WorkItemTracking.WebApi.Models;
@@ -163,6 +165,226 @@
         }
 
         /// <summary>
+        /// Gets the title of the work item.
+        /// Returns empty if no work item could be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public string Title
+        {
+            get
+            {
+                if (!this.ValidateWorkItem())
+                {
+                    return string.Empty;
+                }
+
+                return this.GetField("System.Title");
+            }
+        }
+
+        /// <summary>
+        /// Gets the description of the work item.
+        /// Returns empty if no work item could be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public string Description
+        {
+            get
+            {
+                if (!this.ValidateWorkItem())
+                {
+                    return string.Empty;
+                }
+
+                return this.GetField("System.Description");
+            }
+        }
+
+        /// <summary>
+        /// Gets the area path of the work item.
+        /// Returns empty if no work item could be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public string AreaPath
+        {
+            get
+            {
+                if (!this.ValidateWorkItem())
+                {
+                    return string.Empty;
+                }
+
+                return this.GetField("System.AreaPath");
+            }
+        }
+
+        /// <summary>
+        /// Gets the team project name of the work item.
+        /// Returns empty if no work item could be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public string TeamProject
+        {
+            get
+            {
+                if (!this.ValidateWorkItem())
+                {
+                    return string.Empty;
+                }
+
+                return this.GetField("System.TeamProject");
+            }
+        }
+
+        /// <summary>
+        /// Gets the iteration path of the work item.
+        /// Returns empty if no work item could be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public string IterationPath
+        {
+            get
+            {
+                if (!this.ValidateWorkItem())
+                {
+                    return string.Empty;
+                }
+
+                return this.GetField("System.IterationPath");
+            }
+        }
+
+        /// <summary>
+        /// Gets the type of the work item.
+        /// Returns empty if no work item could be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public string WorkItemType
+        {
+            get
+            {
+                if (!this.ValidateWorkItem())
+                {
+                    return string.Empty;
+                }
+
+                return this.GetField("System.WorkItemType");
+            }
+        }
+
+        /// <summary>
+        /// Gets the state of the work item.
+        /// Returns empty if no work item could be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public string State
+        {
+            get
+            {
+                if (!this.ValidateWorkItem())
+                {
+                    return string.Empty;
+                }
+
+                return this.GetField("System.State");
+            }
+        }
+
+        /// <summary>
+        /// Gets the reason of the state of the work item.
+        /// Returns empty if no work item could be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public string Reason
+        {
+            get
+            {
+                if (!this.ValidateWorkItem())
+                {
+                    return string.Empty;
+                }
+
+                return this.GetField("System.Reason");
+            }
+        }
+
+        /// <summary>
+        /// Gets the create date of the work item.
+        /// Returns DateTime.MinValue if no work item could be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public DateTime CreateDate
+        {
+            get
+            {
+                if (!this.ValidateWorkItem())
+                {
+                    return DateTime.MinValue;
+                }
+
+                return this.GetFieldAsDate("System.CreatedDate");
+            }
+        }
+
+        /// <summary>
+        /// Gets the modify date of the work item.
+        /// Returns DateTime.MinValue if no work item could be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public DateTime ChangeDate
+        {
+            get
+            {
+                if (!this.ValidateWorkItem())
+                {
+                    return DateTime.MinValue;
+                }
+
+                return this.GetFieldAsDate("System.ChangedDate");
+            }
+        }
+
+        /// <summary>
+        /// Gets the tags of the work item.
+        /// Returns empty list if no work item could be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>false</c>.
+        /// </summary>
+        /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
+        /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public IEnumerable<string> Tags
+        {
+            get
+            {
+                if (!this.ValidateWorkItem())
+                {
+                    return Array.Empty<string>();
+                }
+
+                return this.GetField("System.Tags").Split("; ", StringSplitOptions.RemoveEmptyEntries);
+            }
+        }
+
+        /// <summary>
         /// Validates if a work item could be found.
         /// Depending on <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/>
         /// the work item instance can be null for subsequent calls.
@@ -184,6 +406,30 @@
 
             this.log.Verbose("Skipping, since no work item instance could be found.");
             return false;
+        }
+
+        private string GetField(string fieldName)
+        {
+            if (this.workItem.Fields.TryGetValue(fieldName, out var field))
+            {
+                return field.ToString();
+            } 
+            else
+            {
+                return string.Empty;
+            }
+        }
+
+        private DateTime GetFieldAsDate(string fieldName)
+        {
+            if (this.workItem.Fields.TryGetValue(fieldName, out var field))
+            {
+                return (DateTime)field;
+            }
+            else
+            {
+                return DateTime.MinValue;
+            }
         }
     }
 }

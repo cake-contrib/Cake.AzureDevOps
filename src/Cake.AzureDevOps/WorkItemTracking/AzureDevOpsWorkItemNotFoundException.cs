@@ -7,7 +7,7 @@
     /// Represents an error if a work item was not found.
     /// </summary>
     [Serializable]
-    public class AzureDevOpsWorkItemNotFoundException : AzureDevOpsException
+    public class AzureDevOpsWorkItemNotFoundException : AzureDevOpsWorkItemException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureDevOpsWorkItemNotFoundException"/> class.
