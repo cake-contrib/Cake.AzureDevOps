@@ -1,9 +1,9 @@
 ﻿namespace Cake.AzureDevOps
 {
-    using System.Collections.Generic;
     using Cake.AzureDevOps.Pipelines;
     using Cake.Core;
     using Cake.Core.Annotations;
+    using System.Collections.Generic;
 
     /// <content>
     /// Contains functionality related to Azure Pipeline builds.
@@ -329,6 +329,54 @@
             return
                 new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory())
                     .GetChanges();
+        }
+
+        /// <summary>
+        /// Gets the work item ids associated with an Azure Pipelines build.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">Settings for getting the build.</param>
+        /// <example>
+        /// <para>Get work item ids associated with an Azure Pipelines build:</para>
+        /// <code>
+        /// <![CDATA[
+        /// var buildSettings =
+        ///     new AzureDevOpsBuildSettings(
+        ///         new Uri("http://myserver:8080/defaultcollection"),
+        ///         "MyProject",
+        ///         42,
+        ///         AzureDevOpsAuthenticationNtlm());
+        ///
+        /// var workItemIds =
+        ///     AzureDevOpsBuildWorkItemIds(
+        ///         buildSettings);
+        ///
+        /// Information("Work item ids:");
+        /// foreach (var id in workItemIds)
+        /// {
+        ///     Information("  {0}", id);
+        /// }
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <returns>The work item ids associated with the build.
+        /// Returns an empty list if build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Azure Pipelines")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Pipelines")]
+        public static IEnumerable<int> AzureDevOpsBuildWorkItemIds(
+            this ICakeContext context,
+            AzureDevOpsBuildSettings settings)
+        {
+            context.NotNull(nameof(context));
+            settings.NotNull(nameof(settings));
+
+            return
+                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory())
+                    .GetWorkItemIds();
         }
 
         /// <summary>

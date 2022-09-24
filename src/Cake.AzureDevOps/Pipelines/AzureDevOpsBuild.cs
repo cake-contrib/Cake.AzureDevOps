@@ -1,13 +1,13 @@
 ﻿namespace Cake.AzureDevOps.Pipelines
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
     using Cake.AzureDevOps.Authentication;
     using Cake.Core.Diagnostics;
     using Microsoft.TeamFoundation.Build.WebApi;
     using Microsoft.TeamFoundation.TestManagement.WebApi;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Class for writing issues to Azure DevOps pull requests.
@@ -366,6 +366,32 @@
                         .GetAwaiter()
                         .GetResult()
                         .Select(x => x.ToAzureDevOpsChange());
+            }
+        }
+
+        /// <summary>
+        /// Gets the work item ids associated with a build.
+        /// </summary>
+        /// <returns>The work item ids associated with a build or an empty list if no build could be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public IEnumerable<int> GetWorkItemIds()
+        {
+            if (!this.ValidateBuild())
+            {
+                return new List<int>();
+            }
+
+            using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.credentials))
+            {
+                return
+                    buildClient
+                        .GetBuildWorkItemsRefsAsync(this.ProjectId, this.BuildId)
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult()
+                        .Select(r => int.Parse(r.Id));
             }
         }
 
