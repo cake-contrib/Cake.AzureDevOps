@@ -61,5 +61,25 @@
                         .Select(x => new AzureDevOpsWorkItem(this.log, new AzureDevOpsWorkItemSettings(this.settings), x, this.workItemTrackingClientFactory));
             }
         }
+
+        /// <summary>
+        /// Gets the specified work item.
+        /// </summary>
+        /// <param name="workItemId">The ID of the work item.</param>
+        /// <returns>The work item specified by the ID.</returns>
+        public AzureDevOpsWorkItem GetWorkItem(int workItemId)
+        {
+            using (var workItemTrackingClient = this.workItemTrackingClientFactory.CreateWorkItemTrackingClient(this.settings.CollectionUrl, this.settings.Credentials))
+            {
+                var workItem =
+                    workItemTrackingClient
+                        .GetWorkItemAsync(workItemId, expand: Microsoft.TeamFoundation.WorkItemTracking.WebApi.Models.WorkItemExpand.Relations)
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult();
+
+                return new AzureDevOpsWorkItem(this.log, new AzureDevOpsWorkItemSettings(this.settings), workItem, this.workItemTrackingClientFactory);
+            }
+        }
     }
 }
