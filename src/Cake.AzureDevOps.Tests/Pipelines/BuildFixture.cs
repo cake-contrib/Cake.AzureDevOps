@@ -23,6 +23,8 @@
 
         public ITestManagementClientFactory TestManagementClientFactory { get; set; }
 
+        public IWorkItemTrackingClientFactory WorkItemTrackingClientFactory { get; set; }
+
         public AzureDevOpsBuildSettings Settings { get; set; }
 
         private void InitialzeFakes()
@@ -30,6 +32,7 @@
             this.Log = new FakeLog();
             this.BuildClientFactory = new FakeAllSetBuildClientFactory();
             this.TestManagementClientFactory = new FakeAllSetTestManagementClientFactory();
+            this.WorkItemTrackingClientFactory = new FakeAllSetWorkItemTrackingClientFactory();
         }
     }
 }

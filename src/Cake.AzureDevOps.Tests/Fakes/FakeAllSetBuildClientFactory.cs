@@ -1,10 +1,12 @@
 ﻿namespace Cake.AzureDevOps.Tests.Fakes
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading;
     using Cake.AzureDevOps.Authentication;
     using Microsoft.TeamFoundation.Build.WebApi;
     using Microsoft.TeamFoundation.Core.WebApi;
+    using Microsoft.VisualStudio.Services.WebApi;
     using Moq;
 
     public class FakeAllSetBuildClientFactory : FakeBuildClientFactory
@@ -28,6 +30,12 @@
                     BuildNumber = buildId.ToString(),
                     Project = new TeamProjectReference { Name = projectName },
                 });
+
+            mock.Setup(arg => arg.GetBuildWorkItemsRefsAsync(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int?>(), null, default))
+               .ReturnsAsync((string projectName, int buildId, int? top, object userState, CancellationToken token) => new List<ResourceRef>
+               {
+                  new ResourceRef { Id = "42" },
+               });
 
             mock = this.Setup(mock);
 

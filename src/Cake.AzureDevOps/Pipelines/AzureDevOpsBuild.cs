@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Cake.AzureDevOps.Authentication;
+    using Cake.AzureDevOps.Boards.WorkItemTracking;
     using Cake.Core.Diagnostics;
     using Microsoft.TeamFoundation.Build.WebApi;
     using Microsoft.TeamFoundation.TestManagement.WebApi;
@@ -15,10 +15,11 @@
     public sealed class AzureDevOpsBuild
     {
         private readonly ICakeLog log;
-        private readonly IAzureDevOpsCredentials credentials;
+        private readonly BaseAzureDevOpsProjectSettings settings;
         private readonly bool throwExceptionIfBuildCouldNotBeFound;
         private readonly IBuildClientFactory buildClientFactory;
         private readonly ITestManagementClientFactory testClientFactory;
+        private readonly IWorkItemTrackingClientFactory workItemTrackingClientFactory;
         private readonly Build build;
 
         /// <summary>
@@ -29,7 +30,7 @@
         /// <exception cref="AzureDevOpsBuildNotFoundException">If <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/>
         /// is set to <c>true</c> and no build could be found.</exception>
         public AzureDevOpsBuild(ICakeLog log, AzureDevOpsBuildSettings settings)
-            : this(log, settings, new BuildClientFactory(), new TestManagementClientFactory())
+            : this(log, settings, new BuildClientFactory(), new TestManagementClientFactory(), new WorkItemTrackingClientFactory())
         {
         }
 
@@ -49,8 +50,8 @@
             this.build = build;
             this.buildClientFactory = new BuildClientFactory();
             this.testClientFactory = new TestManagementClientFactory();
-            this.credentials = settings.Credentials;
-            this.CollectionUrl = settings.CollectionUrl;
+            this.workItemTrackingClientFactory = new WorkItemTrackingClientFactory();
+            this.settings = settings;
         }
 
         /// <summary>
@@ -60,24 +61,27 @@
         /// <param name="settings">Settings for accessing AzureDevOps.</param>
         /// <param name="buildClientFactory">A factory to communicate with build client.</param>
         /// <param name="testManagementClientFactory">A factory to communicate with test management client.</param>
+        /// <param name="workItemTrackingClientFactory">A factory to communicate with work item tracking client.</param>
         /// <exception cref="AzureDevOpsBuildNotFoundException">If <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/>
         /// is set to <c>true</c> and no build could be found.</exception>
         internal AzureDevOpsBuild(
             ICakeLog log,
             AzureDevOpsBuildSettings settings,
             IBuildClientFactory buildClientFactory,
-            ITestManagementClientFactory testManagementClientFactory)
+            ITestManagementClientFactory testManagementClientFactory,
+            IWorkItemTrackingClientFactory workItemTrackingClientFactory)
         {
             log.NotNull(nameof(log));
             settings.NotNull(nameof(settings));
             buildClientFactory.NotNull(nameof(buildClientFactory));
             testManagementClientFactory.NotNull(nameof(testManagementClientFactory));
+            workItemTrackingClientFactory.NotNull(nameof(workItemTrackingClientFactory));
 
             this.log = log;
             this.buildClientFactory = buildClientFactory;
             this.testClientFactory = testManagementClientFactory;
-            this.credentials = settings.Credentials;
-            this.CollectionUrl = settings.CollectionUrl;
+            this.workItemTrackingClientFactory = workItemTrackingClientFactory;
+            this.settings = settings;
             this.throwExceptionIfBuildCouldNotBeFound = settings.ThrowExceptionIfBuildCouldNotBeFound;
 
             using (var buildClient = this.buildClientFactory.CreateBuildClient(settings.CollectionUrl, settings.Credentials, out var authorizedIdenity))
@@ -149,7 +153,7 @@
         /// <summary>
         /// Gets the URL for accessing the web portal of the Azure DevOps collection.
         /// </summary>
-        public Uri CollectionUrl { get; }
+        public Uri CollectionUrl => this.settings.CollectionUrl;
 
         /// <summary>
         /// Gets the id of the Azure DevOps project.
@@ -357,7 +361,7 @@
                 return new List<AzureDevOpsChange>();
             }
 
-            using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.credentials))
+            using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.settings.Credentials))
             {
                 return
                     buildClient
@@ -380,18 +384,58 @@
         {
             if (!this.ValidateBuild())
             {
-                return new List<int>();
+                return Array.Empty<int>();
             }
 
-            using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.credentials))
+            using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.settings.Credentials))
             {
-                return
-                    buildClient
-                        .GetBuildWorkItemsRefsAsync(this.ProjectId, this.BuildId)
+                Task<List<Microsoft.VisualStudio.Services.WebApi.ResourceRef>> task;
+                if (this.ProjectId != Guid.Empty)
+                {
+                    task = buildClient.GetBuildWorkItemsRefsAsync(this.ProjectId, this.BuildId);
+                }
+                else if (!string.IsNullOrWhiteSpace(this.ProjectName))
+                {
+                    task = buildClient.GetBuildWorkItemsRefsAsync(this.ProjectName, this.BuildId);
+                }
+                else
+                {
+                    throw new InvalidOperationException("Either ProjectId or ProjectName needs to be set");
+                }
+
+                return task
                         .ConfigureAwait(false)
                         .GetAwaiter()
                         .GetResult()
                         .Select(r => int.Parse(r.Id));
+            }
+        }
+
+        /// <summary>
+        /// Gets the work item associated with a build.
+        /// </summary>
+        /// <returns>The work item associated with a build or an empty list if no build could be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        public IEnumerable<AzureDevOpsWorkItem> GetWorkItems()
+        {
+            if (!this.ValidateBuild())
+            {
+                return Array.Empty<AzureDevOpsWorkItem>();
+            }
+
+            var workItemIds = this.GetWorkItemIds();
+
+            using (var workItemTrackingClient = this.workItemTrackingClientFactory.CreateWorkItemTrackingClient(this.settings.CollectionUrl, this.settings.Credentials))
+            {
+                return
+                    workItemTrackingClient
+                        .GetWorkItemsAsync(workItemIds, expand: Microsoft.TeamFoundation.WorkItemTracking.WebApi.Models.WorkItemExpand.Relations)
+                        .ConfigureAwait(false)
+                        .GetAwaiter()
+                        .GetResult()
+                        .Select(x => new AzureDevOpsWorkItem(this.log, new AzureDevOpsWorkItemSettings(this.settings), x, this.workItemTrackingClientFactory));
             }
         }
 
@@ -422,7 +466,7 @@
                 return new List<AzureDevOpsTimelineRecord>();
             }
 
-            using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.credentials))
+            using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.settings.Credentials))
             {
                 return
                     buildClient
@@ -449,7 +493,7 @@
                 return new List<AzureDevOpsBuildArtifact>();
             }
 
-            using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.credentials))
+            using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.settings.Credentials))
             {
                 return
                     buildClient
@@ -502,7 +546,7 @@
                 return null;
             }
 
-            using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.credentials))
+            using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.settings.Credentials))
             {
                 var artifact =
                     new BuildArtifact
@@ -569,7 +613,7 @@
                 return new List<AzureDevOpsTestRun>();
             }
 
-            using (var testClient = this.testClientFactory.CreateTestManagementClient(this.CollectionUrl, this.credentials))
+            using (var testClient = this.testClientFactory.CreateTestManagementClient(this.CollectionUrl, this.settings.Credentials))
             {
                 // Read test result details for current build.
                 var testResultDetails =

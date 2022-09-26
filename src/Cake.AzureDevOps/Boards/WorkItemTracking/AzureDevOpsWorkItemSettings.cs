@@ -2,6 +2,7 @@
 {
     using System;
     using Cake.AzureDevOps.Authentication;
+    using Cake.AzureDevOps.Pipelines;
 
     /// <summary>
     /// Settings for aliases handling work items.
@@ -79,6 +80,16 @@
             workItemId.NotNegativeOrZero(nameof(workItemId));
 
             this.WorkItemId = workItemId;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AzureDevOpsWorkItemSettings"/> class
+        /// based on the instance of a <see cref="BaseAzureDevOpsProjectSettings"/> class.
+        /// </summary>
+        /// <param name="settings">Settings containing the parameters.</param>
+        public AzureDevOpsWorkItemSettings(BaseAzureDevOpsProjectSettings settings)
+            : base(settings)
+        {
         }
 
         /// <summary>
