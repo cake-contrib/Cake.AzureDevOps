@@ -574,6 +574,15 @@
         }
 
         /// <summary>
+        /// Sets the pull request comment thread to <see cref="CommentThreadStatus.Closed"/>.
+        /// </summary>
+        /// <param name="threadId">The Id of the comment thread.</param>
+        public void CloseCommentThread(int threadId)
+        {
+            this.SetCommentThreadStatus(threadId, CommentThreadStatus.Closed);
+        }
+
+        /// <summary>
         /// Creates a new comment thread with a single comment in the pull request.
         /// </summary>
         /// <param name="comment">Comment which should be added.</param>
