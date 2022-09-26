@@ -574,6 +574,15 @@
         }
 
         /// <summary>
+        /// Sets the pull request comment thread to <see cref="CommentThreadStatus.Closed"/>.
+        /// </summary>
+        /// <param name="threadId">The Id of the comment thread.</param>
+        public void CloseCommentThread(int threadId)
+        {
+            this.SetCommentThreadStatus(threadId, CommentThreadStatus.Closed);
+        }
+
+        /// <summary>
         /// Creates a new comment thread with a single comment in the pull request.
         /// </summary>
         /// <param name="comment">Comment which should be added.</param>
@@ -810,6 +819,37 @@
         }
 
         /// <summary>
+        /// Sets the pull request comment thread status.
+        /// </summary>
+        /// <param name="threadId">The Id of the comment thread.</param>
+        /// <param name="status">The comment thread status.</param>
+        public void SetCommentThreadStatus(int threadId, CommentThreadStatus status)
+        {
+            if (!this.ValidatePullRequest())
+            {
+                return;
+            }
+
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
+            {
+                var newThread = new GitPullRequestCommentThread
+                {
+                    Status = status,
+                };
+
+                gitClient
+                    .UpdateThreadAsync(
+                        newThread,
+                        this.RepositoryId,
+                        this.PullRequestId,
+                        threadId)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
+            }
+        }
+
+        /// <summary>
         /// Create a pull request.
         /// </summary>
         /// <param name="log">The Cake log context.</param>
@@ -891,37 +931,6 @@
                         settings.Credentials);
 
                 return new AzureDevOpsPullRequest(log, pullRequestReadSettings, gitClientFactory);
-            }
-        }
-
-        /// <summary>
-        /// Sets the pull request comment thread status.
-        /// </summary>
-        /// <param name="threadId">The Id of the comment thread.</param>
-        /// <param name="status">The comment thread status.</param>
-        private void SetCommentThreadStatus(int threadId, CommentThreadStatus status)
-        {
-            if (!this.ValidatePullRequest())
-            {
-                return;
-            }
-
-            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
-            {
-                var newThread = new GitPullRequestCommentThread
-                {
-                    Status = status,
-                };
-
-                gitClient
-                    .UpdateThreadAsync(
-                        newThread,
-                        this.RepositoryId,
-                        this.PullRequestId,
-                        threadId)
-                    .ConfigureAwait(false)
-                    .GetAwaiter()
-                    .GetResult();
             }
         }
 
