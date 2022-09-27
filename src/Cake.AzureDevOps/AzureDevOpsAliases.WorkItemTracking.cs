@@ -61,7 +61,7 @@
         /// Make sure the build has the 'Allow Scripts to access OAuth token' option enabled.
         /// </summary>
         /// <param name="context">The context.</param>
-        /// <param name="workItemId">ID of the work witem.</param>
+        /// <param name="workItemId">ID of the work item.</param>
         /// <example>
         /// <para>Get an Azure DevOps work item:</para>
         /// <code>
@@ -128,6 +128,69 @@
             settings.ThrowExceptionIfWorkItemCouldNotBeFound = throwExceptionIfWorkItemCouldNotBeFound;
 
             return AzureDevOpsWorkItem(context, settings);
+        }
+
+        /// <summary>
+        /// Gets an Azure DevOps work item tracking using the specified settings.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">Settings for getting the work item tracking.</param>
+        /// <example>
+        /// <para>Get a work item from Azure DevOps Server:</para>
+        /// <code>
+        /// <![CDATA[
+        /// var workItemTrackingSettings =
+        ///     new AzureDevOpsWorkItemTrackingSettings(
+        ///         new Uri("http://myserver:8080/defaultcollection"),
+        ///         "MyProject",
+        ///         AzureDevOpsAuthenticationNtlm());
+        ///
+        /// var workItemTracking =
+        ///     AzureDevOpsWorkItemTracking(
+        ///         workItemTrackingSettings);
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <returns>Description of the work item tracking.</returns>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Azure Boards")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Boards.WorkItemTracking")]
+        public static AzureDevOpsWorkItemTracking AzureDevOpsWorkItemTracking(
+            this ICakeContext context,
+            AzureDevOpsWorkItemTrackingSettings settings)
+        {
+            context.NotNull(nameof(context));
+            settings.NotNull(nameof(settings));
+
+            return new AzureDevOpsWorkItemTracking(context.Log, settings, new WorkItemTrackingClientFactory());
+        }
+
+        /// <summary>
+        /// Gets the description of a specific work item tracking the access token provided by Azure Pipelines.
+        /// Make sure the build has the 'Allow Scripts to access OAuth token' option enabled.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <example>
+        /// <para>Get an Azure DevOps work item tracking:</para>
+        /// <code>
+        /// <![CDATA[
+        /// var workItemTracking =
+        ///     AzureDevOpsWorkItemTrackingUsingAzurePipelinesOAuthToken();
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <returns>Description of the work item tracking.</returns>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Azure Boards")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Boards.WorkItemTracking")]
+        public static AzureDevOpsWorkItemTracking AzureDevOpsWorkItemTrackingUsingAzurePipelinesOAuthToken(
+            this ICakeContext context)
+        {
+            context.NotNull(nameof(context));
+
+            var settings = AzureDevOpsWorkItemTrackingSettings.UsingAzurePipelinesOAuthToken();
+
+            return AzureDevOpsWorkItemTracking(context, settings);
         }
     }
 }
