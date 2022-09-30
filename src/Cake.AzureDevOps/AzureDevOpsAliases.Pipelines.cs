@@ -408,7 +408,7 @@
         /// ]]>
         /// </code>
         /// </example>
-        /// <returns>The work item ids associated with the build.
+        /// <returns>The work items associated with the build.
         /// Returns an empty list if build could not be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
         /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
