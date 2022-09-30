@@ -412,7 +412,7 @@
         }
 
         /// <summary>
-        /// Gets the work item associated with a build.
+        /// Gets the work items associated with a build.
         /// </summary>
         /// <returns>The work item associated with a build or an empty list if no build could be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
