@@ -61,7 +61,7 @@
         /// Make sure the build has the 'Allow Scripts to access OAuth token' option enabled.
         /// </summary>
         /// <param name="context">The context.</param>
-        /// <param name="workItemId">ID of the work witem.</param>
+        /// <param name="workItemId">ID of the work item.</param>
         /// <example>
         /// <para>Get an Azure DevOps work item:</para>
         /// <code>
