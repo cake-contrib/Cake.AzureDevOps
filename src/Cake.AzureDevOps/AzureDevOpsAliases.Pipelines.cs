@@ -1,6 +1,7 @@
 ﻿namespace Cake.AzureDevOps
 {
     using System.Collections.Generic;
+    using Cake.AzureDevOps.Boards.WorkItemTracking;
     using Cake.AzureDevOps.Pipelines;
     using Cake.Core;
     using Cake.Core.Annotations;
@@ -47,7 +48,7 @@
             context.NotNull(nameof(context));
             settings.NotNull(nameof(settings));
 
-            var build = new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory());
+            var build = new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory(), new WorkItemTrackingClientFactory());
 
             if (build.HasBuildLoaded)
             {
@@ -279,7 +280,7 @@
             settings.NotNull(nameof(settings));
 
             return
-                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory())
+                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory(), new WorkItemTrackingClientFactory())
                     .IsBuildFailing();
         }
 
@@ -327,8 +328,104 @@
             settings.NotNull(nameof(settings));
 
             return
-                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory())
+                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory(), new WorkItemTrackingClientFactory())
                     .GetChanges();
+        }
+
+        /// <summary>
+        /// Gets the work item ids associated with an Azure Pipelines build.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">Settings for getting the build.</param>
+        /// <example>
+        /// <para>Get work item ids associated with an Azure Pipelines build:</para>
+        /// <code>
+        /// <![CDATA[
+        /// var buildSettings =
+        ///     new AzureDevOpsBuildSettings(
+        ///         new Uri("http://myserver:8080/defaultcollection"),
+        ///         "MyProject",
+        ///         42,
+        ///         AzureDevOpsAuthenticationNtlm());
+        ///
+        /// var workItemIds =
+        ///     AzureDevOpsBuildWorkItemIds(
+        ///         buildSettings);
+        ///
+        /// Information("Work item ids:");
+        /// foreach (var id in workItemIds)
+        /// {
+        ///     Information("  {0}", id);
+        /// }
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <returns>The work item ids associated with the build.
+        /// Returns an empty list if build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Azure Pipelines")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Pipelines")]
+        public static IEnumerable<int> AzureDevOpsBuildWorkItemIds(
+            this ICakeContext context,
+            AzureDevOpsBuildSettings settings)
+        {
+            context.NotNull(nameof(context));
+            settings.NotNull(nameof(settings));
+
+            return
+                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory(), new WorkItemTrackingClientFactory())
+                    .GetWorkItemIds();
+        }
+
+        /// <summary>
+        /// Gets the work items associated with an Azure Pipelines build.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">Settings for getting the build.</param>
+        /// <example>
+        /// <para>Get work items associated with an Azure Pipelines build:</para>
+        /// <code>
+        /// <![CDATA[
+        /// var buildSettings =
+        ///     new AzureDevOpsBuildSettings(
+        ///         new Uri("http://myserver:8080/defaultcollection"),
+        ///         "MyProject",
+        ///         42,
+        ///         AzureDevOpsAuthenticationNtlm());
+        ///
+        /// var workItems =
+        ///     AzureDevOpsBuildWorkItems(
+        ///         buildSettings);
+        ///
+        /// Information("Work item:");
+        /// foreach (var workItem in workItems)
+        /// {
+        ///     Information("  {0}: {1}", workItem.Id, workItem.Title);
+        /// }
+        /// ]]>
+        /// </code>
+        /// </example>
+        /// <returns>The work items associated with the build.
+        /// Returns an empty list if build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
+        /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Azure Pipelines")]
+        [CakeNamespaceImport("Cake.AzureDevOps.Pipelines")]
+        public static IEnumerable<AzureDevOpsWorkItem> AzureDevOpsBuildWorkItems(
+            this ICakeContext context,
+            AzureDevOpsBuildSettings settings)
+        {
+            context.NotNull(nameof(context));
+            settings.NotNull(nameof(settings));
+
+            return
+                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory(), new WorkItemTrackingClientFactory())
+                    .GetWorkItems();
         }
 
         /// <summary>
@@ -375,7 +472,7 @@
             settings.NotNull(nameof(settings));
 
             return
-                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory())
+                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory(), new WorkItemTrackingClientFactory())
                     .GetTimelineRecords();
         }
 
@@ -423,7 +520,7 @@
             settings.NotNull(nameof(settings));
 
             return
-                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory())
+                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory(), new WorkItemTrackingClientFactory())
                     .GetArtifacts();
         }
 
@@ -471,7 +568,7 @@
             settings.NotNull(nameof(settings));
 
             return
-                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory())
+                new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory(), new WorkItemTrackingClientFactory())
                     .GetTestRuns();
         }
 

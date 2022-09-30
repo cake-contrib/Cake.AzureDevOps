@@ -991,7 +991,6 @@
             public void Should_Throw_If_Build_Id_Env_Var_Is_Set_But_Ctor_Build_Id_Value_Zero_With_OAuthToken()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
                 Environment.SetEnvironmentVariable("BUILD_BUILDID", "20");
@@ -1008,7 +1007,6 @@
             public void Should_Throw_If_Build_Id_Env_Var_Is_Set_But_Ctor_Build_Id_Value_Negative_With_OAuthToken()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
                 Environment.SetEnvironmentVariable("BUILD_BUILDID", "20");

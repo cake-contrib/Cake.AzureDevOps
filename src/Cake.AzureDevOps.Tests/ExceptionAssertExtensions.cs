@@ -24,6 +24,17 @@
         }
 
         /// <summary>
+        /// Checks if an exception is of type <see cref="ArgumentException"/>.
+        /// </summary>
+        /// <param name="exception">Exception to check.</param>
+        /// <param name="parameterName">Expected name of the parameter which has caused the exception.</param>
+        public static void IsArgumentException(this Exception exception, string parameterName)
+        {
+            Assert.IsType<ArgumentException>(exception);
+            Assert.Equal(parameterName, ((ArgumentException)exception).ParamName);
+        }
+
+        /// <summary>
         /// Checks if an exception is of type <see cref="ArgumentNullException"/>.
         /// </summary>
         /// <param name="exception">Exception to check.</param>
@@ -43,17 +54,6 @@
         {
             Assert.IsType<ArgumentOutOfRangeException>(exception);
             Assert.Equal(parameterName, ((ArgumentOutOfRangeException)exception).ParamName);
-        }
-
-        /// <summary>
-        /// Checks if an exception is of type <see cref="ArgumentException"/>.
-        /// </summary>
-        /// <param name="exception">Exception to check.</param>
-        /// <param name="parameterName">Expected name of the parameter which has caused the exception.</param>
-        public static void IsArgumentException(this Exception exception, string parameterName)
-        {
-            Assert.IsType<ArgumentException>(exception);
-            Assert.Equal(parameterName, ((ArgumentException)exception).ParamName);
         }
 
         /// <summary>

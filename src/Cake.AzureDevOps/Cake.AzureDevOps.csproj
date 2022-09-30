@@ -22,7 +22,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/cake-contrib/Cake.AzureDevOps.git</RepositoryUrl>
-    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.AzureDevOps/releases/tag/2.0.0</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.AzureDevOps/releases/tag/2.1.0</PackageReleaseNotes>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);PackBuildOutputs</TargetsForTfmSpecificContentInPackage>
@@ -72,6 +72,9 @@
         <PackagePath>lib\$(TargetFramework)\</PackagePath>
       </TfmSpecificPackageFile>
       <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.TeamFoundation.DistributedTask.Common.Contracts.dll">
+        <PackagePath>lib\$(TargetFramework)\</PackagePath>
+      </TfmSpecificPackageFile>
+      <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.TeamFoundation.Policy.WebApi.dll">
         <PackagePath>lib\$(TargetFramework)\</PackagePath>
       </TfmSpecificPackageFile>
       <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.TeamFoundation.SourceControl.WebApi.dll">

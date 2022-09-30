@@ -13,10 +13,10 @@
         {
             var mock = new Mock<GitHttpClient>(MockBehavior.Loose, collectionUrl, credentials.ToVssCredentials());
 
-            mock.Setup(arg => arg.GetPullRequestAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), null, null, null, null, null, null, default(CancellationToken)))
+            mock.Setup(arg => arg.GetPullRequestAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), null, null, null, null, null, null, default))
                 .ReturnsAsync(() => null);
 
-            mock.Setup(arg => arg.GetPullRequestsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<GitPullRequestSearchCriteria>(), null, null, 1, null, default(CancellationToken)))
+            mock.Setup(arg => arg.GetPullRequestsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<GitPullRequestSearchCriteria>(), null, null, 1, null, default))
                 .ReturnsAsync(() => new List<GitPullRequest>());
 
             mock = this.Setup(mock);

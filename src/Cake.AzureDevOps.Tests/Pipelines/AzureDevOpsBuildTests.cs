@@ -23,7 +23,8 @@
                     fixture.Log,
                     fixture.Settings,
                     fixture.BuildClientFactory,
-                    fixture.TestManagementClientFactory);
+                    fixture.TestManagementClientFactory,
+                    fixture.WorkItemTrackingClientFactory);
 
                 // When
                 var result = build.GetTestRuns();
@@ -42,7 +43,8 @@
                     fixture.Log,
                     fixture.Settings,
                     fixture.BuildClientFactory,
-                    fixture.TestManagementClientFactory);
+                    fixture.TestManagementClientFactory,
+                    fixture.WorkItemTrackingClientFactory);
 
                 // When
                 var result = build.GetTestRuns();
@@ -64,7 +66,8 @@
                     fixture.Log,
                     fixture.Settings,
                     fixture.BuildClientFactory,
-                    fixture.TestManagementClientFactory);
+                    fixture.TestManagementClientFactory,
+                    fixture.WorkItemTrackingClientFactory);
 
                 // When
                 var result = build.GetTestRuns(testRunsCount);
@@ -87,7 +90,8 @@
                     fixture.Log,
                     fixture.Settings,
                     fixture.BuildClientFactory,
-                    fixture.TestManagementClientFactory);
+                    fixture.TestManagementClientFactory,
+                    fixture.WorkItemTrackingClientFactory);
 
                 // When
                 var result = Record.Exception(() => build.GetTestRuns(null, new string[] { "FakeOutcome" }));
@@ -105,7 +109,8 @@
                     fixture.Log,
                     fixture.Settings,
                     fixture.BuildClientFactory,
-                    fixture.TestManagementClientFactory);
+                    fixture.TestManagementClientFactory,
+                    fixture.WorkItemTrackingClientFactory);
 
                 // When
                 var result = build.GetTestRuns();
@@ -124,6 +129,30 @@
                     new AzureDevOpsTestResult { AutomatedTestName = "t2", Outcome = "Failed", ErrorMessage = "Error" });
                 testResults.ElementAt(2).ShouldBeEquivalentTo(
                     new AzureDevOpsTestResult { AutomatedTestName = "t3", Outcome = "Passed", ErrorMessage = string.Empty });
+            }
+        }
+
+        public sealed class TheGetWorkItemsMethod
+        {
+            [Fact]
+            public void Should_Return_List_Of_WorkItems()
+            {
+                // Given
+                var fixture = new BuildFixture(BuildFixture.ValidAzureDevOpsCollectionUrl, "Foo", 42);
+                var build = new AzureDevOpsBuild(
+                    fixture.Log,
+                    fixture.Settings,
+                    fixture.BuildClientFactory,
+                    fixture.TestManagementClientFactory,
+                    fixture.WorkItemTrackingClientFactory);
+
+                // When
+                var result = build.GetWorkItems();
+
+                // Then
+                result.ShouldNotBeNull();
+                result.ShouldHaveSingleItem();
+                result.First().WorkItemId.ShouldBe(42);
             }
         }
     }

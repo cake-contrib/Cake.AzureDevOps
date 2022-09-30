@@ -10,7 +10,9 @@ pr:
 - hotfix/*
 
 jobs:
-- job: Windows
+# Build & Test Windows
+- job: Build_Windows
+  displayName: Build & Test Windows
   pool:
     vmImage: 'windows-2022'
   steps:  
@@ -19,10 +21,15 @@ jobs:
       .\build.ps1
       exit $LASTEXITCODE 
     displayName: 'Cake Build'
+  - publish: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    artifact: NuGet Package Windows
+    displayName: 'Publish NuGet package as build artifact'
 
-- job: macOS
+# Build & Test macOS
+- job: Build_macOS
+  displayName: Build & Test macOS
   pool:
-    vmImage: 'macOS-10.15'
+    vmImage: 'macOS-11'
   steps:
   - task: UseDotNet@2
     inputs:
@@ -36,10 +43,15 @@ jobs:
   - bash: |
       ./build.sh
     displayName: 'Cake Build'
+  - publish: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    artifact: NuGet Package macOS
+    displayName: 'Publish NuGet package as build artifact'
 
-- job: Ubuntu
+# Build & Test Ubuntu
+- job: Build_Ubuntu
+  displayName: Build & Test Ubuntu
   pool:
-    vmImage: 'ubuntu-18.04'
+    vmImage: 'ubuntu-20.04'
   steps:
   - task: UseDotNet@2
     inputs:
@@ -53,3 +65,420 @@ jobs:
   - bash: |
       ./build.sh --verbosity=diagnostic
     displayName: 'Cake Build'
+  - publish: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    artifact: NuGet Package Ubuntu
+    displayName: 'Publish NuGet package as build artifact'
+
+# Integration Tests Frosting Windows (.NET Core 3.1)
+- job: Test_Frosting_Windows_NetCoreApp31
+  displayName: Integration Tests Frosting Windows (.NET Core 3.1)
+  dependsOn: Build_Windows
+  pool:
+    vmImage: 'windows-2019'
+  steps:
+  - download: current
+    artifact: NuGet Package Windows
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Windows
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - powershell: ./build.ps1 --verbosity=diagnostic
+    workingDirectory: ./tests/frosting/netcoreapp3.1
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Frosting Windows (.NET 5)
+- job: Test_Frosting_Windows_Net5
+  displayName: Integration Tests Frosting Windows (.NET 5)
+  dependsOn: Build_Windows
+  pool:
+    vmImage: 'windows-2019'
+  steps:
+  - download: current
+    artifact: NuGet Package Windows
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Windows
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - powershell: ./build.ps1 --verbosity=diagnostic
+    workingDirectory: ./tests/frosting/net5.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Frosting Windows (.NET 6)
+- job: Test_Frosting_Windows_Net6
+  displayName: Integration Tests Frosting Windows (.NET 6)
+  dependsOn: Build_Windows
+  pool:
+    vmImage: 'windows-2022'
+  steps:
+  - download: current
+    artifact: NuGet Package Windows
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Windows
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - powershell: ./build.ps1 --verbosity=diagnostic
+    workingDirectory: ./tests/frosting/net6.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Script Runner Windows (.NET Core 3.1)
+- job: Test_Script_Runner_Windows_NetCoreApp31
+  displayName: Integration Tests Script Runner Windows (.NET Core 3.1)
+  dependsOn: Build_Windows
+  pool:
+    vmImage: 'windows-2019'
+  steps:
+  - download: current
+    artifact: NuGet Package Windows
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Windows
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - powershell: ./build.ps1 --verbosity=diagnostic
+    workingDirectory: ./tests/script-runner/netcoreapp3.1
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Script Runner Windows (.NET 5)
+- job: Test_Script_Runner_Windows_Net5
+  displayName: Integration Tests Script Runner Windows (.NET 5)
+  dependsOn: Build_Windows
+  pool:
+    vmImage: 'windows-2019'
+  steps:
+  - download: current
+    artifact: NuGet Package Windows
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Windows
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - powershell: ./build.ps1 --verbosity=diagnostic
+    workingDirectory: ./tests/script-runner/net5.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Script Runner Windows (.NET 6)
+- job: Test_Script_Runner_Windows_Net6
+  displayName: Integration Tests Script Runner Windows (.NET 6)
+  dependsOn: Build_Windows
+  pool:
+    vmImage: 'windows-2022'
+  steps:
+  - download: current
+    artifact: NuGet Package Windows
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Windows
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - powershell: ./build.ps1 --verbosity=diagnostic
+    workingDirectory: ./tests/script-runner/net6.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Frosting macOS (.NET Core 3.1)
+- job: Test_Frosting_macOS_NetCoreApp31
+  displayName: Integration Tests Frosting macOS (.NET Core 3.1)
+  dependsOn: Build_macOS
+  pool:
+    vmImage: 'macOS-11'
+  steps:
+  - download: current
+    artifact: NuGet Package macOS
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package macOS
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '3.x'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/frosting/netcoreapp3.1
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Frosting macOS (.NET 5)
+- job: Test_Frosting_macOS_Net5
+  displayName: Integration Tests Frosting macOS (.NET 5)
+  dependsOn: Build_macOS
+  pool:
+    vmImage: 'macOS-11'
+  steps:
+  - download: current
+    artifact: NuGet Package macOS
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package macOS
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '5.x'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/frosting/net5.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Frosting macOS (.NET 6)
+- job: Test_Frosting_macOS_Net6
+  displayName: Integration Tests Frosting macOS (.NET 6)
+  dependsOn: Build_macOS
+  pool:
+    vmImage: 'macOS-11'
+  steps:
+  - download: current
+    artifact: NuGet Package macOS
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package macOS
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/frosting/net6.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Script Runner macOS (.NET Core 3.1)
+- job: Test_Script_Runner_macOS_NetCoreApp31
+  displayName: Integration Tests Script Runner macOS (.NET Core 3.1)
+  dependsOn: Build_macOS
+  pool:
+    vmImage: 'macOS-11'
+  steps:
+  - download: current
+    artifact: NuGet Package macOS
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package macOS
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '3.x'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/script-runner/netcoreapp3.1
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Script Runner macOS (.NET 5)
+- job: Test_Script_Runner_macOS_Net5
+  displayName: Integration Tests Script Runner macOS (.NET 5)
+  dependsOn: Build_macOS
+  pool:
+    vmImage: 'macOS-11'
+  steps:
+  - download: current
+    artifact: NuGet Package macOS
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package macOS
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '5.x'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/script-runner/net5.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Script Runner macOS (.NET 6)
+- job: Test_Script_Runner_macOS_Net6
+  displayName: Integration Tests Script Runner macOS (.NET 6)
+  dependsOn: Build_macOS
+  pool:
+    vmImage: 'macOS-11'
+  steps:
+  - download: current
+    artifact: NuGet Package macOS
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package macOS
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/script-runner/net6.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Frosting Ubuntu (.NET Core 3.1)
+- job: Test_Frosting_Ubuntu_NetCoreApp31
+  displayName: Integration Tests Frosting Ubuntu (.NET Core 3.1)
+  dependsOn: Build_Ubuntu
+  pool:
+    vmImage: 'ubuntu-20.04'
+  steps:
+  - download: current
+    artifact: NuGet Package Ubuntu
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Ubuntu
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '3.x'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/frosting/netcoreapp3.1
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Frosting Ubuntu (.NET 5)
+- job: Test_Frosting_Ubuntu_Net5
+  displayName: Integration Tests Frosting Ubuntu (.NET 5)
+  dependsOn: Build_Ubuntu
+  pool:
+    vmImage: 'ubuntu-20.04'
+  steps:
+  - download: current
+    artifact: NuGet Package Ubuntu
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Ubuntu
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '5.x'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/frosting/net5.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Frosting Ubuntu (.NET 6)
+- job: Test_Frosting_Ubuntu_Net6
+  displayName: Integration Tests Frosting Ubuntu (.NET 6)
+  dependsOn: Build_Ubuntu
+  pool:
+    vmImage: 'ubuntu-20.04'
+  steps:
+  - download: current
+    artifact: NuGet Package Ubuntu
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Ubuntu
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/frosting/net6.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Script Runner Ubuntu (.NET Core 3.1)
+- job: Test_Script_Runner_Ubuntu_NetCoreApp31
+  displayName: Integration Tests Script Runner Ubuntu (.NET Core 3.1)
+  dependsOn: Build_Ubuntu
+  pool:
+    vmImage: 'ubuntu-20.04'
+  steps:
+  - download: current
+    artifact: NuGet Package Ubuntu
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Ubuntu
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '3.x'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/script-runner/netcoreapp3.1
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Script Runner Ubuntu (.NET 5)
+- job: Test_Script_Runner_Ubuntu_Net5
+  displayName: Integration Tests Script Runner Ubuntu (.NET 5)
+  dependsOn: Build_Ubuntu
+  pool:
+    vmImage: 'ubuntu-20.04'
+  steps:
+  - download: current
+    artifact: NuGet Package Ubuntu
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Ubuntu
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '5.x'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/script-runner/net5.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Script Runner Ubuntu (.NET 6)
+- job: Test_Script_Runner_Ubuntu_Net6
+  displayName: Integration Tests Script Runner Ubuntu (.NET 6)
+  dependsOn: Build_Ubuntu
+  pool:
+    vmImage: 'ubuntu-20.04'
+  steps:
+  - download: current
+    artifact: NuGet Package Ubuntu
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Ubuntu
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/script-runner/net6.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)

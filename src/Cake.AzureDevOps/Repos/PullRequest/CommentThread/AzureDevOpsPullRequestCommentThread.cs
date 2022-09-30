@@ -180,7 +180,7 @@
 
             if (this.thread.Properties == null)
             {
-                return default(T);
+                return default;
             }
 
             return this.thread.Properties.GetValue(propertyName, default(T));

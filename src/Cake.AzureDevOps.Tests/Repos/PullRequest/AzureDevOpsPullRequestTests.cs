@@ -682,6 +682,20 @@
             }
 
             [Fact]
+            public void Should_Resolve_Close_Thread()
+            {
+                // Given
+                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsUrl, 21);
+                var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
+
+                // When
+                pullRequest.CloseCommentThread(123);
+
+                // Then
+                // ?? Nothing to validate here since the method returns void
+            }
+
+            [Fact]
             public void Should_Not_Throw_If_Null_Is_Returned()
             {
                 // Given
@@ -1018,8 +1032,10 @@
                 // Given
                 var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
                 var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
-                var inComment = new AzureDevOpsComment(new Microsoft.TeamFoundation.SourceControl.WebApi.Comment { Id = 1 }, 5);
-                inComment.Content = "new Content";
+                var inComment = new AzureDevOpsComment(new Microsoft.TeamFoundation.SourceControl.WebApi.Comment { Id = 1 }, 5)
+                {
+                    Content = "new Content",
+                };
 
                 // When
                 pullRequest.DeleteComment(inComment);
@@ -1089,8 +1105,10 @@
                 // Given
                 var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsUrl, 200);
                 var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
-                var inComment = new AzureDevOpsComment(new Microsoft.TeamFoundation.SourceControl.WebApi.Comment { Id = 1 }, 5);
-                inComment.Content = "new Content";
+                var inComment = new AzureDevOpsComment(new Microsoft.TeamFoundation.SourceControl.WebApi.Comment { Id = 1 }, 5)
+                {
+                    Content = "new Content",
+                };
 
                 // When
                 var outComment = pullRequest.UpdateComment(inComment);
