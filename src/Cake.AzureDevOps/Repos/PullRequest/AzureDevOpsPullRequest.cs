@@ -513,22 +513,26 @@
                     .GetAwaiter()
                     .GetResult();
 
-                this.log.Verbose(
-                    "Found {0} changed file(s) in the pull request",
-                    commitDiffs.Changes.Count());
-
                 if (!commitDiffs.ChangeCounts.Any())
                 {
+                    this.log.Verbose("Found 0 changed files in the pull request");
+
                     return new List<FilePath>();
                 }
 
-                return
+                var changes =
                     from change in commitDiffs.Changes
                     where
                         change != null &&
                         !change.Item.IsFolder
                     select
                         new FilePath(change.Item.Path.TrimStart('/'));
+
+                this.log.Verbose(
+                    "Found {0} changed file(s) in the pull request",
+                    changes.Count());
+
+                return changes;
             }
         }
 
