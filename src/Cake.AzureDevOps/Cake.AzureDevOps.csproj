@@ -83,6 +83,9 @@
       <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.TeamFoundation.TestManagement.WebApi.dll">
         <PackagePath>lib\$(TargetFramework)\</PackagePath>
       </TfmSpecificPackageFile>
+	  <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.TeamFoundation.WorkItemTracking.WebApi.dll">
+		<PackagePath>lib\$(TargetFramework)\</PackagePath>
+	  </TfmSpecificPackageFile>
       <TfmSpecificPackageFile Include="$(OutputPath)\**\Microsoft.VisualStudio.Services.Client.Interactive.dll">
         <PackagePath>lib\$(TargetFramework)\</PackagePath>
       </TfmSpecificPackageFile>
