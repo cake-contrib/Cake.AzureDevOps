@@ -14,21 +14,15 @@
         /// <returns>Converted build result.</returns>
         public static AzureDevOpsBuildResult ToAzureDevOpsBuildResult(this BuildResult result)
         {
-            switch (result)
+            return result switch
             {
-                case BuildResult.None:
-                    return AzureDevOpsBuildResult.None;
-                case BuildResult.Succeeded:
-                    return AzureDevOpsBuildResult.Succeeded;
-                case BuildResult.PartiallySucceeded:
-                    return AzureDevOpsBuildResult.PartiallySucceeded;
-                case BuildResult.Failed:
-                    return AzureDevOpsBuildResult.Failed;
-                case BuildResult.Canceled:
-                    return AzureDevOpsBuildResult.Canceled;
-                default:
-                    throw new System.Exception("Unknown value");
-            }
+                BuildResult.None => AzureDevOpsBuildResult.None,
+                BuildResult.Succeeded => AzureDevOpsBuildResult.Succeeded,
+                BuildResult.PartiallySucceeded => AzureDevOpsBuildResult.PartiallySucceeded,
+                BuildResult.Failed => AzureDevOpsBuildResult.Failed,
+                BuildResult.Canceled => AzureDevOpsBuildResult.Canceled,
+                _ => throw new System.Exception("Unknown value"),
+            };
         }
     }
 }
