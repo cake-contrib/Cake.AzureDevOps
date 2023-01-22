@@ -70,10 +70,7 @@
 
             set
             {
-                if (this.thread.ThreadContext == null)
-                {
-                    this.thread.ThreadContext = new CommentThreadContext();
-                }
+                this.thread.ThreadContext ??= new CommentThreadContext();
 
                 this.thread.ThreadContext.FilePath = value.FullPath;
             }
@@ -214,10 +211,7 @@
 
         private void EnsureRightFileStartExists()
         {
-            if (this.thread.ThreadContext == null)
-            {
-                this.thread.ThreadContext = new CommentThreadContext();
-            }
+            this.thread.ThreadContext ??= new CommentThreadContext();
 
             if (this.thread.ThreadContext.RightFileStart == null)
             {

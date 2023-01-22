@@ -14,23 +14,16 @@
         /// <returns>Converted query order.</returns>
         public static BuildQueryOrder ToBuildQueryOrder(this AzureDevOpsBuildQueryOrder queryOrder)
         {
-            switch (queryOrder)
+            return queryOrder switch
             {
-                case AzureDevOpsBuildQueryOrder.FinishTimeAscending:
-                    return BuildQueryOrder.FinishTimeAscending;
-                case AzureDevOpsBuildQueryOrder.FinishTimeDescending:
-                    return BuildQueryOrder.FinishTimeDescending;
-                case AzureDevOpsBuildQueryOrder.QueueTimeDescending:
-                    return BuildQueryOrder.QueueTimeDescending;
-                case AzureDevOpsBuildQueryOrder.QueueTimeAscending:
-                    return BuildQueryOrder.QueueTimeAscending;
-                case AzureDevOpsBuildQueryOrder.StartTimeDescending:
-                    return BuildQueryOrder.StartTimeDescending;
-                case AzureDevOpsBuildQueryOrder.StartTimeAscending:
-                    return BuildQueryOrder.StartTimeAscending;
-                default:
-                    throw new System.Exception("Unknown value");
-            }
+                AzureDevOpsBuildQueryOrder.FinishTimeAscending => BuildQueryOrder.FinishTimeAscending,
+                AzureDevOpsBuildQueryOrder.FinishTimeDescending => BuildQueryOrder.FinishTimeDescending,
+                AzureDevOpsBuildQueryOrder.QueueTimeDescending => BuildQueryOrder.QueueTimeDescending,
+                AzureDevOpsBuildQueryOrder.QueueTimeAscending => BuildQueryOrder.QueueTimeAscending,
+                AzureDevOpsBuildQueryOrder.StartTimeDescending => BuildQueryOrder.StartTimeDescending,
+                AzureDevOpsBuildQueryOrder.StartTimeAscending => BuildQueryOrder.StartTimeAscending,
+                _ => throw new System.Exception("Unknown value"),
+            };
         }
     }
 }

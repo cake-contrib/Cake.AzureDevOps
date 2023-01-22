@@ -852,10 +852,7 @@
                 }
 
                 var targetBranchName = settings.TargetRefName;
-                if (targetBranchName == null)
-                {
-                    targetBranchName = repository.DefaultBranch;
-                }
+                targetBranchName ??= repository.DefaultBranch;
 
                 var refs =
                     gitClient

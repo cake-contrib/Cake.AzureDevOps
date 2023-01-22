@@ -14,25 +14,17 @@
         /// <returns>Converted state.</returns>
         public static BuildStatus ToBuildStatus(this AzureDevOpsBuildStatus status)
         {
-            switch (status)
+            return status switch
             {
-                case AzureDevOpsBuildStatus.None:
-                    return BuildStatus.None;
-                case AzureDevOpsBuildStatus.InProgress:
-                    return BuildStatus.InProgress;
-                case AzureDevOpsBuildStatus.Completed:
-                    return BuildStatus.Completed;
-                case AzureDevOpsBuildStatus.Cancelling:
-                    return BuildStatus.Cancelling;
-                case AzureDevOpsBuildStatus.Postponed:
-                    return BuildStatus.Postponed;
-                case AzureDevOpsBuildStatus.NotStarted:
-                    return BuildStatus.NotStarted;
-                case AzureDevOpsBuildStatus.All:
-                    return BuildStatus.All;
-                default:
-                    throw new System.Exception("Unknown value");
-            }
+                AzureDevOpsBuildStatus.None => BuildStatus.None,
+                AzureDevOpsBuildStatus.InProgress => BuildStatus.InProgress,
+                AzureDevOpsBuildStatus.Completed => BuildStatus.Completed,
+                AzureDevOpsBuildStatus.Cancelling => BuildStatus.Cancelling,
+                AzureDevOpsBuildStatus.Postponed => BuildStatus.Postponed,
+                AzureDevOpsBuildStatus.NotStarted => BuildStatus.NotStarted,
+                AzureDevOpsBuildStatus.All => BuildStatus.All,
+                _ => throw new System.Exception("Unknown value"),
+            };
         }
     }
 }

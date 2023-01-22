@@ -15,19 +15,14 @@
         /// <returns>Converted state.</returns>
         public static AzureDevOpsPullRequestState ToAzureDevOpsPullRequestState(this PullRequestStatus state)
         {
-            switch (state)
+            return state switch
             {
-                case PullRequestStatus.NotSet:
-                    return AzureDevOpsPullRequestState.NotSet;
-                case PullRequestStatus.Active:
-                    return AzureDevOpsPullRequestState.Active;
-                case PullRequestStatus.Abandoned:
-                    return AzureDevOpsPullRequestState.Abandoned;
-                case PullRequestStatus.Completed:
-                    return AzureDevOpsPullRequestState.Completed;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(state));
-            }
+                PullRequestStatus.NotSet => AzureDevOpsPullRequestState.NotSet,
+                PullRequestStatus.Active => AzureDevOpsPullRequestState.Active,
+                PullRequestStatus.Abandoned => AzureDevOpsPullRequestState.Abandoned,
+                PullRequestStatus.Completed => AzureDevOpsPullRequestState.Completed,
+                _ => throw new ArgumentOutOfRangeException(nameof(state)),
+            };
         }
     }
 }
