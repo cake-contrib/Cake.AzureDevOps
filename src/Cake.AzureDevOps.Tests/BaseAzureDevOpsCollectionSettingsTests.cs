@@ -15,7 +15,7 @@
                 public void Should_Throw_If_CollectionUrl_Is_Null()
                 {
                     // Given
-                    Uri collectionUrl = null;
+                    const Uri collectionUrl = null;
                     var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                     // When
@@ -30,7 +30,7 @@
                 {
                     // Given
                     var collectionUrl = new Uri("http://example.com/collection");
-                    IAzureDevOpsCredentials credentials = null;
+                    const IAzureDevOpsCredentials credentials = null;
 
                     // When
                     var result = Record.Exception(() => new BaseAzureDevOpsCollectionSettingsImpl(collectionUrl, credentials));
@@ -74,7 +74,7 @@
                 public void Should_Throw_If_Settings_Are_Null()
                 {
                     // Given
-                    BaseAzureDevOpsCollectionSettingsImpl settings = null;
+                    const BaseAzureDevOpsCollectionSettingsImpl settings = null;
 
                     // When
                     var result = Record.Exception(() => new BaseAzureDevOpsCollectionSettingsImpl(settings));
@@ -127,7 +127,7 @@
                 public void Should_Throw_If_Credentials_Are_Null()
                 {
                     // Given
-                    IAzureDevOpsCredentials credentials = null;
+                    const IAzureDevOpsCredentials credentials = null;
 
                     // When
                     var result = Record.Exception(() => new BaseAzureDevOpsCollectionSettingsImpl(credentials));

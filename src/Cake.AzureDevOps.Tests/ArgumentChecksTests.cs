@@ -10,8 +10,8 @@
             public void Should_Throw_If_Value_Is_Null()
             {
                 // Given
-                object value = null;
-                var parameterName = "foo";
+                const object value = null;
+                const string parameterName = "foo";
 
                 // When
                 var result = Record.Exception(() => value.NotNull(parameterName));
@@ -24,8 +24,8 @@
             public void Should_Not_Throw_If_Value_Is_Not_Null()
             {
                 // Given
-                var value = "foo";
-                var parameterName = "foo";
+                const string value = "foo";
+                const string parameterName = "foo";
 
                 // When
                 value.NotNull(parameterName);
@@ -40,8 +40,8 @@
             public void Should_Throw_If_Value_Is_Null()
             {
                 // Given
-                string value = null;
-                var parameterName = "foo";
+                const string value = null;
+                const string parameterName = "foo";
 
                 // When
                 var result = Record.Exception(() => value.NotNullOrWhiteSpace(parameterName));
@@ -55,7 +55,7 @@
             {
                 // Given
                 var value = string.Empty;
-                var parameterName = "foo";
+                const string parameterName = "foo";
 
                 // When
                 var result = Record.Exception(() => value.NotNullOrWhiteSpace(parameterName));
@@ -68,8 +68,8 @@
             public void Should_Throw_If_Value_Is_WhiteSpace()
             {
                 // Given
-                var value = " ";
-                var parameterName = "foo";
+                const string value = " ";
+                const string parameterName = "foo";
 
                 // When
                 var result = Record.Exception(() => value.NotNullOrWhiteSpace(parameterName));
@@ -82,8 +82,8 @@
             public void Should_Not_Throw_If_Value_Is_Not_Null()
             {
                 // Given
-                var value = "foo";
-                var parameterName = "foo";
+                const string value = "foo";
+                const string parameterName = "foo";
 
                 // When
                 value.NotNullOrWhiteSpace(parameterName);
@@ -100,7 +100,7 @@
             public void Should_Throw_If_Value_Is_Negative(int value)
             {
                 // Given
-                var parameterName = "foo";
+                const string parameterName = "foo";
 
                 // When
                 var result = Record.Exception(() => value.NotNegativeOrZero(parameterName));
@@ -113,8 +113,8 @@
             public void Should_Throw_If_Value_Is_Zero()
             {
                 // Given
-                var value = 0;
-                var parameterName = "foo";
+                const int value = 0;
+                const string parameterName = "foo";
 
                 // When
                 var result = Record.Exception(() => value.NotNegativeOrZero(parameterName));
@@ -129,7 +129,7 @@
             public void Should_Not_Throw_If_Value_Is_Positive(int value)
             {
                 // Given
-                var parameterName = "foo";
+                const string parameterName = "foo";
 
                 // When
                 value.NotNegativeOrZero(parameterName);

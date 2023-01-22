@@ -11,8 +11,11 @@
             [Fact]
             public void Should_Throw_If_Access_Token_Is_Null()
             {
-                // Given / When
-                var result = Record.Exception(() => new AzureDevOpsOAuthCredentials(null));
+                // Given
+                const string accessToken = null;
+
+                // When
+                var result = Record.Exception(() => new AzureDevOpsOAuthCredentials(accessToken));
 
                 // Then
                 result.IsArgumentNullException("accessToken");
@@ -21,8 +24,11 @@
             [Fact]
             public void Should_Throw_If_Access_Token_Is_Empty()
             {
-                // Given / When
-                var result = Record.Exception(() => new AzureDevOpsOAuthCredentials(string.Empty));
+                // Given
+                var accessToken = string.Empty;
+
+                // When
+                var result = Record.Exception(() => new AzureDevOpsOAuthCredentials(accessToken));
 
                 // Then
                 result.IsArgumentOutOfRangeException("accessToken");
@@ -31,8 +37,11 @@
             [Fact]
             public void Should_Throw_If_Access_Token_Is_WhiteSpace()
             {
-                // Given / When
-                var result = Record.Exception(() => new AzureDevOpsOAuthCredentials(" "));
+                // Given
+                const string accessToken = " ";
+
+                // When
+                var result = Record.Exception(() => new AzureDevOpsOAuthCredentials(accessToken));
 
                 // Then
                 result.IsArgumentOutOfRangeException("accessToken");

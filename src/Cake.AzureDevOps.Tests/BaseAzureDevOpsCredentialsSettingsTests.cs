@@ -14,7 +14,7 @@
                 public void Should_Throw_If_Credentials_Are_Null()
                 {
                     // Given
-                    IAzureDevOpsCredentials credentials = null;
+                    const IAzureDevOpsCredentials credentials = null;
 
                     // When
                     var result = Record.Exception(() => new BaseAzureDevOpsCredentialsSettingsImpl(credentials));
@@ -43,7 +43,7 @@
                 public void Should_Throw_If_Settings_Are_Null()
                 {
                     // Given
-                    BaseAzureDevOpsCredentialsSettingsImpl settings = null;
+                    const BaseAzureDevOpsCredentialsSettingsImpl settings = null;
 
                     // When
                     var result = Record.Exception(() => new BaseAzureDevOpsCredentialsSettingsImpl(settings));

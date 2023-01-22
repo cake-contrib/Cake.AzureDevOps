@@ -370,7 +370,7 @@
                         "NotExistingBranch",
                         "test",
                         "test");
-                ICakeLog log = null;
+                const ICakeLog log = null;
 
                 // When
                 var result =
@@ -391,7 +391,7 @@
                         "NotExistingBranch",
                         "test",
                         "test");
-                IGitClientFactory gitClientFactory = null;
+                const IGitClientFactory gitClientFactory = null;
 
                 // When
                 var result =
@@ -412,7 +412,7 @@
                         "NotExistingBranch",
                         "test",
                         "test");
-                AzureDevOpsCreatePullRequestSettings settings = null;
+                const AzureDevOpsCreatePullRequestSettings settings = null;
 
                 // When
                 var result =
@@ -446,10 +446,10 @@
             public void Should_Return_A_PullRequest()
             {
                 // Given
-                var sourceRefName = "testBranch";
-                var targetRefName = "master";
-                var title = "foo";
-                var description = "bar";
+                const string sourceRefName = "testBranch";
+                const string targetRefName = "master";
+                const string title = "foo";
+                const string description = "bar";
                 var fixture =
                     new CreatePullRequestFixture(
                         BasePullRequestFixture.ValidAzureDevOpsServerUrl,
@@ -469,10 +469,10 @@
             public void Should_Return_A_PullRequest_With_Fallback_To_Default_Target_Branch()
             {
                 // Given
-                var sourceRefName = "testBranch";
+                const string sourceRefName = "testBranch";
                 string targetRefName = null;
-                var title = "foo";
-                var description = "bar";
+                const string title = "foo";
+                const string description = "bar";
                 var fixture =
                     new CreatePullRequestFixture(
                         BasePullRequestFixture.ValidAzureDevOpsServerUrl,
@@ -749,7 +749,7 @@
                 threads.ShouldNotBeEmpty();
                 threads.Count().ShouldBe(2);
 
-                AzureDevOpsPullRequestCommentThread thread1 = threads.First();
+                var thread1 = threads.First();
                 thread1.Id.ShouldBe(11);
                 thread1.Status.ShouldBe(AzureDevOpsCommentThreadStatus.Active);
                 thread1.FilePath.ShouldNotBeNull();
@@ -759,21 +759,21 @@
                 thread1.Comments.ShouldNotBeEmpty();
                 thread1.Comments.Count().ShouldBe(2);
 
-                AzureDevOpsComment comment11 = thread1.Comments.First();
+                var comment11 = thread1.Comments.First();
                 comment11.ShouldNotBeNull();
                 comment11.Content.ShouldBe("Hello");
                 comment11.IsDeleted.ShouldBe(false);
                 comment11.CommentType.ShouldBe(AzureDevOpsCommentType.CodeChange);
                 ((int)comment11.Id).ShouldBeGreaterThan(0);
 
-                AzureDevOpsComment comment12 = thread1.Comments.Last();
+                var comment12 = thread1.Comments.Last();
                 comment12.ShouldNotBeNull();
                 comment12.Content.ShouldBe("Goodbye");
                 comment12.IsDeleted.ShouldBe(true);
                 comment12.CommentType.ShouldBe(AzureDevOpsCommentType.Text);
                 ((int)comment12.Id).ShouldBeGreaterThan(0);
 
-                AzureDevOpsPullRequestCommentThread thread2 = threads.Last();
+                var thread2 = threads.Last();
                 thread2.Id.ShouldBe(22);
                 thread2.Status.ShouldBe(AzureDevOpsCommentThreadStatus.Fixed);
                 thread2.FilePath.ShouldBeNull();
@@ -1217,7 +1217,7 @@
                 var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
-                int id = pullRequest.GetLatestIterationId();
+                var id = pullRequest.GetLatestIterationId();
 
                 // Then
                 id.ShouldBe(42);
@@ -1231,7 +1231,7 @@
                 var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
-                int id = pullRequest.GetLatestIterationId();
+                var id = pullRequest.GetLatestIterationId();
 
                 // Then
                 id.ShouldBe(-1);

@@ -24,8 +24,12 @@
             [Fact]
             public void Should_Throw_If_User_Name_Is_Null()
             {
-                // Given / When
-                var result = Record.Exception(() => AuthenticationProvider.AuthenticationBasic(null, "foo"));
+                // Given
+                const string userName = null;
+                const string password = "foo";
+
+                // When
+                var result = Record.Exception(() => AuthenticationProvider.AuthenticationBasic(userName, password));
 
                 // Then
                 result.IsArgumentNullException("userName");
@@ -34,8 +38,12 @@
             [Fact]
             public void Should_Throw_If_User_Name_Is_Empty()
             {
-                // Given / When
-                var result = Record.Exception(() => AuthenticationProvider.AuthenticationBasic(string.Empty, "foo"));
+                // Given
+                var userName = string.Empty;
+                const string password = "foo";
+
+                // When
+                var result = Record.Exception(() => AuthenticationProvider.AuthenticationBasic(userName, password));
 
                 // Then
                 result.IsArgumentOutOfRangeException("userName");
@@ -44,8 +52,12 @@
             [Fact]
             public void Should_Throw_If_User_Name_Is_WhiteSpace()
             {
-                // Given / When
-                var result = Record.Exception(() => AuthenticationProvider.AuthenticationBasic(" ", "foo"));
+                // Given
+                const string userName = " ";
+                const string password = "foo";
+
+                // When
+                var result = Record.Exception(() => AuthenticationProvider.AuthenticationBasic(userName, password));
 
                 // Then
                 result.IsArgumentOutOfRangeException("userName");
@@ -54,8 +66,12 @@
             [Fact]
             public void Should_Throw_If_Password_Is_Null()
             {
-                // Given / When
-                var result = Record.Exception(() => AuthenticationProvider.AuthenticationBasic("foo", null));
+                // Given
+                const string userName = "foo";
+                const string password = null;
+
+                // When
+                var result = Record.Exception(() => AuthenticationProvider.AuthenticationBasic(userName, password));
 
                 // Then
                 result.IsArgumentNullException("password");
@@ -64,8 +80,12 @@
             [Fact]
             public void Should_Throw_If_Password_Is_Empty()
             {
-                // Given / When
-                var result = Record.Exception(() => AuthenticationProvider.AuthenticationBasic("foo", string.Empty));
+                // Given
+                const string userName = "foo";
+                var password = string.Empty;
+
+                // When
+                var result = Record.Exception(() => AuthenticationProvider.AuthenticationBasic(userName, password));
 
                 // Then
                 result.IsArgumentOutOfRangeException("password");
@@ -74,8 +94,12 @@
             [Fact]
             public void Should_Throw_If_Password_Is_WhiteSpace()
             {
-                // Given / When
-                var result = Record.Exception(() => AuthenticationProvider.AuthenticationBasic("foo", " "));
+                // Given
+                const string userName = "foo";
+                const string password = " ";
+
+                // When
+                var result = Record.Exception(() => AuthenticationProvider.AuthenticationBasic(userName, password));
 
                 // Then
                 result.IsArgumentOutOfRangeException("password");
@@ -84,8 +108,12 @@
             [Fact]
             public void Should_Return_AzureDevOpsBasicCredentials_Object()
             {
-                // Given / When
-                var credentials = AuthenticationProvider.AuthenticationBasic("foo", "bar");
+                // Given
+                const string userName = "foo";
+                const string password = "bar";
+
+                // When
+                var credentials = AuthenticationProvider.AuthenticationBasic(userName, password);
 
                 // Then
                 credentials.ShouldBeOfType<AzureDevOpsBasicCredentials>();
@@ -125,8 +153,11 @@
             [Fact]
             public void Should_Throw_If_Personal_Access_Token_Is_Null()
             {
-                // Given / When
-                var result = Record.Exception(() => AuthenticationProvider.AuthenticationPersonalAccessToken(null));
+                // Given
+                const string personalAccessToken = null;
+
+                // When
+                var result = Record.Exception(() => AuthenticationProvider.AuthenticationPersonalAccessToken(personalAccessToken));
 
                 // Then
                 result.IsArgumentNullException("personalAccessToken");
@@ -135,8 +166,11 @@
             [Fact]
             public void Should_Throw_If_Personal_Access_Token_Is_Empty()
             {
-                // Given / When
-                var result = Record.Exception(() => AuthenticationProvider.AuthenticationPersonalAccessToken(string.Empty));
+                // Given
+                var personalAccessToken = string.Empty;
+
+                // When
+                var result = Record.Exception(() => AuthenticationProvider.AuthenticationPersonalAccessToken(personalAccessToken));
 
                 // Then
                 result.IsArgumentOutOfRangeException("personalAccessToken");
@@ -145,8 +179,11 @@
             [Fact]
             public void Should_Throw_If_Personal_Access_Token_Is_WhiteSpace()
             {
-                // Given / When
-                var result = Record.Exception(() => AuthenticationProvider.AuthenticationPersonalAccessToken(" "));
+                // Given
+                const string personalAccessToken = " ";
+
+                // When
+                var result = Record.Exception(() => AuthenticationProvider.AuthenticationPersonalAccessToken(personalAccessToken));
 
                 // Then
                 result.IsArgumentOutOfRangeException("personalAccessToken");
@@ -155,8 +192,11 @@
             [Fact]
             public void Should_Return_AzureDevOpsBasicCredentials_Object()
             {
-                // Given / When
-                var credentials = AuthenticationProvider.AuthenticationPersonalAccessToken("foo");
+                // Given
+                const string personalAccessToken = "foo";
+
+                // When
+                var credentials = AuthenticationProvider.AuthenticationPersonalAccessToken(personalAccessToken);
 
                 // Then
                 credentials.ShouldBeOfType<AzureDevOpsBasicCredentials>();
@@ -183,8 +223,11 @@
             [Fact]
             public void Should_Throw_If_Access_Token_Is_Null()
             {
-                // Given / When
-                var result = Record.Exception(() => AuthenticationProvider.AuthenticationOAuth(null));
+                // Given
+                const string accessToken = null;
+
+                // When
+                var result = Record.Exception(() => AuthenticationProvider.AuthenticationOAuth(accessToken));
 
                 // Then
                 result.IsArgumentNullException("accessToken");
@@ -193,8 +236,11 @@
             [Fact]
             public void Should_Throw_If_Access_Token_Is_Empty()
             {
-                // Given / When
-                var result = Record.Exception(() => AuthenticationProvider.AuthenticationOAuth(string.Empty));
+                // Given
+                var accessToken = string.Empty;
+
+                // When
+                var result = Record.Exception(() => AuthenticationProvider.AuthenticationOAuth(accessToken));
 
                 // Then
                 result.IsArgumentOutOfRangeException("accessToken");
@@ -203,8 +249,11 @@
             [Fact]
             public void Should_Throw_If_Access_Token_Is_WhiteSpace()
             {
-                // Given / When
-                var result = Record.Exception(() => AuthenticationProvider.AuthenticationOAuth(" "));
+                // Given
+                const string accessToken = " ";
+
+                // When
+                var result = Record.Exception(() => AuthenticationProvider.AuthenticationOAuth(accessToken));
 
                 // Then
                 result.IsArgumentOutOfRangeException("accessToken");
@@ -213,8 +262,11 @@
             [Fact]
             public void Should_Return_AzureDevOpsOAuthCredentials_Object()
             {
-                // Given / When
-                var credentials = AuthenticationProvider.AuthenticationOAuth("foo");
+                // Given
+                const string accessToken = "foo";
+
+                // When
+                var credentials = AuthenticationProvider.AuthenticationOAuth(accessToken);
 
                 // Then
                 credentials.ShouldBeOfType<AzureDevOpsOAuthCredentials>();
@@ -240,8 +292,12 @@
             [Fact]
             public void Should_Throw_If_User_Name_Is_Null()
             {
-                // Given / When
-                var result = Record.Exception(() => AuthenticationProvider.AuthenticationAzureActiveDirectory(null, "foo"));
+                // Given
+                const string userName = null;
+                const string password = "foo";
+
+                // When
+                var result = Record.Exception(() => AuthenticationProvider.AuthenticationAzureActiveDirectory(userName, password));
 
                 // Then
                 result.IsArgumentNullException("userName");
@@ -250,8 +306,12 @@
             [Fact]
             public void Should_Throw_If_User_Name_Is_Empty()
             {
-                // Given / When
-                var result = Record.Exception(() => AuthenticationProvider.AuthenticationAzureActiveDirectory(string.Empty, "foo"));
+                // Given
+                var userName = string.Empty;
+                const string password = "foo";
+
+                // When
+                var result = Record.Exception(() => AuthenticationProvider.AuthenticationAzureActiveDirectory(userName, password));
 
                 // Then
                 result.IsArgumentOutOfRangeException("userName");
@@ -260,8 +320,12 @@
             [Fact]
             public void Should_Throw_If_User_Name_Is_WhiteSpace()
             {
-                // Given / When
-                var result = Record.Exception(() => AuthenticationProvider.AuthenticationAzureActiveDirectory(" ", "foo"));
+                // Given
+                const string userName = " ";
+                const string password = "foo";
+
+                // When
+                var result = Record.Exception(() => AuthenticationProvider.AuthenticationAzureActiveDirectory(userName, password));
 
                 // Then
                 result.IsArgumentOutOfRangeException("userName");
@@ -270,8 +334,12 @@
             [Fact]
             public void Should_Throw_If_Password_Is_Null()
             {
-                // Given / When
-                var result = Record.Exception(() => AuthenticationProvider.AuthenticationAzureActiveDirectory("foo", null));
+                // Given
+                const string userName = "foo";
+                const string password = null;
+
+                // When
+                var result = Record.Exception(() => AuthenticationProvider.AuthenticationAzureActiveDirectory(userName, password));
 
                 // Then
                 result.IsArgumentNullException("password");
@@ -280,8 +348,12 @@
             [Fact]
             public void Should_Throw_If_Password_Is_Empty()
             {
-                // Given / When
-                var result = Record.Exception(() => AuthenticationProvider.AuthenticationAzureActiveDirectory("foo", string.Empty));
+                // Given
+                const string userName = "foo";
+                var password = string.Empty;
+
+                // When
+                var result = Record.Exception(() => AuthenticationProvider.AuthenticationAzureActiveDirectory(userName, password));
 
                 // Then
                 result.IsArgumentOutOfRangeException("password");
@@ -290,8 +362,12 @@
             [Fact]
             public void Should_Throw_If_Password_Is_WhiteSpace()
             {
-                // Given / When
-                var result = Record.Exception(() => AuthenticationProvider.AuthenticationAzureActiveDirectory("foo", " "));
+                // Given
+                const string userName = "foo";
+                const string password = " ";
+
+                // When
+                var result = Record.Exception(() => AuthenticationProvider.AuthenticationAzureActiveDirectory(userName, password));
 
                 // Then
                 result.IsArgumentOutOfRangeException("password");
@@ -300,8 +376,12 @@
             [Fact]
             public void Should_Return_AzureDevOpsAadCredentials_Object()
             {
-                // Given / When
-                var credentials = AuthenticationProvider.AuthenticationAzureActiveDirectory("foo", "bar");
+                // Given
+                const string userName = "foo";
+                const string password = "bar";
+
+                // When
+                var credentials = AuthenticationProvider.AuthenticationAzureActiveDirectory(userName, password);
 
                 // Then
                 credentials.ShouldBeOfType<AzureDevOpsAadCredentials>();

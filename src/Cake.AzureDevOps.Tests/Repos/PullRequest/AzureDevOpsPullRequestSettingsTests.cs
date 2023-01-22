@@ -14,8 +14,8 @@
             public void Should_Throw_If_RepositoryUrl_Is_Null()
             {
                 // Given
-                Uri repositoryUrl = null;
-                var sourceBranch = "foo";
+                const Uri repositoryUrl = null;
+                const string sourceBranch = "foo";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -30,7 +30,7 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                string sourceRefName = null;
+                const string sourceRefName = null;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -60,7 +60,7 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceRefName = " ";
+                const string sourceRefName = " ";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -75,8 +75,8 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceBranch = "foo";
-                IAzureDevOpsCredentials credentials = null;
+                const string sourceBranch = "foo";
+                const IAzureDevOpsCredentials credentials = null;
 
                 // When
                 var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(repositoryUrl, sourceBranch, credentials));
@@ -90,7 +90,7 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceBranch = "foo";
+                const string sourceBranch = "foo";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -105,7 +105,7 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceRefName = "foo";
+                const string sourceRefName = "foo";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -120,7 +120,7 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceBranch = "foo";
+                const string sourceBranch = "foo";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -137,8 +137,8 @@
             public void Should_Throw_If_RepositoryUrl_Is_Null()
             {
                 // Given
-                Uri repositoryUrl = null;
-                var pullRequestId = 41;
+                const Uri repositoryUrl = null;
+                const int pullRequestId = 41;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -153,7 +153,7 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var pullRequestId = 0;
+                const int pullRequestId = 0;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -184,8 +184,8 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var pullRequestId = 41;
-                IAzureDevOpsCredentials credentials = null;
+                const int pullRequestId = 41;
+                const IAzureDevOpsCredentials credentials = null;
 
                 // When
                 var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(repositoryUrl, pullRequestId, credentials));
@@ -199,7 +199,7 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var pullRequestId = 41;
+                const int pullRequestId = 41;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -230,7 +230,7 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var pullRequestId = 41;
+                const int pullRequestId = 41;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -247,7 +247,7 @@
             public void Should_Throw_If_Settings_Are_Null()
             {
                 // Given
-                AzureDevOpsPullRequestSettings settings = null;
+                const AzureDevOpsPullRequestSettings settings = null;
 
                 // When
                 var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(settings));
@@ -261,7 +261,7 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var pullRequestId = 41;
+                const int pullRequestId = 41;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
                 var settings = new AzureDevOpsPullRequestSettings(repositoryUrl, pullRequestId, credentials);
 
@@ -294,7 +294,7 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceBranch = "foo";
+                const string sourceBranch = "foo";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
                 var settings = new AzureDevOpsPullRequestSettings(repositoryUrl, sourceBranch, credentials);
 
@@ -310,7 +310,7 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var pullRequestId = 41;
+                const int pullRequestId = 41;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
                 var settings = new AzureDevOpsPullRequestSettings(repositoryUrl, pullRequestId, credentials);
 
@@ -328,7 +328,7 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var pullRequestId = 41;
+                const int pullRequestId = 41;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
                 var settings = new AzureDevOpsPullRequestSettings(repositoryUrl, pullRequestId, credentials)
                 {
@@ -358,7 +358,7 @@
             public void Should_Throw_If_Credentials_Are_Null()
             {
                 // Given
-                IAzureDevOpsCredentials creds = null;
+                const IAzureDevOpsCredentials creds = null;
 
                 // When
                 var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(creds));

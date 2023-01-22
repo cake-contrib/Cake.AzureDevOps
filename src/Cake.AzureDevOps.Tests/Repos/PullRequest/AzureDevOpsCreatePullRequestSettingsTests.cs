@@ -14,11 +14,11 @@
             public void Should_Throw_If_RepositoryUrl_Is_Null()
             {
                 // Given
-                Uri repositoryUrl = null;
-                var sourceRefName = "foo";
-                var targetRefName = "master";
-                var title = "foo";
-                var description = "bar";
+                const Uri repositoryUrl = null;
+                const string sourceRefName = "foo";
+                const string targetRefName = "master";
+                const string title = "foo";
+                const string description = "bar";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -35,10 +35,10 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                string sourceRefName = null;
-                var targetRefName = "master";
-                var title = "foo";
-                var description = "bar";
+                const string sourceRefName = null;
+                const string targetRefName = "master";
+                const string title = "foo";
+                const string description = "bar";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -56,9 +56,9 @@
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
                 var sourceRefName = string.Empty;
-                var targetRefName = "master";
-                var title = "foo";
-                var description = "bar";
+                const string targetRefName = "master";
+                const string title = "foo";
+                const string description = "bar";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -75,10 +75,10 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceRefName = " ";
-                var targetRefName = "master";
-                var title = "foo";
-                var description = "bar";
+                const string sourceRefName = " ";
+                const string targetRefName = "master";
+                const string title = "foo";
+                const string description = "bar";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -95,10 +95,10 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceRefName = "foo";
-                var targetRefName = "master";
-                string title = null;
-                var description = "bar";
+                const string sourceRefName = "foo";
+                const string targetRefName = "master";
+                const string title = null;
+                const string description = "bar";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -115,10 +115,10 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceRefName = "foo";
-                var targetRefName = "master";
+                const string sourceRefName = "foo";
+                const string targetRefName = "master";
                 var title = string.Empty;
-                var description = "bar";
+                const string description = "bar";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -135,10 +135,10 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceRefName = "foo";
-                var targetRefName = "master";
-                var title = " ";
-                var description = "bar";
+                const string sourceRefName = "foo";
+                const string targetRefName = "master";
+                const string title = " ";
+                const string description = "bar";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -155,10 +155,10 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceRefName = "foo";
-                var targetRefName = "master";
-                var title = "foo";
-                string description = null;
+                const string sourceRefName = "foo";
+                const string targetRefName = "master";
+                const string title = "foo";
+                const string description = null;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -175,10 +175,10 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceRefName = "foo";
-                var targetRefName = "master";
-                var title = "foo";
-                var description = "bar";
+                const string sourceRefName = "foo";
+                const string targetRefName = "master";
+                const string title = "foo";
+                const string description = "bar";
                 IAzureDevOpsCredentials credentials = null;
 
                 // When
@@ -195,10 +195,10 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceRefName = "foo";
-                var targetRefName = "master";
-                var title = "foo";
-                var description = "bar";
+                const string sourceRefName = "foo";
+                const string targetRefName = "master";
+                const string title = "foo";
+                const string description = "bar";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -214,10 +214,10 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceRefName = "foo";
-                var targetRefName = "master";
-                var title = "foo";
-                var description = "bar";
+                const string sourceRefName = "foo";
+                const string targetRefName = "master";
+                const string title = "foo";
+                const string description = "bar";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -235,9 +235,9 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceRefName = "foo";
-                var title = "foo";
-                var description = "bar";
+                const string sourceRefName = "foo";
+                const string title = "foo";
+                const string description = "bar";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -253,10 +253,10 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceRefName = "foo";
-                var targetRefName = "master";
-                var title = "foo";
-                var description = "bar";
+                const string sourceRefName = "foo";
+                const string targetRefName = "master";
+                const string title = "foo";
+                const string description = "bar";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -275,9 +275,9 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceRefName = "foo";
-                var targetRefName = "master";
-                var title = "foo";
+                const string sourceRefName = "foo";
+                const string targetRefName = "master";
+                const string title = "foo";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -293,10 +293,10 @@
             {
                 // Given
                 var repositoryUrl = new Uri("http://example.com");
-                var sourceRefName = "foo";
-                var targetRefName = "master";
-                var title = "foo";
-                var description = "bar";
+                const string sourceRefName = "foo";
+                const string targetRefName = "master";
+                const string title = "foo";
+                const string description = "bar";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
