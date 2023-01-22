@@ -15,7 +15,7 @@
                 public void Should_Throw_If_CollectionUrl_Is_Null()
                 {
                     // Given
-                    Uri collectionUrl = null;
+                    const Uri collectionUrl = null;
                     var projectGuid = Guid.NewGuid();
                     var credentials = AuthenticationProvider.AuthenticationNtlm();
 
@@ -47,7 +47,7 @@
                     // Given
                     var collectionUrl = new Uri("http://example.com/collection");
                     var projectGuid = Guid.NewGuid();
-                    IAzureDevOpsCredentials credentials = null;
+                    const IAzureDevOpsCredentials credentials = null;
 
                     // When
                     var result = Record.Exception(() => new BaseAzureDevOpsProjectSettingsImpl(collectionUrl, projectGuid, credentials));
@@ -108,7 +108,7 @@
                 public void Should_Throw_If_CollectionUrl_Is_Null()
                 {
                     // Given
-                    Uri collectionUrl = null;
+                    const Uri collectionUrl = null;
                     var projectName = "MyProject";
                     var credentials = AuthenticationProvider.AuthenticationNtlm();
 
@@ -124,7 +124,7 @@
                 {
                     // Given
                     var collectionUrl = new Uri("http://example.com/collection");
-                    string projectName = null;
+                    const string projectName = null;
                     var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                     // When
@@ -170,7 +170,7 @@
                     // Given
                     var collectionUrl = new Uri("http://example.com/collection");
                     var projectName = "MyProject";
-                    IAzureDevOpsCredentials credentials = null;
+                    const IAzureDevOpsCredentials credentials = null;
 
                     // When
                     var result = Record.Exception(() => new BaseAzureDevOpsProjectSettingsImpl(collectionUrl, projectName, credentials));
@@ -231,7 +231,7 @@
                 public void Should_Throw_If_Settings_Are_Null()
                 {
                     // Given
-                    BaseAzureDevOpsProjectSettingsImpl settings = null;
+                    const BaseAzureDevOpsProjectSettingsImpl settings = null;
 
                     // When
                     var result = Record.Exception(() => new BaseAzureDevOpsProjectSettingsImpl(settings));
@@ -320,7 +320,7 @@
                 public void Should_Throw_If_Credentials_Are_Null()
                 {
                     // Given
-                    IAzureDevOpsCredentials credentials = null;
+                    const IAzureDevOpsCredentials credentials = null;
 
                     // When
                     var result = Record.Exception(() => new BaseAzureDevOpsProjectSettingsImpl(credentials));
@@ -453,7 +453,7 @@
                 public void Should_Set_Project_Name()
                 {
                     // Given
-                    var projectName = "MyProject";
+                    const string projectName = "MyProject";
                     var credentials = new AzureDevOpsNtlmCredentials();
                     Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
                     Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", projectName);

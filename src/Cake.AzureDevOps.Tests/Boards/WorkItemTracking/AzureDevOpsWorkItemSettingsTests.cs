@@ -14,9 +14,9 @@
             public void Should_Throw_If_CollectionUrl_Is_Null()
             {
                 // Given
-                Uri collectionUrl = null;
+                const Uri collectionUrl = null;
                 var projectGuid = Guid.NewGuid();
-                var workItemId = 42;
+                const int workItemId = 42;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -32,7 +32,7 @@
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
                 var projectGuid = Guid.Empty;
-                var workItemId = 42;
+                const int workItemId = 42;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -48,7 +48,7 @@
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
                 var projectGuid = Guid.NewGuid();
-                var workItemId = 0;
+                const int workItemId = 0;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -81,7 +81,7 @@
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
                 var projectGuid = Guid.NewGuid();
-                var workItemId = 42;
+                const int workItemId = 42;
                 IAzureDevOpsCredentials credentials = null;
 
                 // When
@@ -97,7 +97,7 @@
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
                 var projectGuid = Guid.NewGuid();
-                var workItemId = 42;
+                const int workItemId = 42;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -113,7 +113,7 @@
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
                 var projectGuid = Guid.NewGuid();
-                var workItemId = 42;
+                const int workItemId = 42;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -146,7 +146,7 @@
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
                 var projectGuid = Guid.NewGuid();
-                var workItemId = 42;
+                const int workItemId = 42;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -163,9 +163,9 @@
             public void Should_Throw_If_CollectionUrl_Is_Null()
             {
                 // Given
-                Uri collectionUrl = null;
-                var projectName = "MyProject";
-                var workItemId = 42;
+                const Uri collectionUrl = null;
+                const string projectName = "MyProject";
+                const int workItemId = 42;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -180,8 +180,8 @@
             {
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
-                string projectName = null;
-                var workItemId = 42;
+                const string projectName = null;
+                const int workItemId = 42;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -197,7 +197,7 @@
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
                 var projectName = string.Empty;
-                var workItemId = 42;
+                const int workItemId = 42;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -212,8 +212,8 @@
             {
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
-                var projectName = " ";
-                var workItemId = 42;
+                const string projectName = " ";
+                const int workItemId = 42;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -228,8 +228,8 @@
             {
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
-                var projectName = "MyProject";
-                var workItemId = 0;
+                const string projectName = "MyProject";
+                const int workItemId = 0;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -246,7 +246,7 @@
             {
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
-                var projectName = "MyProject";
+                const string projectName = "MyProject";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -261,8 +261,8 @@
             {
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
-                var projectName = "MyProject";
-                var workItemId = 42;
+                const string projectName = "MyProject";
+                const int workItemId = 42;
                 IAzureDevOpsCredentials credentials = null;
 
                 // When
@@ -277,8 +277,8 @@
             {
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
-                var projectName = "MyProject";
-                var workItemId = 42;
+                const string projectName = "MyProject";
+                const int workItemId = 42;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -293,8 +293,8 @@
             {
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
-                var projectName = "MyProject";
-                var workItemId = 42;
+                const string projectName = "MyProject";
+                const int workItemId = 42;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -311,7 +311,7 @@
             {
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
-                var projectName = "MyProject";
+                const string projectName = "MyProject";
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -326,8 +326,8 @@
             {
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
-                var projectName = "MyProject";
-                var workItemId = 42;
+                const string projectName = "MyProject";
+                const int workItemId = 42;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
 
                 // When
@@ -344,7 +344,7 @@
             public void Should_Throw_If_Settings_Are_Null()
             {
                 // Given
-                AzureDevOpsWorkItemSettings settings = null;
+                const AzureDevOpsWorkItemSettings settings = null;
 
                 // When
                 var result = Record.Exception(() => new AzureDevOpsWorkItemSettings(settings));
@@ -359,7 +359,7 @@
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
                 var projectGuid = Guid.NewGuid();
-                var workItemId = 42;
+                const int workItemId = 42;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
                 var settings = new AzureDevOpsWorkItemSettings(collectionUrl, projectGuid, workItemId, credentials);
 
@@ -376,7 +376,7 @@
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
                 var projectGuid = Guid.NewGuid();
-                var workItemId = 42;
+                const int workItemId = 42;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
                 var settings = new AzureDevOpsWorkItemSettings(collectionUrl, projectGuid, workItemId, credentials);
 
@@ -392,8 +392,8 @@
             {
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
-                var projectName = "MyProject";
-                var workItemId = 42;
+                const string projectName = "MyProject";
+                const int workItemId = 42;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
                 var settings = new AzureDevOpsWorkItemSettings(collectionUrl, projectName, workItemId, credentials);
 
@@ -427,8 +427,8 @@
             {
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
-                var projectName = "MyProject";
-                var workItemId = 42;
+                const string projectName = "MyProject";
+                const int workItemId = 42;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
                 var settings = new AzureDevOpsWorkItemSettings(collectionUrl, projectName, workItemId, credentials);
 
@@ -446,8 +446,8 @@
             {
                 // Given
                 var collectionUrl = new Uri("http://example.com/collection");
-                var projectName = "MyProject";
-                var workItemId = 42;
+                const string projectName = "MyProject";
+                const int workItemId = 42;
                 var credentials = AuthenticationProvider.AuthenticationNtlm();
                 var settings = new AzureDevOpsWorkItemSettings(collectionUrl, projectName, workItemId, credentials)
                 {
@@ -477,7 +477,7 @@
             public void Should_Throw_If_Credentials_Are_Null()
             {
                 // Given
-                IAzureDevOpsCredentials creds = null;
+                const IAzureDevOpsCredentials creds = null;
 
                 // When
                 var result = Record.Exception(() => new AzureDevOpsWorkItemSettings(42, creds));
@@ -595,7 +595,7 @@
             public void Should_Set_Project_Name()
             {
                 // Given
-                var projectName = "MyProject";
+                const string projectName = "MyProject";
                 var creds = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", projectName);
@@ -834,7 +834,7 @@
             public void Should_Set_Project_Name()
             {
                 // Given
-                var projectName = "MyProject";
+                const string projectName = "MyProject";
                 var creds = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", projectName);
@@ -851,7 +851,7 @@
             public void Should_Set_WorkItem_Id()
             {
                 // Given
-                var workItemId = 42;
+                const int workItemId = 42;
                 var creds = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
