@@ -1,6 +1,8 @@
 ﻿namespace Cake.AzureDevOps.Pipelines
 {
+    using System.ComponentModel;
     using Microsoft.TeamFoundation.Build.WebApi;
+    using Microsoft.VisualStudio.Services.TestManagement.TestPlanning.WebApi;
 
     /// <summary>
     /// Extensions for the <see cref="BuildStatus"/> class.
@@ -23,7 +25,7 @@
                 BuildStatus.Postponed => AzureDevOpsBuildStatus.Postponed,
                 BuildStatus.NotStarted => AzureDevOpsBuildStatus.NotStarted,
                 BuildStatus.All => AzureDevOpsBuildStatus.All,
-                _ => throw new System.Exception("Unknown value"),
+                _ => throw new InvalidEnumArgumentException(nameof(status), (int)status, typeof(BuildStatus)),
             };
         }
     }

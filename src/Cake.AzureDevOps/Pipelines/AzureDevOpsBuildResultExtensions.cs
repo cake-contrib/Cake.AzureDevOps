@@ -1,5 +1,6 @@
 ﻿namespace Cake.AzureDevOps.Pipelines
 {
+    using System.ComponentModel;
     using Microsoft.TeamFoundation.Build.WebApi;
 
     /// <summary>
@@ -21,7 +22,7 @@
                 AzureDevOpsBuildResult.PartiallySucceeded => BuildResult.PartiallySucceeded,
                 AzureDevOpsBuildResult.Failed => BuildResult.Failed,
                 AzureDevOpsBuildResult.Canceled => BuildResult.Canceled,
-                _ => throw new System.Exception("Unknown value"),
+                _ => throw new InvalidEnumArgumentException(nameof(result), (int)result, typeof(AzureDevOpsBuildResult)),
             };
         }
     }

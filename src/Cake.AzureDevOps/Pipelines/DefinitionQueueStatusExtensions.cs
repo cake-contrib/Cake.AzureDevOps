@@ -1,5 +1,6 @@
 ﻿namespace Cake.AzureDevOps.Pipelines
 {
+    using System.ComponentModel;
     using Microsoft.TeamFoundation.Build.WebApi;
 
     /// <summary>
@@ -19,7 +20,7 @@
                 DefinitionQueueStatus.Enabled => AzureDevOpsDefinitionQueueStatus.Enabled,
                 DefinitionQueueStatus.Paused => AzureDevOpsDefinitionQueueStatus.Paused,
                 DefinitionQueueStatus.Disabled => AzureDevOpsDefinitionQueueStatus.Disabled,
-                _ => throw new System.Exception("Unknown value"),
+                _ => throw new InvalidEnumArgumentException(nameof(status), (int)status, typeof(DefinitionQueueStatus)),
             };
         }
     }

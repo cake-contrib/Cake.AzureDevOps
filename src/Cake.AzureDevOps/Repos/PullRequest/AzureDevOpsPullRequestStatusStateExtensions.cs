@@ -1,5 +1,6 @@
 ﻿namespace Cake.AzureDevOps.Repos.PullRequest
 {
+    using System.ComponentModel;
     using Microsoft.TeamFoundation.SourceControl.WebApi;
 
     /// <summary>
@@ -21,7 +22,7 @@
                 AzureDevOpsPullRequestStatusState.Succeeded => GitStatusState.Succeeded,
                 AzureDevOpsPullRequestStatusState.Failed => GitStatusState.Failed,
                 AzureDevOpsPullRequestStatusState.Error => GitStatusState.Error,
-                _ => throw new System.Exception("Unknown value"),
+                _ => throw new InvalidEnumArgumentException(nameof(state), (int)state, typeof(AzureDevOpsPullRequestStatusState)),
             };
         }
     }

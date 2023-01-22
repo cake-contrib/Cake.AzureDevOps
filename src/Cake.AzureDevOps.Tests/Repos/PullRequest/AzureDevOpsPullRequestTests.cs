@@ -571,7 +571,7 @@
                 // Then
                 result.ShouldNotBe(null);
                 result.IsExpected("SetStatus");
-                result.Message.ShouldBe("Unknown value");
+                result.Message.ShouldBe("The value of argument 'state' (123) is invalid for Enum type 'AzureDevOpsPullRequestStatusState'. (Parameter 'state')");
             }
 
             [Fact]

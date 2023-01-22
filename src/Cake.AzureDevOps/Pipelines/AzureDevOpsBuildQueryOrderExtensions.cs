@@ -1,5 +1,6 @@
 ﻿namespace Cake.AzureDevOps.Pipelines
 {
+    using System.ComponentModel;
     using Microsoft.TeamFoundation.Build.WebApi;
 
     /// <summary>
@@ -22,7 +23,7 @@
                 AzureDevOpsBuildQueryOrder.QueueTimeAscending => BuildQueryOrder.QueueTimeAscending,
                 AzureDevOpsBuildQueryOrder.StartTimeDescending => BuildQueryOrder.StartTimeDescending,
                 AzureDevOpsBuildQueryOrder.StartTimeAscending => BuildQueryOrder.StartTimeAscending,
-                _ => throw new System.Exception("Unknown value"),
+                _ => throw new InvalidEnumArgumentException(nameof(queryOrder), (int)queryOrder, typeof(AzureDevOpsBuildQueryOrder)),
             };
         }
     }

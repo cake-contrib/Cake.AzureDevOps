@@ -1,6 +1,8 @@
 ﻿namespace Cake.AzureDevOps.Pipelines
 {
+    using System.ComponentModel;
     using Microsoft.TeamFoundation.Build.WebApi;
+    using Microsoft.VisualStudio.Services.TestManagement.TestPlanning.WebApi;
 
     /// <summary>
     /// Extensions for the <see cref="TimelineRecordState"/> class.
@@ -19,7 +21,7 @@
                 TimelineRecordState.Pending => AzureDevOpsTimelineRecordState.Pending,
                 TimelineRecordState.InProgress => AzureDevOpsTimelineRecordState.InProgress,
                 TimelineRecordState.Completed => AzureDevOpsTimelineRecordState.Completed,
-                _ => throw new System.Exception("Unknown value"),
+                _ => throw new InvalidEnumArgumentException(nameof(state), (int)state, typeof(TimelineRecordState)),
             };
         }
     }
