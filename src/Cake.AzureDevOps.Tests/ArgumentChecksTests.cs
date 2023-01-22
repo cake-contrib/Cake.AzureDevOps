@@ -54,7 +54,7 @@
             public void Should_Throw_If_Value_Is_Empty()
             {
                 // Given
-                var value = " ";
+                var value = string.Empty;
                 var parameterName = "foo";
 
                 // When
