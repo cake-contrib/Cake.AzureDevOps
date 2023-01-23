@@ -53,30 +53,30 @@
         public int ThreadId { get; }
 
         /// <summary>
-        /// Gets or sets the content of the pull request comment.
+        /// Gets the content of the pull request comment.
         /// </summary>
         public string Content
         {
             get => this.Comment.Content;
-            set => this.Comment.Content = value;
+            init => this.Comment.Content = value;
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the comment is deleted.
+        /// Gets a value indicating whether the comment is deleted.
         /// </summary>
         public bool IsDeleted
         {
             get => this.Comment.IsDeleted;
-            set => this.Comment.IsDeleted = value;
+            init => this.Comment.IsDeleted = value;
         }
 
         /// <summary>
-        /// Gets or sets the comment type.
+        /// Gets the comment type.
         /// </summary>
         public AzureDevOpsCommentType CommentType
         {
             get => (AzureDevOpsCommentType)this.Comment.CommentType;
-            set => this.Comment.CommentType = (CommentType)value;
+            init => this.Comment.CommentType = (CommentType)value;
         }
 
         /// <summary>
