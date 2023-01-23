@@ -1,4 +1,5 @@
-﻿namespace Cake.AzureDevOps.Repos
+﻿// ReSharper disable UnusedAutoPropertyAccessor.Global
+namespace Cake.AzureDevOps.Repos
 {
     using System.Collections.Generic;
 

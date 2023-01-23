@@ -12,8 +12,6 @@
     /// </summary>
     public class AzureDevOpsPullRequestCommentThread
     {
-        private readonly GitPullRequestCommentThread thread;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureDevOpsPullRequestCommentThread"/> class.
         /// </summary>
@@ -25,128 +23,128 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureDevOpsPullRequestCommentThread"/> class.
         /// </summary>
-        /// <param name="thread">The original comment thread in the Azue DevOps pull request.</param>
+        /// <param name="thread">The original comment thread in the Azure DevOps pull request.</param>
         internal AzureDevOpsPullRequestCommentThread(GitPullRequestCommentThread thread)
         {
             thread.NotNull(nameof(thread));
 
-            this.thread = thread;
+            this.InnerThread = thread;
         }
 
         /// <summary>
-        /// Gets or sets the Id of the pull request comment thread.
+        /// Gets the Id of the pull request comment thread.
         /// </summary>
         public int Id
         {
-            get => this.thread.Id;
-            set => this.thread.Id = value;
+            get => this.InnerThread.Id;
+            init => this.InnerThread.Id = value;
         }
 
         /// <summary>
-        /// Gets or sets the status of the pull request comment thread.
+        /// Gets the status of the pull request comment thread.
         /// </summary>
         public AzureDevOpsCommentThreadStatus Status
         {
-            get => (AzureDevOpsCommentThreadStatus)this.thread.Status;
-            set => this.thread.Status = (CommentThreadStatus)value;
+            get => (AzureDevOpsCommentThreadStatus)this.InnerThread.Status;
+            init => this.InnerThread.Status = (CommentThreadStatus)value;
         }
 
         /// <summary>
-        /// Gets or sets the path of the modified file the pull request comment thread belongs to.
-        /// Returns 'null' for the comment threads not related to any particular file.
+        /// Gets the path of the modified file the pull request comment thread belongs to.
+        /// Returns <c>null</c> for the comment threads not related to any particular file.
         /// </summary>
         public FilePath FilePath
         {
             get
             {
                 FilePath filePath = null;
-                if (this.thread.ThreadContext?.FilePath != null)
+                if (this.InnerThread.ThreadContext?.FilePath != null)
                 {
-                    filePath = this.thread.ThreadContext.FilePath.TrimStart('/');
+                    filePath = this.InnerThread.ThreadContext.FilePath.TrimStart('/');
                 }
 
                 return filePath;
             }
 
-            set
+            init
             {
-                this.thread.ThreadContext ??= new CommentThreadContext();
+                this.InnerThread.ThreadContext ??= new CommentThreadContext();
 
-                this.thread.ThreadContext.FilePath = value.FullPath;
+                this.InnerThread.ThreadContext.FilePath = value.FullPath;
             }
         }
 
         /// <summary>
-        /// Gets or sets the line number of the right file.
-        /// Returns 'null' for the comment threads not related to any particular file and position.
+        /// Gets the line number of the right file.
+        /// Returns <c>null</c> for the comment threads not related to any particular file and position.
         /// </summary>
         public int? LineNumber
         {
             get
             {
-                if (this.thread.ThreadContext?.RightFileStart != null)
+                if (this.InnerThread.ThreadContext?.RightFileStart != null)
                 {
-                    return this.thread.ThreadContext?.RightFileStart.Line;
+                    return this.InnerThread.ThreadContext?.RightFileStart.Line;
                 }
 
                 return null;
             }
 
-            set
+            init
             {
                 if (value != null)
                 {
                     this.EnsureRightFileStartExists();
 
-                    this.thread.ThreadContext.RightFileStart.Line = value.Value;
+                    this.InnerThread.ThreadContext.RightFileStart.Line = value.Value;
                 }
             }
         }
 
         /// <summary>
-        /// Gets or sets the character offset inside of a line.
-        /// Returns 'null' for the comment threads not related to any particular file and position.
+        /// Gets the character offset inside of a line.
+        /// Returns <c>null</c> for the comment threads not related to any particular file and position.
         /// </summary>
         public int? Offset
         {
             get
             {
-                if (this.thread.ThreadContext?.RightFileStart != null)
+                if (this.InnerThread.ThreadContext?.RightFileStart != null)
                 {
-                    return this.thread.ThreadContext?.RightFileStart.Offset;
+                    return this.InnerThread.ThreadContext?.RightFileStart.Offset;
                 }
 
                 return null;
             }
 
-            set
+            init
             {
                 if (value != null)
                 {
                     this.EnsureRightFileStartExists();
 
-                    this.thread.ThreadContext.RightFileStart.Offset = value.Value;
+                    this.InnerThread.ThreadContext.RightFileStart.Offset = value.Value;
                 }
             }
         }
 
         /// <summary>
-        /// Gets or sets the collection of comments in the pull request comment thread.
+        /// Gets the collection of comments in the pull request comment thread.
         /// </summary>
         public IEnumerable<AzureDevOpsComment> Comments
         {
             get
             {
-                if (this.thread.Comments == null)
+                if (this.InnerThread.Comments == null)
                 {
                     throw new InvalidOperationException("Comments list is not created.");
                 }
 
-                return this.thread.Comments.Select(x => new AzureDevOpsComment(x, this.thread.Id));
+                return this.InnerThread.Comments.Select(x => new AzureDevOpsComment(x, this.InnerThread.Id));
             }
 
-            set =>
-                this.thread.Comments =
+            init =>
+                this.InnerThread.Comments =
                     value?
                         .Select(c =>
                             new Comment
@@ -158,18 +156,18 @@
         }
 
         /// <summary>
-        /// Gets or sets the collection of properties of the pull request comment thread.
+        /// Gets the collection of properties of the pull request comment thread.
         /// </summary>
         public IDictionary<string, object> Properties
         {
-            get => this.thread.Properties;
-            set => this.thread.Properties = value != null ? new PropertiesCollection(value) : null;
+            get => this.InnerThread.Properties;
+            init => this.InnerThread.Properties = value != null ? new PropertiesCollection(value) : null;
         }
 
         /// <summary>
         /// Gets the inner Git comment thread object. Intended for the internal use only.
         /// </summary>
-        internal GitPullRequestCommentThread InnerThread => this.thread;
+        internal GitPullRequestCommentThread InnerThread { get; }
 
         /// <summary>
         /// Gets the value of the thread property.
@@ -181,12 +179,12 @@
         {
             propertyName.NotNullOrWhiteSpace(nameof(propertyName));
 
-            if (this.thread.Properties == null)
+            if (this.InnerThread.Properties == null)
             {
                 return default;
             }
 
-            return this.thread.Properties.GetValue(propertyName, default(T));
+            return this.InnerThread.Properties.GetValue(propertyName, default(T));
         }
 
         /// <summary>
@@ -200,25 +198,25 @@
         {
             propertyName.NotNullOrWhiteSpace(nameof(propertyName));
 
-            if (this.thread.Properties == null)
+            if (this.InnerThread.Properties == null)
             {
                 throw new InvalidOperationException("Properties collection is not created.");
             }
 
-            if (this.thread.Properties.ContainsKey(propertyName))
+            if (this.InnerThread.Properties.ContainsKey(propertyName))
             {
-                this.thread.Properties[propertyName] = value;
+                this.InnerThread.Properties[propertyName] = value;
             }
             else
             {
-                this.thread.Properties.Add(propertyName, value);
+                this.InnerThread.Properties.Add(propertyName, value);
             }
         }
 
         private void EnsureRightFileStartExists()
         {
-            this.thread.ThreadContext ??= new CommentThreadContext();
-            this.thread.ThreadContext.RightFileStart ??= new CommentPosition();
+            this.InnerThread.ThreadContext ??= new CommentThreadContext();
+            this.InnerThread.ThreadContext.RightFileStart ??= new CommentPosition();
         }
     }
 }

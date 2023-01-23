@@ -1,4 +1,5 @@
-﻿namespace Cake.AzureDevOps.Pipelines
+﻿// ReSharper disable UnusedAutoPropertyAccessor.Global
+namespace Cake.AzureDevOps.Pipelines
 {
     using System;
     using Cake.AzureDevOps.Authentication;
@@ -53,41 +54,41 @@
         }
 
         /// <summary>
-        /// Gets or sets the name of the build definition.
+        /// Gets the name of the build definition.
         /// Can be <c>null</c> or <see cref="string.Empty"/>.
         /// </summary>
-        public string BuildDefinitionName { get; set; }
+        public string BuildDefinitionName { get; init; }
 
         /// <summary>
-        /// Gets or sets the name of the branch.
+        /// Gets the name of the branch.
         /// Can be <c>null</c> or <see cref="string.Empty"/>.
         /// </summary>
-        public string BranchName { get; set; }
+        public string BranchName { get; init; }
 
         /// <summary>
-        /// Gets or sets the build status.
+        /// Gets the build status.
         /// </summary>
-        public AzureDevOpsBuildStatus? BuildStatus { get; set; }
+        public AzureDevOpsBuildStatus? BuildStatus { get; init; }
 
         /// <summary>
-        /// Gets or sets the build result.
+        /// Gets the build result.
         /// </summary>
-        public AzureDevOpsBuildResult? BuildResult { get; set; }
+        public AzureDevOpsBuildResult? BuildResult { get; init; }
 
         /// <summary>
-        /// Gets or sets the build query order.
+        /// Gets the build query order.
         /// </summary>
-        public AzureDevOpsBuildQueryOrder? BuildQueryOrder { get; set; }
+        public AzureDevOpsBuildQueryOrder? BuildQueryOrder { get; init; }
 
         /// <summary>
-        /// Gets or sets the maximum number of builds per definition.
+        /// Gets the maximum number of builds per definition.
         /// </summary>
-        public int? MaxBuildsPerDefinition { get; set; }
+        public int? MaxBuildsPerDefinition { get; init; }
 
         /// <summary>
-        /// Gets or sets the maximum number of builds.
+        /// Gets the maximum number of builds.
         /// </summary>
-        public int? Top { get; set; }
+        public int? Top { get; init; }
 
         /// <summary>
         /// Constructs the settings object using the access token provided by Azure Pipelines.

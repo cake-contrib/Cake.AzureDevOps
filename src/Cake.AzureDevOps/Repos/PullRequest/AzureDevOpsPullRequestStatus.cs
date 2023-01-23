@@ -1,4 +1,5 @@
-﻿namespace Cake.AzureDevOps.Repos.PullRequest
+﻿// ReSharper disable UnusedAutoPropertyAccessor.Global
+namespace Cake.AzureDevOps.Repos.PullRequest
 {
     using System;
 
@@ -24,23 +25,23 @@
         public string Name { get; }
 
         /// <summary>
-        /// Gets or sets the genre of the status.
+        /// Gets the genre of the status.
         /// </summary>
-        public string Genre { get; set; }
+        public string Genre { get; init; }
 
         /// <summary>
-        /// Gets or sets the state of the pull request.
+        /// Gets the state of the pull request.
         /// </summary>
-        public AzureDevOpsPullRequestStatusState State { get; set; }
+        public AzureDevOpsPullRequestStatusState State { get; init; }
 
         /// <summary>
-        /// Gets or sets the description of the status.
+        /// Gets the description of the status.
         /// </summary>
-        public string Description { get; set; }
+        public string Description { get; init; }
 
         /// <summary>
-        /// Gets or sets the URL of the status.
+        /// Gets the URL of the status.
         /// </summary>
-        public Uri TargetUrl { get; set; }
+        public Uri TargetUrl { get; init; }
     }
 }

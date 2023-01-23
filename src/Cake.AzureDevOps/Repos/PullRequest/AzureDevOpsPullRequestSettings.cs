@@ -84,7 +84,7 @@
         /// <summary>
         /// Gets the ID of the pull request.
         /// </summary>
-        public int? PullRequestId { get; private set; }
+        public int? PullRequestId { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether an exception should be thrown if

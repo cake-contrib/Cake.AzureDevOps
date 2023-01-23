@@ -1,4 +1,5 @@
-﻿namespace Cake.AzureDevOps.Pipelines
+﻿// ReSharper disable UnusedAutoPropertyAccessor.Global
+namespace Cake.AzureDevOps.Pipelines
 {
     /// <summary>
     /// Represents a test result associated with a <see cref="AzureDevOpsTestRun" />.
