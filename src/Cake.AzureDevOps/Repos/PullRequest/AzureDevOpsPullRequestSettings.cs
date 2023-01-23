@@ -68,7 +68,7 @@
                     "Failed to read the SYSTEM_PULLREQUEST_PULLREQUESTID environment variable. Make sure you are running in an Azure Pipelines build.");
             }
 
-            if (!int.TryParse(pullRequestId, out int pullRequestIdValue))
+            if (!int.TryParse(pullRequestId, out var pullRequestIdValue))
             {
                 throw new InvalidOperationException("SYSTEM_PULLREQUEST_PULLREQUESTID environment variable should contain integer value");
             }
@@ -159,7 +159,7 @@
                     "Failed to read the SYSTEM_PULLREQUEST_PULLREQUESTID environment variable. Make sure you are running in an Azure Pipelines build.");
             }
 
-            if (!int.TryParse(pullRequestId, out int pullRequestIdValue))
+            if (!int.TryParse(pullRequestId, out var pullRequestIdValue))
             {
                 if (!throwExceptionIfVariablesDontExist)
                 {

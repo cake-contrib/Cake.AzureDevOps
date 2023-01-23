@@ -16,7 +16,7 @@
             return this.CreateWorkItemTrackingClient(collectionUrl, credentials);
         }
 
-        protected virtual Mock<WorkItemTrackingHttpClient> Setup(Mock<WorkItemTrackingHttpClient> m)
+        protected Mock<WorkItemTrackingHttpClient> Setup(Mock<WorkItemTrackingHttpClient> m)
         {
             return m;
         }

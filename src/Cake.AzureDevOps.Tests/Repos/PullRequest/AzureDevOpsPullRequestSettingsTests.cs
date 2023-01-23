@@ -358,10 +358,10 @@
             public void Should_Throw_If_Credentials_Are_Null()
             {
                 // Given
-                const IAzureDevOpsCredentials creds = null;
+                const IAzureDevOpsCredentials credentials = null;
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(credentials));
 
                 // Then
                 result.IsArgumentNullException("credentials");
@@ -371,12 +371,12 @@
             public void Should_Throw_If_Repository_Url_Env_Var_Is_Not_Set()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", null);
                 Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(credentials));
 
                 // Then
                 result.IsInvalidOperationException();
@@ -386,12 +386,12 @@
             public void Should_Throw_If_Repository_Url_Env_Var_Is_Empty()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", string.Empty);
                 Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(credentials));
 
                 // Then
                 result.IsInvalidOperationException();
@@ -401,12 +401,12 @@
             public void Should_Throw_If_Repository_Url_Env_Var_Is_WhiteSpace()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", " ");
                 Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(credentials));
 
                 // Then
                 result.IsInvalidOperationException();
@@ -416,12 +416,12 @@
             public void Should_Throw_If_Pull_Request_Id_Env_Var_Is_Empty()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
                 Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", null);
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(credentials));
 
                 // Then
                 result.IsInvalidOperationException();
@@ -431,12 +431,12 @@
             public void Should_Throw_If_Pull_Request_Id_Env_Var_Is_WhiteSpace()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
                 Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", " ");
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(credentials));
 
                 // Then
                 result.IsInvalidOperationException();
@@ -446,12 +446,12 @@
             public void Should_Throw_If_Pull_Request_Id_Env_Var_Is_Not_Set()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
                 Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", string.Empty);
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(credentials));
 
                 // Then
                 result.IsInvalidOperationException();
@@ -461,12 +461,12 @@
             public void Should_Throw_If_Pull_Request_Id_Env_Var_Is_Not_Integer()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
                 Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "hello");
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(credentials));
 
                 // Then
                 result.IsInvalidOperationException();
@@ -476,12 +476,12 @@
             public void Should_Throw_If_Pull_Request_Id_Is_Zero()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
                 Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "0");
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsPullRequestSettings(credentials));
 
                 // Then
                 result.IsInvalidOperationException();
@@ -491,12 +491,12 @@
             public void Should_Set_Repository_Url()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
                 Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
 
                 // When
-                var settings = new AzureDevOpsPullRequestSettings(creds);
+                var settings = new AzureDevOpsPullRequestSettings(credentials);
 
                 // Then
                 settings.RepositoryUrl.ShouldBe(new Uri("http://example.com"));
@@ -506,12 +506,12 @@
             public void Should_Set_Pull_Request_Id()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
                 Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
 
                 // When
-                var settings = new AzureDevOpsPullRequestSettings(creds);
+                var settings = new AzureDevOpsPullRequestSettings(credentials);
 
                 // Then
                 settings.PullRequestId.ShouldBe(42);
@@ -546,7 +546,7 @@
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
 
                 // When
-                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken());
+                var result = Record.Exception(AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken);
 
                 // Then
                 result.IsInvalidOperationException();
@@ -561,7 +561,7 @@
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
 
                 // When
-                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken());
+                var result = Record.Exception(AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken);
 
                 // Then
                 result.IsInvalidOperationException();
@@ -576,7 +576,7 @@
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
 
                 // When
-                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken());
+                var result = Record.Exception(AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken);
 
                 // Then
                 result.IsInvalidOperationException();
@@ -591,7 +591,7 @@
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
 
                 // When
-                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken());
+                var result = Record.Exception(AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken);
 
                 // Then
                 result.IsInvalidOperationException();
@@ -606,7 +606,7 @@
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
 
                 // When
-                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken());
+                var result = Record.Exception(AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken);
 
                 // Then
                 result.IsInvalidOperationException();
@@ -621,7 +621,7 @@
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
 
                 // When
-                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken());
+                var result = Record.Exception(AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken);
 
                 // Then
                 result.IsInvalidOperationException();
@@ -636,7 +636,7 @@
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
 
                 // When
-                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken());
+                var result = Record.Exception(AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken);
 
                 // Then
                 result.IsInvalidOperationException();
@@ -651,7 +651,7 @@
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
 
                 // When
-                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken());
+                var result = Record.Exception(AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken);
 
                 // Then
                 result.IsInvalidOperationException();
@@ -666,7 +666,7 @@
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", null);
 
                 // When
-                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken());
+                var result = Record.Exception(AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken);
 
                 // Then
                 result.IsInvalidOperationException();
@@ -681,7 +681,7 @@
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", string.Empty);
 
                 // When
-                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken());
+                var result = Record.Exception(AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken);
 
                 // Then
                 result.IsInvalidOperationException();
@@ -696,7 +696,7 @@
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", " ");
 
                 // When
-                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken());
+                var result = Record.Exception(AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken);
 
                 // Then
                 result.IsInvalidOperationException();

@@ -72,7 +72,7 @@
                     "Failed to read the BUILD_BUILDID environment variable. Make sure you are running in an Azure Pipelines build.");
             }
 
-            if (!int.TryParse(buildId, out int buildIdValue))
+            if (!int.TryParse(buildId, out var buildIdValue))
             {
                 throw new InvalidOperationException("BUILD_BUILDID environment variable should contain integer value");
             }

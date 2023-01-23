@@ -42,17 +42,17 @@
         /// Gets the target branch of the pull request.
         /// If <see langword="null"/> or <see cref="string.Empty"/> the default branch of the repository will be used.
         /// </summary>
-        public string TargetRefName { get; private set; }
+        public string TargetRefName { get; }
 
         /// <summary>
         /// Gets the title of the pull request.
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get; }
 
         /// <summary>
         /// Gets the description of the pull request.
         /// </summary>
-        public string Description { get; private set; }
+        public string Description { get; }
 
         /// <summary>
         /// Constructs the settings object using the access token provided by Azure Pipelines.

@@ -13,7 +13,7 @@
         /// Converts a <see cref="ArtifactResource"/> to an <see cref="AzureDevOpsBuildArtifact"/>.
         /// </summary>
         /// <param name="artifactResource">Artifact resource record to convert.</param>
-        /// <returns>Converted artifact resorce record.</returns>
+        /// <returns>Converted artifact resource record.</returns>
         public static AzureDevOpsArtifactResource ToAzureDevOpsArtifactResource(this ArtifactResource artifactResource)
         {
             artifactResource.NotNull(nameof(artifactResource));

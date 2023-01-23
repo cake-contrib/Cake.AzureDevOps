@@ -49,7 +49,7 @@
                     Id = 42,
                     Status = CommentThreadStatus.Pending,
                     ThreadContext = new CommentThreadContext { FilePath = "/src/myclass.cs" },
-                    Comments = new List<Comment> { new Comment { Content = "Hello", CommentType = CommentType.Text, IsDeleted = false } },
+                    Comments = new List<Comment> { new () { Content = "Hello", CommentType = CommentType.Text, IsDeleted = false } },
                     Properties = new PropertiesCollection(),
                 };
 
@@ -151,7 +151,7 @@
                 // When
                 var azureDevOpsThread = new AzureDevOpsPullRequestCommentThread(thread)
                 {
-                    Comments = new List<AzureDevOpsComment> { new AzureDevOpsComment("hi", false) },
+                    Comments = new List<AzureDevOpsComment> { new ("hi", false) },
                 };
 
                 // Then
@@ -207,7 +207,7 @@
             }
 
             [Fact]
-            public void Should_Set_Colletion_With_Single_Element()
+            public void Should_Set_Collection_With_Single_Element()
             {
                 // Given
                 var thread = new GitPullRequestCommentThread

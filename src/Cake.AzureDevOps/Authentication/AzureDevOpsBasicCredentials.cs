@@ -19,11 +19,11 @@
         /// <summary>
         /// Gets the user name.
         /// </summary>
-        public string UserName { get; private set; }
+        public string UserName { get; }
 
         /// <summary>
         /// Gets the password.
         /// </summary>
-        public string Password { get; private set; }
+        public string Password { get; }
     }
 }

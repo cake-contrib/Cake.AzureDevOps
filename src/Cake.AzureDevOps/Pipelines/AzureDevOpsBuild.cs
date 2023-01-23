@@ -84,12 +84,12 @@
             this.settings = settings;
             this.throwExceptionIfBuildCouldNotBeFound = settings.ThrowExceptionIfBuildCouldNotBeFound;
 
-            using (var buildClient = this.buildClientFactory.CreateBuildClient(settings.CollectionUrl, settings.Credentials, out var authorizedIdenity))
+            using (var buildClient = this.buildClientFactory.CreateBuildClient(settings.CollectionUrl, settings.Credentials, out var authorizedIdentity))
             {
                 this.log.Verbose(
                      "Authorized Identity:\n  Id: {0}\n  DisplayName: {1}",
-                     authorizedIdenity.Id,
-                     authorizedIdenity.DisplayName);
+                     authorizedIdentity.Id,
+                     authorizedIdentity.DisplayName);
 
                 try
                 {
@@ -449,7 +449,7 @@
         {
             return
                 this.ValidateBuild() &&
-                this.GetTimelineRecords().Any(x => x.Result.HasValue && x.Result.Value == AzureDevOpsTaskResult.Failed);
+                this.GetTimelineRecords().Any(x => x.Result is AzureDevOpsTaskResult.Failed);
         }
 
         /// <summary>
@@ -672,6 +672,7 @@
                 return testResults;
             }
 
+            var filterOutcomesList = filterOutcomes?.ToList();
             const int maxPagingSize = 10000;
             var resultCount = 0;
             var remainingResultsToRead = maxResults.HasValue ? Math.Min(testCount, maxResults.Value) : testCount;
@@ -685,7 +686,7 @@
                             runId,
                             skip: resultCount,
                             top: resultsToRead,
-                            outcomes: filterOutcomes?.Select(o => (TestOutcome)Enum.Parse(typeof(TestOutcome), o, true)).ToList())
+                            outcomes: filterOutcomesList?.Select(o => (TestOutcome)Enum.Parse(typeof(TestOutcome), o, true)).ToList())
                         .ConfigureAwait(false))
                     .Select(test =>
                         new AzureDevOpsTestResult

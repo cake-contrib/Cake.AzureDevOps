@@ -145,10 +145,16 @@
                 return this.thread.Comments.Select(x => new AzureDevOpsComment(x, this.thread.Id));
             }
 
-            set
-            {
-                this.thread.Comments = value?.Select(c => new Comment { Content = c.Content, IsDeleted = c.IsDeleted, CommentType = (CommentType)c.CommentType }).ToList();
-            }
+            set =>
+                this.thread.Comments =
+                    value?
+                        .Select(c =>
+                            new Comment
+                                {
+                                    Content = c.Content,
+                                    IsDeleted = c.IsDeleted,
+                                    CommentType = (CommentType)c.CommentType,
+                                }).ToList();
         }
 
         /// <summary>
@@ -212,11 +218,7 @@
         private void EnsureRightFileStartExists()
         {
             this.thread.ThreadContext ??= new CommentThreadContext();
-
-            if (this.thread.ThreadContext.RightFileStart == null)
-            {
-                this.thread.ThreadContext.RightFileStart = new CommentPosition();
-            }
+            this.thread.ThreadContext.RightFileStart ??= new CommentPosition();
         }
     }
 }

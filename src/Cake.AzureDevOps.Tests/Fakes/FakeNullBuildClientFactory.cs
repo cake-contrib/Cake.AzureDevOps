@@ -1,7 +1,6 @@
 ﻿namespace Cake.AzureDevOps.Tests.Fakes
 {
     using System;
-    using System.Threading;
     using Cake.AzureDevOps.Authentication;
     using Microsoft.TeamFoundation.Build.WebApi;
     using Moq;

@@ -2,7 +2,6 @@
 {
     using System;
     using Cake.AzureDevOps.Authentication;
-    using Microsoft.TeamFoundation.Build.WebApi;
     using Microsoft.TeamFoundation.WorkItemTracking.WebApi;
     using Microsoft.VisualStudio.Services.Identity;
     using Microsoft.VisualStudio.Services.WebApi;

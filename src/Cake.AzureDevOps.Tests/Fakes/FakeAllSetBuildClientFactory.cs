@@ -34,7 +34,7 @@
             mock.Setup(arg => arg.GetBuildWorkItemsRefsAsync(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int?>(), null, default))
                .ReturnsAsync((string projectName, int buildId, int? top, object userState, CancellationToken token) => new List<ResourceRef>
                {
-                  new ResourceRef { Id = "42" },
+                  new () { Id = "42" },
                });
 
             mock = this.Setup(mock);
