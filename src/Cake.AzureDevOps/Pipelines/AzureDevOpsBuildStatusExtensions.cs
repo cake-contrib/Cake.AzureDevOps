@@ -2,7 +2,6 @@
 {
     using System.ComponentModel;
     using Microsoft.TeamFoundation.Build.WebApi;
-    using Microsoft.VisualStudio.Services.TestManagement.TestPlanning.WebApi;
 
     /// <summary>
     /// Extensions for the <see cref="AzureDevOpsBuildStatus"/> class.

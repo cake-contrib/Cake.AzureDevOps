@@ -8,16 +8,16 @@
         /// <summary>
         /// Gets the ID of the build definition.
         /// </summary>
-        public int Id { get; internal set; }
+        public int Id { get; internal init; }
 
         /// <summary>
         /// Gets the name of the build definition.
         /// </summary>
-        public string Name { get; internal set; }
+        public string Name { get; internal init; }
 
         /// <summary>
         /// Gets the queue status.
         /// </summary>
-        public AzureDevOpsDefinitionQueueStatus QueueStatus { get; internal set; }
+        public AzureDevOpsDefinitionQueueStatus QueueStatus { get; internal init; }
     }
 }

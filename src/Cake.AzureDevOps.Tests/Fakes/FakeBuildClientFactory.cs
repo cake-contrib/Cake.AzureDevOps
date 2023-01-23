@@ -16,7 +16,7 @@
             return this.CreateBuildClient(collectionUrl, credentials);
         }
 
-        protected virtual Mock<BuildHttpClient> Setup(Mock<BuildHttpClient> m)
+        protected Mock<BuildHttpClient> Setup(Mock<BuildHttpClient> m)
         {
             return m;
         }

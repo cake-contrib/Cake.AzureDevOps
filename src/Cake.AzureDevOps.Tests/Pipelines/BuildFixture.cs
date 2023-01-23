@@ -14,7 +14,7 @@
         public BuildFixture(string collectionUrl, string projectName, int buildId)
         {
             this.Settings = new AzureDevOpsBuildSettings(new Uri(collectionUrl), projectName, buildId, new AzureDevOpsNtlmCredentials());
-            this.InitialzeFakes();
+            this.InitializeFakes();
         }
 
         public ICakeLog Log { get; set; }
@@ -25,9 +25,9 @@
 
         public IWorkItemTrackingClientFactory WorkItemTrackingClientFactory { get; set; }
 
-        public AzureDevOpsBuildSettings Settings { get; set; }
+        public AzureDevOpsBuildSettings Settings { get; }
 
-        private void InitialzeFakes()
+        private void InitializeFakes()
         {
             this.Log = new FakeLog();
             this.BuildClientFactory = new FakeAllSetBuildClientFactory();

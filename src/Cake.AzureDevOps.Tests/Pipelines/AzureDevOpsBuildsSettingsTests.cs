@@ -319,10 +319,10 @@
             public void Should_Throw_If_Credentials_Are_Null()
             {
                 // Given
-                const IAzureDevOpsCredentials creds = null;
+                const IAzureDevOpsCredentials credentials = null;
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(credentials));
 
                 // Then
                 result.IsArgumentNullException("credentials");
@@ -332,12 +332,12 @@
             public void Should_Throw_If_Collection_Url_Env_Var_Is_Not_Set()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", null);
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(credentials));
 
                 // Then
                 result.IsInvalidOperationException();
@@ -347,12 +347,12 @@
             public void Should_Throw_If_Collection_Url_Env_Var_Is_Empty()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", string.Empty);
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(credentials));
 
                 // Then
                 result.IsInvalidOperationException();
@@ -362,12 +362,12 @@
             public void Should_Throw_If_Collection_Url_Env_Var_Is_WhiteSpace()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", " ");
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(credentials));
 
                 // Then
                 result.IsInvalidOperationException();
@@ -377,12 +377,12 @@
             public void Should_Throw_If_Project_Name_Env_Var_Is_Not_Set()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", null);
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(credentials));
 
                 // Then
                 result.IsInvalidOperationException();
@@ -392,12 +392,12 @@
             public void Should_Throw_If_Project_Name_Env_Var_Is_Empty()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", string.Empty);
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(credentials));
 
                 // Then
                 result.IsInvalidOperationException();
@@ -422,12 +422,12 @@
             public void Should_Set_Collection_Url()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
 
                 // When
-                var settings = new AzureDevOpsBuildsSettings(creds);
+                var settings = new AzureDevOpsBuildsSettings(credentials);
 
                 // Then
                 settings.CollectionUrl.ToString().ShouldBe(new Uri("https://example.com/collection").ToString());
@@ -438,12 +438,12 @@
             {
                 // Given
                 const string projectName = "MyProject";
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", projectName);
 
                 // When
-                var settings = new AzureDevOpsBuildsSettings(creds);
+                var settings = new AzureDevOpsBuildsSettings(credentials);
 
                 // Then
                 settings.ProjectName.ShouldBe(projectName);
@@ -453,15 +453,15 @@
             public void Should_Set_Credentials()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
 
                 // When
-                var settings = new AzureDevOpsBuildsSettings(creds);
+                var settings = new AzureDevOpsBuildsSettings(credentials);
 
                 // Then
-                settings.Credentials.ShouldBe(creds);
+                settings.Credentials.ShouldBe(credentials);
             }
 
             public void Dispose()
@@ -493,7 +493,7 @@
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
 
                 // When
-                var result = Record.Exception(() => AzureDevOpsBuildsSettings.UsingAzurePipelinesOAuthToken());
+                var result = Record.Exception(AzureDevOpsBuildsSettings.UsingAzurePipelinesOAuthToken);
 
                 // Then
                 result.IsInvalidOperationException();
@@ -503,13 +503,13 @@
             public void Should_Throw_If_Collection_Url_Env_Var_Is_Empty()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", string.Empty);
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(credentials));
 
                 // Then
                 result.IsInvalidOperationException();
@@ -519,13 +519,13 @@
             public void Should_Throw_If_Collection_Url_Env_Var_Is_WhiteSpace()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", " ");
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(credentials));
 
                 // Then
                 result.IsInvalidOperationException();
@@ -535,13 +535,13 @@
             public void Should_Throw_If_Project_Name_Env_Var_Is_Not_Set()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", null);
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(credentials));
 
                 // Then
                 result.IsInvalidOperationException();
@@ -551,13 +551,13 @@
             public void Should_Throw_If_Project_Name_Env_Var_Is_Empty()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", string.Empty);
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(credentials));
 
                 // Then
                 result.IsInvalidOperationException();
@@ -567,13 +567,13 @@
             public void Should_Throw_If_Project_Name_Env_Var_Is_WhiteSpace()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", " ");
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
 
                 // When
-                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(creds));
+                var result = Record.Exception(() => new AzureDevOpsBuildsSettings(credentials));
 
                 // Then
                 result.IsInvalidOperationException();
@@ -588,7 +588,7 @@
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", null);
 
                 // When
-                var result = Record.Exception(() => AzureDevOpsBuildsSettings.UsingAzurePipelinesOAuthToken());
+                var result = Record.Exception(AzureDevOpsBuildsSettings.UsingAzurePipelinesOAuthToken);
 
                 // Then
                 result.IsInvalidOperationException();
@@ -603,7 +603,7 @@
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", string.Empty);
 
                 // When
-                var result = Record.Exception(() => AzureDevOpsBuildsSettings.UsingAzurePipelinesOAuthToken());
+                var result = Record.Exception(AzureDevOpsBuildsSettings.UsingAzurePipelinesOAuthToken);
 
                 // Then
                 result.IsInvalidOperationException();
@@ -618,7 +618,7 @@
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", " ");
 
                 // When
-                var result = Record.Exception(() => AzureDevOpsBuildsSettings.UsingAzurePipelinesOAuthToken());
+                var result = Record.Exception(AzureDevOpsBuildsSettings.UsingAzurePipelinesOAuthToken);
 
                 // Then
                 result.IsInvalidOperationException();
@@ -628,13 +628,13 @@
             public void Should_Set_Collection_Url()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
 
                 // When
-                var settings = new AzureDevOpsBuildsSettings(creds);
+                var settings = new AzureDevOpsBuildsSettings(credentials);
 
                 // Then
                 settings.CollectionUrl.ToString().ShouldBe(new Uri("https://example.com/collection").ToString());
@@ -645,13 +645,13 @@
             {
                 // Given
                 const string projectName = "MyProject";
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", projectName);
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
 
                 // When
-                var settings = new AzureDevOpsBuildsSettings(creds);
+                var settings = new AzureDevOpsBuildsSettings(credentials);
 
                 // Then
                 settings.ProjectName.ShouldBe(projectName);
@@ -661,16 +661,16 @@
             public void Should_Set_Credentials()
             {
                 // Given
-                var creds = new AzureDevOpsNtlmCredentials();
+                var credentials = new AzureDevOpsNtlmCredentials();
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", "https://example.com/collection");
                 Environment.SetEnvironmentVariable("SYSTEM_TEAMPROJECT", "MyProject");
                 Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
 
                 // When
-                var settings = new AzureDevOpsBuildsSettings(creds);
+                var settings = new AzureDevOpsBuildsSettings(credentials);
 
                 // Then
-                settings.Credentials.ShouldBe(creds);
+                settings.Credentials.ShouldBe(credentials);
             }
 
             public void Dispose()

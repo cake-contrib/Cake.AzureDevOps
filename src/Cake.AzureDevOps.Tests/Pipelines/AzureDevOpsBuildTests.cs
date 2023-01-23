@@ -15,9 +15,15 @@
             public void Should_Return_Empty_List_If_Build_Is_Invalid()
             {
                 // Given
-                var fixture = new BuildFixture(BuildFixture.ValidAzureDevOpsCollectionUrl, "Foo", 42);
-                fixture.Settings.ThrowExceptionIfBuildCouldNotBeFound = false;
-                fixture.BuildClientFactory = new FakeNullBuildClientFactory();
+                var fixture =
+                    new BuildFixture(BuildFixture.ValidAzureDevOpsCollectionUrl, "Foo", 42)
+                    {
+                        Settings =
+                            {
+                                ThrowExceptionIfBuildCouldNotBeFound = false,
+                            },
+                        BuildClientFactory = new FakeNullBuildClientFactory(),
+                    };
 
                 var build = new AzureDevOpsBuild(
                     fixture.Log,
@@ -27,7 +33,7 @@
                     fixture.WorkItemTrackingClientFactory);
 
                 // When
-                var result = build.GetTestRuns();
+                var result = build.GetTestRuns().ToList();
 
                 // Then
                 result.ShouldNotBeNull();
@@ -47,7 +53,7 @@
                     fixture.WorkItemTrackingClientFactory);
 
                 // When
-                var result = build.GetTestRuns();
+                var result = build.GetTestRuns().ToList();
 
                 // Then
                 result.ShouldNotBeNull();
@@ -70,7 +76,7 @@
                     fixture.WorkItemTrackingClientFactory);
 
                 // When
-                var result = build.GetTestRuns(testRunsCount);
+                var result = build.GetTestRuns(testRunsCount).ToList();
 
                 // Then
                 result.ShouldNotBeNull();
@@ -94,7 +100,7 @@
                     fixture.WorkItemTrackingClientFactory);
 
                 // When
-                var result = Record.Exception(() => build.GetTestRuns(null, new string[] { "FakeOutcome" }));
+                var result = Record.Exception(() => build.GetTestRuns(null, new[] { "FakeOutcome" }));
 
                 // Then
                 result.IsArgumentException(null);
@@ -113,16 +119,16 @@
                     fixture.WorkItemTrackingClientFactory);
 
                 // When
-                var result = build.GetTestRuns();
+                var result = build.GetTestRuns().ToList();
 
                 // Then
                 result.ShouldNotBeNull();
                 result.ShouldHaveSingleItem();
                 result.First().RunId.ShouldBe(1);
 
-                var testResults = result.First().TestResults;
+                var testResults = result.First().TestResults.ToList();
                 testResults.ShouldNotBeNull();
-                testResults.Count().ShouldBe(3);
+                testResults.Count.ShouldBe(3);
                 testResults.ElementAt(0).ShouldBeEquivalentTo(
                     new AzureDevOpsTestResult { AutomatedTestName = "t1", Outcome = "Passed", ErrorMessage = string.Empty });
                 testResults.ElementAt(1).ShouldBeEquivalentTo(
@@ -147,7 +153,7 @@
                     fixture.WorkItemTrackingClientFactory);
 
                 // When
-                var result = build.GetWorkItems();
+                var result = build.GetWorkItems().ToList();
 
                 // Then
                 result.ShouldNotBeNull();

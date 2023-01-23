@@ -68,12 +68,12 @@
         /// Gets the Guid of the project.
         /// Can be <see cref="Guid.Empty"/> if <see cref="ProjectName"/> is set.
         /// </summary>
-        public Guid ProjectGuid { get; private set; }
+        public Guid ProjectGuid { get; }
 
         /// <summary>
         /// Gets the name of the project.
         /// Can be <c>null</c> if <see cref="ProjectGuid"/> is set.
         /// </summary>
-        public string ProjectName { get; private set; }
+        public string ProjectName { get; }
     }
 }

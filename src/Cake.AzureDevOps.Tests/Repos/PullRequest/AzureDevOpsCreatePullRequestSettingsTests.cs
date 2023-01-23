@@ -179,7 +179,7 @@
                 const string targetRefName = "master";
                 const string title = "foo";
                 const string description = "bar";
-                IAzureDevOpsCredentials credentials = null;
+                const IAzureDevOpsCredentials credentials = null;
 
                 // When
                 var result =

@@ -24,10 +24,9 @@
             log.NotNull(nameof(log));
             settings.NotNull(nameof(settings));
 
-            List<BuildDefinitionReference> buildDefinitions = null;
-
             using (var buildHttpClient = new BuildClientFactory().CreateBuildClient(settings.CollectionUrl, settings.Credentials))
             {
+                List<BuildDefinitionReference> buildDefinitions;
                 if (settings.ProjectGuid != Guid.Empty)
                 {
                     buildDefinitions =

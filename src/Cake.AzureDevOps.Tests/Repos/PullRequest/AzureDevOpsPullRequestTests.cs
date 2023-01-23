@@ -439,7 +439,7 @@
                     Record.Exception(() => AzureDevOpsPullRequest.Create(fixture.Log, fixture.GitClientFactory, fixture.Settings));
 
                 // Then
-                result.IsAzureDevOpsBranchNotFoundException($"Branch not found \"NotExistingBranch\"");
+                result.IsAzureDevOpsBranchNotFoundException("Branch not found \"NotExistingBranch\"");
             }
 
             [Fact]
@@ -470,7 +470,7 @@
             {
                 // Given
                 const string sourceRefName = "testBranch";
-                string targetRefName = null;
+                const string targetRefName = null;
                 const string title = "foo";
                 const string description = "bar";
                 var fixture =
@@ -620,7 +620,7 @@
                 var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
-                var files = pullRequest.GetModifiedFiles();
+                var files = pullRequest.GetModifiedFiles().ToList();
 
                 // Then
                 files.ShouldBeOfType<List<FilePath>>();
@@ -636,7 +636,7 @@
                 var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
-                var files = pullRequest.GetModifiedFiles();
+                var files = pullRequest.GetModifiedFiles().ToList();
 
                 // Then
                 files.ShouldNotBeNull();
@@ -727,7 +727,7 @@
                 var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
-                var threads = pullRequest.GetCommentThreads();
+                var threads = pullRequest.GetCommentThreads().ToList();
 
                 // Then
                 threads.ShouldNotBeNull();
@@ -742,12 +742,12 @@
                 var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
-                var threads = pullRequest.GetCommentThreads();
+                var threads = pullRequest.GetCommentThreads().ToList();
 
                 // Then
                 threads.ShouldNotBeNull();
                 threads.ShouldNotBeEmpty();
-                threads.Count().ShouldBe(2);
+                threads.Count.ShouldBe(2);
 
                 var thread1 = threads.First();
                 thread1.Id.ShouldBe(11);
@@ -785,7 +785,7 @@
         public sealed class TheCreateCommentMethod
         {
             [Theory]
-            [InlineData((string)null, typeof(ArgumentNullException))]
+            [InlineData(null, typeof(ArgumentNullException))]
             [InlineData("", typeof(ArgumentOutOfRangeException))]
             [InlineData(" ", typeof(ArgumentOutOfRangeException))]
             public void Should_Throw_If_Comment_Is_Null_Or_Empty_Or_Whitespace(string comment, Type expectedExceptionType)
@@ -845,7 +845,7 @@
         public sealed class TheCreateCommentWithFileMethod
         {
             [Theory]
-            [InlineData((string)null, typeof(ArgumentNullException))]
+            [InlineData(null, typeof(ArgumentNullException))]
             [InlineData("", typeof(ArgumentOutOfRangeException))]
             [InlineData(" ", typeof(ArgumentOutOfRangeException))]
             public void Should_Throw_If_Comment_Is_Null_Or_Empty_Or_Whitespace(string comment, Type expectedExceptionType)
@@ -863,7 +863,7 @@
             }
 
             [Theory]
-            [InlineData((string)null, typeof(ArgumentNullException))]
+            [InlineData(null, typeof(ArgumentNullException))]
             [InlineData("", typeof(ArgumentOutOfRangeException))]
             [InlineData(" ", typeof(ArgumentOutOfRangeException))]
             public void Should_Throw_If_FilePath_Is_Null_Or_Empty_Or_Whitespace(string filePath, Type expectedExceptionType)
@@ -884,7 +884,7 @@
             [InlineData(0, typeof(ArgumentOutOfRangeException))]
             [InlineData(-1, typeof(ArgumentOutOfRangeException))]
             [InlineData(-50, typeof(ArgumentOutOfRangeException))]
-            public void Should_Throw_If_LineNumber_Is_Negative_Or_Zeror(int lineNumber, Type expectedExceptionType)
+            public void Should_Throw_If_LineNumber_Is_Negative_Or_Zero(int lineNumber, Type expectedExceptionType)
             {
                 // Given
                 var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100);
@@ -1066,11 +1066,15 @@
             public void Should_Return_Null_If_Pull_Request_Is_Invalid()
             {
                 // Given
-                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100)
-                {
-                    GitClientFactory = new FakeNullGitClientFactory(),
-                };
-                fixture.Settings.ThrowExceptionIfPullRequestCouldNotBeFound = false;
+                var fixture =
+                    new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100)
+                    {
+                        GitClientFactory = new FakeNullGitClientFactory(),
+                        Settings =
+                            {
+                                ThrowExceptionIfPullRequestCouldNotBeFound = false,
+                            },
+                    };
 
                 var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
@@ -1139,11 +1143,15 @@
             public void Should_Return_Null_If_Pull_Request_Is_Invalid()
             {
                 // Given
-                var fixture = new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100)
-                {
-                    GitClientFactory = new FakeNullGitClientFactory(),
-                };
-                fixture.Settings.ThrowExceptionIfPullRequestCouldNotBeFound = false;
+                var fixture =
+                    new PullRequestFixture(BasePullRequestFixture.ValidAzureDevOpsServerUrl, 100)
+                    {
+                        GitClientFactory = new FakeNullGitClientFactory(),
+                        Settings =
+                            {
+                                ThrowExceptionIfPullRequestCouldNotBeFound = false,
+                            },
+                    };
 
                 var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
@@ -1265,12 +1273,12 @@
                 var pullRequest = new AzureDevOpsPullRequest(fixture.Log, fixture.Settings, fixture.GitClientFactory);
 
                 // When
-                var changes = pullRequest.GetIterationChanges(500);
+                var changes = pullRequest.GetIterationChanges(500).ToList();
 
                 // Then
                 changes.ShouldNotBeNull();
                 changes.ShouldNotBeEmpty();
-                changes.Count().ShouldBe(2);
+                changes.Count.ShouldBe(2);
 
                 changes.First().ShouldNotBeNull();
                 changes.First().ShouldBeOfType<AzureDevOpsPullRequestIterationChange>();

@@ -68,12 +68,12 @@
             this.workItemTrackingClientFactory = workItemTrackingClientFactory;
             this.settings = settings;
 
-            using (var workItemTrackingClient = this.workItemTrackingClientFactory.CreateWorkItemTrackingClient(settings.CollectionUrl, settings.Credentials, out var authorizedIdenity))
+            using (var workItemTrackingClient = this.workItemTrackingClientFactory.CreateWorkItemTrackingClient(settings.CollectionUrl, settings.Credentials, out var authorizedIdentity))
             {
                 this.log.Verbose(
                      "Authorized Identity:\n  Id: {0}\n  DisplayName: {1}",
-                     authorizedIdenity.Id,
-                     authorizedIdenity.DisplayName);
+                     authorizedIdentity.Id,
+                     authorizedIdentity.DisplayName);
 
                 try
                 {

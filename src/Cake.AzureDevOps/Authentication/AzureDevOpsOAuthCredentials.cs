@@ -19,6 +19,6 @@
         /// <summary>
         /// Gets the OAuth access token.
         /// </summary>
-        public string AccessToken { get; private set; }
+        public string AccessToken { get; }
     }
 }
