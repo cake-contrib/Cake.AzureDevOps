@@ -16,7 +16,7 @@
             var mock = new Mock<BuildHttpClient>(MockBehavior.Loose, collectionUrl, credentials.ToVssCredentials());
 
             mock.Setup(arg => arg.GetBuildAsync(It.IsAny<Guid>(), It.IsAny<int>(), null, null, default))
-                .ReturnsAsync((Guid projectId, int buildId, string propertyFilters, object userState, CancellationToken token) => new Build
+                .ReturnsAsync((Guid projectId, int buildId, string _, object _, CancellationToken _) => new Build
                 {
                     Id = buildId,
                     BuildNumber = buildId.ToString(),
@@ -24,7 +24,7 @@
                 });
 
             mock.Setup(arg => arg.GetBuildAsync(It.IsAny<string>(), It.IsAny<int>(), null, null, default))
-                .ReturnsAsync((string projectName, int buildId, string propertyFilters, object userState, CancellationToken token) => new Build
+                .ReturnsAsync((string projectName, int buildId, string _, object _, CancellationToken _) => new Build
                 {
                     Id = buildId,
                     BuildNumber = buildId.ToString(),
@@ -32,7 +32,7 @@
                 });
 
             mock.Setup(arg => arg.GetBuildWorkItemsRefsAsync(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int?>(), null, default))
-               .ReturnsAsync((string projectName, int buildId, int? top, object userState, CancellationToken token) => new List<ResourceRef>
+               .ReturnsAsync((string _, int _, int? _, object _, CancellationToken _) => new List<ResourceRef>
                {
                   new () { Id = "42" },
                });

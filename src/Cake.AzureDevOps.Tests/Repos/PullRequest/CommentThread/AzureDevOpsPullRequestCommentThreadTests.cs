@@ -8,6 +8,7 @@
     using Shouldly;
     using Xunit;
 
+    // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class AzureDevOpsPullRequestCommentThreadTests
     {
         public sealed class TheCtor

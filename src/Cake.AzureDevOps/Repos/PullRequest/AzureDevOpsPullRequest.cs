@@ -507,8 +507,7 @@
                         null, // int? top
                         null, // int? skip
                         baseVersionDescriptor,
-                        targetVersionDescriptor,
-                        null) // object userState
+                        targetVersionDescriptor)
                     .ConfigureAwait(false)
                     .GetAwaiter()
                     .GetResult();

@@ -5,8 +5,10 @@
     using Shouldly;
     using Xunit;
 
+    // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class BaseAzureDevOpsProjectSettingsTests
     {
+        // ReSharper disable once ClassNeverInstantiated.Global
         public sealed class TheCtor
         {
             public sealed class WithCollectionUrlAndProjectGuidAndCredentialsParameter

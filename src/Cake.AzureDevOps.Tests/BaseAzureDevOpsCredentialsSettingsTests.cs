@@ -4,8 +4,10 @@
     using Shouldly;
     using Xunit;
 
+    // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class BaseAzureDevOpsCredentialsSettingsTests
     {
+        // ReSharper disable once ClassNeverInstantiated.Global
         public sealed class TheCtor
         {
             public sealed class WithCredentialsParameter
