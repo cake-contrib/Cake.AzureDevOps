@@ -16,6 +16,16 @@ jobs:
   pool:
     vmImage: 'windows-2022'
   steps:  
+  - task: UseDotNet@2
+    inputs:
+      version: '7.x'
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
+  # .NET 5 required for GitVersion
+  - task: UseDotNet@2
+    inputs:
+      version: '5.x'
   - powershell: |
       $ENV:CAKE_SKIP_GITVERSION=([string]::IsNullOrEmpty($ENV:SYSTEM_PULLREQUEST_PULLREQUESTID) -eq $False).ToString()
       .\build.ps1
