@@ -6,6 +6,7 @@
     using Shouldly;
     using Xunit;
 
+    // ReSharper disable once ClassNeverInstantiated.Global
     public sealed class AzureDevOpsPullRequestSettingsTests
     {
         public sealed class TheCtorForSourceRefName

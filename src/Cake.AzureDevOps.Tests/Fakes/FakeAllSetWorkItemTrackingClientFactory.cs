@@ -16,7 +16,7 @@
             var mock = new Mock<WorkItemTrackingHttpClient>(MockBehavior.Strict, collectionUrl, credentials.ToVssCredentials());
 
             mock.Setup(arg => arg.GetWorkItemsAsync(It.IsAny<IEnumerable<int>>(), It.IsAny<IEnumerable<string>>(), It.IsAny<DateTime?>(), It.IsAny<WorkItemExpand?>(), It.IsAny<WorkItemErrorPolicy?>(), null, default))
-                .ReturnsAsync((IEnumerable<int> workItemIds, IEnumerable<string> fields, DateTime? asOf, WorkItemExpand? expand, WorkItemErrorPolicy? errorPolicy, object userState, CancellationToken token) =>
+                .ReturnsAsync((IEnumerable<int> workItemIds, IEnumerable<string> _, DateTime? _, WorkItemExpand? _, WorkItemErrorPolicy? _, object _, CancellationToken _) =>
                 {
                     return workItemIds.Select(x => new WorkItem { Id = x }).ToList();
                 });

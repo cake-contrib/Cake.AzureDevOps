@@ -35,12 +35,23 @@
                 });
 
             mock.Setup(arg => arg.GetTestResultsAsync(It.IsAny<Guid>(), It.IsAny<int>(), null, It.IsAny<int?>(), It.IsAny<int?>(), It.IsAny<IEnumerable<TestOutcome>>(), null, default))
-                .ReturnsAsync((Guid projectId, int testRunId, ResultDetails? details, int? skip, int? top, IEnumerable<TestOutcome> outcomes, object userState, CancellationToken token) => new List<TestCaseResult>()
+                .ReturnsAsync((Guid _, int _, ResultDetails? _, int? _, int? top, IEnumerable<TestOutcome> _, object _, CancellationToken _) =>
                 {
-                    new () { AutomatedTestName = "t1", Outcome = "Passed", ErrorMessage = string.Empty },
-                    new () { AutomatedTestName = "t2", Outcome = "Failed", ErrorMessage = "Error" },
-                    new () { AutomatedTestName = "t3", Outcome = "Passed", ErrorMessage = string.Empty },
-                }.Take(top.Value).ToList());
+                    var result =
+                        new List<TestCaseResult>
+                        {
+                            new () { AutomatedTestName = "t1", Outcome = "Passed", ErrorMessage = string.Empty },
+                            new () { AutomatedTestName = "t2", Outcome = "Failed", ErrorMessage = "Error" },
+                            new () { AutomatedTestName = "t3", Outcome = "Passed", ErrorMessage = string.Empty },
+                        };
+
+                    if (top.HasValue)
+                    {
+                        result = result.Take(top.Value).ToList();
+                    }
+
+                    return result;
+                });
 
             mock = this.Setup(mock);
 
