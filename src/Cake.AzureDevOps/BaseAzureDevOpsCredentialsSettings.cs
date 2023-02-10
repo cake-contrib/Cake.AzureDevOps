@@ -33,6 +33,6 @@
         /// <summary>
         /// Gets the credentials used to authenticate against Azure DevOps.
         /// </summary>
-        public IAzureDevOpsCredentials Credentials { get; private set; }
+        public IAzureDevOpsCredentials Credentials { get; }
     }
 }

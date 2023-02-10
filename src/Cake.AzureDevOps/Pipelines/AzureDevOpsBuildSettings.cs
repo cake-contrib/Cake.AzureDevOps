@@ -80,7 +80,7 @@
         /// <summary>
         /// Gets the ID of the build.
         /// </summary>
-        public int BuildId { get; private set; }
+        public int BuildId { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether an exception should be thrown if

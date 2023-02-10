@@ -1,5 +1,6 @@
 ﻿namespace Cake.AzureDevOps.Pipelines
 {
+    using System.ComponentModel;
     using Microsoft.TeamFoundation.Build.WebApi;
 
     /// <summary>
@@ -14,23 +15,16 @@
         /// <returns>Converted result.</returns>
         public static AzureDevOpsTaskResult ToAzureDevOpsTaskResult(this TaskResult result)
         {
-            switch (result)
+            return result switch
             {
-                case TaskResult.Succeeded:
-                    return AzureDevOpsTaskResult.Succeeded;
-                case TaskResult.SucceededWithIssues:
-                    return AzureDevOpsTaskResult.SucceededWithIssues;
-                case TaskResult.Failed:
-                    return AzureDevOpsTaskResult.Failed;
-                case TaskResult.Canceled:
-                    return AzureDevOpsTaskResult.Canceled;
-                case TaskResult.Skipped:
-                    return AzureDevOpsTaskResult.Skipped;
-                case TaskResult.Abandoned:
-                    return AzureDevOpsTaskResult.Abandoned;
-                default:
-                    throw new System.Exception("Unknown value");
-            }
+                TaskResult.Succeeded => AzureDevOpsTaskResult.Succeeded,
+                TaskResult.SucceededWithIssues => AzureDevOpsTaskResult.SucceededWithIssues,
+                TaskResult.Failed => AzureDevOpsTaskResult.Failed,
+                TaskResult.Canceled => AzureDevOpsTaskResult.Canceled,
+                TaskResult.Skipped => AzureDevOpsTaskResult.Skipped,
+                TaskResult.Abandoned => AzureDevOpsTaskResult.Abandoned,
+                _ => throw new InvalidEnumArgumentException(nameof(result), (int)result, typeof(TaskResult)),
+            };
         }
     }
 }

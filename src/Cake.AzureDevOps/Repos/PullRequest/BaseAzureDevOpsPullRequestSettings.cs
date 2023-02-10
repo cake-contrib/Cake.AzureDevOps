@@ -79,7 +79,7 @@
         /// <summary>
         /// Gets the full URL of the Git repository, eg. <code>http://myserver:8080/defaultcollection/myproject/_git/myrepository</code>.
         /// </summary>
-        public Uri RepositoryUrl { get; private set; }
+        public Uri RepositoryUrl { get; }
 
         /// <summary>
         /// Gets the branch for which the pull request is made.
@@ -90,6 +90,6 @@
         /// <summary>
         /// Gets the branch for which the pull request is made.
         /// </summary>
-        public string SourceRefName { get; private set; }
+        public string SourceRefName { get; }
     }
 }

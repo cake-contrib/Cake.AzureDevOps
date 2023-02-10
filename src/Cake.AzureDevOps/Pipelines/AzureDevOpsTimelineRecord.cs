@@ -1,4 +1,5 @@
-﻿namespace Cake.AzureDevOps.Pipelines
+﻿// ReSharper disable UnusedAutoPropertyAccessor.Global
+namespace Cake.AzureDevOps.Pipelines
 {
     using System;
 
@@ -10,32 +11,32 @@
         /// <summary>
         /// Gets the attempt of the build.
         /// </summary>
-        public int Attempt { get; internal set; }
+        public int Attempt { get; internal init; }
 
         /// <summary>
         /// Gets the number of warnings in the build.
         /// </summary>
-        public int? WarningCount { get; internal set; }
+        public int? WarningCount { get; internal init; }
 
         /// <summary>
         /// Gets the number of errors in the build.
         /// </summary>
-        public int? ErrorCount { get; internal set; }
+        public int? ErrorCount { get; internal init; }
 
         /// <summary>
         /// Gets an ordinal value relative to other records.
         /// </summary>
-        public int? Order { get; internal set; }
+        public int? Order { get; internal init; }
 
         /// <summary>
         /// Gets the name of the agent running the operation.
         /// </summary>
-        public string WorkerName { get; internal set; }
+        public string WorkerName { get; internal init; }
 
         /// <summary>
         /// Gets the time the record was last modified.
         /// </summary>
-        public DateTime LastModified { get; internal set; }
+        public DateTime LastModified { get; internal init; }
 
         /// <summary>
         /// Gets the change ID.
@@ -43,61 +44,61 @@
         /// <remarks>
         /// This is a monotonically-increasing number used to ensure consistency in the UI.
         /// </remarks>
-        public int ChangeId { get; internal set; }
+        public int ChangeId { get; internal init; }
 
         /// <summary>
         /// Gets the result code.
         /// </summary>
-        public string ResultCode { get; internal set; }
+        public string ResultCode { get; internal init; }
 
         /// <summary>
         /// Gets the result.
         /// </summary>
-        public AzureDevOpsTaskResult? Result { get; internal set; }
+        public AzureDevOpsTaskResult? Result { get; internal init; }
 
         /// <summary>
         /// Gets the state of the record.
         /// </summary>
-        public AzureDevOpsTimelineRecordState? State { get; internal set; }
+        public AzureDevOpsTimelineRecordState? State { get; internal init; }
 
         /// <summary>
         /// Gets the current completion percentage.
         /// </summary>
-        public int? PercentComplete { get; internal set; }
+        public int? PercentComplete { get; internal init; }
 
         /// <summary>
         /// Gets a string that indicates the current operation.
         /// </summary>
-        public string CurrentOperation { get; internal set; }
+        public string CurrentOperation { get; internal init; }
 
         /// <summary>
         /// Gets the finish time.
         /// </summary>
-        public DateTime? FinishTime { get; internal set; }
+        public DateTime? FinishTime { get; internal init; }
 
         /// <summary>
         /// Gets the start time.
         /// </summary>
-        public DateTime? StartTime { get; internal set; }
+        public DateTime? StartTime { get; internal init; }
 
         /// <summary>
         /// Gets the name.
         /// </summary>
-        public string Name { get; internal set; }
+        public string Name { get; internal init; }
 
         /// <summary>
         /// Gets the type of the record.
         /// </summary>
-        public string RecordType { get; internal set; }
+        public string RecordType { get; internal init; }
 
         /// <summary>
         /// Gets the ID of the record's parent.
         /// </summary>
-        public Guid? ParentId { get; internal set; }
+        public Guid? ParentId { get; internal init; }
 
         /// <summary>
         /// Gets the ID of the record.
         /// </summary>
-        public Guid Id { get; internal set; }
+        public Guid Id { get; internal init; }
     }
 }

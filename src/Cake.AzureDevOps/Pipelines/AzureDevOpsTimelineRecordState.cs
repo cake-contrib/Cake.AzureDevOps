@@ -11,7 +11,7 @@
         Pending = 0,
 
         /// <summary>
-        /// Task execution is in progres.
+        /// Task execution is in progress.
         /// </summary>
         InProgress = 1,
 

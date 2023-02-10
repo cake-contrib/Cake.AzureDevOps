@@ -8,18 +8,18 @@
     public class AzureDevOpsPullRequestIterationChange
     {
         /// <summary>
-        /// Gets or sets the file path the iteration change is associated with.
+        /// Gets the file path the iteration change is associated with.
         /// </summary>
-        public FilePath ItemPath { get; set; }
+        public FilePath ItemPath { get; init; }
 
         /// <summary>
-        /// Gets or sets the id of the iteration change.
+        /// Gets the id of the iteration change.
         /// </summary>
-        public int ChangeId { get; set; }
+        public int ChangeId { get; init; }
 
         /// <summary>
-        /// Gets or sets the tracking id of the iteration change.
+        /// Gets the tracking id of the iteration change.
         /// </summary>
-        public int ChangeTrackingId { get; set; }
+        public int ChangeTrackingId { get; init; }
     }
 }

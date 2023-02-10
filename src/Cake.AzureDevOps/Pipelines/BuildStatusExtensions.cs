@@ -1,5 +1,6 @@
 ﻿namespace Cake.AzureDevOps.Pipelines
 {
+    using System.ComponentModel;
     using Microsoft.TeamFoundation.Build.WebApi;
 
     /// <summary>
@@ -14,25 +15,17 @@
         /// <returns>Converted state.</returns>
         public static AzureDevOpsBuildStatus ToAzureDevOpsBuildStatus(this BuildStatus status)
         {
-            switch (status)
+            return status switch
             {
-                case BuildStatus.None:
-                    return AzureDevOpsBuildStatus.None;
-                case BuildStatus.InProgress:
-                    return AzureDevOpsBuildStatus.InProgress;
-                case BuildStatus.Completed:
-                    return AzureDevOpsBuildStatus.Completed;
-                case BuildStatus.Cancelling:
-                    return AzureDevOpsBuildStatus.Cancelling;
-                case BuildStatus.Postponed:
-                    return AzureDevOpsBuildStatus.Postponed;
-                case BuildStatus.NotStarted:
-                    return AzureDevOpsBuildStatus.NotStarted;
-                case BuildStatus.All:
-                    return AzureDevOpsBuildStatus.All;
-                default:
-                    throw new System.Exception("Unknown value");
-            }
+                BuildStatus.None => AzureDevOpsBuildStatus.None,
+                BuildStatus.InProgress => AzureDevOpsBuildStatus.InProgress,
+                BuildStatus.Completed => AzureDevOpsBuildStatus.Completed,
+                BuildStatus.Cancelling => AzureDevOpsBuildStatus.Cancelling,
+                BuildStatus.Postponed => AzureDevOpsBuildStatus.Postponed,
+                BuildStatus.NotStarted => AzureDevOpsBuildStatus.NotStarted,
+                BuildStatus.All => AzureDevOpsBuildStatus.All,
+                _ => throw new InvalidEnumArgumentException(nameof(status), (int)status, typeof(BuildStatus)),
+            };
         }
     }
 }

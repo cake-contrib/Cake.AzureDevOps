@@ -1,5 +1,6 @@
 ﻿namespace Cake.AzureDevOps.Repos.PullRequest
 {
+    using System.ComponentModel;
     using Microsoft.TeamFoundation.SourceControl.WebApi;
 
     /// <summary>
@@ -14,21 +15,15 @@
         /// <returns>Converted state.</returns>
         public static GitStatusState ToGitStatusState(this AzureDevOpsPullRequestStatusState state)
         {
-            switch (state)
+            return state switch
             {
-                case AzureDevOpsPullRequestStatusState.NotSet:
-                    return GitStatusState.NotSet;
-                case AzureDevOpsPullRequestStatusState.Pending:
-                    return GitStatusState.Pending;
-                case AzureDevOpsPullRequestStatusState.Succeeded:
-                    return GitStatusState.Succeeded;
-                case AzureDevOpsPullRequestStatusState.Failed:
-                    return GitStatusState.Failed;
-                case AzureDevOpsPullRequestStatusState.Error:
-                    return GitStatusState.Error;
-                default:
-                    throw new System.Exception("Unknown value");
-            }
+                AzureDevOpsPullRequestStatusState.NotSet => GitStatusState.NotSet,
+                AzureDevOpsPullRequestStatusState.Pending => GitStatusState.Pending,
+                AzureDevOpsPullRequestStatusState.Succeeded => GitStatusState.Succeeded,
+                AzureDevOpsPullRequestStatusState.Failed => GitStatusState.Failed,
+                AzureDevOpsPullRequestStatusState.Error => GitStatusState.Error,
+                _ => throw new InvalidEnumArgumentException(nameof(state), (int)state, typeof(AzureDevOpsPullRequestStatusState)),
+            };
         }
     }
 }

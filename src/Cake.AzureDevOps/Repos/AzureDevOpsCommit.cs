@@ -1,4 +1,5 @@
-﻿namespace Cake.AzureDevOps.Repos
+﻿// ReSharper disable UnusedAutoPropertyAccessor.Global
+namespace Cake.AzureDevOps.Repos
 {
     using System.Collections.Generic;
 
@@ -17,27 +18,27 @@
         /// <summary>
         /// Gets the ID (SHA-1) of the commit.
         /// </summary>
-        public string Id { get; internal set; }
+        public string Id { get; internal init; }
 
         /// <summary>
         /// Gets the Comment or message of the commit.
         /// </summary>
-        public string Message { get; internal set; }
+        public string Message { get; internal init; }
 
         /// <summary>
         /// Gets a value indicating whether the comment is truncated from the full Git
         /// commit comment message or not.
         /// </summary>
-        public bool IsMessageTruncated { get; internal set; }
+        public bool IsMessageTruncated { get; internal init; }
 
         /// <summary>
         /// Gets the parent commit IDs of the commit.
         /// </summary>
-        public IEnumerable<string> ParentIds { get; internal set; }
+        public IEnumerable<string> ParentIds { get; internal init; }
 
         /// <summary>
         /// Gets the remote URL path to the commit.
         /// </summary>
-        public string RemoteUrl { get; internal set; }
+        public string RemoteUrl { get; internal init; }
     }
 }

@@ -15,7 +15,7 @@
             var mock = new Mock<GitHttpClient>(MockBehavior.Loose, collectionUrl, credentials.ToVssCredentials());
 
             mock.Setup(arg => arg.GetPullRequestAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>(), null, null, null, null, null, null, default))
-                .ReturnsAsync((string project1, string repoId1, int prId, int i1, int i2, int i3, bool b1, bool b2, object o1, CancellationToken c1) => new GitPullRequest
+                .ReturnsAsync((string _, string repoId1, int prId, int _, int _, int _, bool _, bool _, object _, CancellationToken _) => new GitPullRequest
                 {
                     PullRequestId = prId,
                     Status = PullRequestStatus.Active,
@@ -40,7 +40,7 @@
                     1,
                     null,
                     default))
-                .ReturnsAsync((string project2, string repoId2, GitPullRequestSearchCriteria sc, int j1, int j2, int top, object o2, CancellationToken c2)
+                .ReturnsAsync((string _, string repoId2, GitPullRequestSearchCriteria sc, int _, int _, int _, object _, CancellationToken _)
                     => new List<GitPullRequest>(new[]
                     {
                         new GitPullRequest
@@ -74,7 +74,7 @@
                     It.IsAny<string>(),
                     It.IsAny<object>(),
                     default))
-             .ReturnsAsync((IdentityRefWithVote identity, Guid project, int prId, string reviewerId, object o, CancellationToken c)
+             .ReturnsAsync((IdentityRefWithVote identity, Guid _, int _, string _, object _, CancellationToken _)
                     => new IdentityRefWithVote
                     {
                         Vote = identity.Vote,
@@ -95,7 +95,7 @@
                     It.IsAny<int>(),
                     It.IsAny<object>(),
                     It.IsAny<CancellationToken>()))
-             .ReturnsAsync((GitPullRequestStatus status, Guid repoId, int prId, object o, CancellationToken c)
+             .ReturnsAsync((GitPullRequestStatus status, Guid _, int _, object _, CancellationToken _)
                     => new GitPullRequestStatus
                     {
                         Context = status.Context,
@@ -105,14 +105,14 @@
             // Setup CommitDiffs object
             var gitChanges = new List<GitChange>
             {
-                new GitChange
+                new ()
                 {
                     ChangeId = 1,
                     ChangeType = VersionControlChangeType.Edit,
                     Item = new GitItem("/src/project/myclass.cs", "ID1", GitObjectType.Commit, "6b13ff8", 0),
                 },
                 null,
-                new GitChange
+                new ()
                 {
                     ChangeId = 2,
                     ChangeType = VersionControlChangeType.Edit,
@@ -136,7 +136,7 @@
                     It.IsAny<GitTargetVersionDescriptor>(),
                     null,
                     CancellationToken.None))
-             .ReturnsAsync((string prj, Guid rId, bool? b, int? t, int? s, GitBaseVersionDescriptor bvd, GitTargetVersionDescriptor tvd, object o, CancellationToken c)
+             .ReturnsAsync((string _, Guid _, bool? _, int? _, int? _, GitBaseVersionDescriptor _, GitTargetVersionDescriptor _, object _, CancellationToken _)
                     => gitCommitDiffs);
 
             m.Setup(arg => arg.UpdateThreadAsync(
@@ -146,13 +146,13 @@
                 It.IsAny<int>(),
                 null,
                 CancellationToken.None))
-             .ReturnsAsync((GitPullRequestCommentThread prct, Guid g, int prId, int thId, object o, CancellationToken c)
+             .ReturnsAsync((GitPullRequestCommentThread prct, Guid _, int _, int thId, object _, CancellationToken _)
                     => new GitPullRequestCommentThread { Id = thId, Status = prct.Status });
 
             // Setup GitPullRequestCommentThread collection
             var commentThreads = new List<GitPullRequestCommentThread>
             {
-                new GitPullRequestCommentThread
+                new ()
                 {
                     Id = 11,
                     ThreadContext = new CommentThreadContext()
@@ -161,12 +161,12 @@
                     },
                     Comments = new List<Comment>
                     {
-                        new Comment { Content = "Hello", IsDeleted = false, CommentType = CommentType.CodeChange, Id = 1 },
-                        new Comment { Content = "Goodbye", IsDeleted = true, CommentType = CommentType.Text, Id = 2 },
+                        new () { Content = "Hello", IsDeleted = false, CommentType = CommentType.CodeChange, Id = 1 },
+                        new () { Content = "Goodbye", IsDeleted = true, CommentType = CommentType.Text, Id = 2 },
                     },
                     Status = CommentThreadStatus.Active,
                 },
-                new GitPullRequestCommentThread
+                new ()
                 {
                     Id = 22,
                     ThreadContext = null,
@@ -182,7 +182,7 @@
                 null,
                 null,
                 CancellationToken.None))
-             .ReturnsAsync((Guid rId, int prId, int? it, int? baseIt, object o, CancellationToken c)
+             .ReturnsAsync((Guid _, int _, int? _, int? _, object _, CancellationToken _)
                     => commentThreads);
 
             m.Setup(arg => arg.CreateThreadAsync(
@@ -191,7 +191,7 @@
                 It.IsAny<int>(),
                 null,
                 CancellationToken.None))
-             .ReturnsAsync((GitPullRequestCommentThread prct, Guid g, int i, object o, CancellationToken c)
+             .ReturnsAsync((GitPullRequestCommentThread prct, Guid _, int _, object _, CancellationToken _)
                     => prct);
 
             m.Setup(arg => arg.GetPullRequestIterationsAsync(
@@ -200,11 +200,11 @@
                 null,
                 null,
                 CancellationToken.None))
-             .ReturnsAsync((Guid repoId, int prId, bool? b, object o, CancellationToken c)
+             .ReturnsAsync((Guid _, int _, bool? _, object _, CancellationToken _)
                     => new List<GitPullRequestIteration>
                     {
-                        new GitPullRequestIteration { Id = 42, CreatedDate = DateTime.Today.AddDays(-3) },
-                        new GitPullRequestIteration { Id = 16, CreatedDate = DateTime.Today.AddDays(-1) },
+                        new () { Id = 42, CreatedDate = DateTime.Today.AddDays(-3) },
+                        new () { Id = 16, CreatedDate = DateTime.Today.AddDays(-1) },
                     });
 
             m.Setup(arg => arg.GetPullRequestIterationsAsync(
@@ -213,10 +213,10 @@
                     null,
                     null,
                     CancellationToken.None))
-                .ReturnsAsync((Guid repoId, int prId, bool? b, object o, CancellationToken c)
+                .ReturnsAsync((Guid _, int _, bool? _, object _, CancellationToken _)
                     => new List<GitPullRequestIteration>
                     {
-                        new GitPullRequestIteration { Id = null },
+                        new () { Id = null },
                     });
 
             // Setup GitPullRequestIterationChanges collection
@@ -224,8 +224,8 @@
             {
                 ChangeEntries = new List<GitPullRequestChange>
                 {
-                    new GitPullRequestChange { ChangeId = 100, ChangeTrackingId = 1, Item = new GitItem { Path = "/src/my/class1.cs" } },
-                    new GitPullRequestChange { ChangeId = 200, ChangeTrackingId = 2, Item = new GitItem { Path = string.Empty } },
+                    new () { ChangeId = 100, ChangeTrackingId = 1, Item = new GitItem { Path = "/src/my/class1.cs" } },
+                    new () { ChangeId = 200, ChangeTrackingId = 2, Item = new GitItem { Path = string.Empty } },
                 },
             };
 
@@ -238,7 +238,7 @@
                 null,
                 null,
                 CancellationToken.None))
-             .ReturnsAsync((Guid repoId, int prId, int iterId, int? t, int? s, int? ct, object o, CancellationToken c)
+             .ReturnsAsync((Guid _, int _, int _, int? _, int? _, int? _, object _, CancellationToken _)
                     => changes);
 
             // Setup pull request creation
@@ -273,7 +273,7 @@
                 CancellationToken.None))
              .ReturnsAsync(() => new List<GitRef>()
              {
-                 new GitRef("master"),
+                 new ("master"),
              });
 
             m.Setup(
@@ -288,11 +288,11 @@
              .ReturnsAsync(
                 (
                     GitPullRequest gitPullRequestToCreate,
-                    string project,
+                    string _,
                     string repositoryId,
-                    bool? supportsIterations,
-                    object userState,
-                    CancellationToken cancellationToken) =>
+                    bool? _,
+                    object _,
+                    CancellationToken _) =>
                 {
                     gitPullRequestToCreate.PullRequestId = 777;
                     gitPullRequestToCreate.Repository = new GitRepository
@@ -315,7 +315,7 @@
                    It.IsAny<int>(),
                    null,
                    CancellationToken.None))
-               .ReturnsAsync((Comment comment, Guid repositoryId, int prId, int threadId, int commentId, object o, CancellationToken c)
+               .ReturnsAsync((Comment comment, Guid _, int _, int _, int _, object _, CancellationToken _)
                    => new Comment
                    {
                         Id = comment.Id,

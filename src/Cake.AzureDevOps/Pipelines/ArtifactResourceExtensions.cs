@@ -13,14 +13,14 @@
         /// Converts a <see cref="ArtifactResource"/> to an <see cref="AzureDevOpsBuildArtifact"/>.
         /// </summary>
         /// <param name="artifactResource">Artifact resource record to convert.</param>
-        /// <returns>Converted artifact resorce record.</returns>
+        /// <returns>Converted artifact resource record.</returns>
         public static AzureDevOpsArtifactResource ToAzureDevOpsArtifactResource(this ArtifactResource artifactResource)
         {
             artifactResource.NotNull(nameof(artifactResource));
 
             if (!Enum.TryParse(artifactResource.Type, out AzurePipelinesArtifactType type))
             {
-                throw new Exception($"Unexpected value for artifact type '{artifactResource.Type}'");
+                throw new InvalidOperationException($"Unexpected value for artifact type '{artifactResource.Type}'");
             }
 
             return

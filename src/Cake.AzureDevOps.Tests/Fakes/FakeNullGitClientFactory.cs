@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Threading;
     using Cake.AzureDevOps.Authentication;
     using Microsoft.TeamFoundation.SourceControl.WebApi;
     using Moq;

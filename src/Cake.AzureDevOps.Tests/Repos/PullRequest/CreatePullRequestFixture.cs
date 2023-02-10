@@ -8,7 +8,6 @@
         : BasePullRequestFixture
     {
         public CreatePullRequestFixture(string repoUrl, string sourceRefName, string targetRefName, string title, string description)
-            : base()
         {
             this.Settings =
                 new AzureDevOpsCreatePullRequestSettings(
@@ -20,6 +19,6 @@
                     new AzureDevOpsNtlmCredentials());
         }
 
-        public AzureDevOpsCreatePullRequestSettings Settings { get; set; }
+        public AzureDevOpsCreatePullRequestSettings Settings { get; }
     }
 }

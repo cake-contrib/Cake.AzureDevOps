@@ -10,11 +10,11 @@
         /// <summary>
         /// Gets the name of the test run.
         /// </summary>
-        public int RunId { get; internal set; }
+        public int RunId { get; internal init; }
 
         /// <summary>
         /// Gets the test results of a test run.
         /// </summary>
-        public IEnumerable<AzureDevOpsTestResult> TestResults { get; internal set; }
+        public IEnumerable<AzureDevOpsTestResult> TestResults { get; internal init; }
     }
 }

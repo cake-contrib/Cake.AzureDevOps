@@ -1,4 +1,4 @@
-﻿namespace Cake.AzureDevOps
+﻿namespace Cake.AzureDevOps.Tests
 {
     using System;
     using Cake.AzureDevOps.Authentication;

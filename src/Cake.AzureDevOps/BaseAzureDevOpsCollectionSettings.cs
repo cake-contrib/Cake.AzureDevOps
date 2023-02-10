@@ -47,6 +47,6 @@
         /// <summary>
         /// Gets the full URL of the Azure DevOps collection, eg. <code>http://myserver:8080/defaultcollection</code>.
         /// </summary>
-        public Uri CollectionUrl { get; private set; }
+        public Uri CollectionUrl { get; }
     }
 }

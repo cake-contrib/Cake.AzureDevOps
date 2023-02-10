@@ -27,12 +27,12 @@
 
             var azureDevOpsBuilds = new List<AzureDevOpsBuild>();
 
-            using (var buildHttpClient = new BuildClientFactory().CreateBuildClient(settings.CollectionUrl, settings.Credentials, out var authorizedIdenity))
+            using (var buildHttpClient = new BuildClientFactory().CreateBuildClient(settings.CollectionUrl, settings.Credentials, out var authorizedIdentity))
             {
                 log.Verbose(
                      "Authorized Identity:\n  Id: {0}\n  DisplayName: {1}",
-                     authorizedIdenity.Id,
-                     authorizedIdenity.DisplayName);
+                     authorizedIdentity.Id,
+                     authorizedIdentity.DisplayName);
 
                 AzureDevOpsBuildDefinition buildDefinition = null;
 
@@ -45,10 +45,10 @@
                     }
                 }
 
-                List<int> buildsDefinitionIds =
+                var buildsDefinitionIds =
                     buildDefinition == null ? null : new List<int>() { buildDefinition.Id };
 
-                List<Build> builds = null;
+                List<Build> builds;
 
                 if (settings.ProjectGuid != Guid.Empty)
                 {

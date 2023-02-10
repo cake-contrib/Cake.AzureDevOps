@@ -9,7 +9,7 @@
         public const string ValidAzureDevOpsUrl = "https://my-account.visualstudio.com/DefaultCollection/MyProject/_git/MyRepoName";
         public const string InvalidUrl = "http://example.com";
 
-        public BasePullRequestFixture()
+        protected BasePullRequestFixture()
         {
             this.InitializeFakes();
         }

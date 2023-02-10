@@ -7,9 +7,6 @@
     /// </summary>
     public class AzureDevOpsComment
     {
-        private readonly Comment comment;
-        private readonly int threadId;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AzureDevOpsComment"/> class.
         /// </summary>
@@ -19,8 +16,8 @@
         {
             content.NotNullOrWhiteSpace(nameof(content));
 
-            this.comment = new Comment { Content = content, IsDeleted = isDeleted };
-            this.threadId = 0;
+            this.Comment = new Comment { Content = content, IsDeleted = isDeleted };
+            this.ThreadId = 0;
         }
 
         /// <summary>
@@ -41,59 +38,50 @@
             comment.NotNull(nameof(comment));
             threadId.NotNegative(nameof(threadId));
 
-            this.comment = comment;
-            this.threadId = threadId;
+            this.Comment = comment;
+            this.ThreadId = threadId;
         }
 
         /// <summary>
         /// Gets the comment id.
         /// </summary>
-        public short Id
-        {
-            get => this.comment.Id;
-        }
+        public short Id => this.Comment.Id;
 
         /// <summary>
         /// Gets the thread id.
         /// </summary>
-        public int ThreadId
-        {
-            get => this.threadId;
-        }
+        public int ThreadId { get; }
 
         /// <summary>
-        /// Gets or sets the content of the pull request comment.
+        /// Gets the content of the pull request comment.
         /// </summary>
         public string Content
         {
-            get => this.comment.Content;
-            set => this.comment.Content = value;
+            get => this.Comment.Content;
+            init => this.Comment.Content = value;
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the comment is deleted.
+        /// Gets a value indicating whether the comment is deleted.
         /// </summary>
         public bool IsDeleted
         {
-            get => this.comment.IsDeleted;
-            set => this.comment.IsDeleted = value;
+            get => this.Comment.IsDeleted;
+            init => this.Comment.IsDeleted = value;
         }
 
         /// <summary>
-        /// Gets or sets the comment type.
+        /// Gets the comment type.
         /// </summary>
         public AzureDevOpsCommentType CommentType
         {
-            get => (AzureDevOpsCommentType)this.comment.CommentType;
-            set => this.comment.CommentType = (CommentType)value;
+            get => (AzureDevOpsCommentType)this.Comment.CommentType;
+            init => this.Comment.CommentType = (CommentType)value;
         }
 
         /// <summary>
         /// Gets the internal comment.
         /// </summary>
-        internal Comment Comment
-        {
-            get => this.comment;
-        }
+        internal Comment Comment { get; }
     }
 }

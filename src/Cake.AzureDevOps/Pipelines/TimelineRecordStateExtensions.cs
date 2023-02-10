@@ -1,5 +1,6 @@
 ﻿namespace Cake.AzureDevOps.Pipelines
 {
+    using System.ComponentModel;
     using Microsoft.TeamFoundation.Build.WebApi;
 
     /// <summary>
@@ -14,17 +15,13 @@
         /// <returns>Converted state.</returns>
         public static AzureDevOpsTimelineRecordState ToAzureDevOpsTimelineRecordState(this TimelineRecordState state)
         {
-            switch (state)
+            return state switch
             {
-                case TimelineRecordState.Pending:
-                    return AzureDevOpsTimelineRecordState.Pending;
-                case TimelineRecordState.InProgress:
-                    return AzureDevOpsTimelineRecordState.InProgress;
-                case TimelineRecordState.Completed:
-                    return AzureDevOpsTimelineRecordState.Completed;
-                default:
-                    throw new System.Exception("Unknown value");
-            }
+                TimelineRecordState.Pending => AzureDevOpsTimelineRecordState.Pending,
+                TimelineRecordState.InProgress => AzureDevOpsTimelineRecordState.InProgress,
+                TimelineRecordState.Completed => AzureDevOpsTimelineRecordState.Completed,
+                _ => throw new InvalidEnumArgumentException(nameof(state), (int)state, typeof(TimelineRecordState)),
+            };
         }
     }
 }

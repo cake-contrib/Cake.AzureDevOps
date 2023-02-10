@@ -2,7 +2,6 @@
 {
     using System;
     using Cake.AzureDevOps.Authentication;
-    using Cake.AzureDevOps.Pipelines;
 
     /// <summary>
     /// Settings for aliases handling work items.
@@ -95,7 +94,7 @@
         /// <summary>
         /// Gets the ID of the work item.
         /// </summary>
-        public int WorkItemId { get; private set; }
+        public int WorkItemId { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether an exception should be thrown if

@@ -10,9 +10,9 @@
     {
         public abstract GitHttpClient CreateGitClient(Uri collectionUrl, IAzureDevOpsCredentials credentials);
 
-        public GitHttpClient CreateGitClient(Uri collectionUrl, IAzureDevOpsCredentials credentials, out Identity identity)
+        public GitHttpClient CreateGitClient(Uri collectionUrl, IAzureDevOpsCredentials credentials, out Identity authorizedIdentity)
         {
-            identity = new Identity { ProviderDisplayName = "FakeUser", Id = Guid.NewGuid(), IsActive = true };
+            authorizedIdentity = new Identity { ProviderDisplayName = "FakeUser", Id = Guid.NewGuid(), IsActive = true };
             return this.CreateGitClient(collectionUrl, credentials);
         }
 

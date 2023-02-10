@@ -64,12 +64,12 @@
                 this.repositoryDescription.ProjectName,
                 this.repositoryDescription.RepositoryName);
 
-            using (var gitClient = this.gitClientFactory.CreateGitClient(this.repositoryDescription.CollectionUrl, settings.Credentials, out var authorizedIdenity))
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.repositoryDescription.CollectionUrl, settings.Credentials, out var authorizedIdentity))
             {
                 this.log.Verbose(
                      "Authorized Identity:\n  Id: {0}\n  DisplayName: {1}",
-                     authorizedIdenity.Id,
-                     authorizedIdenity.DisplayName);
+                     authorizedIdentity.Id,
+                     authorizedIdentity.DisplayName);
 
                 if (settings.PullRequestId.HasValue)
                 {
@@ -359,7 +359,7 @@
         }
 
         /// <summary>
-        /// Votes for the pullrequest.
+        /// Votes for the pull request.
         /// </summary>
         /// <param name="vote">The vote for the pull request.</param>
         /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
@@ -371,7 +371,7 @@
                 return;
             }
 
-            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials, out var authorizedIdenity))
+            using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials, out var authorizedIdentity))
             {
                 var createdReviewer =
                     gitClient
@@ -379,7 +379,7 @@
                             new IdentityRefWithVote() { Vote = (short)vote },
                             this.pullRequest.Repository.Id,
                             this.pullRequest.PullRequestId,
-                            authorizedIdenity.Id.ToString())
+                            authorizedIdentity.Id.ToString())
                         .ConfigureAwait(false)
                         .GetAwaiter()
                         .GetResult();
@@ -507,8 +507,7 @@
                         null, // int? top
                         null, // int? skip
                         baseVersionDescriptor,
-                        targetVersionDescriptor,
-                        null) // object userState
+                        targetVersionDescriptor)
                     .ConfigureAwait(false)
                     .GetAwaiter()
                     .GetResult();
@@ -521,16 +520,14 @@
                 }
 
                 var changes =
-                    from change in commitDiffs.Changes
-                    where
-                        change != null &&
-                        !change.Item.IsFolder
-                    select
-                        new FilePath(change.Item.Path.TrimStart('/'));
+                    commitDiffs.Changes
+                        .Where(x => x != null && !x.Item.IsFolder)
+                        .Select(x => new FilePath(x.Item.Path.TrimStart('/')))
+                        .ToList();
 
                 this.log.Verbose(
                     "Found {0} changed file(s) in the pull request",
-                    changes.Count());
+                    changes.Count);
 
                 return changes;
             }
@@ -600,7 +597,7 @@
                 Status = AzureDevOpsCommentThreadStatus.Active,
                 Comments = new List<AzureDevOpsComment>
                 {
-                    new AzureDevOpsComment
+                    new ()
                     {
                         CommentType = AzureDevOpsCommentType.System,
                         IsDeleted = false,
@@ -632,7 +629,7 @@
                 Status = AzureDevOpsCommentThreadStatus.Active,
                 Comments = new List<AzureDevOpsComment>
                 {
-                    new AzureDevOpsComment
+                    new ()
                     {
                         CommentType = AzureDevOpsCommentType.System,
                         IsDeleted = false,
@@ -686,17 +683,17 @@
         /// Updates the comment.
         /// </summary>
         /// <param name="comment">The updated comment.</param>
-        /// <returns>The updated comment, or null if it can't be updated.</returns>
+        /// <returns>The updated comment, or <c>null</c> if it can't be updated.</returns>
         public AzureDevOpsComment UpdateComment(AzureDevOpsComment comment)
         {
             comment.NotNull(nameof(comment));
 
-            AzureDevOpsComment resultingComment = null;
             if (!this.ValidatePullRequest())
             {
-                return resultingComment;
+                return null;
             }
 
+            AzureDevOpsComment resultingComment = null;
             using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
             {
                 var newComment = gitClient
@@ -723,17 +720,17 @@
         /// Creates a new comment thread in the pull request.
         /// </summary>
         /// <param name="thread">The instance of the thread.</param>
-        /// <returns>A newly created comment thread, or null if it can't be created.</returns>
+        /// <returns>A newly created comment thread, or <c>null</c> if it can't be created.</returns>
         public AzureDevOpsPullRequestCommentThread CreateCommentThread(AzureDevOpsPullRequestCommentThread thread)
         {
             thread.NotNull(nameof(thread));
 
-            AzureDevOpsPullRequestCommentThread resultingThread = null;
             if (!this.ValidatePullRequest())
             {
-                return resultingThread;
+                return null;
             }
 
+            AzureDevOpsPullRequestCommentThread resultingThread = null;
             using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
             {
                 var newThread = gitClient.CreateThreadAsync(
@@ -790,7 +787,7 @@
         /// Gets all the pull request changes of the given iteration.
         /// </summary>
         /// <param name="iterationId">The id of the iteration.</param>
-        /// <returns>The colletion of the iteration changes of the given id. Returns <c>null</c> if pull request is not valid.</returns>
+        /// <returns>The collection of the iteration changes of the given id. Returns <c>null</c> if pull request is not valid.</returns>
         public IEnumerable<AzureDevOpsPullRequestIterationChange> GetIterationChanges(int iterationId)
         {
             if (!this.ValidatePullRequest())
@@ -852,10 +849,7 @@
                 }
 
                 var targetBranchName = settings.TargetRefName;
-                if (targetBranchName == null)
-                {
-                    targetBranchName = repository.DefaultBranch;
-                }
+                targetBranchName ??= repository.DefaultBranch;
 
                 var refs =
                     gitClient

@@ -16,7 +16,7 @@
             return this.CreateTestManagementClient(collectionUrl, credentials);
         }
 
-        protected virtual Mock<TestManagementHttpClient> Setup(Mock<TestManagementHttpClient> m)
+        protected Mock<TestManagementHttpClient> Setup(Mock<TestManagementHttpClient> m)
         {
             return m;
         }

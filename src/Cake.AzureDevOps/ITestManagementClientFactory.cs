@@ -25,6 +25,7 @@
         /// <param name="credentials">The credentials to connect to Azure DevOps.</param>
         /// <param name="authorizedIdentity">Returns identity which is authorized.</param>
         /// <returns>The instance of <see cref="TestManagementHttpClient"/> class.</returns>
+        // ReSharper disable once UnusedMemberInSuper.Global
         TestManagementHttpClient CreateTestManagementClient(Uri collectionUrl, IAzureDevOpsCredentials credentials, out Identity authorizedIdentity);
     }
 }
