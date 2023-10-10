@@ -38,8 +38,8 @@
                 result.Url.ShouldBe(artifactResource.Url);
                 result.Type.ShouldBe(AzurePipelinesArtifactType.FilePath);
                 result.Properties.Count.ShouldBe(1);
-                result.Properties.First().Key.ShouldBe(artifactResource.Properties.First().Key);
-                result.Properties.First().Value.ShouldBe(artifactResource.Properties.First().Value);
+                result.Properties.Single().Key.ShouldBe(artifactResource.Properties.Single().Key);
+                result.Properties.Single().Value.ShouldBe(artifactResource.Properties.Single().Value);
             }
 
             [Theory]
@@ -54,7 +54,7 @@
             [InlineData("VersionControl", AzurePipelinesArtifactType.VersionControl)]
             [InlineData("versioncontrol", AzurePipelinesArtifactType.VersionControl)]
 
-            public void Should_Return_The_Correct_AzureDevOpsArtifactResource_Type_EnumValue_Independent_The_ArtifactResource_Type_String_Casing(string typeString, AzurePipelinesArtifactType artifactType)
+            public void Should_Return_The_Correct_AzureDevOpsArtifactResource_Type_EnumValue_Independent_The_ArtifactResource_Type_String_Casing(string typeString, AzurePipelinesArtifactType expectedResult)
             {
                 // Given
                 var artifactResource = new ArtifactResource()
@@ -66,7 +66,7 @@
                 var result = artifactResource.ToAzureDevOpsArtifactResource();
 
                 // Then
-                result.Type.ShouldBe(artifactType);
+                result.Type.ShouldBe(expectedResult);
             }
         }
     }
