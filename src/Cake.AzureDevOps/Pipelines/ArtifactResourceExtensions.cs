@@ -18,7 +18,7 @@
         {
             artifactResource.NotNull(nameof(artifactResource));
 
-            if (!Enum.TryParse(artifactResource.Type, out AzurePipelinesArtifactType type))
+            if (!Enum.TryParse(artifactResource.Type, true, out AzurePipelinesArtifactType type))
             {
                 throw new InvalidOperationException($"Unexpected value for artifact type '{artifactResource.Type}'");
             }
