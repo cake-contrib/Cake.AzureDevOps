@@ -12,26 +12,26 @@ namespace Cake.AzureDevOps.Pipelines
         /// <summary>
         /// Gets the data of the resource.
         /// </summary>
-        public string Data { get; internal set; }
+        public string Data { get; init; }
 
         /// <summary>
         /// Gets the download url of the resource.
         /// </summary>
-        public string DownloadUrl { get; internal set; }
+        public string DownloadUrl { get; init; }
 
         /// <summary>
         /// Gets the type of the resource.
         /// </summary>
-        public AzurePipelinesArtifactType Type { get; internal set; }
+        public AzurePipelinesArtifactType Type { get; init; }
 
         /// <summary>
         /// Gets the full http link to the resource.
         /// </summary>
-        public string Url { get; internal set; }
+        public string Url { get; init; }
 
         /// <summary>
         /// Gets the properties for the resource.
         /// </summary>
-        public Dictionary<string, string> Properties { get; internal set; }
+        public Dictionary<string, string> Properties { get; init; }
     }
 }
