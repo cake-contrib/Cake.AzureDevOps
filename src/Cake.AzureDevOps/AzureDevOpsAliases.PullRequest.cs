@@ -97,8 +97,8 @@
         /// Make sure the build has the 'Allow Scripts to access OAuth token' option enabled.
         /// </summary>
         /// <param name="context">The context.</param>
-        /// <param name="throwExceptionIfPullRequestCouldNotBeFound">Value indicating whether an exception
-        /// should be thrown if pull request could not be found.</param>
+        /// <param name="throwException">Value indicating whether an exception
+        /// should be thrown if not running in Azure Pipelines or pull request could not be found.</param>
         /// <example>
         /// <para>Get a pull request:</para>
         /// <code>
@@ -109,13 +109,14 @@
         /// </code>
         /// </example>
         /// <returns>Description of the pull request.
-        /// Returns <c>null</c> if pull request could not be found and
-        /// <paramref name="throwExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.</returns>
-        /// <exception cref="InvalidOperationException">If build is not running in Azure Pipelines,
-        /// build is not for a pull request or 'Allow Scripts to access OAuth token' option is not enabled
-        /// on the build definition.</exception>
-        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
-        /// <paramref name="throwExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
+        /// Returns <c>null</c> if pull request could not be found or if not running in an Azure Pipelines build and
+        /// <paramref name="throwException"/> is set to <c>false</c>.</returns>
+        /// <exception cref="InvalidOperationException">If <paramref name="throwException"/>
+        /// is set to <c>true</c> and build is not running in Azure Pipelines, build is not for a pull request or
+        /// 'Allow Scripts to access OAuth token' option is not enabled on the build definition.</exception>
+        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If
+        /// <paramref name="throwException"/> is set to <c>true</c> and pull request
+        /// could not be found.</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Pull Request")]
         [CakeNamespaceImport("Cake.AzureDevOps.Repos")]
@@ -123,18 +124,18 @@
         [CakeNamespaceImport("Cake.AzureDevOps.Repos.PullRequest.CommentThread")]
         public static AzureDevOpsPullRequest AzureDevOpsPullRequestUsingAzurePipelinesOAuthToken(
             this ICakeContext context,
-            bool throwExceptionIfPullRequestCouldNotBeFound)
+            bool throwException)
         {
             context.NotNull(nameof(context));
 
-            var settings = AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(throwExceptionIfPullRequestCouldNotBeFound);
+            var settings = AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(throwException);
 
             if (settings == null)
             {
                 return null;
             }
 
-            settings.ThrowExceptionIfPullRequestCouldNotBeFound = throwExceptionIfPullRequestCouldNotBeFound;
+            settings.ThrowExceptionIfPullRequestCouldNotBeFound = throwException;
 
             return AzureDevOpsPullRequest(context, settings);
         }
