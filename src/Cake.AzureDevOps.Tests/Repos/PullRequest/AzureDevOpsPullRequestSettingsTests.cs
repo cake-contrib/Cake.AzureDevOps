@@ -554,6 +554,36 @@
             }
 
             [Fact]
+            public void Should_Throw_If_Repository_Url_Env_Var_Is_Not_Set_And_Parameter_Is_True()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", null);
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(true));
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Not_Throw_If_Repository_Url_Env_Var_Is_Not_Set_And_Parameter_Is_False()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", null);
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(false);
+
+                // Then
+                result.ShouldBeNull();
+            }
+
+            [Fact]
             public void Should_Throw_If_Repository_Url_Env_Var_Is_Empty()
             {
                 // Given
@@ -566,6 +596,36 @@
 
                 // Then
                 result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_Repository_Url_Env_Var_Is_Empty_And_Parameter_Is_True()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", string.Empty);
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(true));
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Not_Throw_If_Repository_Url_Env_Var_Is_Empty_And_Parameter_Is_False()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", string.Empty);
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(false);
+
+                // Then
+                result.ShouldBeNull();
             }
 
             [Fact]
@@ -584,6 +644,36 @@
             }
 
             [Fact]
+            public void Should_Throw_If_Repository_Url_Env_Var_Is_WhiteSpace_And_Parameter_Is_True()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", " ");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(true));
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Not_Throw_If_Repository_Url_Env_Var_Is_WhiteSpace_And_Parameter_Is_False()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", " ");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(false);
+
+                // Then
+                result.ShouldBeNull();
+            }
+
+            [Fact]
             public void Should_Throw_If_Pull_Request_Id_Env_Var_Is_Not_Set()
             {
                 // Given
@@ -596,6 +686,36 @@
 
                 // Then
                 result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_Pull_Request_Id_Env_Var_Is_Not_Set_And_Parameter_Is_True()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", null);
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(true));
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Not_Throw_If_Pull_Request_Id_Env_Var_Is_Not_Set_And_Parameter_Is_False()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", null);
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(false);
+
+                // Then
+                result.ShouldBeNull();
             }
 
             [Fact]
@@ -614,6 +734,36 @@
             }
 
             [Fact]
+            public void Should_Throw_If_Pull_Request_Id_Env_Var_Is_Empty_And_Parameter_Is_True()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", string.Empty);
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(true));
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Not_Throw_If_Pull_Request_Id_Env_Var_Is_Empty_And_Parameter_Is_False()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", string.Empty);
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(false);
+
+                // Then
+                result.ShouldBeNull();
+            }
+
+            [Fact]
             public void Should_Throw_If_Pull_Request_Id_Env_Var_Is_WhiteSpace()
             {
                 // Given
@@ -626,6 +776,36 @@
 
                 // Then
                 result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_Pull_Request_Id_Env_Var_Is_WhiteSpace_And_Parameter_Is_True()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", " ");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(true));
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Not_Throw_If_Pull_Request_Id_Env_Var_Is_WhiteSpace_And_Parameter_Is_False()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", " ");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(false);
+
+                // Then
+                result.ShouldBeNull();
             }
 
             [Fact]
@@ -644,6 +824,36 @@
             }
 
             [Fact]
+            public void Should_Throw_If_Pull_Request_Id_Env_Var_Is_Not_Integer_And_Parameter_Is_True()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "foo");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(true));
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Not_Throw_If_Pull_Request_Id_Env_Var_Is_Not_Integer_And_Parameter_Is_False()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "foo");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(false);
+
+                // Then
+                result.ShouldBeNull();
+            }
+
+            [Fact]
             public void Should_Throw_If_Pull_Request_Id_Is_Zero()
             {
                 // Given
@@ -656,6 +866,36 @@
 
                 // Then
                 result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_Pull_Request_Id_Is_Zero_And_Parameter_Is_True()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "0");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(true));
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Not_Throw_If_Pull_Request_Id_Is_Zero_And_Parameter_Is_False()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "0");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", "foo");
+
+                // When
+                var result = AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(false);
+
+                // Then
+                result.ShouldBeNull();
             }
 
             [Fact]
@@ -674,6 +914,36 @@
             }
 
             [Fact]
+            public void Should_Throw_If_System_Access_Token_Env_Var_Is_Not_Set_And_Parameter_Is_True()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", null);
+
+                // When
+                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(true));
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Not_Throw_If_System_Access_Token_Env_Var_Is_Not_Set_And_Parameter_Is_False()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", null);
+
+                // When
+                var result = AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(false);
+
+                // Then
+                result.ShouldBeNull();
+            }
+
+            [Fact]
             public void Should_Throw_If_System_Access_Token_Env_Var_Is_Empty()
             {
                 // Given
@@ -689,6 +959,36 @@
             }
 
             [Fact]
+            public void Should_Throw_If_System_Access_Token_Env_Var_Is_Empty_And_Parameter_Is_True()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", string.Empty);
+
+                // When
+                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(true));
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Not_Throw_If_System_Access_Token_Env_Var_Is_Empty_And_Parameter_Is_False()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", string.Empty);
+
+                // When
+                var result = AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(false);
+
+                // Then
+                result.ShouldBeNull();
+            }
+
+            [Fact]
             public void Should_Throw_If_System_Access_Token_Env_Var_Is_WhiteSpace()
             {
                 // Given
@@ -701,6 +1001,36 @@
 
                 // Then
                 result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Throw_If_System_Access_Token_Env_Var_Is_WhiteSpace_And_Parameter_Is_True()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", " ");
+
+                // When
+                var result = Record.Exception(() => AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(true));
+
+                // Then
+                result.IsInvalidOperationException();
+            }
+
+            [Fact]
+            public void Should_Not_Throw_If_System_Access_Token_Env_Var_Is_WhiteSpace_And_Parameter_Is_False()
+            {
+                // Given
+                Environment.SetEnvironmentVariable("BUILD_REPOSITORY_URI", "http://example.com");
+                Environment.SetEnvironmentVariable("SYSTEM_PULLREQUEST_PULLREQUESTID", "42");
+                Environment.SetEnvironmentVariable("SYSTEM_ACCESSTOKEN", " ");
+
+                // When
+                var result = AzureDevOpsPullRequestSettings.UsingAzurePipelinesOAuthToken(false);
+
+                // Then
+                result.ShouldBeNull();
             }
 
             [Fact]
