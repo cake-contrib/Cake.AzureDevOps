@@ -124,7 +124,19 @@
                 return null;
             }
 
-            return new AzureDevOpsPullRequestSettings(new AzureDevOpsOAuthCredentials(accessToken));
+            try
+            {
+                return new AzureDevOpsPullRequestSettings(new AzureDevOpsOAuthCredentials(accessToken));
+            }
+            catch (InvalidOperationException)
+            {
+                if (!throwExceptionIfVariablesDontExist)
+                {
+                    return null;
+                }
+
+                throw;
+            }
         }
 
         /// <summary>
