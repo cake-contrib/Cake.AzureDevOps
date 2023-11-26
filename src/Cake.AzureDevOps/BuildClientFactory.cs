@@ -23,13 +23,8 @@
 
             authorizedIdentity = connection.AuthorizedIdentity;
 
-            var buildClient = connection.GetClient<BuildHttpClient>();
-            if (buildClient == null)
-            {
+            return connection.GetClient<BuildHttpClient>() ??
                 throw new AzureDevOpsException("Could not retrieve the BuildHttpClient object");
-            }
-
-            return buildClient;
         }
     }
 }
