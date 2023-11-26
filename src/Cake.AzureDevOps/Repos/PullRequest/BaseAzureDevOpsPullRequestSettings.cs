@@ -84,12 +84,6 @@
         /// <summary>
         /// Gets the branch for which the pull request is made.
         /// </summary>
-        [Obsolete("Use SourceRefName instead.")]
-        public string SourceBranch => this.SourceRefName;
-
-        /// <summary>
-        /// Gets the branch for which the pull request is made.
-        /// </summary>
         public string SourceRefName { get; }
     }
 }
