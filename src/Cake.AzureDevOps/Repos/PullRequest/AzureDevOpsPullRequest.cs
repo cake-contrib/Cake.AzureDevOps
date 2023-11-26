@@ -466,7 +466,10 @@
         /// <summary>
         /// Gets the files modified by the pull request.
         /// </summary>
-        /// <returns>The collection of the modified files paths.</returns>
+        /// <returns>The collection of the modified files paths or an empty list if no pull request could be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>..</returns>
+        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public IEnumerable<FilePath> GetModifiedFiles()
         {
             if (!this.ValidatePullRequest())
@@ -526,7 +529,10 @@
         /// <summary>
         /// Gets the pull request comment threads.
         /// </summary>
-        /// <returns>The list of comment threads of the pull request.</returns>
+        /// <returns>The list of comment threads of the pull request or an empty list if no pull request could be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>.</returns>
+        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public IEnumerable<AzureDevOpsPullRequestCommentThread> GetCommentThreads()
         {
             if (!this.ValidatePullRequest())
@@ -550,6 +556,8 @@
         /// Sets the pull request comment thread status to <see cref="CommentThreadStatus.Fixed"/>.
         /// </summary>
         /// <param name="threadId">The Id of the comment thread.</param>
+        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public void ResolveCommentThread(int threadId)
         {
             this.SetCommentThreadStatus(threadId, CommentThreadStatus.Fixed);
@@ -559,6 +567,8 @@
         /// Sets the pull request comment thread to <see cref="CommentThreadStatus.Active"/>.
         /// </summary>
         /// <param name="threadId">The Id of the comment thread.</param>
+        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public void ActivateCommentThread(int threadId)
         {
             this.SetCommentThreadStatus(threadId, CommentThreadStatus.Active);
@@ -568,6 +578,8 @@
         /// Sets the pull request comment thread to <see cref="CommentThreadStatus.Closed"/>.
         /// </summary>
         /// <param name="threadId">The Id of the comment thread.</param>
+        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public void CloseCommentThread(int threadId)
         {
             this.SetCommentThreadStatus(threadId, CommentThreadStatus.Closed);
@@ -577,7 +589,10 @@
         /// Creates a new comment thread with a single comment in the pull request.
         /// </summary>
         /// <param name="comment">Comment which should be added.</param>
-        /// <returns>A newly created comment thread, or null if it can't be created.</returns>
+        /// <returns>A newly created comment thread, or <see langword="null"/> if no pull request could be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>..</returns>
+        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public AzureDevOpsPullRequestCommentThread CreateComment(string comment)
         {
             comment.NotNullOrWhiteSpace(nameof(comment));
@@ -606,7 +621,10 @@
         /// <param name="filePath">Path to the file to create the comment for.</param>
         /// <param name="lineNumber">The line number of a thread's position. Starts at 1.</param>
         /// <param name="offset">The character offset of a thread's position inside of a line. Starts at 0.</param>
-        /// <returns>A newly created comment thread, or null if it can't be created.</returns>
+        /// <returns>A newly created comment thread, or <see langword="null"/> if no pull request could be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>..</returns>
+        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public AzureDevOpsPullRequestCommentThread CreateComment(string comment, FilePath filePath, int lineNumber, int offset)
         {
             comment.NotNullOrWhiteSpace(nameof(comment));
@@ -673,7 +691,10 @@
         /// Updates the comment.
         /// </summary>
         /// <param name="comment">The updated comment.</param>
-        /// <returns>The updated comment, or <c>null</c> if it can't be updated.</returns>
+        /// <returns>The updated comment, or <see langword="null"/> if no pull request could be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>..</returns>
+        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public AzureDevOpsComment UpdateComment(AzureDevOpsComment comment)
         {
             comment.NotNull(nameof(comment));
@@ -710,7 +731,10 @@
         /// Creates a new comment thread in the pull request.
         /// </summary>
         /// <param name="thread">The instance of the thread.</param>
-        /// <returns>A newly created comment thread, or <c>null</c> if it can't be created.</returns>
+        /// <returns>A newly created comment thread, or <see langword="null"/> if no pull request could be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>..</returns>
+        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public AzureDevOpsPullRequestCommentThread CreateCommentThread(AzureDevOpsPullRequestCommentThread thread)
         {
             thread.NotNull(nameof(thread));
@@ -743,7 +767,10 @@
         /// <summary>
         /// Gets the Id of the latest pull request iteration.
         /// </summary>
-        /// <returns>The Id of the pull request iteration. Returns -1 in case the pull request is not valid.</returns>
+        /// <returns>The Id of the pull request iteration or <c>-1</c> if no pull request could be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>..</returns>
+        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         /// <exception cref="AzureDevOpsException">If it is not possible to obtain a collection of <see cref="GitPullRequestIteration"/>.</exception>
         public int GetLatestIterationId()
         {
@@ -771,7 +798,10 @@
         /// Gets all the pull request changes of the given iteration.
         /// </summary>
         /// <param name="iterationId">The id of the iteration.</param>
-        /// <returns>The collection of the iteration changes of the given id. Returns an empty collection if pull request is not valid.</returns>
+        /// <returns>The collection of the iteration changes of the given id or an empty list if no pull request could be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false</c>..</returns>
+        /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
+        /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public IEnumerable<AzureDevOpsPullRequestIterationChange> GetIterationChanges(int iterationId)
         {
             if (!this.ValidatePullRequest())
@@ -905,7 +935,7 @@
         /// <summary>
         /// Validates if a pull request could be found.
         /// Depending on <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/>
-        /// the pull request instance can be null for subsequent calls.
+        /// the pull request instance can be <see langword="null"/> for subsequent calls.
         /// </summary>
         /// <returns>True if a valid pull request instance exists.</returns>
         /// <exception cref="AzureDevOpsPullRequestNotFoundException">If <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/>
