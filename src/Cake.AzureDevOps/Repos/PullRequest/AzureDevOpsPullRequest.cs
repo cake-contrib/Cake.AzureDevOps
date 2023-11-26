@@ -771,12 +771,12 @@
         /// Gets all the pull request changes of the given iteration.
         /// </summary>
         /// <param name="iterationId">The id of the iteration.</param>
-        /// <returns>The collection of the iteration changes of the given id. Returns <c>null</c> if pull request is not valid.</returns>
+        /// <returns>The collection of the iteration changes of the given id. Returns an empty collection if pull request is not valid.</returns>
         public IEnumerable<AzureDevOpsPullRequestIterationChange> GetIterationChanges(int iterationId)
         {
             if (!this.ValidatePullRequest())
             {
-                return null;
+                return [];
             }
 
             using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
