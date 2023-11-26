@@ -4,12 +4,10 @@
     using Cake.AzureDevOps.Authentication;
     using Cake.AzureDevOps.Repos.PullRequest;
 
-    internal class CreatePullRequestFixture
-        : BasePullRequestFixture
+    internal class CreatePullRequestFixture(string repoUrl, string sourceRefName, string targetRefName, string title, string description)
+                : BasePullRequestFixture
     {
-        public CreatePullRequestFixture(string repoUrl, string sourceRefName, string targetRefName, string title, string description)
-        {
-            this.Settings =
+        public AzureDevOpsCreatePullRequestSettings Settings { get; } =
                 new AzureDevOpsCreatePullRequestSettings(
                     new Uri(repoUrl),
                     sourceRefName,
@@ -17,8 +15,5 @@
                     title,
                     description,
                     new AzureDevOpsNtlmCredentials());
-        }
-
-        public AzureDevOpsCreatePullRequestSettings Settings { get; }
     }
 }

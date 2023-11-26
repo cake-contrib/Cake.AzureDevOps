@@ -51,7 +51,7 @@
                     Status = CommentThreadStatus.Pending,
                     ThreadContext = new CommentThreadContext { FilePath = "/src/myclass.cs" },
                     Comments = new List<Comment> { new () { Content = "Hello", CommentType = CommentType.Text, IsDeleted = false } },
-                    Properties = new PropertiesCollection(),
+                    Properties = [],
                 };
 
                 // When
@@ -215,7 +215,7 @@
                 {
                     Id = 16,
                     Status = CommentThreadStatus.Active,
-                    Properties = new PropertiesCollection(),
+                    Properties = [],
                 };
 
                 // When
@@ -294,7 +294,7 @@
                     {
                         Id = 42,
                         Status = CommentThreadStatus.Active,
-                        Properties = new PropertiesCollection(),
+                        Properties = [],
                     });
 
                 // When
@@ -313,7 +313,7 @@
                     {
                         Id = 42,
                         Status = CommentThreadStatus.Active,
-                        Properties = new PropertiesCollection(),
+                        Properties = [],
                     });
 
                 // When

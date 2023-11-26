@@ -23,13 +23,8 @@
 
             authorizedIdentity = connection.AuthorizedIdentity;
 
-            var workItemTrackingClient = connection.GetClient<WorkItemTrackingHttpClient>();
-            if (workItemTrackingClient == null)
-            {
+            return connection.GetClient<WorkItemTrackingHttpClient>() ??
                 throw new AzureDevOpsException("Could not retrieve the WorkItemTrackingHttpClient object");
-            }
-
-            return workItemTrackingClient;
         }
     }
 }

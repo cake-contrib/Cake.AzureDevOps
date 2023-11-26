@@ -18,7 +18,7 @@
 
             m.Setup(arg => arg.GetCommitDiffsAsync(It.IsAny<string>(), It.IsAny<Guid>(), true, null, null, It.IsAny<GitBaseVersionDescriptor>(), It.IsAny<GitTargetVersionDescriptor>(), null, CancellationToken.None))
              .ReturnsAsync(()
-                    => new GitCommitDiffs { ChangeCounts = new Dictionary<VersionControlChangeType, int>(), Changes = new List<GitChange>() });
+                    => new GitCommitDiffs { ChangeCounts = [], Changes = new List<GitChange>() });
 
             m.Setup(arg => arg.UpdateThreadAsync(It.IsAny<GitPullRequestCommentThread>(), It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>(), null, CancellationToken.None))
              .ReturnsAsync(() => null);

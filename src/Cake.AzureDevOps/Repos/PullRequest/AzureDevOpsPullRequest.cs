@@ -382,15 +382,10 @@
                             authorizedIdentity.Id.ToString())
                         .ConfigureAwait(false)
                         .GetAwaiter()
-                        .GetResult();
-
-                if (createdReviewer == null)
-                {
+                        .GetResult() ??
                     throw new AzureDevOpsPullRequestNotFoundException(
                         this.pullRequest.Repository.Id,
                         this.pullRequest.PullRequestId);
-                }
-
                 var createdVote = (AzureDevOpsPullRequestVote)createdReviewer.Vote;
                 this.log.Verbose("Voted for pull request with '{0}'.", createdVote.ToString());
             }
@@ -431,15 +426,10 @@
                             this.pullRequest.PullRequestId)
                        .ConfigureAwait(false)
                        .GetAwaiter()
-                       .GetResult();
-
-                if (postedStatus == null)
-                {
+                       .GetResult() ??
                     throw new AzureDevOpsPullRequestNotFoundException(
                         this.pullRequest.Repository.Id,
                         this.pullRequest.PullRequestId);
-                }
-
                 this.log.Verbose(
                     "Set status '{0}' to {1}.",
                     postedStatus.Context?.Name,
@@ -512,7 +502,7 @@
                     .GetAwaiter()
                     .GetResult();
 
-                if (!commitDiffs.ChangeCounts.Any())
+                if (commitDiffs.ChangeCounts.Count == 0)
                 {
                     this.log.Verbose("Found 0 changed files in the pull request");
 
@@ -771,15 +761,9 @@
                             this.PullRequestId)
                         .ConfigureAwait(false)
                         .GetAwaiter()
-                        .GetResult();
-
-                if (iterations == null)
-                {
+                        .GetResult() ??
                     throw new AzureDevOpsException("Could not retrieve the iterations");
-                }
-
-                var iterationId = iterations.Max(x => x.Id ?? -1);
-                return iterationId;
+                return iterations.Max(x => x.Id ?? -1);
             }
         }
 
@@ -841,13 +825,8 @@
                         .GetRepositoryAsync(repositoryDescription.ProjectName, repositoryDescription.RepositoryName)
                         .ConfigureAwait(false)
                         .GetAwaiter()
-                        .GetResult();
-
-                if (repository == null)
-                {
+                        .GetResult() ??
                     throw new AzureDevOpsException("Could not read repository.");
-                }
-
                 var targetBranchName = settings.TargetRefName;
                 targetBranchName ??= repository.DefaultBranch;
 
@@ -859,20 +838,11 @@
                             filter: targetBranchName.Replace("refs/", string.Empty))
                         .ConfigureAwait(false)
                         .GetAwaiter()
-                        .GetResult();
-
-                if (refs == null)
-                {
+                        .GetResult() ??
                     throw new AzureDevOpsBranchNotFoundException(targetBranchName);
-                }
-
-                var targetBranch = refs.SingleOrDefault();
-
-                if (targetBranch == null)
-                {
+                var targetBranch =
+                    refs.SingleOrDefault() ??
                     throw new AzureDevOpsBranchNotFoundException(targetBranchName);
-                }
-
                 var pullRequest = new GitPullRequest()
                 {
                     SourceRefName = settings.SourceRefName,

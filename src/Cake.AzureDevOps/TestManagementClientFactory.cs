@@ -23,13 +23,8 @@
 
             authorizedIdentity = connection.AuthorizedIdentity;
 
-            var testClient = connection.GetClient<TestManagementHttpClient>();
-            if (testClient == null)
-            {
+            return connection.GetClient<TestManagementHttpClient>() ??
                 throw new AzureDevOpsException("Could not retrieve the TestManagementHttpClient object");
-            }
-
-            return testClient;
         }
     }
 }
