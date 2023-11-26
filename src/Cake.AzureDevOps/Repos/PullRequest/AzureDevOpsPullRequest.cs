@@ -448,7 +448,7 @@
         {
             if (!this.ValidatePullRequest())
             {
-                return new List<AzureDevOpsCommit>();
+                return [];
             }
 
             using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
@@ -474,7 +474,7 @@
         {
             if (!this.ValidatePullRequest())
             {
-                return new List<FilePath>();
+                return [];
             }
 
             var targetVersionDescriptor = new GitTargetVersionDescriptor
@@ -509,7 +509,7 @@
                 {
                     this.log.Verbose("Found 0 changed files in the pull request");
 
-                    return new List<FilePath>();
+                    return [];
                 }
 
                 var changes =
@@ -537,7 +537,7 @@
         {
             if (!this.ValidatePullRequest())
             {
-                return new List<AzureDevOpsPullRequestCommentThread>();
+                return [];
             }
 
             using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
@@ -600,15 +600,15 @@
             var thread = new AzureDevOpsPullRequestCommentThread
             {
                 Status = AzureDevOpsCommentThreadStatus.Active,
-                Comments = new List<AzureDevOpsComment>
-                {
-                    new ()
-                    {
-                        CommentType = AzureDevOpsCommentType.System,
-                        IsDeleted = false,
-                        Content = comment,
-                    },
-                },
+                Comments =
+                    [
+                        new ()
+                        {
+                            CommentType = AzureDevOpsCommentType.System,
+                            IsDeleted = false,
+                            Content = comment,
+                        },
+                    ],
             };
 
             return this.CreateCommentThread(thread);
@@ -635,15 +635,15 @@
             var thread = new AzureDevOpsPullRequestCommentThread
             {
                 Status = AzureDevOpsCommentThreadStatus.Active,
-                Comments = new List<AzureDevOpsComment>
-                {
-                    new ()
-                    {
-                        CommentType = AzureDevOpsCommentType.System,
-                        IsDeleted = false,
-                        Content = comment,
-                    },
-                },
+                Comments =
+                    [
+                        new ()
+                        {
+                            CommentType = AzureDevOpsCommentType.System,
+                            IsDeleted = false,
+                            Content = comment,
+                        },
+                    ],
                 FilePath = filePath,
                 LineNumber = lineNumber,
                 Offset = offset,
@@ -704,7 +704,6 @@
                 return null;
             }
 
-            AzureDevOpsComment resultingComment = null;
             using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
             {
                 var newComment = gitClient
@@ -720,11 +719,11 @@
 
                 if (newComment != null)
                 {
-                    resultingComment = new AzureDevOpsComment(newComment, comment.ThreadId);
+                    return new AzureDevOpsComment(newComment, comment.ThreadId);
                 }
             }
 
-            return resultingComment;
+            return null;
         }
 
         /// <summary>
@@ -744,7 +743,6 @@
                 return null;
             }
 
-            AzureDevOpsPullRequestCommentThread resultingThread = null;
             using (var gitClient = this.gitClientFactory.CreateGitClient(this.CollectionUrl, this.credentials))
             {
                 var newThread = gitClient.CreateThreadAsync(
@@ -757,11 +755,11 @@
 
                 if (newThread != null)
                 {
-                    resultingThread = new AzureDevOpsPullRequestCommentThread(newThread);
+                    return new AzureDevOpsPullRequestCommentThread(newThread);
                 }
             }
 
-            return resultingThread;
+            return null;
         }
 
         /// <summary>
@@ -821,15 +819,14 @@
                         .GetAwaiter()
                         .GetResult();
 
-                var azureDevOpsChanges = changes?.ChangeEntries.Select(c =>
-                    new AzureDevOpsPullRequestIterationChange
-                    {
-                        ChangeId = c.ChangeId,
-                        ChangeTrackingId = c.ChangeTrackingId,
-                        ItemPath = c.Item.Path.IsNullOrEmpty() ? null : new FilePath(c.Item.Path),
-                    });
-
-                return azureDevOpsChanges;
+                return
+                    changes?.ChangeEntries.Select(c =>
+                        new AzureDevOpsPullRequestIterationChange
+                        {
+                            ChangeId = c.ChangeId,
+                            ChangeTrackingId = c.ChangeTrackingId,
+                            ItemPath = c.Item.Path.IsNullOrEmpty() ? null : new FilePath(c.Item.Path),
+                        });
             }
         }
 
@@ -846,13 +843,13 @@
             gitClientFactory.NotNull(nameof(gitClientFactory));
             settings.NotNull(nameof(settings));
 
-            var repositoryDescription = new RepositoryDescription(settings.RepositoryUrl);
+            var repoDesc = new RepositoryDescription(settings.RepositoryUrl);
 
-            using (var gitClient = gitClientFactory.CreateGitClient(repositoryDescription.CollectionUrl, settings.Credentials))
+            using (var gitClient = gitClientFactory.CreateGitClient(repoDesc.CollectionUrl, settings.Credentials))
             {
                 var repository =
                     gitClient
-                        .GetRepositoryAsync(repositoryDescription.ProjectName, repositoryDescription.RepositoryName)
+                        .GetRepositoryAsync(repoDesc.ProjectName, repoDesc.RepositoryName)
                         .ConfigureAwait(false)
                         .GetAwaiter()
                         .GetResult() ??
@@ -863,8 +860,8 @@
                 var refs =
                     gitClient
                         .GetRefsAsync(
-                            repositoryDescription.ProjectName,
-                            repositoryDescription.RepositoryName,
+                            repoDesc.ProjectName,
+                            repoDesc.RepositoryName,
                             filter: targetBranchName.Replace("refs/", string.Empty))
                         .ConfigureAwait(false)
                         .GetAwaiter()
@@ -873,7 +870,7 @@
                 var targetBranch =
                     refs.SingleOrDefault() ??
                     throw new AzureDevOpsBranchNotFoundException(targetBranchName);
-                var pullRequest = new GitPullRequest()
+                var pr = new GitPullRequest()
                 {
                     SourceRefName = settings.SourceRefName,
                     TargetRefName = targetBranch.Name,
@@ -884,9 +881,9 @@
                 var createdPullRequest =
                     gitClient
                         .CreatePullRequestAsync(
-                            pullRequest,
-                            repositoryDescription.ProjectName,
-                            repositoryDescription.RepositoryName)
+                            pr,
+                            repoDesc.ProjectName,
+                            repoDesc.RepositoryName)
                         .ConfigureAwait(false)
                         .GetAwaiter()
                         .GetResult();
