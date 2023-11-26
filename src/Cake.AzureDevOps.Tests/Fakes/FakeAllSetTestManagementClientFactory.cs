@@ -15,23 +15,23 @@
             var mock = new Mock<TestManagementHttpClient>(MockBehavior.Strict, collectionUrl, credentials.ToVssCredentials());
 
             mock.Setup(arg => arg.GetTestResultDetailsForBuildAsync(It.IsAny<Guid>(), It.Is<int>(id => id == 1), null, null, null, null, null, null, null, default))
-                .ReturnsAsync(() => new TestResultsDetails { ResultsForGroup = new List<TestResultsDetailsForGroup>() });
+                .ReturnsAsync(() => new TestResultsDetails { ResultsForGroup = [] });
 
             mock.Setup(arg => arg.GetTestResultDetailsForBuildAsync(It.IsAny<Guid>(), It.Is<int>(id => id > 1), null, null, null, null, null, null, null, default))
                 .ReturnsAsync(() => new TestResultsDetails
                 {
-                    ResultsForGroup = new List<TestResultsDetailsForGroup>()
-                    {
-                        new ()
-                        {
-                            Results = new List<TestCaseResult>()
+                    ResultsForGroup =
+                        [
+                            new ()
                             {
-                                new () { Id = 11, TestRun = new ShallowReference { Id = "1" } },
-                                new () { Id = 12, TestRun = new ShallowReference { Id = "1" } },
-                                new () { Id = 13, TestRun = new ShallowReference { Id = "1" } },
+                                Results =
+                                    [
+                                        new () { Id = 11, TestRun = new ShallowReference { Id = "1" } },
+                                        new () { Id = 12, TestRun = new ShallowReference { Id = "1" } },
+                                        new () { Id = 13, TestRun = new ShallowReference { Id = "1" } },
+                                    ],
                             },
-                        },
-                    },
+                        ],
                 });
 
             mock.Setup(arg => arg.GetTestResultsAsync(It.IsAny<Guid>(), It.IsAny<int>(), null, It.IsAny<int?>(), It.IsAny<int?>(), It.IsAny<IEnumerable<TestOutcome>>(), null, default))

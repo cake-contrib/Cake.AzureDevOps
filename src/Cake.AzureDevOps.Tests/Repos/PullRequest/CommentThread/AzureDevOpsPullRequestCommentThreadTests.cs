@@ -50,7 +50,10 @@
                     Id = 42,
                     Status = CommentThreadStatus.Pending,
                     ThreadContext = new CommentThreadContext { FilePath = "/src/myclass.cs" },
-                    Comments = new List<Comment> { new () { Content = "Hello", CommentType = CommentType.Text, IsDeleted = false } },
+                    Comments =
+                        [
+                            new () { Content = "Hello", CommentType = CommentType.Text, IsDeleted = false }
+                        ],
                     Properties = [],
                 };
 
@@ -152,7 +155,10 @@
                 // When
                 var azureDevOpsThread = new AzureDevOpsPullRequestCommentThread(thread)
                 {
-                    Comments = new List<AzureDevOpsComment> { new ("hi", false) },
+                    Comments =
+                        [
+                            new ("hi", false)
+                        ],
                 };
 
                 // Then

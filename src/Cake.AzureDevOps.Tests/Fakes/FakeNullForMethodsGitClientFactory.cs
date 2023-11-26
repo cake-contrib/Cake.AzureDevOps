@@ -17,14 +17,13 @@
              .ReturnsAsync(() => null);
 
             m.Setup(arg => arg.GetCommitDiffsAsync(It.IsAny<string>(), It.IsAny<Guid>(), true, null, null, It.IsAny<GitBaseVersionDescriptor>(), It.IsAny<GitTargetVersionDescriptor>(), null, CancellationToken.None))
-             .ReturnsAsync(()
-                    => new GitCommitDiffs { ChangeCounts = [], Changes = new List<GitChange>() });
+             .ReturnsAsync(() => new GitCommitDiffs { ChangeCounts = [], Changes = [] });
 
             m.Setup(arg => arg.UpdateThreadAsync(It.IsAny<GitPullRequestCommentThread>(), It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>(), null, CancellationToken.None))
              .ReturnsAsync(() => null);
 
             m.Setup(arg => arg.GetThreadsAsync(It.IsAny<Guid>(), It.IsAny<int>(), null, null, null, CancellationToken.None))
-             .ReturnsAsync(() => new List<GitPullRequestCommentThread>());
+             .ReturnsAsync(() => []);
 
             m.Setup(arg => arg.CreateThreadAsync(It.IsAny<GitPullRequestCommentThread>(), It.IsAny<Guid>(), It.IsAny<int>(), null, CancellationToken.None))
              .ReturnsAsync(() => null);

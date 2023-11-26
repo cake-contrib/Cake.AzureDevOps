@@ -7,7 +7,6 @@
     /// <param name="password">Password.</param>
     public class AzureDevOpsBasicCredentials(string userName, string password) : IAzureDevOpsCredentials
     {
-
         /// <summary>
         /// Gets the user name.
         /// </summary>
