@@ -16,7 +16,7 @@
                 .ReturnsAsync(() => null);
 
             mock.Setup(arg => arg.GetPullRequestsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<GitPullRequestSearchCriteria>(), null, null, 1, null, default))
-                .ReturnsAsync(() => new List<GitPullRequest>());
+                .ReturnsAsync(() => []);
 
             mock = this.Setup(mock);
 

@@ -16,16 +16,23 @@ jobs:
   pool:
     vmImage: 'windows-2022'
   steps:  
-  - task: UseDotNet@2
-    inputs:
-      version: '7.x'
-  - task: UseDotNet@2
-    inputs:
-      version: '6.x'
   # .NET 5 required for GitVersion
   - task: UseDotNet@2
     inputs:
       version: '5.x'
+    displayName: 'Install .NET 5'
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
+    displayName: 'Install .NET 6'
+  - task: UseDotNet@2
+    inputs:
+      version: '7.x'
+    displayName: 'Install .NET 7'
+  - task: UseDotNet@2
+    inputs:
+      version: '8.x'
+    displayName: 'Install .NET 8'
   - powershell: |
       $ENV:CAKE_SKIP_GITVERSION=([string]::IsNullOrEmpty($ENV:SYSTEM_PULLREQUEST_PULLREQUESTID) -eq $False).ToString()
       .\build.ps1
@@ -41,16 +48,23 @@ jobs:
   pool:
     vmImage: 'macOS-11'
   steps:
-  - task: UseDotNet@2
-    inputs:
-      version: '7.x'
-  - task: UseDotNet@2
-    inputs:
-      version: '6.x'
   # .NET 5 required for GitVersion
   - task: UseDotNet@2
     inputs:
       version: '5.x'
+    displayName: 'Install .NET 5'
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
+    displayName: 'Install .NET 6'
+  - task: UseDotNet@2
+    inputs:
+      version: '7.x'
+    displayName: 'Install .NET 7'
+  - task: UseDotNet@2
+    inputs:
+      version: '8.x'
+    displayName: 'Install .NET 8'
   - bash: |
       ./build.sh
     displayName: 'Cake Build'
@@ -64,16 +78,23 @@ jobs:
   pool:
     vmImage: 'ubuntu-20.04'
   steps:
-  - task: UseDotNet@2
-    inputs:
-      version: '7.x'
-  - task: UseDotNet@2
-    inputs:
-      version: '6.x'
   # .NET 5 required for GitVersion
   - task: UseDotNet@2
     inputs:
       version: '5.x'
+    displayName: 'Install .NET 5'
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
+    displayName: 'Install .NET 6'
+  - task: UseDotNet@2
+    inputs:
+      version: '7.x'
+    displayName: 'Install .NET 7'
+  - task: UseDotNet@2
+    inputs:
+      version: '8.x'
+    displayName: 'Install .NET 8'
   - bash: |
       ./build.sh --verbosity=diagnostic
     displayName: 'Cake Build'
@@ -82,7 +103,7 @@ jobs:
     displayName: 'Publish NuGet package as build artifact'
 
 # Integration Tests Frosting Windows (.NET 6)
-- job: Test_Frosting_Windows_Net5
+- job: Test_Frosting_Windows_Net6
   displayName: Integration Tests Frosting Windows (.NET 6)
   dependsOn: Build_Windows
   pool:
@@ -96,6 +117,10 @@ jobs:
       sourceFolder: $(Pipeline.Workspace)/NuGet Package Windows
       targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
     displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
+    displayName: 'Install .NET 6'
   - powershell: ./build.ps1 --verbosity=diagnostic
     workingDirectory: ./tests/frosting/net6.0
     displayName: 'Run integration tests'
@@ -117,8 +142,37 @@ jobs:
       sourceFolder: $(Pipeline.Workspace)/NuGet Package Windows
       targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
     displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '7.x'
+    displayName: 'Install .NET 7'
   - powershell: ./build.ps1 --verbosity=diagnostic
     workingDirectory: ./tests/frosting/net7.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Frosting Windows (.NET 8)
+- job: Test_Frosting_Windows_Net8
+  displayName: Integration Tests Frosting Windows (.NET 8)
+  dependsOn: Build_Windows
+  pool:
+    vmImage: 'windows-2022'
+  steps:
+  - download: current
+    artifact: NuGet Package Windows
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Windows
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '8.x'
+    displayName: 'Install .NET 8'
+  - powershell: ./build.ps1 --verbosity=diagnostic
+    workingDirectory: ./tests/frosting/net8.0
     displayName: 'Run integration tests'
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
@@ -138,6 +192,10 @@ jobs:
       sourceFolder: $(Pipeline.Workspace)/NuGet Package Windows
       targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
     displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '6.x'
+    displayName: 'Install .NET 6'
   - powershell: ./build.ps1 --verbosity=diagnostic
     workingDirectory: ./tests/script-runner/net6.0
     displayName: 'Run integration tests'
@@ -159,8 +217,37 @@ jobs:
       sourceFolder: $(Pipeline.Workspace)/NuGet Package Windows
       targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
     displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '7.x'
+    displayName: 'Install .NET 7'
   - powershell: ./build.ps1 --verbosity=diagnostic
     workingDirectory: ./tests/script-runner/net7.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Script Runner Windows (.NET 8)
+- job: Test_Script_Runner_Windows_Net8
+  displayName: Integration Tests Script Runner Windows (.NET 8)
+  dependsOn: Build_Windows
+  pool:
+    vmImage: 'windows-2022'
+  steps:
+  - download: current
+    artifact: NuGet Package Windows
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Windows
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '8.x'
+    displayName: 'Install .NET 8'
+  - powershell: ./build.ps1 --verbosity=diagnostic
+    workingDirectory: ./tests/script-runner/net8.0
     displayName: 'Run integration tests'
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
@@ -183,6 +270,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '6.x'
+    displayName: 'Install .NET 6'
   - bash: ./build.sh --verbosity=diagnostic
     workingDirectory: ./tests/frosting/net6.0
     displayName: 'Run integration tests'
@@ -207,8 +295,34 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '7.x'
+    displayName: 'Install .NET 7'
   - bash: ./build.sh --verbosity=diagnostic
     workingDirectory: ./tests/frosting/net7.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Frosting macOS (.NET 8)
+- job: Test_Frosting_macOS_Net8
+  displayName: Integration Tests Frosting macOS (.NET 8)
+  dependsOn: Build_macOS
+  pool:
+    vmImage: 'macOS-11'
+  steps:
+  - download: current
+    artifact: NuGet Package macOS
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package macOS
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '8.x'
+    displayName: 'Install .NET 8'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/frosting/net8.0
     displayName: 'Run integration tests'
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
@@ -231,6 +345,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '6.x'
+    displayName: 'Install .NET 6'
   - bash: ./build.sh --verbosity=diagnostic
     workingDirectory: ./tests/script-runner/net6.0
     displayName: 'Run integration tests'
@@ -255,8 +370,34 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '7.x'
+    displayName: 'Install .NET 7'
   - bash: ./build.sh --verbosity=diagnostic
     workingDirectory: ./tests/script-runner/net7.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Script Runner macOS (.NET 8)
+- job: Test_Script_Runner_macOS_Net8
+  displayName: Integration Tests Script Runner macOS (.NET 8)
+  dependsOn: Build_macOS
+  pool:
+    vmImage: 'macOS-11'
+  steps:
+  - download: current
+    artifact: NuGet Package macOS
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package macOS
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '8.x'
+    displayName: 'Install .NET 8'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/script-runner/net8.0
     displayName: 'Run integration tests'
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
@@ -279,6 +420,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '6.x'
+    displayName: 'Install .NET 6'
   - bash: ./build.sh --verbosity=diagnostic
     workingDirectory: ./tests/frosting/net6.0
     displayName: 'Run integration tests'
@@ -303,8 +445,34 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '7.x'
+    displayName: 'Install .NET 7'
   - bash: ./build.sh --verbosity=diagnostic
     workingDirectory: ./tests/frosting/net7.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Frosting Ubuntu (.NET 8)
+- job: Test_Frosting_Ubuntu_Net8
+  displayName: Integration Tests Frosting Ubuntu (.NET 8)
+  dependsOn: Build_Ubuntu
+  pool:
+    vmImage: 'ubuntu-20.04'
+  steps:
+  - download: current
+    artifact: NuGet Package Ubuntu
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Ubuntu
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '8.x'
+    displayName: 'Install .NET 8'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/frosting/net8.0
     displayName: 'Run integration tests'
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
@@ -327,6 +495,7 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '6.x'
+    displayName: 'Install .NET 6'
   - bash: ./build.sh --verbosity=diagnostic
     workingDirectory: ./tests/script-runner/net6.0
     displayName: 'Run integration tests'
@@ -351,8 +520,34 @@ jobs:
   - task: UseDotNet@2
     inputs:
       version: '7.x'
+    displayName: 'Install .NET 7'
   - bash: ./build.sh --verbosity=diagnostic
     workingDirectory: ./tests/script-runner/net7.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Integration Tests Script Runner Ubuntu (.NET 8)
+- job: Test_Script_Runner_Ubuntu_Net8
+  displayName: Integration Tests Script Runner Ubuntu (.NET 8)
+  dependsOn: Build_Ubuntu
+  pool:
+    vmImage: 'ubuntu-20.04'
+  steps:
+  - download: current
+    artifact: NuGet Package Ubuntu
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Ubuntu
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '8.x'
+    displayName: 'Install .NET 8'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/script-runner/net8.0
     displayName: 'Run integration tests'
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)

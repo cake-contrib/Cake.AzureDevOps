@@ -1,7 +1,6 @@
 ﻿namespace Cake.AzureDevOps.Boards.WorkItemTracking
 {
     using System;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Represents an error for a work item.
@@ -34,18 +33,6 @@
         /// reference if no inner exception is specified.</param>
         public AzureDevOpsWorkItemException(string message, Exception innerException)
             : base(message, innerException)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AzureDevOpsWorkItemException"/> class with serialized data.
-        /// </summary>
-        /// <param name="info">The <see cref="SerializationInfo"/> that holds the serialized object data about
-        /// the exception being thrown.</param>
-        /// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about
-        /// the source or destination. </param>
-        protected AzureDevOpsWorkItemException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
         {
         }
     }

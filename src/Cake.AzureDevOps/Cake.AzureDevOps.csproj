@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -22,7 +22,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/cake-contrib/Cake.AzureDevOps.git</RepositoryUrl>
-    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.AzureDevOps/releases/tag/3.0.2</PackageReleaseNotes>
+    <PackageReleaseNotes>https://github.com/cake-contrib/Cake.AzureDevOps/releases/tag/$(Version)</PackageReleaseNotes>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);PackBuildOutputs</TargetsForTfmSpecificContentInPackage>
@@ -34,9 +34,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Cake.Common" Version="3.0.0" PrivateAssets="All" />
-    <PackageReference Include="Cake.Core" Version="3.0.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="7.0.4">
+    <PackageReference Include="Cake.Common" Version="4.0.0" PrivateAssets="All" />
+    <PackageReference Include="Cake.Core" Version="4.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="8.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

@@ -23,13 +23,8 @@
 
             authorizedIdentity = connection.AuthorizedIdentity;
 
-            var gitClient = connection.GetClient<GitHttpClient>();
-            if (gitClient == null)
-            {
+            return connection.GetClient<GitHttpClient>() ??
                 throw new AzureDevOpsException("Could not retrieve the GitHttpClient object");
-            }
-
-            return gitClient;
         }
     }
 }

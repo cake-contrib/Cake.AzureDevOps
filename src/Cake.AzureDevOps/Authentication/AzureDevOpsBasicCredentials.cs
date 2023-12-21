@@ -3,27 +3,18 @@
     /// <summary>
     /// Credentials for basic authentication.
     /// </summary>
-    public class AzureDevOpsBasicCredentials : IAzureDevOpsCredentials
+    /// <param name="userName">User name.</param>
+    /// <param name="password">Password.</param>
+    public class AzureDevOpsBasicCredentials(string userName, string password) : IAzureDevOpsCredentials
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AzureDevOpsBasicCredentials"/> class.
-        /// </summary>
-        /// <param name="userName">User name.</param>
-        /// <param name="password">Password.</param>
-        public AzureDevOpsBasicCredentials(string userName, string password)
-        {
-            this.UserName = userName;
-            this.Password = password;
-        }
-
         /// <summary>
         /// Gets the user name.
         /// </summary>
-        public string UserName { get; }
+        public string UserName { get; } = userName;
 
         /// <summary>
         /// Gets the password.
         /// </summary>
-        public string Password { get; }
+        public string Password { get; } = password;
     }
 }

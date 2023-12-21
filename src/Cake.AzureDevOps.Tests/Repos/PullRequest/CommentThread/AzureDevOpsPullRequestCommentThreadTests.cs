@@ -50,8 +50,11 @@
                     Id = 42,
                     Status = CommentThreadStatus.Pending,
                     ThreadContext = new CommentThreadContext { FilePath = "/src/myclass.cs" },
-                    Comments = new List<Comment> { new () { Content = "Hello", CommentType = CommentType.Text, IsDeleted = false } },
-                    Properties = new PropertiesCollection(),
+                    Comments =
+                        [
+                            new () { Content = "Hello", CommentType = CommentType.Text, IsDeleted = false }
+                        ],
+                    Properties = [],
                 };
 
                 // When
@@ -152,7 +155,10 @@
                 // When
                 var azureDevOpsThread = new AzureDevOpsPullRequestCommentThread(thread)
                 {
-                    Comments = new List<AzureDevOpsComment> { new ("hi", false) },
+                    Comments =
+                        [
+                            new ("hi", false)
+                        ],
                 };
 
                 // Then
@@ -215,7 +221,7 @@
                 {
                     Id = 16,
                     Status = CommentThreadStatus.Active,
-                    Properties = new PropertiesCollection(),
+                    Properties = [],
                 };
 
                 // When
@@ -294,7 +300,7 @@
                     {
                         Id = 42,
                         Status = CommentThreadStatus.Active,
-                        Properties = new PropertiesCollection(),
+                        Properties = [],
                     });
 
                 // When
@@ -313,7 +319,7 @@
                     {
                         Id = 42,
                         Status = CommentThreadStatus.Active,
-                        Properties = new PropertiesCollection(),
+                        Properties = [],
                     });
 
                 // When

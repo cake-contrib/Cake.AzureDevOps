@@ -1,7 +1,6 @@
 ﻿namespace Cake.AzureDevOps.Repos.PullRequest
 {
     using System;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Represents an error if a branch was not found.
@@ -34,18 +33,6 @@
         /// reference if no inner exception is specified.</param>
         public AzureDevOpsBranchNotFoundException(string branchName, Exception innerException)
             : base($"Branch not found \"{branchName}\"", innerException)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AzureDevOpsBranchNotFoundException"/> class with serialized data.
-        /// </summary>
-        /// <param name="info">The <see cref="SerializationInfo"/> that holds the serialized object data about
-        /// the exception being thrown.</param>
-        /// <param name="context">The <see cref="StreamingContext"/> that contains contextual information about
-        /// the source or destination. </param>
-        protected AzureDevOpsBranchNotFoundException(SerializationInfo info, StreamingContext context)
-            : base(info, context)
         {
         }
     }

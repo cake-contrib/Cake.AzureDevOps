@@ -358,7 +358,7 @@
         {
             if (!this.ValidateBuild())
             {
-                return new List<AzureDevOpsChange>();
+                return [];
             }
 
             using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.settings.Credentials))
@@ -384,7 +384,7 @@
         {
             if (!this.ValidateBuild())
             {
-                return Array.Empty<int>();
+                return [];
             }
 
             using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.settings.Credentials))
@@ -403,7 +403,8 @@
                     throw new InvalidOperationException("Either ProjectId or ProjectName needs to be set");
                 }
 
-                return task
+                return
+                    task
                         .ConfigureAwait(false)
                         .GetAwaiter()
                         .GetResult()
@@ -422,7 +423,7 @@
         {
             if (!this.ValidateBuild())
             {
-                return Array.Empty<AzureDevOpsWorkItem>();
+                return [];
             }
 
             var workItemIds = this.GetWorkItemIds();
@@ -463,7 +464,7 @@
         {
             if (!this.ValidateBuild())
             {
-                return new List<AzureDevOpsTimelineRecord>();
+                return [];
             }
 
             using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.settings.Credentials))
@@ -490,7 +491,7 @@
         {
             if (!this.ValidateBuild())
             {
-                return new List<AzureDevOpsBuildArtifact>();
+                return [];
             }
 
             using (var buildClient = this.buildClientFactory.CreateBuildClient(this.CollectionUrl, this.settings.Credentials))
@@ -610,7 +611,7 @@
         {
             if (!this.ValidateBuild())
             {
-                return new List<AzureDevOpsTestRun>();
+                return [];
             }
 
             using (var testClient = this.testClientFactory.CreateTestManagementClient(this.CollectionUrl, this.settings.Credentials))

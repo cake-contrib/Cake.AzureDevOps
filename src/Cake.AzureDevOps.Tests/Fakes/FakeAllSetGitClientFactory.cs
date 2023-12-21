@@ -41,24 +41,24 @@
                     null,
                     default))
                 .ReturnsAsync((string _, string repoId2, GitPullRequestSearchCriteria sc, int _, int _, int _, object _, CancellationToken _)
-                    => new List<GitPullRequest>(new[]
-                    {
-                        new GitPullRequest
-                        {
-                            PullRequestId = 777,
-                            Status = PullRequestStatus.Active,
-                            Repository = new GitRepository
+                    =>
+                        [
+                          new GitPullRequest
                             {
-                                Id = Guid.NewGuid(),
-                                Name = repoId2,
+                                PullRequestId = 777,
+                                Status = PullRequestStatus.Active,
+                                Repository = new GitRepository
+                                {
+                                    Id = Guid.NewGuid(),
+                                    Name = repoId2,
+                                },
+                                SourceRefName = sc.SourceRefName,
+                                TargetRefName = "master",
+                                CodeReviewId = 123,
+                                LastMergeSourceCommit = new GitCommitRef { CommitId = "4a92b977" },
+                                LastMergeTargetCommit = new GitCommitRef { CommitId = "78a3c113" },
                             },
-                            SourceRefName = sc.SourceRefName,
-                            TargetRefName = "master",
-                            CodeReviewId = 123,
-                            LastMergeSourceCommit = new GitCommitRef { CommitId = "4a92b977" },
-                            LastMergeTargetCommit = new GitCommitRef { CommitId = "78a3c113" },
-                        },
-                    }));
+                        ]);
 
             mock = this.Setup(mock);
 
@@ -159,18 +159,18 @@
                     {
                         FilePath = "/some/path/to/file.cs",
                     },
-                    Comments = new List<Comment>
-                    {
-                        new () { Content = "Hello", IsDeleted = false, CommentType = CommentType.CodeChange, Id = 1 },
-                        new () { Content = "Goodbye", IsDeleted = true, CommentType = CommentType.Text, Id = 2 },
-                    },
+                    Comments =
+                        [
+                            new () { Content = "Hello", IsDeleted = false, CommentType = CommentType.CodeChange, Id = 1 },
+                            new () { Content = "Goodbye", IsDeleted = true, CommentType = CommentType.Text, Id = 2 },
+                        ],
                     Status = CommentThreadStatus.Active,
                 },
                 new ()
                 {
                     Id = 22,
                     ThreadContext = null,
-                    Comments = new List<Comment>(),
+                    Comments = [],
                     Status = CommentThreadStatus.Fixed,
                 },
             };
@@ -201,11 +201,11 @@
                 null,
                 CancellationToken.None))
              .ReturnsAsync((Guid _, int _, bool? _, object _, CancellationToken _)
-                    => new List<GitPullRequestIteration>
-                    {
-                        new () { Id = 42, CreatedDate = DateTime.Today.AddDays(-3) },
-                        new () { Id = 16, CreatedDate = DateTime.Today.AddDays(-1) },
-                    });
+                    =>
+                        [
+                            new () { Id = 42, CreatedDate = DateTime.Today.AddDays(-3) },
+                            new () { Id = 16, CreatedDate = DateTime.Today.AddDays(-1) },
+                        ]);
 
             m.Setup(arg => arg.GetPullRequestIterationsAsync(
                     It.IsAny<Guid>(),
@@ -214,19 +214,20 @@
                     null,
                     CancellationToken.None))
                 .ReturnsAsync((Guid _, int _, bool? _, object _, CancellationToken _)
-                    => new List<GitPullRequestIteration>
-                    {
-                        new () { Id = null },
-                    });
+                    =>
+                        [
+                            new () { Id = null },
+                        ]);
 
             // Setup GitPullRequestIterationChanges collection
             var changes = new GitPullRequestIterationChanges
             {
-                ChangeEntries = new List<GitPullRequestChange>
-                {
-                    new () { ChangeId = 100, ChangeTrackingId = 1, Item = new GitItem { Path = "/src/my/class1.cs" } },
-                    new () { ChangeId = 200, ChangeTrackingId = 2, Item = new GitItem { Path = string.Empty } },
-                },
+                ChangeEntries =
+                    [
+                        new () { ChangeId = 100, ChangeTrackingId = 1, Item = new GitItem { Path = "/src/my/class1.cs" } },
+                        new () { ChangeId = 200, ChangeTrackingId = 2, Item = new GitItem { Path = string.Empty } },
+
+                    ],
             };
 
             m.Setup(arg => arg.GetPullRequestIterationChangesAsync(
@@ -254,7 +255,7 @@
                 null,
                 null,
                 CancellationToken.None))
-             .ReturnsAsync(() => new List<GitRef>());
+             .ReturnsAsync(() => []);
 
             m.Setup(args => args.GetRepositoryAsync(It.IsAny<string>(), "MyRepoName", null, CancellationToken.None))
                 .ReturnsAsync(() => new GitRepository() { DefaultBranch = "master" });
@@ -271,10 +272,10 @@
                 null,
                 null,
                 CancellationToken.None))
-             .ReturnsAsync(() => new List<GitRef>()
-             {
-                 new ("master"),
-             });
+             .ReturnsAsync(() =>
+                [
+                     new ("master"),
+                ]);
 
             m.Setup(
                 arg =>
