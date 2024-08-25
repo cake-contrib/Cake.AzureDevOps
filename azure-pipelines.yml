@@ -46,7 +46,7 @@ jobs:
 - job: Build_macOS
   displayName: Build & Test macOS
   pool:
-    vmImage: 'macOS-11'
+    vmImage: 'macOS-12'
   steps:
   # .NET 5 required for GitVersion
   - task: UseDotNet@2
@@ -257,7 +257,7 @@ jobs:
   displayName: Integration Tests Frosting macOS (.NET 6)
   dependsOn: Build_macOS
   pool:
-    vmImage: 'macOS-11'
+    vmImage: 'macOS-12'
   steps:
   - download: current
     artifact: NuGet Package macOS
@@ -282,7 +282,7 @@ jobs:
   displayName: Integration Tests Frosting macOS (.NET 7)
   dependsOn: Build_macOS
   pool:
-    vmImage: 'macOS-11'
+    vmImage: 'macOS-13'
   steps:
   - download: current
     artifact: NuGet Package macOS
@@ -307,7 +307,7 @@ jobs:
   displayName: Integration Tests Frosting macOS (.NET 8)
   dependsOn: Build_macOS
   pool:
-    vmImage: 'macOS-11'
+    vmImage: 'macOS-14'
   steps:
   - download: current
     artifact: NuGet Package macOS
@@ -332,7 +332,7 @@ jobs:
   displayName: Integration Tests Script Runner macOS (.NET 6)
   dependsOn: Build_macOS
   pool:
-    vmImage: 'macOS-11'
+    vmImage: 'macOS-12'
   steps:
   - download: current
     artifact: NuGet Package macOS
@@ -357,7 +357,7 @@ jobs:
   displayName: Integration Tests Script Runner macOS (.NET 7)
   dependsOn: Build_macOS
   pool:
-    vmImage: 'macOS-11'
+    vmImage: 'macOS-13'
   steps:
   - download: current
     artifact: NuGet Package macOS
@@ -382,7 +382,7 @@ jobs:
   displayName: Integration Tests Script Runner macOS (.NET 8)
   dependsOn: Build_macOS
   pool:
-    vmImage: 'macOS-11'
+    vmImage: 'macOS-14'
   steps:
   - download: current
     artifact: NuGet Package macOS
