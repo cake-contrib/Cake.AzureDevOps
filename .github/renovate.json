@@ -6,6 +6,15 @@
   ],
   "packageRules": [
     {
+      "description": "Ignore Cake runner minor and patch updates",
+      "matchDepNames": [
+          "Cake.Tool",
+          "Cake.Frosting"
+      ],
+      "matchUpdateTypes": ["minor", "patch"],
+      "enabled": false
+    },
+    {
       "description": "Group Azure DevOps packages together",
       "matchManagers": [
         "nuget"
