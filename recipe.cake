@@ -10,6 +10,7 @@ BuildParameters.SetParameters(
     repositoryOwner: "cake-contrib",
     repositoryName: "Cake.AzureDevOps",
     appVeyorAccountName: "cakecontrib",
+    shouldUseDeterministicBuilds: true,
     shouldGenerateDocumentation: false, // Fails to restore tool on AppVeyor
     shouldRunCoveralls: false, // Fails to restore tool on AppVeyor
     shouldRunCodecov: false); // Fails to restore tool on AppVeyor
