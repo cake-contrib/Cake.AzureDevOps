@@ -11,7 +11,6 @@ BuildParameters.SetParameters(
     repositoryName: "Cake.AzureDevOps",
     appVeyorAccountName: "cakecontrib",
     shouldCalculateVersion: true,
-    shouldRunDotNetCorePack: true,
     shouldGenerateDocumentation: false, // Fails to restore tool on AppVeyor
     shouldRunCoveralls: false, // Fails to restore tool on AppVeyor
     shouldRunCodecov: false); // Fails to restore tool on AppVeyor

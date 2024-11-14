@@ -1,0 +1,11 @@
+<Project>
+  <ItemGroup Condition="'$(Language)' == 'C#' AND ('$(ImplicitUsings)' == 'true' or '$(ImplicitUsings)' == 'enable')">
+    <Using Include="Cake.AzureDevOps" />
+    <Using Include="Cake.AzureDevOps.Authentication" />
+    <Using Include="Cake.AzureDevOps.Boards.WorkItemTracking" />
+    <Using Include="Cake.AzureDevOps.Pipelines" />
+    <Using Include="Cake.AzureDevOps.Repos" />
+    <Using Include="Cake.AzureDevOps.Repos.PullRequest" />
+    <Using Include="Cake.AzureDevOps.Repos.PullRequest.CommentThread" />
+  </ItemGroup>
+</Project>
