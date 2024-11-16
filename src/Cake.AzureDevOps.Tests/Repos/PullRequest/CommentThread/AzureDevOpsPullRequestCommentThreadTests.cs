@@ -32,7 +32,7 @@
 
                 // Then
                 thread.ShouldNotBeNull();
-                thread.InnerThread.ShouldBeOfType(typeof(GitPullRequestCommentThread));
+                thread.InnerThread.ShouldBeOfType<GitPullRequestCommentThread>();
                 thread.Id.ShouldBe(default);
                 thread.FilePath.ShouldBeNull();
                 thread.Status.ShouldBe(default);

@@ -687,7 +687,7 @@
                             runId,
                             skip: resultCount,
                             top: resultsToRead,
-                            outcomes: filterOutcomesList?.Select(o => (TestOutcome)Enum.Parse(typeof(TestOutcome), o, true)).ToList())
+                            outcomes: filterOutcomesList?.Select(o => Enum.Parse<TestOutcome>(o, true)).ToList())
                         .ConfigureAwait(false))
                     .Select(test =>
                         new AzureDevOpsTestResult
