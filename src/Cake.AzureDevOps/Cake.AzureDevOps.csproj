@@ -23,7 +23,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="Cake.AzureDevOps.Tests"/>
+    <InternalsVisibleTo Include="Cake.AzureDevOps.Tests" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,7 +33,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556" PrivateAssets="All" />
     <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="19.225.1" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Services.InteractiveClient" Version="19.225.1" PrivateAssets="All" />
     <PackageReference Include="TfsUrlParser" Version="1.5.0" PrivateAssets="All" />
