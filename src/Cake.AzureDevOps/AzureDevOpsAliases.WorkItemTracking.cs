@@ -48,12 +48,7 @@
 
             var workItem = new AzureDevOpsWorkItem(context.Log, settings, new WorkItemTrackingClientFactory());
 
-            if (workItem.HasWorkItemLoaded)
-            {
-                return workItem;
-            }
-
-            return null;
+            return workItem.HasWorkItemLoaded ? workItem : null;
         }
 
         /// <summary>

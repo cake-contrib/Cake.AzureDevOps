@@ -162,18 +162,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public Guid ProjectId
-        {
-            get
-            {
-                if (!this.ValidateBuild())
-                {
-                    return Guid.Empty;
-                }
-
-                return this.build.Project.Id;
-            }
-        }
+        public Guid ProjectId => this.ValidateBuild() ? this.build.Project.Id : Guid.Empty;
 
         /// <summary>
         /// Gets the name of the Azure DevOps project.
@@ -182,18 +171,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public string ProjectName
-        {
-            get
-            {
-                if (!this.ValidateBuild())
-                {
-                    return string.Empty;
-                }
-
-                return this.build.Project.Name;
-            }
-        }
+        public string ProjectName => this.ValidateBuild() ? this.build.Project.Name : string.Empty;
 
         /// <summary>
         /// Gets the name of the Git repository.
@@ -202,18 +180,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public string RepositoryName
-        {
-            get
-            {
-                if (!this.ValidateBuild())
-                {
-                    return string.Empty;
-                }
-
-                return this.build.Repository.Name;
-            }
-        }
+        public string RepositoryName => this.ValidateBuild() ? this.build.Repository.Name : string.Empty;
 
         /// <summary>
         /// Gets the ID of the repository.
@@ -222,18 +189,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public Guid RepositoryId
-        {
-            get
-            {
-                if (!this.ValidateBuild())
-                {
-                    return Guid.Empty;
-                }
-
-                return new Guid(this.build.Repository.Id);
-            }
-        }
+        public Guid RepositoryId => this.ValidateBuild() ? new Guid(this.build.Repository.Id) : Guid.Empty;
 
         /// <summary>
         /// Gets the ID of the build.
@@ -242,18 +198,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public int BuildId
-        {
-            get
-            {
-                if (!this.ValidateBuild())
-                {
-                    return 0;
-                }
-
-                return this.build.Id;
-            }
-        }
+        public int BuildId => this.ValidateBuild() ? this.build.Id : 0;
 
         /// <summary>
         /// Gets the status of the build.
@@ -262,18 +207,10 @@
         /// </summary>
         /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public AzureDevOpsBuildStatus? Status
-        {
-            get
-            {
-                if (!this.ValidateBuild())
-                {
-                    return 0;
-                }
-
-                return this.build.Status?.ToAzureDevOpsBuildStatus();
-            }
-        }
+        public AzureDevOpsBuildStatus? Status =>
+            this.ValidateBuild()
+                ? this.build.Status?.ToAzureDevOpsBuildStatus()
+                : (AzureDevOpsBuildStatus?)0;
 
         /// <summary>
         /// Gets the result of the build.
@@ -286,18 +223,10 @@
         /// </remarks>
         /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public AzureDevOpsBuildResult? Result
-        {
-            get
-            {
-                if (!this.ValidateBuild())
-                {
-                    return 0;
-                }
-
-                return this.build.Result?.ToAzureDevOpsBuildResult();
-            }
-        }
+        public AzureDevOpsBuildResult? Result =>
+            this.ValidateBuild()
+                ? this.build.Result?.ToAzureDevOpsBuildResult()
+                : (AzureDevOpsBuildResult?)0;
 
         /// <summary>
         /// Gets the finish time of the build.
@@ -306,18 +235,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsBuildNotFoundException">If build could not be found and
         /// <see cref="AzureDevOpsBuildSettings.ThrowExceptionIfBuildCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public DateTime? FinishTime
-        {
-            get
-            {
-                if (!this.ValidateBuild())
-                {
-                    return null;
-                }
-
-                return this.build.FinishTime;
-            }
-        }
+        public DateTime? FinishTime => this.ValidateBuild() ? this.build.FinishTime : null;
 
         /// <summary>
         /// Gets the parameters passed to the build.

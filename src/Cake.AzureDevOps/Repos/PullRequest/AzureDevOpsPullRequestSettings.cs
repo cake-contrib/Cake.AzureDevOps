@@ -150,13 +150,10 @@
             var accessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN", EnvironmentVariableTarget.Process);
             if (string.IsNullOrWhiteSpace(accessToken))
             {
-                if (!throwExceptionIfVariablesDontExist)
-                {
-                    return (false, null);
-                }
-
-                throw new InvalidOperationException(
-                    "Failed to read the SYSTEM_ACCESSTOKEN environment variable. Make sure you are running in an Azure Pipelines build and that the 'Allow Scripts to access OAuth token' option is enabled.");
+                return throwExceptionIfVariablesDontExist
+                    ? throw new InvalidOperationException(
+                        "Failed to read the SYSTEM_ACCESSTOKEN environment variable. Make sure you are running in an Azure Pipelines build and that the 'Allow Scripts to access OAuth token' option is enabled.")
+                    : ((bool Valid, string AccessToken))(false, null);
             }
 
             return (true, accessToken);

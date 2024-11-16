@@ -148,18 +148,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
         /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public int WorkItemId
-        {
-            get
-            {
-                if (!this.ValidateWorkItem())
-                {
-                    return 0;
-                }
-
-                return this.workItem.Id ?? 0;
-            }
-        }
+        public int WorkItemId => this.ValidateWorkItem() ? this.workItem.Id ?? 0 : 0;
 
         /// <summary>
         /// Gets the title of the work item.
@@ -168,18 +157,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
         /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public string Title
-        {
-            get
-            {
-                if (!this.ValidateWorkItem())
-                {
-                    return string.Empty;
-                }
-
-                return this.GetField("System.Title");
-            }
-        }
+        public string Title => this.ValidateWorkItem() ? this.GetField("System.Title") : string.Empty;
 
         /// <summary>
         /// Gets the description of the work item.
@@ -188,18 +166,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
         /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public string Description
-        {
-            get
-            {
-                if (!this.ValidateWorkItem())
-                {
-                    return string.Empty;
-                }
-
-                return this.GetField("System.Description");
-            }
-        }
+        public string Description => this.ValidateWorkItem() ? this.GetField("System.Description") : string.Empty;
 
         /// <summary>
         /// Gets the area path of the work item.
@@ -208,18 +175,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
         /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public string AreaPath
-        {
-            get
-            {
-                if (!this.ValidateWorkItem())
-                {
-                    return string.Empty;
-                }
-
-                return this.GetField("System.AreaPath");
-            }
-        }
+        public string AreaPath => this.ValidateWorkItem() ? this.GetField("System.AreaPath") : string.Empty;
 
         /// <summary>
         /// Gets the team project name of the work item.
@@ -228,18 +184,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
         /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public string TeamProject
-        {
-            get
-            {
-                if (!this.ValidateWorkItem())
-                {
-                    return string.Empty;
-                }
-
-                return this.GetField("System.TeamProject");
-            }
-        }
+        public string TeamProject => this.ValidateWorkItem() ? this.GetField("System.TeamProject") : string.Empty;
 
         /// <summary>
         /// Gets the iteration path of the work item.
@@ -248,18 +193,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
         /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public string IterationPath
-        {
-            get
-            {
-                if (!this.ValidateWorkItem())
-                {
-                    return string.Empty;
-                }
-
-                return this.GetField("System.IterationPath");
-            }
-        }
+        public string IterationPath => this.ValidateWorkItem() ? this.GetField("System.IterationPath") : string.Empty;
 
         /// <summary>
         /// Gets the type of the work item.
@@ -268,18 +202,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
         /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public string WorkItemType
-        {
-            get
-            {
-                if (!this.ValidateWorkItem())
-                {
-                    return string.Empty;
-                }
-
-                return this.GetField("System.WorkItemType");
-            }
-        }
+        public string WorkItemType => this.ValidateWorkItem() ? this.GetField("System.WorkItemType") : string.Empty;
 
         /// <summary>
         /// Gets the state of the work item.
@@ -288,18 +211,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
         /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public string State
-        {
-            get
-            {
-                if (!this.ValidateWorkItem())
-                {
-                    return string.Empty;
-                }
-
-                return this.GetField("System.State");
-            }
-        }
+        public string State => this.ValidateWorkItem() ? this.GetField("System.State") : string.Empty;
 
         /// <summary>
         /// Gets the reason of the state of the work item.
@@ -308,18 +220,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
         /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public string Reason
-        {
-            get
-            {
-                if (!this.ValidateWorkItem())
-                {
-                    return string.Empty;
-                }
-
-                return this.GetField("System.Reason");
-            }
-        }
+        public string Reason => this.ValidateWorkItem() ? this.GetField("System.Reason") : string.Empty;
 
         /// <summary>
         /// Gets the create date of the work item.
@@ -328,18 +229,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
         /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public DateTime CreateDate
-        {
-            get
-            {
-                if (!this.ValidateWorkItem())
-                {
-                    return DateTime.MinValue;
-                }
-
-                return this.GetFieldAsDate("System.CreatedDate");
-            }
-        }
+        public DateTime CreateDate => this.ValidateWorkItem() ? this.GetFieldAsDate("System.CreatedDate") : DateTime.MinValue;
 
         /// <summary>
         /// Gets the modify date of the work item.
@@ -348,18 +238,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
         /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public DateTime ChangeDate
-        {
-            get
-            {
-                if (!this.ValidateWorkItem())
-                {
-                    return DateTime.MinValue;
-                }
-
-                return this.GetFieldAsDate("System.ChangedDate");
-            }
-        }
+        public DateTime ChangeDate => this.ValidateWorkItem() ? this.GetFieldAsDate("System.ChangedDate") : DateTime.MinValue;
 
         /// <summary>
         /// Gets the tags of the work item.
@@ -368,18 +247,9 @@
         /// </summary>
         /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
         /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public IEnumerable<string> Tags
-        {
-            get
-            {
-                if (!this.ValidateWorkItem())
-                {
-                    return Array.Empty<string>();
-                }
-
-                return this.GetField("System.Tags").Split("; ", StringSplitOptions.RemoveEmptyEntries);
-            }
-        }
+        public IEnumerable<string> Tags => this.ValidateWorkItem()
+            ? (IEnumerable<string>)this.GetField("System.Tags").Split("; ", StringSplitOptions.RemoveEmptyEntries)
+            : Array.Empty<string>();
 
         /// <summary>
         /// Gets the id of the parent work item.
@@ -388,18 +258,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsWorkItemNotFoundException">If work item could not be found and
         /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public int ParentWorkItemId
-        {
-            get
-            {
-                if (!this.ValidateWorkItem())
-                {
-                    return 0;
-                }
-
-                return this.GetFieldAsInt("System.Parent");
-            }
-        }
+        public int ParentWorkItemId => this.ValidateWorkItem() ? this.GetFieldAsInt("System.Parent") : 0;
 
         /// <summary>
         /// Gets the parent work item or null of no parent exists.
@@ -445,38 +304,17 @@
 
         private string GetField(string fieldName)
         {
-            if (this.workItem.Fields.TryGetValue(fieldName, out var field))
-            {
-                return field.ToString();
-            }
-            else
-            {
-                return string.Empty;
-            }
+            return this.workItem.Fields.TryGetValue(fieldName, out var field) ? field.ToString() : string.Empty;
         }
 
         private DateTime GetFieldAsDate(string fieldName)
         {
-            if (this.workItem.Fields.TryGetValue(fieldName, out var field))
-            {
-                return (DateTime)field;
-            }
-            else
-            {
-                return DateTime.MinValue;
-            }
+            return this.workItem.Fields.TryGetValue(fieldName, out var field) ? (DateTime)field : DateTime.MinValue;
         }
 
         private int GetFieldAsInt(string fieldName)
         {
-            if (this.workItem.Fields.TryGetValue(fieldName, out var field))
-            {
-                return Convert.ToInt32(field);
-            }
-            else
-            {
-                return 0;
-            }
+            return this.workItem.Fields.TryGetValue(fieldName, out var field) ? Convert.ToInt32(field) : 0;
         }
     }
 }

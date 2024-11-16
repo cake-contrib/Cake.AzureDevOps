@@ -18,20 +18,16 @@
         {
             artifactResource.NotNull(nameof(artifactResource));
 
-            if (!Enum.TryParse(artifactResource.Type, true, out AzurePipelinesArtifactType type))
-            {
-                throw new InvalidOperationException($"Unexpected value for artifact type '{artifactResource.Type}'");
-            }
-
-            return
-                new AzureDevOpsArtifactResource
+            return Enum.TryParse(artifactResource.Type, true, out AzurePipelinesArtifactType type)
+                ? new AzureDevOpsArtifactResource
                 {
                     Data = artifactResource.Data,
                     DownloadUrl = artifactResource.DownloadUrl,
                     Type = type,
                     Url = artifactResource.Url,
                     Properties = artifactResource.Properties,
-                };
+                }
+                : throw new InvalidOperationException($"Unexpected value for artifact type '{artifactResource.Type}'");
         }
     }
 }

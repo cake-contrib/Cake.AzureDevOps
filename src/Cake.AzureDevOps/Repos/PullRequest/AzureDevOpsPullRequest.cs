@@ -171,18 +171,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public Guid RepositoryId
-        {
-            get
-            {
-                if (!this.ValidatePullRequest())
-                {
-                    return Guid.Empty;
-                }
-
-                return this.pullRequest.Repository.Id;
-            }
-        }
+        public Guid RepositoryId => this.ValidatePullRequest() ? this.pullRequest.Repository.Id : Guid.Empty;
 
         /// <summary>
         /// Gets the ID of the pull request.
@@ -191,18 +180,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public int PullRequestId
-        {
-            get
-            {
-                if (!this.ValidatePullRequest())
-                {
-                    return 0;
-                }
-
-                return this.pullRequest.PullRequestId;
-            }
-        }
+        public int PullRequestId => this.ValidatePullRequest() ? this.pullRequest.PullRequestId : 0;
 
         /// <summary>
         /// Gets if the pull request is in draft mode.
@@ -211,18 +189,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public bool? IsDraft
-        {
-            get
-            {
-                if (!this.ValidatePullRequest())
-                {
-                    return null;
-                }
-
-                return this.pullRequest.IsDraft;
-            }
-        }
+        public bool? IsDraft => this.ValidatePullRequest() ? this.pullRequest.IsDraft : null;
 
         /// <summary>
         /// Gets the status of the pull request.
@@ -231,18 +198,10 @@
         /// </summary>
         /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public AzureDevOpsPullRequestState PullRequestStatus
-        {
-            get
-            {
-                if (!this.ValidatePullRequest())
-                {
-                    return AzureDevOpsPullRequestState.NotSet;
-                }
-
-                return this.pullRequest.Status.ToAzureDevOpsPullRequestState();
-            }
-        }
+        public AzureDevOpsPullRequestState PullRequestStatus =>
+            this.ValidatePullRequest()
+                ? this.pullRequest.Status.ToAzureDevOpsPullRequestState()
+                : AzureDevOpsPullRequestState.NotSet;
 
         /// <summary>
         /// Gets the ID of the code review.
@@ -251,18 +210,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public int CodeReviewId
-        {
-            get
-            {
-                if (!this.ValidatePullRequest())
-                {
-                    return 0;
-                }
-
-                return this.pullRequest.CodeReviewId;
-            }
-        }
+        public int CodeReviewId => this.ValidatePullRequest() ? this.pullRequest.CodeReviewId : 0;
 
         /// <summary>
         /// Gets the name of the source branch from the pull request.
@@ -271,18 +219,7 @@
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>false.</c>.
         /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public string SourceRefName
-        {
-            get
-            {
-                if (!this.ValidatePullRequest())
-                {
-                    return string.Empty;
-                }
-
-                return this.pullRequest.SourceRefName;
-            }
-        }
+        public string SourceRefName => this.ValidatePullRequest() ? this.pullRequest.SourceRefName : string.Empty;
 
         /// <summary>
         /// Gets the name of the target branch.
@@ -291,18 +228,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public string TargetRefName
-        {
-            get
-            {
-                if (!this.ValidatePullRequest())
-                {
-                    return string.Empty;
-                }
-
-                return this.pullRequest.TargetRefName;
-            }
-        }
+        public string TargetRefName => this.ValidatePullRequest() ? this.pullRequest.TargetRefName : string.Empty;
 
         /// <summary>
         /// Gets the commit at the head of the source branch at the time of the last pull request merge.
@@ -311,18 +237,10 @@
         /// </summary>
         /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public string LastSourceCommitId
-        {
-            get
-            {
-                if (!this.ValidatePullRequest())
-                {
-                    return string.Empty;
-                }
-
-                return this.pullRequest.LastMergeSourceCommit.CommitId;
-            }
-        }
+        public string LastSourceCommitId =>
+            this.ValidatePullRequest()
+                ? this.pullRequest.LastMergeSourceCommit.CommitId
+                : string.Empty;
 
         /// <summary>
         /// Gets the commit at the head of the target branch at the time of the last pull request merge.
@@ -331,18 +249,10 @@
         /// </summary>
         /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
-        public string LastTargetCommitId
-        {
-            get
-            {
-                if (!this.ValidatePullRequest())
-                {
-                    return string.Empty;
-                }
-
-                return this.pullRequest.LastMergeTargetCommit.CommitId;
-            }
-        }
+        public string LastTargetCommitId =>
+            this.ValidatePullRequest()
+                ? this.pullRequest.LastMergeTargetCommit.CommitId
+                : string.Empty;
 
         /// <summary>
         /// Create a pull request.

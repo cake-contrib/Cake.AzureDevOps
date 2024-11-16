@@ -76,20 +76,17 @@
         {
             var accessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN", EnvironmentVariableTarget.Process);
 
-            if (string.IsNullOrWhiteSpace(accessToken))
-            {
-                throw new InvalidOperationException(
-                    "Failed to read the SYSTEM_ACCESSTOKEN environment variable. Make sure you are running in an Azure Pipelines build and that the 'Allow Scripts to access OAuth token' option is enabled.");
-            }
-
             return
-                new AzureDevOpsCreatePullRequestSettings(
+                !string.IsNullOrWhiteSpace(accessToken)
+                ? new AzureDevOpsCreatePullRequestSettings(
                     repositoryUrl,
                     sourceRefName,
                     targetRefName,
                     title,
                     description,
-                    new AzureDevOpsOAuthCredentials(accessToken));
+                    new AzureDevOpsOAuthCredentials(accessToken))
+                : throw new InvalidOperationException(
+                    "Failed to read the SYSTEM_ACCESSTOKEN environment variable. Make sure you are running in an Azure Pipelines build and that the 'Allow Scripts to access OAuth token' option is enabled.");
         }
     }
 }
