@@ -249,7 +249,7 @@
         /// <see cref="AzureDevOpsWorkItemSettings.ThrowExceptionIfWorkItemCouldNotBeFound"/> is set to <c>true</c>.</exception>
         public IEnumerable<string> Tags => this.ValidateWorkItem()
             ? (IEnumerable<string>)this.GetField("System.Tags").Split("; ", StringSplitOptions.RemoveEmptyEntries)
-            : Array.Empty<string>();
+            : [];
 
         /// <summary>
         /// Gets the id of the parent work item.
