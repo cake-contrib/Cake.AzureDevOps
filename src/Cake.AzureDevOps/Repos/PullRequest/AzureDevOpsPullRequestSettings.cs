@@ -145,7 +145,7 @@
         /// <param name="throwExceptionIfVariablesDontExist">Value indicating whether an exception
         /// should be thrown if required environment variables could not be found.</param>
         /// <returns>Tuple containing a flag if variables are valid and the variable values.</returns>
-        private static (bool valid, string accessToken) RetrieveAzurePipelinesVariables(bool throwExceptionIfVariablesDontExist)
+        private static (bool Valid, string AccessToken) RetrieveAzurePipelinesVariables(bool throwExceptionIfVariablesDontExist)
         {
             var accessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN", EnvironmentVariableTarget.Process);
             if (string.IsNullOrWhiteSpace(accessToken))
