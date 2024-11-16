@@ -25,14 +25,14 @@ For addin compatible with Cake Script Runners see Cake.AzureDevOps.
     <dependencies>
       <group targetFramework="net8.0">
         <dependency id="Cake.Core" version="5.0" exclude="Build,Analyzers" />
-        <dependency id="Microsoft.TeamFoundationServer.Client" version="16.205.1" exclude="Build,Analyzers" />
-        <dependency id="Microsoft.VisualStudio.Services.InteractiveClient" version="16.205.1" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.TeamFoundationServer.Client" version="19.225.1" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.VisualStudio.Services.InteractiveClient" version="19.225.1" exclude="Build,Analyzers" />
         <dependency id="TfsUrlParser" version="1.5.0" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="net9.0">
         <dependency id="Cake.Core" version="5.0" exclude="Build,Analyzers" />
-        <dependency id="Microsoft.TeamFoundationServer.Client" version="16.205.1" exclude="Build,Analyzers" />
-        <dependency id="Microsoft.VisualStudio.Services.InteractiveClient" version="16.205.1" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.TeamFoundationServer.Client" version="19.225.1" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.VisualStudio.Services.InteractiveClient" version="19.225.1" exclude="Build,Analyzers" />
         <dependency id="TfsUrlParser" version="1.5.0" exclude="Build,Analyzers" />
       </group>
     </dependencies>
