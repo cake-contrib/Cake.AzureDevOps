@@ -18,10 +18,7 @@
         protected BaseAzureDevOpsProjectSettings(Uri collectionUrl, Guid projectGuid, IAzureDevOpsCredentials credentials)
             : base(collectionUrl, credentials)
         {
-            if (projectGuid == Guid.Empty)
-            {
-                throw new ArgumentOutOfRangeException(nameof(projectGuid));
-            }
+            ArgumentOutOfRangeException.ThrowIfEqual(projectGuid, Guid.Empty);
 
             this.ProjectGuid = projectGuid;
         }
