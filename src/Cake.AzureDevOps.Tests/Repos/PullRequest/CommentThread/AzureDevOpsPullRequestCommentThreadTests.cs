@@ -52,7 +52,7 @@
                     ThreadContext = new CommentThreadContext { FilePath = "/src/myclass.cs" },
                     Comments =
                         [
-                            new () { Content = "Hello", CommentType = CommentType.Text, IsDeleted = false }
+                            new() { Content = "Hello", CommentType = CommentType.Text, IsDeleted = false }
                         ],
                     Properties = [],
                 };
@@ -157,7 +157,7 @@
                 {
                     Comments =
                         [
-                            new ("hi", false)
+                            new("hi", false)
                         ],
                 };
 

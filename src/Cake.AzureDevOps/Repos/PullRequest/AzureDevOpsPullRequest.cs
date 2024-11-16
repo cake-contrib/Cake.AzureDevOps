@@ -512,7 +512,7 @@
                 Status = AzureDevOpsCommentThreadStatus.Active,
                 Comments =
                     [
-                        new ()
+                        new()
                         {
                             CommentType = AzureDevOpsCommentType.System,
                             IsDeleted = false,
@@ -547,7 +547,7 @@
                 Status = AzureDevOpsCommentThreadStatus.Active,
                 Comments =
                     [
-                        new ()
+                        new()
                         {
                             CommentType = AzureDevOpsCommentType.System,
                             IsDeleted = false,
