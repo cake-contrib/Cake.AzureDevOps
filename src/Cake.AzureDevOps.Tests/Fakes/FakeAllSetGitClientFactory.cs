@@ -306,7 +306,7 @@
                     gitPullRequestToCreate.LastMergeTargetCommit = new GitCommitRef { CommitId = "78a3c113" };
 
                     return gitPullRequestToCreate;
-                 });
+                });
 
             m.Setup(arg => arg.UpdateCommentAsync(
                    It.IsAny<Comment>(),
@@ -319,8 +319,8 @@
                .ReturnsAsync((Comment comment, Guid _, int _, int _, int _, object _, CancellationToken _)
                    => new Comment
                    {
-                        Id = comment.Id,
-                        Content = comment.Content,
+                       Id = comment.Id,
+                       Content = comment.Content,
                    });
 
             return m;
