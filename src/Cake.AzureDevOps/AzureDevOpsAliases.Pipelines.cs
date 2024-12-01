@@ -50,12 +50,7 @@
 
             var build = new AzureDevOpsBuild(context.Log, settings, new BuildClientFactory(), new TestManagementClientFactory(), new WorkItemTrackingClientFactory());
 
-            if (build.HasBuildLoaded)
-            {
-                return build;
-            }
-
-            return null;
+            return build.HasBuildLoaded ? build : null;
         }
 
         /// <summary>

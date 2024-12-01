@@ -3,6 +3,7 @@ issue-labels-include:
 - Feature
 - Bug
 - Improvement
+- Dependencies
 - Documentation
 issue-labels-exclude:
 - Build

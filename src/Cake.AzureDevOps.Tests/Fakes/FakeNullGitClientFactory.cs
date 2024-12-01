@@ -1,7 +1,6 @@
 ﻿namespace Cake.AzureDevOps.Tests.Fakes
 {
     using System;
-    using System.Collections.Generic;
     using Cake.AzureDevOps.Authentication;
     using Microsoft.TeamFoundation.SourceControl.WebApi;
     using Moq;

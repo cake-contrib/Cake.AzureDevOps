@@ -52,12 +52,7 @@
 
             var pullRequest = new AzureDevOpsPullRequest(context.Log, settings, new GitClientFactory());
 
-            if (pullRequest.HasPullRequestLoaded)
-            {
-                return pullRequest;
-            }
-
-            return null;
+            return pullRequest.HasPullRequestLoaded ? pullRequest : null;
         }
 
         /// <summary>

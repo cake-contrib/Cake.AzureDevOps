@@ -101,7 +101,7 @@
                     fixture.WorkItemTrackingClientFactory);
 
                 // When
-                var result = Record.Exception(() => build.GetTestRuns(null, new[] { "FakeOutcome" }));
+                var result = Record.Exception(() => build.GetTestRuns(null, ["FakeOutcome"]));
 
                 // Then
                 result.IsArgumentException(null);

@@ -17,7 +17,7 @@
         /// <param name="parameterName">The name of the parameter to include in any thrown exception.</param>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
         [DebuggerStepThrough]
-        public static void NotNull<T>([ValidatedNotNull]this T value, string parameterName)
+        public static void NotNull<T>([ValidatedNotNull] this T value, string parameterName)
             where T : class
         {
             if (value == null)
@@ -34,7 +34,7 @@
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if <paramref name="value"/> is empty or consists only of white-space characters.</exception>
         [DebuggerStepThrough]
-        public static void NotNullOrWhiteSpace([ValidatedNotNull]this string value, string parameterName)
+        public static void NotNullOrWhiteSpace([ValidatedNotNull] this string value, string parameterName)
         {
             if (value == null)
             {

@@ -1,7 +1,6 @@
 ﻿namespace Cake.AzureDevOps
 {
     using System;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Represents errors that occur during connecting to Azure DevOps.

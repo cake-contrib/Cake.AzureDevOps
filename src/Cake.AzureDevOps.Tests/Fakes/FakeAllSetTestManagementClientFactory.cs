@@ -22,13 +22,13 @@
                 {
                     ResultsForGroup =
                         [
-                            new ()
+                            new()
                             {
                                 Results =
                                     [
-                                        new () { Id = 11, TestRun = new ShallowReference { Id = "1" } },
-                                        new () { Id = 12, TestRun = new ShallowReference { Id = "1" } },
-                                        new () { Id = 13, TestRun = new ShallowReference { Id = "1" } },
+                                        new() { Id = 11, TestRun = new ShallowReference { Id = "1" } },
+                                        new() { Id = 12, TestRun = new ShallowReference { Id = "1" } },
+                                        new() { Id = 13, TestRun = new ShallowReference { Id = "1" } },
                                     ],
                             },
                         ],
@@ -40,9 +40,9 @@
                     var result =
                         new List<TestCaseResult>
                         {
-                            new () { AutomatedTestName = "t1", Outcome = "Passed", ErrorMessage = string.Empty },
-                            new () { AutomatedTestName = "t2", Outcome = "Failed", ErrorMessage = "Error" },
-                            new () { AutomatedTestName = "t3", Outcome = "Passed", ErrorMessage = string.Empty },
+                            new() { AutomatedTestName = "t1", Outcome = "Passed", ErrorMessage = string.Empty },
+                            new() { AutomatedTestName = "t2", Outcome = "Failed", ErrorMessage = "Error" },
+                            new() { AutomatedTestName = "t3", Outcome = "Passed", ErrorMessage = string.Empty },
                         };
 
                     if (top.HasValue)
