@@ -15,13 +15,10 @@
         public static string GetSystemAccessToken()
         {
             var accessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN", EnvironmentVariableTarget.Process);
-            if (string.IsNullOrWhiteSpace(accessToken))
-            {
-                throw new InvalidOperationException(
+            return !string.IsNullOrWhiteSpace(accessToken)
+                ? accessToken
+                : throw new InvalidOperationException(
                     "Failed to read the SYSTEM_ACCESSTOKEN environment variable. Make sure you are running in an Azure Pipelines build and that the 'Allow Scripts to access OAuth token' option is enabled.");
-            }
-
-            return accessToken;
         }
 
         /// <summary>
@@ -32,13 +29,10 @@
         public static Uri GetSystemTeamFoundationCollectionUri()
         {
             var collectionUrl = Environment.GetEnvironmentVariable("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI", EnvironmentVariableTarget.Process);
-            if (string.IsNullOrWhiteSpace(collectionUrl))
-            {
-                throw new InvalidOperationException(
-                    "Failed to read the SYSTEM_TEAMFOUNDATIONCOLLECTIONURI environment variable. Make sure you are running in an Azure Pipelines build.");
-            }
-
-            return new Uri(collectionUrl);
+            return string.IsNullOrWhiteSpace(collectionUrl)
+                ? throw new InvalidOperationException(
+                    "Failed to read the SYSTEM_TEAMFOUNDATIONCOLLECTIONURI environment variable. Make sure you are running in an Azure Pipelines build.")
+                : new Uri(collectionUrl);
         }
 
         /// <summary>
@@ -49,13 +43,10 @@
         public static string GetSystemTeamProject()
         {
             var projectName = Environment.GetEnvironmentVariable("SYSTEM_TEAMPROJECT", EnvironmentVariableTarget.Process);
-            if (string.IsNullOrWhiteSpace(projectName))
-            {
-                throw new InvalidOperationException(
-                    "Failed to read the SYSTEM_TEAMPROJECT environment variable. Make sure you are running in an Azure Pipelines build.");
-            }
-
-            return projectName;
+            return string.IsNullOrWhiteSpace(projectName)
+                ? throw new InvalidOperationException(
+                    "Failed to read the SYSTEM_TEAMPROJECT environment variable. Make sure you are running in an Azure Pipelines build.")
+                : projectName;
         }
 
         /// <summary>
@@ -77,12 +68,9 @@
                 throw new InvalidOperationException("BUILD_BUILDID environment variable should contain integer value");
             }
 
-            if (buildIdValue <= 0)
-            {
-                throw new InvalidOperationException("BUILD_BUILDID environment variable should contain integer value and it should be greater than zero");
-            }
-
-            return buildIdValue;
+            return buildIdValue <= 0
+                ? throw new InvalidOperationException("BUILD_BUILDID environment variable should contain integer value and it should be greater than zero")
+                : buildIdValue;
         }
     }
 }

@@ -145,18 +145,15 @@
         /// <param name="throwExceptionIfVariablesDontExist">Value indicating whether an exception
         /// should be thrown if required environment variables could not be found.</param>
         /// <returns>Tuple containing a flag if variables are valid and the variable values.</returns>
-        private static (bool valid, string accessToken) RetrieveAzurePipelinesVariables(bool throwExceptionIfVariablesDontExist)
+        private static (bool Valid, string AccessToken) RetrieveAzurePipelinesVariables(bool throwExceptionIfVariablesDontExist)
         {
             var accessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN", EnvironmentVariableTarget.Process);
             if (string.IsNullOrWhiteSpace(accessToken))
             {
-                if (!throwExceptionIfVariablesDontExist)
-                {
-                    return (false, null);
-                }
-
-                throw new InvalidOperationException(
-                    "Failed to read the SYSTEM_ACCESSTOKEN environment variable. Make sure you are running in an Azure Pipelines build and that the 'Allow Scripts to access OAuth token' option is enabled.");
+                return throwExceptionIfVariablesDontExist
+                    ? throw new InvalidOperationException(
+                        "Failed to read the SYSTEM_ACCESSTOKEN environment variable. Make sure you are running in an Azure Pipelines build and that the 'Allow Scripts to access OAuth token' option is enabled.")
+                    : ((bool Valid, string AccessToken))(false, null);
             }
 
             return (true, accessToken);

@@ -6,14 +6,23 @@
   ],
   "packageRules": [
     {
+      "description": "Ignore Cake runner minor and patch updates",
+      "matchDepNames": [
+          "Cake.Tool",
+          "Cake.Frosting"
+      ],
+      "matchUpdateTypes": ["minor", "patch"],
+      "enabled": false
+    },
+    {
       "description": "Group Azure DevOps packages together",
       "matchManagers": [
         "nuget"
       ],
-      "matchPackagePatterns": [
-        "Microsoft.TeamFoundationServer.Client|Microsoft.VisualStudio.Services.InteractiveClient"
-      ],
-      "groupName": "Azure DevOps Client"
+      "groupName": "Azure DevOps Client",
+      "matchPackageNames": [
+        "/Microsoft.TeamFoundationServer.Client|Microsoft.VisualStudio.Services.InteractiveClient/"
+      ]
     }
   ]
 }

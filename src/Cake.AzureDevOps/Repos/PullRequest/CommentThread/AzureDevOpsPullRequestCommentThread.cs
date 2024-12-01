@@ -80,15 +80,9 @@
         /// </summary>
         public int? LineNumber
         {
-            get
-            {
-                if (this.InnerThread.ThreadContext?.RightFileStart != null)
-                {
-                    return this.InnerThread.ThreadContext?.RightFileStart.Line;
-                }
-
-                return null;
-            }
+            get => this.InnerThread.ThreadContext?.RightFileStart != null
+                ? this.InnerThread.ThreadContext?.RightFileStart.Line
+                : null;
 
             init
             {
@@ -107,15 +101,9 @@
         /// </summary>
         public int? Offset
         {
-            get
-            {
-                if (this.InnerThread.ThreadContext?.RightFileStart != null)
-                {
-                    return this.InnerThread.ThreadContext?.RightFileStart.Offset;
-                }
-
-                return null;
-            }
+            get => this.InnerThread.ThreadContext?.RightFileStart != null
+                ? this.InnerThread.ThreadContext?.RightFileStart.Offset
+                : null;
 
             init
             {
@@ -133,26 +121,20 @@
         /// </summary>
         public IEnumerable<AzureDevOpsComment> Comments
         {
-            get
-            {
-                if (this.InnerThread.Comments == null)
-                {
-                    throw new InvalidOperationException("Comments list is not created.");
-                }
-
-                return this.InnerThread.Comments.Select(x => new AzureDevOpsComment(x, this.InnerThread.Id));
-            }
+            get => this.InnerThread.Comments == null
+                ? throw new InvalidOperationException("Comments list is not created.")
+                : this.InnerThread.Comments.Select(x => new AzureDevOpsComment(x, this.InnerThread.Id));
 
             init =>
                 this.InnerThread.Comments =
                     value?
                         .Select(c =>
                             new Comment
-                                {
-                                    Content = c.Content,
-                                    IsDeleted = c.IsDeleted,
-                                    CommentType = (CommentType)c.CommentType,
-                                }).ToList();
+                            {
+                                Content = c.Content,
+                                IsDeleted = c.IsDeleted,
+                                CommentType = (CommentType)c.CommentType,
+                            }).ToList();
         }
 
         /// <summary>
@@ -179,12 +161,7 @@
         {
             propertyName.NotNullOrWhiteSpace(nameof(propertyName));
 
-            if (this.InnerThread.Properties == null)
-            {
-                return default;
-            }
-
-            return this.InnerThread.Properties.GetValue(propertyName, default(T));
+            return this.InnerThread.Properties == null ? default : this.InnerThread.Properties.GetValue(propertyName, default(T));
         }
 
         /// <summary>

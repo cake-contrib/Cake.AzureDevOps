@@ -105,14 +105,14 @@
             // Setup CommitDiffs object
             var gitChanges = new List<GitChange>
             {
-                new ()
+                new()
                 {
                     ChangeId = 1,
                     ChangeType = VersionControlChangeType.Edit,
                     Item = new GitItem("/src/project/myclass.cs", "ID1", GitObjectType.Commit, "6b13ff8", 0),
                 },
                 null,
-                new ()
+                new()
                 {
                     ChangeId = 2,
                     ChangeType = VersionControlChangeType.Edit,
@@ -152,7 +152,7 @@
             // Setup GitPullRequestCommentThread collection
             var commentThreads = new List<GitPullRequestCommentThread>
             {
-                new ()
+                new()
                 {
                     Id = 11,
                     ThreadContext = new CommentThreadContext()
@@ -161,12 +161,12 @@
                     },
                     Comments =
                         [
-                            new () { Content = "Hello", IsDeleted = false, CommentType = CommentType.CodeChange, Id = 1 },
-                            new () { Content = "Goodbye", IsDeleted = true, CommentType = CommentType.Text, Id = 2 },
+                            new() { Content = "Hello", IsDeleted = false, CommentType = CommentType.CodeChange, Id = 1 },
+                            new() { Content = "Goodbye", IsDeleted = true, CommentType = CommentType.Text, Id = 2 },
                         ],
                     Status = CommentThreadStatus.Active,
                 },
-                new ()
+                new()
                 {
                     Id = 22,
                     ThreadContext = null,
@@ -203,8 +203,8 @@
              .ReturnsAsync((Guid _, int _, bool? _, object _, CancellationToken _)
                     =>
                         [
-                            new () { Id = 42, CreatedDate = DateTime.Today.AddDays(-3) },
-                            new () { Id = 16, CreatedDate = DateTime.Today.AddDays(-1) },
+                            new() { Id = 42, CreatedDate = DateTime.Today.AddDays(-3) },
+                            new() { Id = 16, CreatedDate = DateTime.Today.AddDays(-1) },
                         ]);
 
             m.Setup(arg => arg.GetPullRequestIterationsAsync(
@@ -216,7 +216,7 @@
                 .ReturnsAsync((Guid _, int _, bool? _, object _, CancellationToken _)
                     =>
                         [
-                            new () { Id = null },
+                            new() { Id = null },
                         ]);
 
             // Setup GitPullRequestIterationChanges collection
@@ -224,8 +224,8 @@
             {
                 ChangeEntries =
                     [
-                        new () { ChangeId = 100, ChangeTrackingId = 1, Item = new GitItem { Path = "/src/my/class1.cs" } },
-                        new () { ChangeId = 200, ChangeTrackingId = 2, Item = new GitItem { Path = string.Empty } },
+                        new() { ChangeId = 100, ChangeTrackingId = 1, Item = new GitItem { Path = "/src/my/class1.cs" } },
+                        new() { ChangeId = 200, ChangeTrackingId = 2, Item = new GitItem { Path = string.Empty } },
 
                     ],
             };
@@ -274,7 +274,7 @@
                 CancellationToken.None))
              .ReturnsAsync(() =>
                 [
-                     new ("master"),
+                     new("master"),
                 ]);
 
             m.Setup(
@@ -306,7 +306,7 @@
                     gitPullRequestToCreate.LastMergeTargetCommit = new GitCommitRef { CommitId = "78a3c113" };
 
                     return gitPullRequestToCreate;
-                 });
+                });
 
             m.Setup(arg => arg.UpdateCommentAsync(
                    It.IsAny<Comment>(),
@@ -319,8 +319,8 @@
                .ReturnsAsync((Comment comment, Guid _, int _, int _, int _, object _, CancellationToken _)
                    => new Comment
                    {
-                        Id = comment.Id,
-                        Content = comment.Content,
+                       Id = comment.Id,
+                       Content = comment.Content,
                    });
 
             return m;
