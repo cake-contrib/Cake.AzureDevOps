@@ -42,7 +42,7 @@ jobs:
 - job: Build_macOS
   displayName: Build & Test macOS
   pool:
-    vmImage: 'macOS-12'
+    vmImage: 'macOS-13'
   steps:
   # .NET 5 required for GitVersion
   - task: UseDotNet@2
