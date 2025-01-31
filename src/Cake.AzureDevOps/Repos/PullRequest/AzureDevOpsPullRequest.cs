@@ -407,7 +407,7 @@
                         this.ProjectName,
                         this.RepositoryId,
                         true, // bool? diffCommonCommit
-                        null, // int? top
+                        int.MaxValue, // int? top
                         null, // int? skip
                         baseVersionDescriptor,
                         targetVersionDescriptor)
