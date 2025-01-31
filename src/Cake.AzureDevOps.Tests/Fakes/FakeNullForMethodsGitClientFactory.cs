@@ -15,7 +15,7 @@
             m.Setup(arg => arg.CreatePullRequestStatusAsync(It.IsAny<GitPullRequestStatus>(), It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<object>(), It.IsAny<CancellationToken>()))
              .ReturnsAsync(() => null);
 
-            m.Setup(arg => arg.GetCommitDiffsAsync(It.IsAny<string>(), It.IsAny<Guid>(), true, null, null, It.IsAny<GitBaseVersionDescriptor>(), It.IsAny<GitTargetVersionDescriptor>(), null, CancellationToken.None))
+            m.Setup(arg => arg.GetCommitDiffsAsync(It.IsAny<string>(), It.IsAny<Guid>(), true, int.MaxValue, null, It.IsAny<GitBaseVersionDescriptor>(), It.IsAny<GitTargetVersionDescriptor>(), null, CancellationToken.None))
              .ReturnsAsync(() => new GitCommitDiffs { ChangeCounts = [], Changes = [] });
 
             m.Setup(arg => arg.UpdateThreadAsync(It.IsAny<GitPullRequestCommentThread>(), It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<int>(), null, CancellationToken.None))
