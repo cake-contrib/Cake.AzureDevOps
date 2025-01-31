@@ -130,7 +130,7 @@
                     It.IsAny<string>(),
                     It.IsAny<Guid>(),
                     true,
-                    null,
+                    int.MaxValue,
                     null,
                     It.IsAny<GitBaseVersionDescriptor>(),
                     It.IsAny<GitTargetVersionDescriptor>(),
