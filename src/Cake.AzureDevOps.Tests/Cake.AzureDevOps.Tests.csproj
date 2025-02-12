@@ -29,7 +29,7 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="3.0.2" />
     <!--Transitive dependencies specified to fix security vulnerabilities-->
     <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
-    <PackageReference Include="System.Formats.Asn1" Version="9.0.1" />
+    <PackageReference Include="System.Formats.Asn1" Version="9.0.2" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.1" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
