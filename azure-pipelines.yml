@@ -68,7 +68,7 @@ jobs:
 - job: Build_Ubuntu
   displayName: Build & Test Ubuntu
   pool:
-    vmImage: 'ubuntu-20.04'
+    vmImage: 'ubuntu-22.04'
   steps:
   # .NET 5 required for GitVersion
   - task: UseDotNet@2
@@ -295,7 +295,7 @@ jobs:
   displayName: Integration Tests Frosting Ubuntu (.NET 8)
   dependsOn: Build_Ubuntu
   pool:
-    vmImage: 'ubuntu-20.04'
+    vmImage: 'ubuntu-22.04'
   steps:
   - download: current
     artifact: NuGet Package Ubuntu
@@ -320,7 +320,7 @@ jobs:
   displayName: Integration Tests Frosting Ubuntu (.NET 9)
   dependsOn: Build_Ubuntu
   pool:
-    vmImage: 'ubuntu-20.04'
+    vmImage: 'ubuntu-22.04'
   steps:
   - download: current
     artifact: NuGet Package Ubuntu
@@ -345,7 +345,7 @@ jobs:
   displayName: Integration Tests Script Runner Ubuntu (.NET 8)
   dependsOn: Build_Ubuntu
   pool:
-    vmImage: 'ubuntu-20.04'
+    vmImage: 'ubuntu-22.04'
   steps:
   - download: current
     artifact: NuGet Package Ubuntu
@@ -370,7 +370,7 @@ jobs:
   displayName: Integration Tests Script Runner Ubuntu (.NET 9)
   dependsOn: Build_Ubuntu
   pool:
-    vmImage: 'ubuntu-20.04'
+    vmImage: 'ubuntu-22.04'
   steps:
   - download: current
     artifact: NuGet Package Ubuntu
