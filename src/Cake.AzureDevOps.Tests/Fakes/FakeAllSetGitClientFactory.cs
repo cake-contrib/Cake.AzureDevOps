@@ -27,6 +27,8 @@
                     SourceRefName = "foo",
                     TargetRefName = "master",
                     CodeReviewId = 123,
+                    Title = "Add feature X",
+                    Description = "This pull request adds feature X.",
                     LastMergeSourceCommit = new GitCommitRef { CommitId = "4a92b977" },
                     LastMergeTargetCommit = new GitCommitRef { CommitId = "78a3c113" },
                 });
@@ -55,6 +57,8 @@
                                 SourceRefName = sc.SourceRefName,
                                 TargetRefName = "master",
                                 CodeReviewId = 123,
+                                Title = "Add feature X",
+                                Description = "This pull request adds feature X.",
                                 LastMergeSourceCommit = new GitCommitRef { CommitId = "4a92b977" },
                                 LastMergeTargetCommit = new GitCommitRef { CommitId = "78a3c113" },
                             },
