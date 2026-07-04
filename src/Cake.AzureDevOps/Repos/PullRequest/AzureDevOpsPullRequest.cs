@@ -189,7 +189,7 @@
         /// </summary>
         /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
-public string Title => this.ValidatePullRequest() ? (this.pullRequest.Title ?? string.Empty) : string.Empty;
+        public string Title => this.ValidatePullRequest() ? (this.pullRequest.Title ?? string.Empty) : string.Empty;
 
         /// <summary>
         /// Gets the description of the pull request.
@@ -198,7 +198,7 @@ public string Title => this.ValidatePullRequest() ? (this.pullRequest.Title ?? s
         /// </summary>
         /// <exception cref="AzureDevOpsPullRequestNotFoundException">If pull request could not be found and
         /// <see cref="AzureDevOpsPullRequestSettings.ThrowExceptionIfPullRequestCouldNotBeFound"/> is set to <c>true</c>.</exception>
-public string Description => this.ValidatePullRequest() ? (this.pullRequest.Description ?? string.Empty) : string.Empty;
+        public string Description => this.ValidatePullRequest() ? (this.pullRequest.Description ?? string.Empty) : string.Empty;
 
         /// <summary>
         /// Gets if the pull request is in draft mode.
