@@ -131,6 +131,8 @@
                 pullRequest.ProjectName.ShouldBe("MyTeamProject");
                 pullRequest.SourceRefName.ShouldBe("foo");
                 pullRequest.TargetRefName.ShouldBe("master");
+                pullRequest.Title.ShouldBe("Add feature X");
+                pullRequest.Description.ShouldBe("This pull request adds feature X.");
                 pullRequest.LastSourceCommitId.ShouldBe("4a92b977");
                 pullRequest.LastTargetCommitId.ShouldBe("78a3c113");
             }
@@ -155,6 +157,8 @@
                 pullRequest.ProjectName.ShouldBe("MyProject");
                 pullRequest.SourceRefName.ShouldBe("foo");
                 pullRequest.TargetRefName.ShouldBe("master");
+                pullRequest.Title.ShouldBe("Add feature X");
+                pullRequest.Description.ShouldBe("This pull request adds feature X.");
                 pullRequest.LastSourceCommitId.ShouldBe("4a92b977");
                 pullRequest.LastTargetCommitId.ShouldBe("78a3c113");
             }
@@ -179,6 +183,8 @@
                 pullRequest.ProjectName.ShouldBe("MyTeamProject");
                 pullRequest.SourceRefName.ShouldBe("feature");
                 pullRequest.TargetRefName.ShouldBe("master");
+                pullRequest.Title.ShouldBe("Add feature X");
+                pullRequest.Description.ShouldBe("This pull request adds feature X.");
                 pullRequest.LastSourceCommitId.ShouldBe("4a92b977");
                 pullRequest.LastTargetCommitId.ShouldBe("78a3c113");
             }
@@ -203,6 +209,8 @@
                 pullRequest.ProjectName.ShouldBe("MyProject");
                 pullRequest.SourceRefName.ShouldBe("feature");
                 pullRequest.TargetRefName.ShouldBe("master");
+                pullRequest.Title.ShouldBe("Add feature X");
+                pullRequest.Description.ShouldBe("This pull request adds feature X.");
                 pullRequest.LastSourceCommitId.ShouldBe("4a92b977");
                 pullRequest.LastTargetCommitId.ShouldBe("78a3c113");
             }
@@ -232,6 +240,8 @@
                 pullRequest.CodeReviewId.ShouldBe(0);
                 pullRequest.SourceRefName.ShouldBeEmpty();
                 pullRequest.TargetRefName.ShouldBeEmpty();
+                pullRequest.Title.ShouldBeEmpty();
+                pullRequest.Description.ShouldBeEmpty();
                 pullRequest.LastSourceCommitId.ShouldBeEmpty();
                 pullRequest.LastTargetCommitId.ShouldBeEmpty();
             }
@@ -261,6 +271,8 @@
                 pullRequest.CodeReviewId.ShouldBe(0);
                 pullRequest.SourceRefName.ShouldBeEmpty();
                 pullRequest.TargetRefName.ShouldBeEmpty();
+                pullRequest.Title.ShouldBeEmpty();
+                pullRequest.Description.ShouldBeEmpty();
                 pullRequest.LastSourceCommitId.ShouldBeEmpty();
                 pullRequest.LastTargetCommitId.ShouldBeEmpty();
             }
@@ -290,6 +302,8 @@
                 pullRequest.CodeReviewId.ShouldBe(0);
                 pullRequest.SourceRefName.ShouldBeEmpty();
                 pullRequest.TargetRefName.ShouldBeEmpty();
+                pullRequest.Title.ShouldBeEmpty();
+                pullRequest.Description.ShouldBeEmpty();
                 pullRequest.LastSourceCommitId.ShouldBeEmpty();
                 pullRequest.LastTargetCommitId.ShouldBeEmpty();
             }
@@ -319,6 +333,8 @@
                 pullRequest.CodeReviewId.ShouldBe(0);
                 pullRequest.SourceRefName.ShouldBeEmpty();
                 pullRequest.TargetRefName.ShouldBeEmpty();
+                pullRequest.Title.ShouldBeEmpty();
+                pullRequest.Description.ShouldBeEmpty();
                 pullRequest.LastSourceCommitId.ShouldBeEmpty();
                 pullRequest.LastTargetCommitId.ShouldBeEmpty();
             }
