@@ -29,6 +29,10 @@ jobs:
     inputs:
       version: '9.x'
     displayName: 'Install .NET 9'
+  - task: UseDotNet@2
+    inputs:
+      version: '10.x'
+    displayName: 'Install .NET 10'
   - powershell: |
       $ENV:CAKE_SKIP_GITVERSION=([string]::IsNullOrEmpty($ENV:SYSTEM_PULLREQUEST_PULLREQUESTID) -eq $False).ToString()
       .\build.ps1
@@ -57,6 +61,10 @@ jobs:
     inputs:
       version: '9.x'
     displayName: 'Install .NET 9'
+  - task: UseDotNet@2
+    inputs:
+      version: '10.x'
+    displayName: 'Install .NET 10'
   - bash: |
       ./build.sh
     displayName: 'Cake Build'
@@ -83,6 +91,10 @@ jobs:
     inputs:
       version: '9.x'
     displayName: 'Install .NET 9'
+  - task: UseDotNet@2
+    inputs:
+      version: '10.x'
+    displayName: 'Install .NET 10'
   - bash: |
       ./build.sh --verbosity=diagnostic
     displayName: 'Cake Build'
@@ -140,6 +152,30 @@ jobs:
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
+- job: Test_Frosting_Windows_Net10
+  displayName: Integration Tests Frosting Windows (.NET 10)
+  dependsOn: Build_Windows
+  pool:
+    vmImage: 'windows-2022'
+  steps:
+  - download: current
+    artifact: NuGet Package Windows
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Windows
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '10.x'
+    displayName: 'Install .NET 10'
+  - powershell: ./build.ps1 --verbosity=diagnostic
+    workingDirectory: ./tests/frosting/net10.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
 # Integration Tests Script Runner Windows (.NET 8)
 - job: Test_Script_Runner_Windows_Net8
   displayName: Integration Tests Script Runner Windows (.NET 8)
@@ -186,6 +222,30 @@ jobs:
     displayName: 'Install .NET 9'
   - powershell: ./build.ps1 --verbosity=diagnostic
     workingDirectory: ./tests/script-runner/net9.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+- job: Test_Script_Runner_Windows_Net10
+  displayName: Integration Tests Script Runner Windows (.NET 10)
+  dependsOn: Build_Windows
+  pool:
+    vmImage: 'windows-2022'
+  steps:
+  - download: current
+    artifact: NuGet Package Windows
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Windows
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '10.x'
+    displayName: 'Install .NET 10'
+  - powershell: ./build.ps1 --verbosity=diagnostic
+    workingDirectory: ./tests/script-runner/net10.0
     displayName: 'Run integration tests'
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
@@ -240,6 +300,30 @@ jobs:
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
+- job: Test_Frosting_macOS_Net10
+  displayName: Integration Tests Frosting macOS (.NET 10)
+  dependsOn: Build_macOS
+  pool:
+    vmImage: 'macOS-14'
+  steps:
+  - download: current
+    artifact: NuGet Package macOS
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package macOS
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '10.x'
+    displayName: 'Install .NET 10'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/frosting/net10.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
 # Integration Tests Script Runner macOS (.NET 8)
 - job: Test_Script_Runner_macOS_Net8
   displayName: Integration Tests Script Runner macOS (.NET 8)
@@ -286,6 +370,30 @@ jobs:
     displayName: 'Install .NET 9'
   - bash: ./build.sh --verbosity=diagnostic
     workingDirectory: ./tests/script-runner/net9.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+- job: Test_Script_Runner_macOS_Net10
+  displayName: Integration Tests Script Runner macOS (.NET 10)
+  dependsOn: Build_macOS
+  pool:
+    vmImage: 'macOS-14'
+  steps:
+  - download: current
+    artifact: NuGet Package macOS
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package macOS
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '10.x'
+    displayName: 'Install .NET 10'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/script-runner/net10.0
     displayName: 'Run integration tests'
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
@@ -340,6 +448,30 @@ jobs:
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)
 
+- job: Test_Frosting_Ubuntu_Net10
+  displayName: Integration Tests Frosting Ubuntu (.NET 10)
+  dependsOn: Build_Ubuntu
+  pool:
+    vmImage: 'ubuntu-22.04'
+  steps:
+  - download: current
+    artifact: NuGet Package Ubuntu
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Ubuntu
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '10.x'
+    displayName: 'Install .NET 10'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/frosting/net10.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
 # Integration Tests Script Runner Ubuntu (.NET 8)
 - job: Test_Script_Runner_Ubuntu_Net8
   displayName: Integration Tests Script Runner Ubuntu (.NET 8)
@@ -386,6 +518,30 @@ jobs:
     displayName: 'Install .NET 9'
   - bash: ./build.sh --verbosity=diagnostic
     workingDirectory: ./tests/script-runner/net9.0
+    displayName: 'Run integration tests'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+- job: Test_Script_Runner_Ubuntu_Net10
+  displayName: Integration Tests Script Runner Ubuntu (.NET 10)
+  dependsOn: Build_Ubuntu
+  pool:
+    vmImage: 'ubuntu-22.04'
+  steps:
+  - download: current
+    artifact: NuGet Package Ubuntu
+    displayName: 'Download build artifact'
+  - task: CopyFiles@2
+    inputs:
+      sourceFolder: $(Pipeline.Workspace)/NuGet Package Ubuntu
+      targetFolder: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
+    displayName: 'Copy build artifact for test run'
+  - task: UseDotNet@2
+    inputs:
+      version: '10.x'
+    displayName: 'Install .NET 10'
+  - bash: ./build.sh --verbosity=diagnostic
+    workingDirectory: ./tests/script-runner/net10.0
     displayName: 'Run integration tests'
     env:
       SYSTEM_ACCESSTOKEN: $(System.AccessToken)

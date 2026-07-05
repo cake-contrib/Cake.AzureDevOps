@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <TargetFrameworks>net8.0;net9.0;net10.0</TargetFrameworks>
     <IsPackable>false</IsPackable>
     <Product>Cake.AzureDevOps</Product>
     <Copyright>Copyright © Pascal Berger</Copyright>
@@ -15,9 +15,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.7.0" />
-    <PackageReference Include="Cake.Common" Version="5.0.0" />
-    <PackageReference Include="Cake.Core" Version="5.0.0" />
-    <PackageReference Include="Cake.Testing" Version="5.0.0" />
+    <PackageReference Include="Cake.Common" Version="6.0.0" />
+    <PackageReference Include="Cake.Core" Version="6.0.0" />
+    <PackageReference Include="Cake.Testing" Version="6.0.0" />
     <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="19.225.2" />
     <PackageReference Include="Moq" Version="4.18.4" />
     <PackageReference Include="Shouldly" Version="4.3.0" />
@@ -29,10 +29,7 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" />
     <!--Transitive dependencies specified to fix security vulnerabilities-->
     <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
-    <PackageReference Include="System.Formats.Asn1" Version="9.0.17" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.2.1" />
-    <PackageReference Include="System.Net.Http" Version="4.3.4" />
-    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
   </ItemGroup>
 
   <ItemGroup>
