@@ -258,6 +258,8 @@
                 null,
                 null,
                 null,
+                null,
+                null,
                 CancellationToken.None))
              .ReturnsAsync(() => []);
 
@@ -268,6 +270,8 @@
                 It.IsAny<string>(),
                 "MyRepoName",
                 "master",
+                null,
+                null,
                 null,
                 null,
                 null,
