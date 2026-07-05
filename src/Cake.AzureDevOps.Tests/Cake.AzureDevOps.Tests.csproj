@@ -15,9 +15,9 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.7.0" />
-    <PackageReference Include="Cake.Common" Version="5.0.0" />
-    <PackageReference Include="Cake.Core" Version="5.0.0" />
-    <PackageReference Include="Cake.Testing" Version="5.0.0" />
+    <PackageReference Include="Cake.Common" Version="6.2.0" />
+    <PackageReference Include="Cake.Core" Version="6.2.0" />
+    <PackageReference Include="Cake.Testing" Version="6.2.0" />
     <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="19.225.2" />
     <PackageReference Include="Moq" Version="4.18.4" />
     <PackageReference Include="Shouldly" Version="4.3.0" />
