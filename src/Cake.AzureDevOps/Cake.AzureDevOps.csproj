@@ -18,7 +18,7 @@
     <Copyright>Copyright © Pascal Berger</Copyright>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <IncludeBuildOutput>false</IncludeBuildOutput>
-    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);PackBuildOutputs</TargetsForTfmSpecificContentInPackage>
+    <TargetsForTfmSpecificContentInPackage>$(TargetsForTfmSpecificContentInPackage);PackBuildOutputs;PackRuntimeDependencies</TargetsForTfmSpecificContentInPackage>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
@@ -42,5 +42,15 @@
     <PackageReference Include="System.Security.Cryptography.Xml" Version="6.0.1" />
     <!--Required to ensure same version across projects-->
     <PackageReference Include="Azure.Core" Version="1.44.1" />
+    <PackageReference Include="Microsoft.Identity.Client" Version="4.72.1" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="4.10.0" />
   </ItemGroup>
+
+  <Target Name="PackRuntimeDependencies">
+    <ItemGroup>
+      <TfmSpecificPackageFile Include="$(TargetDir)Azure.Core.dll" PackagePath="lib/$(TargetFramework)" />
+      <TfmSpecificPackageFile Include="$(TargetDir)Microsoft.Identity.Client.dll" PackagePath="lib/$(TargetFramework)" />
+      <TfmSpecificPackageFile Include="$(TargetDir)System.ServiceModel.Primitives.dll" PackagePath="lib/$(TargetFramework)" />
+    </ItemGroup>
+  </Target>
 </Project>
