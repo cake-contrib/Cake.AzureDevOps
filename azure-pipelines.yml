@@ -38,6 +38,8 @@ jobs:
       .\build.ps1
       exit $LASTEXITCODE 
     displayName: 'Cake Build'
+  - pwsh: .\tests\Verify-Packages.ps1
+    displayName: 'Verify packaged runtime dependencies'
   - publish: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
     artifact: NuGet Package Windows
     displayName: 'Publish NuGet package as build artifact'
@@ -68,6 +70,8 @@ jobs:
   - bash: |
       ./build.sh
     displayName: 'Cake Build'
+  - pwsh: .\tests\Verify-Packages.ps1
+    displayName: 'Verify packaged runtime dependencies'
   - publish: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
     artifact: NuGet Package macOS
     displayName: 'Publish NuGet package as build artifact'
@@ -98,6 +102,8 @@ jobs:
   - bash: |
       ./build.sh --verbosity=diagnostic
     displayName: 'Cake Build'
+  - pwsh: .\tests\Verify-Packages.ps1
+    displayName: 'Verify packaged runtime dependencies'
   - publish: $(Build.SourcesDirectory)/BuildArtifacts/Packages/NuGet
     artifact: NuGet Package Ubuntu
     displayName: 'Publish NuGet package as build artifact'

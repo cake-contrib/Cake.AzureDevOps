@@ -27,6 +27,10 @@ On OSX/Linux run:
 ./build.sh
 ```
 
+Packages are created from `nuspec/nuget/*.nuspec`, not by `dotnet pack`.
+When changing dependencies, update the script-runner bundled files and the Frosting dependency groups.
+The build pipeline runs `tests/Verify-Packages.ps1` to check that the script-runner package includes its runtime dependency chain.
+
 ## Release
 
 See [Cake.Recipe documentation] how to create a new release of this addin.

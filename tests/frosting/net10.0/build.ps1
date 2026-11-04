@@ -1,4 +1,4 @@
-$ADDIN_PACKAGE_PATH = "packages/cake.azuredevops"
+$ADDIN_PACKAGE_PATH = "packages/cake.frosting.azuredevops"
 if (Test-Path $ADDIN_PACKAGE_PATH)
 {
     Write-Host "Cleaning up cached version of $ADDIN_PACKAGE_PATH..."
