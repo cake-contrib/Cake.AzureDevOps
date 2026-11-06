@@ -29,14 +29,8 @@ For addin compatible with Cake Script Runners see Cake.AzureDevOps.
         <dependency id="Microsoft.VisualStudio.Services.InteractiveClient" version="20.256.2" exclude="Build,Analyzers" />
         <dependency id="TfsUrlParser" version="1.5.0" exclude="Build,Analyzers" />
         <!--Transitive dependencies specified to fix security vulnerabilities-->
-        <dependency id="Microsoft.Identity.Client" version="4.72.1" />
-        <dependency id="System.Configuration.ConfigurationManager" version="8.0.0" />
         <dependency id="System.Drawing.Common" version="6.0.0" />
         <dependency id="System.Security.Cryptography.Xml" version="6.0.1" />
-        <dependency id="System.Formats.Asn1" version="9.0.0" />
-        <dependency id="System.IdentityModel.Tokens.Jwt" version="8.2.1" />
-        <dependency id="System.Net.Http" version="4.3.4" />
-        <dependency id="System.Text.RegularExpressions" version="4.3.1" />
       </group>
       <group targetFramework="net9.0">
         <dependency id="Cake.Core" version="6.0.0" exclude="Build,Analyzers" />
@@ -44,14 +38,8 @@ For addin compatible with Cake Script Runners see Cake.AzureDevOps.
         <dependency id="Microsoft.VisualStudio.Services.InteractiveClient" version="20.256.2" exclude="Build,Analyzers" />
         <dependency id="TfsUrlParser" version="1.5.0" exclude="Build,Analyzers" />
         <!--Transitive dependencies specified to fix security vulnerabilities-->
-        <dependency id="Microsoft.Identity.Client" version="4.72.1" />
-        <dependency id="System.Configuration.ConfigurationManager" version="8.0.0" />
         <dependency id="System.Drawing.Common" version="6.0.0" />
         <dependency id="System.Security.Cryptography.Xml" version="6.0.1" />
-        <dependency id="System.Formats.Asn1" version="9.0.0" />
-        <dependency id="System.IdentityModel.Tokens.Jwt" version="8.2.1" />
-        <dependency id="System.Net.Http" version="4.3.4" />
-        <dependency id="System.Text.RegularExpressions" version="4.3.1" />
       </group>
       <group targetFramework="net10.0">
         <dependency id="Cake.Core" version="6.0.0" exclude="Build,Analyzers" />
@@ -59,14 +47,8 @@ For addin compatible with Cake Script Runners see Cake.AzureDevOps.
         <dependency id="Microsoft.VisualStudio.Services.InteractiveClient" version="20.256.2" exclude="Build,Analyzers" />
         <dependency id="TfsUrlParser" version="1.5.0" exclude="Build,Analyzers" />
         <!--Transitive dependencies specified to fix security vulnerabilities-->
-        <dependency id="Microsoft.Identity.Client" version="4.72.1" />
-        <dependency id="System.Configuration.ConfigurationManager" version="8.0.0" />
         <dependency id="System.Drawing.Common" version="6.0.0" />
         <dependency id="System.Security.Cryptography.Xml" version="6.0.1" />
-        <dependency id="System.Formats.Asn1" version="9.0.0" />
-        <dependency id="System.IdentityModel.Tokens.Jwt" version="8.2.1" />
-        <dependency id="System.Net.Http" version="4.3.4" />
-        <dependency id="System.Text.RegularExpressions" version="4.3.1" />
       </group>
     </dependencies>
   </metadata>
