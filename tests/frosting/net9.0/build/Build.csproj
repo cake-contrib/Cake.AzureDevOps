@@ -6,6 +6,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Cake.Frosting" Version="6.0.0" />
-    <PackageReference Include="Cake.AzureDevOps" Version="*-*" />
+    <PackageReference Include="Cake.Frosting.AzureDevOps" Version="*-*" />
   </ItemGroup>
 </Project>
